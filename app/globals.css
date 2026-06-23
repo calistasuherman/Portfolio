@@ -1,5 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Melodrama:wght@400;500;700&display=swap');
-
+﻿@font-face {
+  font-family: "RelationshipMelodrame";
+  src: url("/fonts/RelationshipMelodrame.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,7 +27,7 @@
   --font-cormorant: "Cormorant Garamond", serif;
   --font-sloop: "SloopScript", cursive;
   --font-pinyon: var(--font-pinyon), cursive;
-  --font-melodrama: "Melodrama", serif;
+  --font-melodrama: "RelationshipMelodrame", cursive;
 }
 
 html {
@@ -45,7 +49,7 @@ a, button {
   cursor: none;
 }
 
-/* ── Dark overlay for legibility ── */
+/* â”€â”€ Dark overlay for legibility â”€â”€ */
 body::before {
   content: "";
   position: fixed;
@@ -55,7 +59,7 @@ body::before {
   background: rgba(10, 0, 0, 0.45);
 }
 
-/* ── Grain texture ── */
+/* â”€â”€ Grain texture â”€â”€ */
 body::after {
   content: "";
   position: fixed;
@@ -67,7 +71,7 @@ body::after {
   background-size: 200px 200px;
 }
 
-/* ── Custom cursor ── */
+/* â”€â”€ Custom cursor â”€â”€ */
 .cursor-dot {
   position: fixed;
   width: 8px;
@@ -80,7 +84,7 @@ body::after {
   mix-blend-mode: difference;
 }
 
-/* ── Nav pill ── */
+/* â”€â”€ Nav pill â”€â”€ */
 .nav-pill {
   padding: 10px 28px;
   border-radius: 9999px;
@@ -90,7 +94,7 @@ body::after {
   -webkit-backdrop-filter: blur(16px);
 }
 
-/* ── Hero entrance animations ── */
+/* â”€â”€ Hero entrance animations â”€â”€ */
 .hero-item {
   opacity: 0;
   transform: translateY(28px);
@@ -102,7 +106,7 @@ body::after {
   transform: translateY(0);
 }
 
-/* ── Marquee ── */
+/* â”€â”€ Marquee â”€â”€ */
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-33.333%); }
@@ -117,7 +121,7 @@ body::after {
   animation-play-state: paused;
 }
 
-/* ── Brand pill ── */
+/* â”€â”€ Brand pill â”€â”€ */
 .brand-pill {
   border: 1px solid rgba(139, 0, 0, 0.35);
   background: rgba(26, 0, 0, 0.3);
@@ -129,7 +133,7 @@ body::after {
   color: #f5f0f0;
 }
 
-/* ── Stat card ── */
+/* â”€â”€ Stat card â”€â”€ */
 .stat-card {
   border: 1px solid rgba(139, 0, 0, 0.3);
   background: rgba(26, 0, 0, 0.4);
@@ -141,7 +145,7 @@ body::after {
   background: rgba(26, 0, 0, 0.65);
 }
 
-/* ── Work card ── */
+/* â”€â”€ Work card â”€â”€ */
 .work-card {
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
 }
@@ -152,105 +156,11 @@ body::after {
   border-color: rgba(139, 0, 0, 0.5) !important;
 }
 
-/* ── Service card ── */
+/* â”€â”€ Service card â”€â”€ */
 .service-card {
   border: 1px solid rgba(139, 0, 0, 0.25);
   background: rgba(26, 0, 0, 0.35);
   transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.service-card:hover {
-  border-color: rgba(139, 0, 0, 0.55);
-  background: rgba(26, 0, 0, 0.55);
-  transform: translateY(-3px);
-}
-
-/* ── Lace frame ── */
-.lace-frame {
-  position: relative;
-  display: inline-block;
-}
-
-.lace-frame::before {
-  content: "";
-  position: absolute;
-  inset: -12px;
-  border-radius: 50% 45% 55% 48% / 48% 52% 45% 55%;
-  border: 2px solid rgba(232, 228, 224, 0.5);
-  pointer-events: none;
-}
-
-.lace-frame::after {
-  content: "";
-  position: absolute;
-  inset: -22px;
-  border-radius: 48% 52% 44% 58% / 55% 45% 58% 42%;
-  border: 1px dashed rgba(232, 228, 224, 0.3);
-  pointer-events: none;
-}
-
-.lace-inner {
-  position: relative;
-}
-
-.lace-inner::before {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: 50% 48% 52% 46% / 46% 54% 48% 52%;
-  border: 1px solid rgba(201, 169, 169, 0.35);
-  pointer-events: none;
-}
-
-/* ── Decorative dots ring ── */
-.lace-dots {
-  position: absolute;
-  inset: -32px;
-  border-radius: 50%;
-  background-image: radial-gradient(circle, rgba(232, 228, 224, 0.4) 1.5px, transparent 1.5px);
-  background-size: 14px 14px;
-  background-position: center;
-  mask-image: radial-gradient(ellipse at center, transparent 60%, black 65%, black 75%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse at center, transparent 60%, black 65%, black 75%, transparent 80%);
-  pointer-events: none;
-}
-
-/* ── Tray nav items ── */
-.tray-item {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.tray-item:hover {
-  transform: scale(1.18) translateY(-6px);
-}
-
-.tray-item:nth-child(3):hover {
-  transform: translateX(-50%) scale(1.18) translateY(-6px);
-}
-
-/* ── Fashion photo collage ── */
-.fashion-photo {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-}
-
-.fashion-photo:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.35);
-}
-
-/* ── Section z-index ── */
-.section-content {
-  position: relative;
-  z-index: 1;
-}
-
-@layer utilities {
-  .font-cormorant {
-    font-family: var(--font-cormorant);
-  }
-  .font-inter {
-    font-family: var(--font-inter);
-  }
-}
+.service-card:

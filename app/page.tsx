@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 /* ── Data ──────────────────────────────────────────────────── */
 
@@ -46,6 +46,13 @@ const youtubeIntegrations = [
   { label: "Aelfric Eden", src: "" },
 ];
 
+const fashionPhotos = [
+  "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
+  "/fashion5.jpg","/fashion6.jpg","/fashion7.jpg","/fashion8.jpg",
+  "/fashion9.jpg","/fashion10.jpg","/fashion11.jpg","/fashion12.jpg",
+  "/fashion13.jpg","/fashion14.jpg","/fashion15.jpg","/fashion16.jpg",
+];
+
 /* ── Hooks ─────────────────────────────────────────────────── */
 
 function useReveal(threshold = 0.12) {
@@ -55,9 +62,7 @@ function useReveal(threshold = 0.12) {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) { setVisible(true); obs.disconnect(); }
-      },
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
       { threshold }
     );
     obs.observe(el);
@@ -89,12 +94,104 @@ function useCountUp(num: number, suffix: string, visible: boolean, duration = 16
   return display;
 }
 
+/* ── Text Scramble hook ─────────────────────────────────────── */
+const SCRAMBLE_CHARS = "!<>—_\\/[]{}=+*^?#@~";
+
+function useTextScramble(text: string, visible: boolean) {
+  const [display, setDisplay] = useState(text);
+  useEffect(() => {
+    if (!visible) return;
+    let frame = 0;
+    const totalFrames = 22;
+    const id = setInterval(() => {
+      frame++;
+      if (frame >= totalFrames) {
+        setDisplay(text);
+        clearInterval(id);
+        return;
+      }
+      setDisplay(
+        text.split("").map((char, i) => {
+          if (char === " " || char === "&") return char;
+          const threshold = (i / text.length) * totalFrames * 0.65;
+          if (frame > threshold) return char;
+          return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+        }).join("")
+      );
+    }, 38);
+    return () => clearInterval(id);
+  }, [visible, text]);
+  return display;
+}
+
+/* ── Scroll progress hook (for sticky heading progress bar) ── */
+function useScrollProgress(ref: React.RefObject<HTMLDivElement | null>) {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const update = () => {
+      const el = ref.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const scrolled = -rect.top + 80;
+      const total = rect.height - window.innerHeight + 80;
+      setProgress(Math.min(1, Math.max(0, scrolled / total)));
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, [ref]);
+  return progress;
+}
+
+/* ── Smooth scroll (lerp RAF — no external lib) ─────────────── */
+function useSmoothScroll() {
+  useEffect(() => {
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let rafId = 0;
+    let ticking = false;
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+    const animate = () => {
+      currentY = lerp(currentY, targetY, 0.09);
+      const diff = Math.abs(targetY - currentY);
+      if (diff > 0.5) {
+        window.scrollTo(0, currentY);
+        rafId = requestAnimationFrame(animate);
+      } else {
+        window.scrollTo(0, targetY);
+        ticking = false;
+      }
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      targetY = Math.max(0, Math.min(
+        document.body.scrollHeight - window.innerHeight,
+        targetY + e.deltaY * 1.2
+      ));
+      if (!ticking) {
+        ticking = true;
+        rafId = requestAnimationFrame(animate);
+      }
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+}
+
 /* ── Page ──────────────────────────────────────────────────── */
 
 export default function Home() {
   const [heroVisible, setHeroVisible] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [cursorHover, setCursorHover] = useState(false);
+
+  useSmoothScroll();
 
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 120);
@@ -151,7 +248,6 @@ export default function Home() {
 
         {/* ── Hero ── */}
         <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-16 overflow-hidden">
-          {/* Video background */}
           <video
             autoPlay
             muted
@@ -162,42 +258,21 @@ export default function Home() {
           >
             <source src="/hero.mp4" type="video/mp4" />
           </video>
-          {/* Subtle overlay */}
           <div
             className="absolute inset-0"
             style={{ background: "rgba(0,0,0,0.18)", zIndex: 1 }}
           />
 
           <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-16" style={{ zIndex: 3 }}>
-            {/* Staggered name */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-              <div
-                style={{
-                  fontFamily: "AstonScript, cursive",
-                  fontSize: "clamp(3rem, 10vw, 7rem)",
-                  fontWeight: "normal",
-                  color: "#7f1d1d",
-                  lineHeight: 0.95,
-                  display: "block",
-                }}
-              >
+              <div style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#7f1d1d", lineHeight: 0.95, display: "block" }}>
                 Calista
               </div>
-              <div
-                style={{
-                  fontFamily: "AstonScript, cursive",
-                  fontSize: "clamp(3rem, 10vw, 7rem)",
-                  fontWeight: "normal",
-                  color: "#7f1d1d",
-                  lineHeight: 0.95,
-                  display: "block",
-                }}
-              >
+              <div style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#7f1d1d", lineHeight: 0.95, display: "block" }}>
                 Suherman
               </div>
             </div>
 
-            {/* Subtitle + CTA */}
             <p
               className={`font-inter text-text-muted text-[11px] md:text-xs mt-8 tracking-[0.15em] hero-item${heroVisible ? " hero-visible" : ""}`}
               style={{ transitionDelay: "0.55s" }}
@@ -291,26 +366,10 @@ export default function Home() {
 
             <Reveal delay={80}>
               <WorkSubsection id="fashion-checks" title={<DualHeading serif="Fashion &" script="Fit Checks" size="sub" />}>
-                <div style={{ columns: "3 180px", gap: "12px" }}>
-                  {[
-                    "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
-                    "/fashion5.jpg","/fashion6.jpg","/fashion7.jpg","/fashion8.jpg",
-                    "/fashion9.jpg","/fashion10.jpg","/fashion11.jpg","/fashion12.jpg",
-                    "/fashion13.jpg","/fashion14.jpg","/fashion15.jpg","/fashion16.jpg",
-                  ].map((src, i) => (
-                    <div key={i} style={{ breakInside: "avoid", marginBottom: "12px" }}>
-                      <img
-                        src={src}
-                        alt={`Look ${i + 1}`}
-                        className="fashion-photo"
-                        style={{
-                          width: "100%",
-                          borderRadius: "12px",
-                          display: "block",
-                          transform: src === "/fashion16.jpg" ? "rotate(90deg)" : undefined,
-                        }}
-                      />
-                    </div>
+                {/* Horizontal scroll strip */}
+                <div className="fashion-scroll">
+                  {fashionPhotos.map((src, i) => (
+                    <ClipPhoto key={i} src={src} index={i} />
                   ))}
                 </div>
               </WorkSubsection>
@@ -446,6 +505,53 @@ function Reveal({
   );
 }
 
+/* ── Clip-path photo reveal (fashion grid) ─────────────────── */
+function ClipPhoto({ src, index }: { src: string; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setRevealed(true); obs.disconnect(); } },
+      { threshold: 0.05 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const isRotated = src === "/fashion16.jpg";
+  const width = isRotated ? 200 : 180;
+  const height = isRotated ? 180 : 260;
+
+  return (
+    <div
+      ref={ref}
+      className="fashion-scroll-item"
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+        clipPath: revealed ? "inset(0% 0 0% 0)" : "inset(100% 0 0% 0)",
+        transition: `clip-path 0.8s cubic-bezier(0.16,1,0.3,1) ${index * 55}ms`,
+      }}
+    >
+      <img
+        src={src}
+        alt={`Look ${index + 1}`}
+        className="fashion-photo"
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          display: "block",
+          transform: isRotated ? "rotate(90deg) scale(1.4)" : undefined,
+        }}
+      />
+    </div>
+  );
+}
+
 function AnalyticsGrid() {
   const { ref, visible } = useReveal();
   return (
@@ -484,16 +590,21 @@ function StatCard({
   );
 }
 
+/* ── DualHeading with text scramble ────────────────────────── */
 function DualHeading({ serif, script, size = "section" }: { serif: string; script: string; size?: "section" | "sub" }) {
   const serifSize = size === "section" ? "clamp(2.5rem, 6vw, 5rem)" : "clamp(2.4rem, 5vw, 4rem)";
   const scriptSize = size === "section" ? "clamp(2.8rem, 7vw, 5.6rem)" : "clamp(2.7rem, 5.5vw, 4.5rem)";
+  const { ref, visible } = useReveal(0.2);
+  const serifDisplay = useTextScramble(serif, visible);
+  const scriptDisplay = useTextScramble(script, visible);
+
   return (
-    <div className="flex items-baseline justify-center flex-wrap">
+    <div ref={ref} className="flex items-baseline justify-center flex-wrap">
       <span
         className="font-cormorant"
         style={{ fontSize: serifSize, fontWeight: 700, color: "#f5f0f0", lineHeight: 1, letterSpacing: "-0.01em" }}
       >
-        {serif}
+        {serifDisplay}
       </span>
       <span
         style={{
@@ -507,7 +618,7 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
           top: "0.08em",
         }}
       >
-        {script}
+        {scriptDisplay}
       </span>
     </div>
   );
@@ -516,19 +627,17 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
 function TrayNav() {
   return (
     <div className="relative mx-auto mb-4" style={{ maxWidth: "680px", width: "100%" }}>
-      {/* Curved title over tray */}
       <svg viewBox="0 0 680 200" width="100%" style={{ position: "absolute", top: 0, left: 0, zIndex: 3, pointerEvents: "none" }}>
         <defs>
           <path id="trayArc" d="M 40,195 A 300,250 0 0,1 640,195" />
         </defs>
         <text fill="#f5f0f0" style={{ fontFamily: "var(--font-melodrama)", fontSize: "36px" }}>
           <textPath href="#trayArc" startOffset="50%" textAnchor="middle">
-            what I bring to the table
+            What I bring to the table
           </textPath>
         </text>
       </svg>
 
-      {/* Tray */}
       <div className="relative mx-auto" style={{
         width: "100%",
         paddingBottom: "58%",
@@ -538,7 +647,6 @@ function TrayNav() {
         boxShadow: "0 12px 48px rgba(0,0,0,0.5), inset 0 2px 6px rgba(255,255,255,0.5), inset 0 -3px 8px rgba(0,0,0,0.25)",
         border: "2px solid rgba(210,198,188,0.6)",
       }}>
-        {/* click us! */}
         <span className="absolute" style={{
           left: "6%", top: "44%",
           fontFamily: "var(--font-melodrama)",
@@ -548,19 +656,16 @@ function TrayNav() {
           click us!
         </span>
 
-        {/* Croissant → YouTube Integrations */}
         <a href="#youtube-integrations" className="tray-item absolute flex flex-col items-center" style={{ left: "16%", top: "32%" }}>
           <span style={{ fontSize: "clamp(2.5rem,6vw,4rem)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.25))" }}>🥐</span>
           <span className="font-inter text-center" style={{ fontSize: "clamp(8px,1.2vw,11px)", color: "#3d1a0a", letterSpacing: "0.04em", marginTop: "4px" }}>youtube integrations</span>
         </a>
 
-        {/* Ice cream → Fashion & Fit Checks */}
         <a href="#fashion-checks" className="tray-item absolute flex flex-col items-center" style={{ left: "50%", top: "46%", transform: "translateX(-50%)" }}>
           <span style={{ fontSize: "clamp(2.2rem,5.5vw,3.5rem)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.25))" }}>🍨</span>
           <span className="font-inter text-center" style={{ fontSize: "clamp(8px,1.2vw,11px)", color: "#3d1a0a", letterSpacing: "0.04em", marginTop: "4px" }}>fashion/fit checks</span>
         </a>
 
-        {/* Coffee → Video Editing */}
         <a href="#video-editing" className="tray-item absolute flex flex-col items-center" style={{ right: "14%", top: "24%" }}>
           <span style={{ fontSize: "clamp(2.5rem,6vw,4rem)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.25))" }}>☕</span>
           <span className="font-inter text-center" style={{ fontSize: "clamp(8px,1.2vw,11px)", color: "#3d1a0a", letterSpacing: "0.04em", marginTop: "4px" }}>video editing</span>
@@ -570,11 +675,19 @@ function TrayNav() {
   );
 }
 
+/* ── WorkSubsection with sticky heading + progress bar ─────── */
 function WorkSubsection({ id, title, children }: { id?: string; title: React.ReactNode; children: React.ReactNode }) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const progress = useScrollProgress(sectionRef);
+
   return (
-    <div id={id} className="mb-20" style={{ scrollMarginTop: "80px" }}>
-      <div className="mb-8 text-center">
+    <div ref={sectionRef} id={id} className="mb-20" style={{ scrollMarginTop: "80px" }}>
+      <div className="work-subsection-heading relative">
         {title}
+        <div
+          className="section-progress"
+          style={{ width: `${progress * 100}%` }}
+        />
       </div>
       {children}
     </div>
@@ -587,22 +700,6 @@ function Divider() {
       className="pointer-events-none absolute top-0 left-0 right-0 h-px"
       style={{ background: "linear-gradient(to right, transparent, rgba(139,0,0,0.45), transparent)" }}
     />
-  );
-}
-
-function SectionHeading({ children, sub }: { children: React.ReactNode; sub?: string }) {
-  return (
-    <div className="text-center mb-14">
-      {sub && (
-        <p className="font-cormorant italic text-text-muted text-base mb-1">{sub}</p>
-      )}
-      <h2
-        className="font-cormorant italic"
-        style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", fontWeight: 300, color: "#f5f0f0", lineHeight: 1 }}
-      >
-        {children}
-      </h2>
-    </div>
   );
 }
 
@@ -652,14 +749,12 @@ function VideoCard({
         autoPlay
         className="absolute inset-0 w-full h-full object-cover"
       />
-      {/* Label overlay at bottom */}
       <div
         className="absolute bottom-0 left-0 right-0 px-3 py-2 flex items-center justify-between"
         style={{ background: "linear-gradient(to top, rgba(13,0,0,0.85), transparent)" }}
       >
         {label && <span className="font-inter text-[10px] uppercase tracking-widest text-text-primary">{label}</span>}
       </div>
-      {/* Mute toggle */}
       <button
         onClick={toggleMute}
         className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center transition-opacity duration-300"
@@ -678,64 +773,6 @@ function VideoCard({
       <div
         className="absolute inset-0 transition-opacity duration-300"
         style={{ opacity: hovered ? 1 : 0, background: "rgba(139,0,0,0.12)" }}
-      />
-    </div>
-  );
-}
-
-function WorkCard({
-  label,
-  tag,
-  aspect = "4/3",
-  staggerDelay = 0,
-}: {
-  label: string;
-  tag: string;
-  aspect?: string;
-  staggerDelay?: number;
-}) {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <div
-      className="work-card group relative overflow-hidden rounded-lg cursor-pointer"
-      style={{
-        aspectRatio: aspect,
-        background: "linear-gradient(135deg, rgba(61,0,0,0.55) 0%, rgba(13,0,0,0.85) 100%)",
-        border: "1px solid rgba(139,0,0,0.2)",
-        transitionDelay: `${staggerDelay}ms`,
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <div
-        className="absolute inset-0 transition-opacity duration-500"
-        style={{ opacity: hovered ? 1 : 0, background: "radial-gradient(ellipse at center, rgba(139,0,0,0.3) 0%, transparent 70%)" }}
-      />
-      {/* Play button */}
-      <div
-        className="absolute inset-0 flex items-center justify-center transition-all duration-400"
-        style={{ opacity: hovered ? 1 : 0, transform: hovered ? "scale(1)" : "scale(0.8)" }}
-      >
-        <div
-          className="w-11 h-11 rounded-full flex items-center justify-center"
-          style={{ border: "1px solid rgba(232,228,224,0.55)", background: "rgba(13,0,0,0.55)", backdropFilter: "blur(6px)" }}
-        >
-          <svg width="11" height="13" viewBox="0 0 11 13" fill="none">
-            <path d="M1 1l9 5.5L1 12V1z" fill="rgba(232,228,224,0.9)" />
-          </svg>
-        </div>
-      </div>
-      {label && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 p-3">
-          <span className="font-cormorant italic text-text-primary text-center" style={{ fontSize: "clamp(0.85rem, 2vw, 1.1rem)" }}>
-            {label}
-          </span>
-          <span className="font-inter text-[9px] uppercase tracking-widest text-text-muted">{tag}</span>
-        </div>
-      )}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-px transition-opacity duration-300"
-        style={{ background: "rgba(139,0,0,0.8)", opacity: hovered ? 1 : 0 }}
       />
     </div>
   );
