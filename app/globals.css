@@ -212,6 +212,21 @@ body::after {
   pointer-events: none;
 }
 
+/* ── Tray nav items ── */
+.tray-item {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tray-item:hover {
+  transform: scale(1.18) translateY(-6px);
+}
+
+.tray-item:nth-child(3):hover {
+  transform: translateX(-50%) scale(1.18) translateY(-6px);
+}
+
 /* ── Fashion photo collage ── */
 .fashion-photo {
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
