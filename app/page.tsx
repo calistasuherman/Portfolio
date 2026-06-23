@@ -134,8 +134,7 @@ export default function Home() {
           <nav className="nav-pill flex gap-8 md:gap-12">
             {[
               { label: "About", href: "#about" },
-              { label: "Work", href: "#work" },
-              { label: "Brands", href: "#brands" },
+              { label: "My Work", href: "#work" },
               { label: "Services", href: "#services" },
               { label: "Contact", href: "#contact" },
             ].map((link) => (
@@ -308,14 +307,19 @@ export default function Home() {
                     "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
                     "/fashion5.jpg","/fashion6.jpg","/fashion7.jpg","/fashion8.jpg",
                     "/fashion9.jpg","/fashion10.jpg","/fashion11.jpg","/fashion12.jpg",
-                    "/fashion13.jpg","/fashion14.jpg","/fashion15.jpg",
+                    "/fashion13.jpg","/fashion14.jpg","/fashion15.jpg","/fashion16.jpg",
                   ].map((src, i) => (
                     <div key={i} style={{ breakInside: "avoid", marginBottom: "12px" }}>
                       <img
                         src={src}
                         alt={`Look ${i + 1}`}
                         className="fashion-photo"
-                        style={{ width: "100%", borderRadius: "12px", display: "block" }}
+                        style={{
+                          width: "100%",
+                          borderRadius: "12px",
+                          display: "block",
+                          transform: src === "/fashion16.jpg" ? "rotate(90deg)" : undefined,
+                        }}
                       />
                     </div>
                   ))}
@@ -326,8 +330,8 @@ export default function Home() {
             <Reveal delay={80}>
               <WorkSubsection title="Video Editing">
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {Array.from({ length: 8 }).map((_, i) => (
-                    <WorkCard key={i} label="" tag="Edit" aspect="16/9" staggerDelay={i * 50} />
+                  {Array.from({ length: 16 }).map((_, i) => (
+                    <VideoCard key={i} label="" src={`/edit${i + 1}.mp4`} staggerDelay={i * 40} />
                   ))}
                 </div>
               </WorkSubsection>
@@ -336,28 +340,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Brands ── */}
-        <section id="brands" className="section-content relative py-24 md:py-36 overflow-hidden">
-          <Divider />
-          <Reveal className="text-center mb-14 px-6">
-            <SectionHeading sub="brands I've worked with">Collaborations</SectionHeading>
-          </Reveal>
-          <div className="relative overflow-hidden">
-            {/* Fade edges */}
-            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 z-10" style={{ background: "linear-gradient(to right, #0d0000, transparent)" }} />
-            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 z-10" style={{ background: "linear-gradient(to left, #0d0000, transparent)" }} />
-            <div className="marquee-track flex gap-6 whitespace-nowrap">
-              {[...brands, ...brands, ...brands].map((brand, i) => (
-                <span
-                  key={i}
-                  className="font-inter text-[11px] uppercase tracking-[0.25em] text-text-muted px-6 py-3 rounded-full flex-shrink-0 brand-pill"
-                >
-                  {brand}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ── Services ── */}
         <section id="services" className="section-content relative py-24 md:py-36 px-6 md:px-16 lg:px-32">
