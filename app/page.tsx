@@ -609,7 +609,7 @@ function TrayNav() {
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
-          style={{ position: "absolute", left: "42%", top: "52%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "40%", top: "46%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Figs — lower center of tray */}
@@ -618,7 +618,7 @@ function TrayNav() {
           src="/tray-figs.png"
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
-          style={{ position: "absolute", left: "50%", top: "42%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "50%", top: "58%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Coffee — center right of tray */}
