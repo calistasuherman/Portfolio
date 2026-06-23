@@ -43,7 +43,7 @@ const youtubeIntegrations = [
   { label: "BypassGPT", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%203.mov" },
   { label: "Lewkin", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%204.mov" },
   { label: "Teddy Blake", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%205.mov" },
-  { label: "Aelfric Eden", src: "" },
+  { label: "Aelfric Eden", src: "/aelfriceden.mp4" },
 ];
 
 
@@ -322,7 +322,7 @@ export default function Home() {
               {services.map((s, i) => (
                 <Reveal key={s.title} delay={i * 100}>
                   <div className="service-card p-7 rounded-xl h-full">
-                    <h4 className="font-cormorant italic text-text-primary text-xl md:text-2xl mb-3" style={{ fontWeight: 400 }}>
+                    <h4 className="text-text-primary text-xl md:text-2xl mb-3" style={{ fontFamily: "var(--font-melodrama)", fontWeight: 400 }}>
                       {s.title}
                     </h4>
                     <p className="font-inter text-text-muted text-[13px] leading-relaxed">{s.desc}</p>
@@ -455,7 +455,7 @@ function StatCard({
         transition: `opacity 0.7s ease ${delay}ms, transform 0.7s ease ${delay}ms`,
       }}
     >
-      <p className="font-cormorant italic text-2xl md:text-3xl text-text-primary" style={{ fontWeight: 300 }}>
+      <p className="text-2xl md:text-3xl text-text-primary" style={{ fontFamily: "var(--font-melodrama)", fontWeight: 400 }}>
         {display}
       </p>
       <p className="font-inter text-[10px] uppercase tracking-widest text-text-muted mt-1">{stat.label}</p>
@@ -467,10 +467,9 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
   const serifSize = size === "section" ? "clamp(2.5rem, 6vw, 5rem)" : "clamp(2.4rem, 5vw, 4rem)";
   const scriptSize = size === "section" ? "clamp(2.8rem, 7vw, 5.6rem)" : "clamp(2.7rem, 5.5vw, 4.5rem)";
   return (
-    <div className="flex items-baseline justify-center flex-wrap">
+    <div className="flex items-end justify-center flex-wrap" style={{ gap: "0.15em" }}>
       <span
-        className="font-cormorant"
-        style={{ fontSize: serifSize, fontWeight: 700, color: "#f5f0f0", lineHeight: 1, letterSpacing: "-0.01em" }}
+        style={{ fontFamily: "var(--font-melodrama)", fontSize: serifSize, fontWeight: 400, color: "#f5f0f0", lineHeight: 1, letterSpacing: "-0.01em", paddingBottom: "0.05em" }}
       >
         {serif}
       </span>
@@ -480,10 +479,7 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
           fontSize: scriptSize,
           fontWeight: "normal",
           color: "#f5f0f0",
-          lineHeight: 1,
-          marginLeft: "-0.1em",
-          position: "relative",
-          top: "0.08em",
+          lineHeight: 0.85,
         }}
       >
         {script}
@@ -492,9 +488,68 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
   );
 }
 
+function TrayItem({
+  href,
+  src,
+  alt,
+  label,
+  style,
+  decorative = false,
+}: {
+  href?: string;
+  src: string;
+  alt: string;
+  label?: string;
+  style: React.CSSProperties;
+  decorative?: boolean;
+}) {
+  const [hovered, setHovered] = useState(false);
+  const inner = (
+    <div
+      className="flex flex-col items-center"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        cursor: decorative ? "default" : "pointer",
+        transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1)",
+        transform: hovered
+          ? decorative
+            ? "rotate(8deg) scale(1.08)"
+            : "translateY(-10px) scale(1.08)"
+          : "none",
+        filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
+      }}
+    >
+      <img src={src} alt={alt} style={{ width: "clamp(60px,10vw,110px)", objectFit: "contain" }} />
+      {label && (
+        <span
+          className="font-inter text-center"
+          style={{
+            fontSize: "clamp(7px,1.1vw,10px)",
+            color: "#3d1a0a",
+            letterSpacing: "0.08em",
+            marginTop: "6px",
+            textTransform: "uppercase",
+            opacity: hovered ? 1 : 0.7,
+            transition: "opacity 0.3s ease",
+          }}
+        >
+          {label}
+        </span>
+      )}
+    </div>
+  );
+
+  return (
+    <div className="absolute" style={style}>
+      {href ? <a href={href}>{inner}</a> : inner}
+    </div>
+  );
+}
+
 function TrayNav() {
   return (
-    <div className="relative mx-auto mb-4" style={{ maxWidth: "680px", width: "100%" }}>
+    <div className="relative mx-auto mb-4" style={{ maxWidth: "720px", width: "100%" }}>
       <svg viewBox="0 0 680 200" width="100%" style={{ position: "absolute", top: 0, left: 0, zIndex: 3, pointerEvents: "none" }}>
         <defs>
           <path id="trayArc" d="M 40,195 A 300,250 0 0,1 640,195" />
@@ -506,38 +561,47 @@ function TrayNav() {
         </text>
       </svg>
 
-      <div className="relative mx-auto" style={{
-        width: "100%",
-        paddingBottom: "58%",
-        marginTop: "110px",
-        borderRadius: "50%",
-        background: "radial-gradient(ellipse at 38% 32%, #ece6e0 0%, #c8bab0 45%, #9a8878 100%)",
-        boxShadow: "0 12px 48px rgba(0,0,0,0.5), inset 0 2px 6px rgba(255,255,255,0.5), inset 0 -3px 8px rgba(0,0,0,0.25)",
-        border: "2px solid rgba(210,198,188,0.6)",
-      }}>
-        <span className="absolute" style={{
-          left: "6%", top: "44%",
-          fontFamily: "var(--font-melodrama)",
-          color: "#7f1d1d", fontSize: "clamp(0.9rem,2vw,1.1rem)",
-          transform: "rotate(-12deg)", whiteSpace: "nowrap",
-        }}>
-          click us!
-        </span>
+      <div className="relative mx-auto" style={{ width: "100%", paddingBottom: "62%", marginTop: "110px" }}>
+        <img
+          src="/tray-bg.png"
+          alt="Tray"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain" }}
+        />
 
-        <a href="#youtube-integrations" className="tray-item absolute flex flex-col items-center" style={{ left: "16%", top: "32%" }}>
-          <span style={{ fontSize: "clamp(2.5rem,6vw,4rem)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.25))" }}>🥐</span>
-          <span className="font-inter text-center" style={{ fontSize: "clamp(8px,1.2vw,11px)", color: "#3d1a0a", letterSpacing: "0.04em", marginTop: "4px" }}>youtube integrations</span>
-        </a>
+        {/* Croissant — lower left of tray */}
+        <TrayItem
+          href="#youtube-integrations"
+          src="/tray-croissant.png"
+          alt="YouTube Integrations"
+          label="youtube integrations"
+          style={{ left: "8%", top: "48%", zIndex: 2 }}
+        />
 
-        <a href="#fashion-checks" className="tray-item absolute flex flex-col items-center" style={{ left: "50%", top: "46%", transform: "translateX(-50%)" }}>
-          <span style={{ fontSize: "clamp(2.2rem,5.5vw,3.5rem)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.25))" }}>🍨</span>
-          <span className="font-inter text-center" style={{ fontSize: "clamp(8px,1.2vw,11px)", color: "#3d1a0a", letterSpacing: "0.04em", marginTop: "4px" }}>fashion/fit checks</span>
-        </a>
+        {/* Figs — lower center of tray */}
+        <TrayItem
+          href="#fashion-checks"
+          src="/tray-figs.png"
+          alt="Fashion & Fit Checks"
+          label="fashion / fit checks"
+          style={{ left: "38%", top: "55%", zIndex: 2 }}
+        />
 
-        <a href="#video-editing" className="tray-item absolute flex flex-col items-center" style={{ right: "14%", top: "24%" }}>
-          <span style={{ fontSize: "clamp(2.5rem,6vw,4rem)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.25))" }}>☕</span>
-          <span className="font-inter text-center" style={{ fontSize: "clamp(8px,1.2vw,11px)", color: "#3d1a0a", letterSpacing: "0.04em", marginTop: "4px" }}>video editing</span>
-        </a>
+        {/* Coffee — center right of tray */}
+        <TrayItem
+          href="#video-editing"
+          src="/tray-coffee.png"
+          alt="Video Editing"
+          label="video editing"
+          style={{ right: "18%", top: "32%", zIndex: 2 }}
+        />
+
+        {/* Cream + Jam — upper right, decorative */}
+        <TrayItem
+          src="/tray-cream-jam.png"
+          alt="Decorative"
+          decorative
+          style={{ right: "8%", top: "10%", zIndex: 2 }}
+        />
       </div>
     </div>
   );
