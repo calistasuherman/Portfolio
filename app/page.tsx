@@ -159,49 +159,52 @@ export default function Home() {
           >
             <source src="/hero.mp4" type="video/mp4" />
           </video>
-          {/* Dark overlay so text stays readable */}
+          {/* Subtle overlay */}
           <div
             className="absolute inset-0"
-            style={{ background: "rgba(13,0,0,0.62)", zIndex: 1 }}
+            style={{ background: "rgba(0,0,0,0.18)", zIndex: 1 }}
           />
 
-          <div className="relative" style={{ zIndex: 3 }}>
-            <p
-              className={`font-cormorant italic text-text-muted text-base md:text-xl mb-1 tracking-widest hero-item${heroVisible ? " hero-visible" : ""}`}
-              style={{ transitionDelay: "0.1s" }}
-            >
-              welcome to my
-            </p>
+          <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-14" style={{ zIndex: 3 }}>
+            {/* Staggered name */}
+            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
+              <div
+                style={{
+                  fontFamily: "var(--font-pinyon)",
+                  fontSize: "clamp(5rem, 18vw, 13rem)",
+                  fontWeight: "normal",
+                  color: "#8b0000",
+                  lineHeight: 0.95,
+                  display: "block",
+                }}
+              >
+                Calista
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-pinyon)",
+                  fontSize: "clamp(5rem, 18vw, 13rem)",
+                  fontWeight: "normal",
+                  color: "#8b0000",
+                  lineHeight: 0.95,
+                  display: "block",
+                  marginLeft: "clamp(3rem, 12vw, 10rem)",
+                }}
+              >
+                Suherman.
+              </div>
+            </div>
 
-            <h1
-              className={`hero-item${heroVisible ? " hero-visible" : ""}`}
-              style={{
-                fontFamily: "var(--font-pinyon)",
-                fontSize: "clamp(4.5rem, 16vw, 11rem)",
-                fontWeight: "normal",
-                color: "#f5f0f0",
-                lineHeight: 1,
-                transitionDelay: "0.28s",
-              }}
-            >
-              Calista Suherman
-            </h1>
-
+            {/* Subtitle + CTA */}
             <p
-              className={`font-inter text-text-primary text-xs md:text-sm mt-5 tracking-[0.3em] uppercase hero-item${heroVisible ? " hero-visible" : ""}`}
-              style={{ transitionDelay: "0.48s" }}
-            >
-              Calista Suherman
-            </p>
-            <p
-              className={`font-inter text-text-muted text-[11px] md:text-xs mt-2 tracking-[0.15em] hero-item${heroVisible ? " hero-visible" : ""}`}
-              style={{ transitionDelay: "0.6s" }}
+              className={`font-inter text-text-muted text-[11px] md:text-xs mt-8 tracking-[0.15em] hero-item${heroVisible ? " hero-visible" : ""}`}
+              style={{ transitionDelay: "0.55s" }}
             >
               Content Creator · Video Editor · Fashion &amp; Lifestyle
             </p>
 
             <div
-              className={`flex items-center justify-center gap-4 mt-10 hero-item${heroVisible ? " hero-visible" : ""}`}
+              className={`flex items-center gap-4 mt-8 hero-item${heroVisible ? " hero-visible" : ""}`}
               style={{ transitionDelay: "0.75s" }}
             >
               <a
