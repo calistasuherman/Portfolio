@@ -240,7 +240,7 @@ export default function Home() {
                 className="leading-none mb-10"
                 style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: "normal", color: "#f5f0f0" }}
               >
-                About Me
+                <DualHeading serif="About" script="Me" />
               </h2>
               <div className="space-y-5 font-inter text-text-muted text-sm md:text-[15px] leading-relaxed">
                 <p>CAL1STAR is a fashion &amp; lifestyle content creator and video editor based in San Francisco, CA.</p>
@@ -291,7 +291,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection title="YouTube Integrations">
+              <WorkSubsection title={<DualHeading serif="YouTube" script="Integrations" size="sub" />}>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {youtubeIntegrations.map((item, i) => (
                     <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} />
@@ -301,7 +301,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection title="Fashion &amp; Fit Checks">
+              <WorkSubsection title={<DualHeading serif="Fashion &" script="Fit Checks" size="sub" />}>
                 <div style={{ columns: "3 180px", gap: "12px" }}>
                   {[
                     "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
@@ -328,7 +328,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection title="Video Editing">
+              <WorkSubsection title={<DualHeading serif="Video" script="Editing" size="sub" />}>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   {Array.from({ length: 16 }).map((_, i) => (
                     <VideoCard key={i} label="" src={`/edit${i + 1}.mp4`} staggerDelay={i * 40} />
@@ -346,7 +346,10 @@ export default function Home() {
           <Divider />
           <div className="max-w-5xl mx-auto">
             <Reveal>
-              <SectionHeading sub="what I offer">Services</SectionHeading>
+              <div className="text-center mb-14">
+                <p className="font-cormorant italic text-text-muted text-base mb-2">what I offer</p>
+                <DualHeading serif="My" script="Services" />
+              </div>
             </Reveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {services.map((s, i) => (
@@ -492,15 +495,41 @@ function StatCard({
   );
 }
 
-function WorkSubsection({ title, children }: { title: string; children: React.ReactNode }) {
+function DualHeading({ serif, script, size = "section" }: { serif: string; script: string; size?: "section" | "sub" }) {
+  const serifSize = size === "section" ? "clamp(2.5rem, 6vw, 5rem)" : "clamp(1.8rem, 4vw, 3.2rem)";
+  const scriptSize = size === "section" ? "clamp(2.8rem, 7vw, 5.6rem)" : "clamp(2rem, 4.5vw, 3.6rem)";
+  return (
+    <div className="flex items-baseline justify-center flex-wrap">
+      <span
+        className="font-cormorant"
+        style={{ fontSize: serifSize, fontWeight: 700, color: "#f5f0f0", lineHeight: 1, letterSpacing: "-0.01em" }}
+      >
+        {serif}
+      </span>
+      <span
+        style={{
+          fontFamily: "var(--font-pinyon)",
+          fontSize: scriptSize,
+          fontWeight: "normal",
+          color: "#f5f0f0",
+          lineHeight: 1,
+          marginLeft: "-0.1em",
+          position: "relative",
+          top: "0.08em",
+        }}
+      >
+        {script}
+      </span>
+    </div>
+  );
+}
+
+function WorkSubsection({ title, children }: { title: React.ReactNode; children: React.ReactNode }) {
   return (
     <div className="mb-20">
-      <h3
-        className="font-cormorant italic text-text-muted mb-8 text-center"
-        style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)", fontWeight: 300 }}
-      >
+      <div className="mb-8 text-center">
         {title}
-      </h3>
+      </div>
       {children}
     </div>
   );
