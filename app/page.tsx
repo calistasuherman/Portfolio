@@ -242,6 +242,19 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Trusted By ── */}
+        <section className="section-content relative py-10 overflow-hidden">
+          <p className="text-center font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted mb-6 opacity-60">Trusted by</p>
+          <div className="relative">
+            <div style={{ display: "flex", animation: "marquee 28s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
+              {[...brands, ...brands].map((b, i) => (
+                <span key={i} className="font-inter text-text-muted opacity-50 hover:opacity-100 transition-opacity duration-300" style={{ fontSize: "clamp(10px,1.2vw,13px)", letterSpacing: "0.18em", textTransform: "uppercase", padding: "0 clamp(16px,2.5vw,36px)" }}>{b}</span>
+              ))}
+            </div>
+          </div>
+          <style>{`@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
+        </section>
+
         {/* ── Work ── */}
         <section id="work" className="section-content relative pt-4 pb-12 px-6 md:px-16 lg:px-32">
           <div className="max-w-6xl mx-auto">
@@ -308,8 +321,11 @@ export default function Home() {
           <div className="max-w-5xl mx-auto">
             <Reveal>
               <div className="text-center mb-14">
-                <p className="text-text-muted text-base mb-2" style={{ fontFamily: "var(--font-melodrama)" }}>what I offer</p>
-                <DualHeading serif="My" script="Services" />
+                <p className="text-text-muted text-base mb-2" style={{ fontFamily: "var(--font-melodrama)" }}>What I offer</p>
+                <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", lineHeight: 1 }}>
+                  <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "clamp(2.52rem, 5.4vw, 4.68rem)", fontWeight: 400, color: "#f5f0f0", lineHeight: 1, letterSpacing: "-0.01em", position: "relative", zIndex: 1, paddingBottom: "0.04em" }}>My</span>
+                  <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(3rem, 6.5vw, 5.6rem)", fontWeight: "normal", color: "#f5f0f0", lineHeight: 1, marginLeft: "-0.12em", position: "relative", zIndex: 2 }}>Services</span>
+                </div>
               </div>
             </Reveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -648,7 +664,7 @@ function TrayNav() {
 
 function WorkSubsection({ id, title, children }: { id?: string; title: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div id={id} className="mb-20" style={{ scrollMarginTop: "80px" }}>
+    <div id={id} className={id === "video-editing" ? "mb-0" : "mb-20"} style={{ scrollMarginTop: "80px" }}>
       <div className="mb-8 text-center">
         {title}
       </div>
