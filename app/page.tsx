@@ -277,10 +277,17 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
 
             <Reveal>
-              <div className="text-center mb-14">
-                <h2 style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: "normal", color: "#f5f0f0", lineHeight: 1 }}>
-                  what I bring to the table
-                </h2>
+              <div className="flex justify-center mb-14">
+                <svg viewBox="0 0 500 260" width="500" height="260" style={{ maxWidth: "90vw" }}>
+                  <defs>
+                    <path id="curve" d="M 50,220 A 200,200 0 0,1 450,220" />
+                  </defs>
+                  <text fill="#f5f0f0" style={{ fontFamily: "var(--font-pinyon)", fontSize: "52px" }}>
+                    <textPath href="#curve" startOffset="50%" textAnchor="middle">
+                      What I bring to the table
+                    </textPath>
+                  </text>
+                </svg>
               </div>
             </Reveal>
 
@@ -296,9 +303,21 @@ export default function Home() {
 
             <Reveal delay={80}>
               <WorkSubsection title="Fashion &amp; Fit Checks">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {Array.from({ length: 8 }).map((_, i) => (
-                    <WorkCard key={i} label={`Look ${i + 1}`} tag="Fashion" aspect="3/4" staggerDelay={i * 50} />
+                <div style={{ columns: "3 180px", gap: "12px" }}>
+                  {[
+                    "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
+                    "/fashion5.jpg","/fashion6.jpg","/fashion7.jpg","/fashion8.jpg",
+                    "/fashion9.jpg","/fashion10.jpg","/fashion11.jpg","/fashion12.jpg",
+                    "/fashion13.jpg","/fashion14.jpg","/fashion15.jpg",
+                  ].map((src, i) => (
+                    <div key={i} style={{ breakInside: "avoid", marginBottom: "12px" }}>
+                      <img
+                        src={src}
+                        alt={`Look ${i + 1}`}
+                        className="fashion-photo"
+                        style={{ width: "100%", borderRadius: "12px", display: "block" }}
+                      />
+                    </div>
                   ))}
                 </div>
               </WorkSubsection>
@@ -540,6 +559,17 @@ function VideoCard({
   staggerDelay?: number;
 }) {
   const [hovered, setHovered] = useState(false);
+  const [muted, setMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setMuted((m) => {
+      if (videoRef.current) videoRef.current.muted = !m;
+      return !m;
+    });
+  };
+
   return (
     <div
       className="work-card group relative overflow-hidden rounded-lg cursor-pointer"
@@ -552,6 +582,7 @@ function VideoCard({
       onMouseLeave={() => setHovered(false)}
     >
       <video
+        ref={videoRef}
         src={src}
         muted
         loop
@@ -567,6 +598,22 @@ function VideoCard({
         <span className="font-inter text-[10px] uppercase tracking-widest text-text-primary">{label}</span>
         <span className="font-inter text-[9px] uppercase tracking-widest text-text-muted">YouTube</span>
       </div>
+      {/* Mute toggle */}
+      <button
+        onClick={toggleMute}
+        className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center transition-opacity duration-300"
+        style={{ background: "rgba(13,0,0,0.6)", opacity: hovered ? 1 : 0, border: "1px solid rgba(232,228,224,0.3)" }}
+      >
+        {muted ? (
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(232,228,224,0.9)" strokeWidth="2">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+          </svg>
+        ) : (
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(232,228,224,0.9)" strokeWidth="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          </svg>
+        )}
+      </button>
       <div
         className="absolute inset-0 transition-opacity duration-300"
         style={{ opacity: hovered ? 1 : 0, background: "rgba(139,0,0,0.12)" }}
