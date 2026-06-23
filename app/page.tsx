@@ -480,7 +480,7 @@ function StatCard({
 
 function DualHeading({ serif, script, size = "section", noOverlap = false }: { serif: string; script: string; size?: "section" | "sub" | "large"; noOverlap?: boolean }) {
   const serifSize = size === "section" ? "clamp(2.8rem, 6vw, 5.2rem)" : size === "large" ? "clamp(3rem, 6.5vw, 5.6rem)" : "clamp(3rem, 6.5vw, 5.6rem)";
-  const scriptSize = size === "section" ? "clamp(3rem, 6.5vw, 5.6rem)" : size === "large" ? "clamp(3.1rem, 7vw, 7.2rem)" : "clamp(3.1rem, 7vw, 7.2rem)";
+  const scriptSize = size === "section" ? "clamp(3rem, 6.5vw, 5.6rem)" : size === "large" ? "clamp(3rem, 7vw, 7.3rem)" : "clamp(3rem, 7vw, 7.3rem)";
   return (
     <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", lineHeight: 1 }}>
       <span
@@ -554,7 +554,7 @@ function TrayItem({
             left: "50%",
             transform: "translate(-50%, -50%)",
             fontFamily: "var(--font-inter)",
-            fontSize: "8px",
+            fontSize: "6px",
             fontWeight: 400,
             color: "#ffffff",
             letterSpacing: "0.2em",
@@ -609,7 +609,7 @@ function TrayNav() {
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
-          style={{ position: "absolute", left: "38%", top: "38%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "42%", top: "52%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Figs — lower center of tray */}
@@ -618,7 +618,7 @@ function TrayNav() {
           src="/tray-figs.png"
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
-          style={{ position: "absolute", left: "56%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "50%", top: "42%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Coffee — center right of tray */}
