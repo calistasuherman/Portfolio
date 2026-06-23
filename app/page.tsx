@@ -43,7 +43,7 @@ const youtubeIntegrations = [
   { label: "BypassGPT", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%203.mov" },
   { label: "Lewkin", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%204.mov" },
   { label: "Teddy Blake", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%205.mov" },
-  { label: "Aelfric Eden", src: "/aelfriceden.mp4" },
+  { label: "Aelfric Eden", src: "/timeline6.mp4" },
 ];
 
 
