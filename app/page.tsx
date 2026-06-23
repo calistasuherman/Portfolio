@@ -415,7 +415,7 @@ export default function Home() {
                 Instagram
               </a>
               <a
-                href="https://youtube.com/@cal1star"
+                href="https://www.youtube.com/@cal1stvr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted hover:text-text-primary border-b border-transparent hover:border-text-muted pb-0.5 transition-all duration-300"
@@ -429,7 +429,7 @@ export default function Home() {
         {/* ── Footer ── */}
         <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
           <p className="font-inter text-[10px] uppercase tracking-[0.3em] text-text-muted opacity-40">
-            © 2025 CAL1STAR — Calista Suherman
+            © 2026 CAL1STAR — Calista Suherman
           </p>
         </footer>
 
