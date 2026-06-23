@@ -46,12 +46,6 @@ const youtubeIntegrations = [
   { label: "Aelfric Eden", src: "" },
 ];
 
-const fashionPhotos = [
-  "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
-  "/fashion5.jpg","/fashion6.jpg","/fashion7.jpg","/fashion8.jpg",
-  "/fashion9.jpg","/fashion10.jpg","/fashion11.jpg","/fashion12.jpg",
-  "/fashion13.jpg","/fashion14.jpg","/fashion15.jpg","/fashion16.jpg",
-];
 
 /* ── Hooks ─────────────────────────────────────────────────── */
 
@@ -94,53 +88,6 @@ function useCountUp(num: number, suffix: string, visible: boolean, duration = 16
   return display;
 }
 
-/* ── Text Scramble hook ─────────────────────────────────────── */
-const SCRAMBLE_CHARS = "!<>—_\\/[]{}=+*^?#@~";
-
-function useTextScramble(text: string, visible: boolean) {
-  const [display, setDisplay] = useState(text);
-  useEffect(() => {
-    if (!visible) return;
-    let frame = 0;
-    const totalFrames = 22;
-    const id = setInterval(() => {
-      frame++;
-      if (frame >= totalFrames) {
-        setDisplay(text);
-        clearInterval(id);
-        return;
-      }
-      setDisplay(
-        text.split("").map((char, i) => {
-          if (char === " " || char === "&") return char;
-          const threshold = (i / text.length) * totalFrames * 0.65;
-          if (frame > threshold) return char;
-          return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
-        }).join("")
-      );
-    }, 38);
-    return () => clearInterval(id);
-  }, [visible, text]);
-  return display;
-}
-
-/* ── Scroll progress hook (for sticky heading progress bar) ── */
-function useScrollProgress(ref: React.RefObject<HTMLDivElement | null>) {
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    const update = () => {
-      const el = ref.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const scrolled = -rect.top + 80;
-      const total = rect.height - window.innerHeight + 80;
-      setProgress(Math.min(1, Math.max(0, scrolled / total)));
-    };
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, [ref]);
-  return progress;
-}
 
 /* ── Page ──────────────────────────────────────────────────── */
 
@@ -322,10 +269,26 @@ export default function Home() {
 
             <Reveal delay={80}>
               <WorkSubsection id="fashion-checks" title={<DualHeading serif="Fashion &" script="Fit Checks" size="sub" />}>
-                {/* Horizontal scroll strip */}
-                <div className="fashion-scroll">
-                  {fashionPhotos.map((src, i) => (
-                    <ClipPhoto key={i} src={src} index={i} />
+                <div style={{ columns: "3 180px", gap: "12px" }}>
+                  {[
+                    "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
+                    "/fashion5.jpg","/fashion6.jpg","/fashion7.jpg","/fashion8.jpg",
+                    "/fashion9.jpg","/fashion10.jpg","/fashion11.jpg","/fashion12.jpg",
+                    "/fashion13.jpg","/fashion14.jpg","/fashion15.jpg","/fashion16.jpg",
+                  ].map((src, i) => (
+                    <div key={i} style={{ breakInside: "avoid", marginBottom: "12px" }}>
+                      <img
+                        src={src}
+                        alt={`Look ${i + 1}`}
+                        className="fashion-photo"
+                        style={{
+                          width: "100%",
+                          borderRadius: "12px",
+                          display: "block",
+                          transform: src === "/fashion16.jpg" ? "rotate(90deg)" : undefined,
+                        }}
+                      />
+                    </div>
                   ))}
                 </div>
               </WorkSubsection>
@@ -461,52 +424,6 @@ function Reveal({
   );
 }
 
-/* ── Clip-path photo reveal (fashion grid) ─────────────────── */
-function ClipPhoto({ src, index }: { src: string; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [revealed, setRevealed] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setRevealed(true); obs.disconnect(); } },
-      { threshold: 0.05 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  const isRotated = src === "/fashion16.jpg";
-  const width = isRotated ? 200 : 180;
-  const height = isRotated ? 180 : 260;
-
-  return (
-    <div
-      ref={ref}
-      className="fashion-scroll-item"
-      style={{
-        width: `${width}px`,
-        height: `${height}px`,
-        clipPath: revealed ? "inset(0% 0 0% 0)" : "inset(100% 0 0% 0)",
-        transition: `clip-path 0.8s cubic-bezier(0.16,1,0.3,1) ${index * 55}ms`,
-      }}
-    >
-      <img
-        src={src}
-        alt={`Look ${index + 1}`}
-        className="fashion-photo"
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          display: "block",
-          transform: isRotated ? "rotate(90deg) scale(1.4)" : undefined,
-        }}
-      />
-    </div>
-  );
-}
 
 function AnalyticsGrid() {
   const { ref, visible } = useReveal();
@@ -546,21 +463,16 @@ function StatCard({
   );
 }
 
-/* ── DualHeading with text scramble ────────────────────────── */
 function DualHeading({ serif, script, size = "section" }: { serif: string; script: string; size?: "section" | "sub" }) {
   const serifSize = size === "section" ? "clamp(2.5rem, 6vw, 5rem)" : "clamp(2.4rem, 5vw, 4rem)";
   const scriptSize = size === "section" ? "clamp(2.8rem, 7vw, 5.6rem)" : "clamp(2.7rem, 5.5vw, 4.5rem)";
-  const { ref, visible } = useReveal(0.2);
-  const serifDisplay = useTextScramble(serif, visible);
-  const scriptDisplay = useTextScramble(script, visible);
-
   return (
-    <div ref={ref} className="flex items-baseline justify-center flex-wrap">
+    <div className="flex items-baseline justify-center flex-wrap">
       <span
         className="font-cormorant"
         style={{ fontSize: serifSize, fontWeight: 700, color: "#f5f0f0", lineHeight: 1, letterSpacing: "-0.01em" }}
       >
-        {serifDisplay}
+        {serif}
       </span>
       <span
         style={{
@@ -574,7 +486,7 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
           top: "0.08em",
         }}
       >
-        {scriptDisplay}
+        {script}
       </span>
     </div>
   );
@@ -631,19 +543,11 @@ function TrayNav() {
   );
 }
 
-/* ── WorkSubsection with sticky heading + progress bar ─────── */
 function WorkSubsection({ id, title, children }: { id?: string; title: React.ReactNode; children: React.ReactNode }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const progress = useScrollProgress(sectionRef);
-
   return (
-    <div ref={sectionRef} id={id} className="mb-20" style={{ scrollMarginTop: "80px" }}>
-      <div className="work-subsection-heading relative">
+    <div id={id} className="mb-20" style={{ scrollMarginTop: "80px" }}>
+      <div className="mb-8 text-center">
         {title}
-        <div
-          className="section-progress"
-          style={{ width: `${progress * 100}%` }}
-        />
       </div>
       {children}
     </div>
