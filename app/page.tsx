@@ -147,7 +147,7 @@ export default function Home() {
         </header>
 
         {/* ── Hero ── */}
-        <section className="section-content relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-16">
+        <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-16 overflow-hidden">
           {/* Video background */}
           <video
             autoPlay
@@ -163,11 +163,6 @@ export default function Home() {
           <div
             className="absolute inset-0"
             style={{ background: "rgba(13,0,0,0.62)", zIndex: 1 }}
-          />
-          {/* Red glow */}
-          <div
-            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full"
-            style={{ background: "radial-gradient(ellipse at center, rgba(139,0,0,0.18) 0%, transparent 70%)", zIndex: 2 }}
           />
 
           <div className="relative" style={{ zIndex: 3 }}>
