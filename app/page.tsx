@@ -584,16 +584,16 @@ function TrayNav() {
 
         {/* Positions are % of image, centered on the food item via transform */}
 
-        {/* Croissant — food is at ~54% x in PNG, tray-ex target ~27% → left: 24% */}
+        {/* Croissant — left side of tray */}
         <TrayItem
           href="#youtube-integrations"
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
-          style={{ position: "absolute", left: "24%", top: "42%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "26%", top: "40%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
-        {/* Figs — food is at ~42% x in PNG, tray-ex target ~38% → left: 40% */}
+        {/* Figs — lower center of tray */}
         <TrayItem
           href="#fashion-checks"
           src="/tray-figs.png"
@@ -602,13 +602,13 @@ function TrayNav() {
           style={{ position: "absolute", left: "40%", top: "65%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
-        {/* Coffee — food is at ~47% x in PNG, tray-ex target ~57% → left: 58% */}
+        {/* Coffee — center right of tray */}
         <TrayItem
           href="#video-editing"
           src="/tray-coffee.png"
           alt="Video Editing"
           label="video editing"
-          style={{ position: "absolute", left: "58%", top: "47%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "58%", top: "46%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Cream + Jam — upper right, decorative */}
@@ -616,7 +616,7 @@ function TrayNav() {
           src="/tray-cream-jam.png"
           alt="Decorative"
           decorative
-          style={{ position: "absolute", left: "62%", top: "22%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "63%", top: "21%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
       </div>
     </div>
@@ -653,22 +653,7 @@ function VideoCard({
   staggerDelay?: number;
 }) {
   const [hovered, setHovered] = useState(false);
-  const [muted, setMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef.current) videoRef.current.muted = true;
-  }, []);
-
-  const toggleMute = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const video = videoRef.current;
-    if (!video) return;
-    const next = !muted;
-    video.muted = next;
-    if (!next) video.play().catch(() => {});
-    setMuted(next);
-  };
 
   return (
     <div
@@ -695,21 +680,6 @@ function VideoCard({
       >
         {label && <span className="font-inter text-[10px] uppercase tracking-widest text-text-primary">{label}</span>}
       </div>
-      <button
-        onClick={toggleMute}
-        className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center transition-opacity duration-300"
-        style={{ background: "rgba(13,0,0,0.6)", opacity: hovered ? 1 : 0, border: "1px solid rgba(232,228,224,0.3)" }}
-      >
-        {muted ? (
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(232,228,224,0.9)" strokeWidth="2">
-            <path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
-          </svg>
-        ) : (
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(232,228,224,0.9)" strokeWidth="2">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-          </svg>
-        )}
-      </button>
       <div
         className="absolute inset-0 transition-opacity duration-300"
         style={{ opacity: hovered ? 1 : 0, background: "rgba(139,0,0,0.12)" }}
