@@ -584,31 +584,31 @@ function TrayNav() {
 
         {/* Positions are % of image, centered on the food item via transform */}
 
-        {/* Croissant — left-center of tray */}
+        {/* Croissant — food is at ~54% x in PNG, tray-ex target ~27% → left: 24% */}
         <TrayItem
           href="#youtube-integrations"
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
-          style={{ position: "absolute", left: "22%", top: "42%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "24%", top: "42%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
-        {/* Figs — lower-center of tray */}
+        {/* Figs — food is at ~42% x in PNG, tray-ex target ~38% → left: 40% */}
         <TrayItem
           href="#fashion-checks"
           src="/tray-figs.png"
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
-          style={{ position: "absolute", left: "38%", top: "67%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "40%", top: "65%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
-        {/* Coffee — center-right of tray */}
+        {/* Coffee — food is at ~47% x in PNG, tray-ex target ~57% → left: 58% */}
         <TrayItem
           href="#video-editing"
           src="/tray-coffee.png"
           alt="Video Editing"
           label="video editing"
-          style={{ position: "absolute", left: "57%", top: "48%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "58%", top: "47%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Cream + Jam — upper right, decorative */}
@@ -616,7 +616,7 @@ function TrayNav() {
           src="/tray-cream-jam.png"
           alt="Decorative"
           decorative
-          style={{ position: "absolute", left: "61%", top: "23%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "62%", top: "22%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
       </div>
     </div>
