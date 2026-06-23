@@ -590,7 +590,7 @@ function TrayNav() {
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
-          style={{ position: "absolute", left: "30%", top: "38%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "37%", top: "38%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Figs — lower center of tray */}
@@ -608,7 +608,7 @@ function TrayNav() {
           src="/tray-coffee.png"
           alt="Video Editing"
           label="video editing"
-          style={{ position: "absolute", left: "62%", top: "46%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "55%", top: "46%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Cream + Jam — upper right, decorative */}
@@ -616,7 +616,7 @@ function TrayNav() {
           src="/tray-cream-jam.png"
           alt="Decorative"
           decorative
-          style={{ position: "absolute", left: "65%", top: "22%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "58%", top: "22%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
       </div>
     </div>
