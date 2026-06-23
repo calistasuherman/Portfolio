@@ -520,32 +520,36 @@ function TrayItem({
   const [hovered, setHovered] = useState(false);
   const inner = (
     <div
-      className="flex flex-col items-center"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       style={{
+        position: "relative",
+        display: "inline-block",
         cursor: decorative ? "default" : "pointer",
         transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1)",
-        transform: hovered
-          ? decorative
-            ? "rotate(8deg) scale(1.08)"
-            : "translateY(-10px) scale(1.08)"
-          : "none",
+        transform: hovered ? "translateY(-10px) scale(1.08)" : "none",
         filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
       }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <img src={src} alt={alt} style={{ width: "clamp(324px,33vw,608px)", objectFit: "contain" }} />
+      <img src={src} alt={alt} style={{ width: "clamp(308px,31vw,578px)", objectFit: "contain", display: "block" }} />
       {label && (
         <span
-          className="font-inter text-center"
           style={{
-            fontSize: "clamp(7px,1.1vw,10px)",
-            color: "#3d1a0a",
-            letterSpacing: "0.08em",
-            marginTop: "6px",
-            textTransform: "uppercase",
-            opacity: hovered ? 1 : 0.7,
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            fontFamily: "'Times New Roman MT Condensed', 'Times New Roman', Times, serif",
+            fontSize: "clamp(11px,1.4vw,16px)",
+            fontWeight: 700,
+            color: "#ffffff",
+            letterSpacing: "0.06em",
+            textTransform: "lowercase",
+            textAlign: "center",
+            whiteSpace: "nowrap",
+            opacity: hovered ? 1 : 0.85,
             transition: "opacity 0.3s ease",
+            pointerEvents: "none",
           }}
         >
           {label}
@@ -591,7 +595,7 @@ function TrayNav() {
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
-          style={{ position: "absolute", left: "37%", top: "38%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "32%", top: "38%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Figs — lower center of tray */}
@@ -600,7 +604,7 @@ function TrayNav() {
           src="/tray-figs.png"
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
-          style={{ position: "absolute", left: "46%", top: "65%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "56%", top: "72%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Coffee — center right of tray */}
@@ -609,16 +613,9 @@ function TrayNav() {
           src="/tray-coffee.png"
           alt="Video Editing"
           label="video editing"
-          style={{ position: "absolute", left: "55%", top: "46%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "58%", top: "42%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
-        {/* Cream + Jam — upper right, decorative */}
-        <TrayItem
-          src="/tray-cream-jam.png"
-          alt="Decorative"
-          decorative
-          style={{ position: "absolute", left: "58%", top: "22%", transform: "translate(-50%, -50%)", zIndex: 2 }}
-        />
       </div>
     </div>
   );
