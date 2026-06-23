@@ -168,12 +168,7 @@ export default function Home() {
 
           <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-16" style={{ zIndex: 3 }}>
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-              <div style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#6b1616", lineHeight: 0.95, display: "block" }}>
-                Calista
-              </div>
-              <div style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#6b1616", lineHeight: 0.95, display: "block" }}>
-                Suherman
-              </div>
+              <TypingText lines={["Calista", "Suherman"]} style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#6b1616", lineHeight: 0.95, display: "block" }} />
             </div>
 
             <p
@@ -210,7 +205,6 @@ export default function Home() {
 
         {/* ── About ── */}
         <section id="about" className="section-content relative pt-24 md:pt-36 pb-10 md:pb-14 px-6 md:px-16 lg:px-32">
-          <Divider />
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
             <Reveal className="order-1" direction="left">
@@ -393,6 +387,37 @@ export default function Home() {
 
 /* ── Shared Components ──────────────────────────────────────── */
 
+function TypingText({ lines, style }: { lines: string[]; style: React.CSSProperties }) {
+  const [displayed, setDisplayed] = useState<string[]>(lines.map(() => ""));
+  const [activeLine, setActiveLine] = useState(0);
+
+  useEffect(() => {
+    let lineIdx = 0;
+    let charIdx = 0;
+    const interval = setInterval(() => {
+      if (lineIdx >= lines.length) { clearInterval(interval); setActiveLine(-1); return; }
+      charIdx++;
+      setDisplayed(prev => {
+        const next = [...prev];
+        next[lineIdx] = lines[lineIdx].slice(0, charIdx);
+        return next;
+      });
+      if (charIdx >= lines[lineIdx].length) { lineIdx++; charIdx = 0; setActiveLine(lineIdx); }
+    }, 80);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <>
+      {lines.map((_, i) => (
+        <div key={i} style={style}>
+          {displayed[i]}{activeLine === i && <span style={{ opacity: 1 }}>|</span>}
+        </div>
+      ))}
+    </>
+  );
+}
+
 function Reveal({
   children,
   className = "",
@@ -539,12 +564,12 @@ function TrayItem({
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            fontFamily: "'Times New Roman MT Condensed', 'Times New Roman', Times, serif",
-            fontSize: "clamp(11px,1.4vw,16px)",
-            fontWeight: 700,
+            fontFamily: "var(--font-inter)",
+            fontSize: "10px",
+            fontWeight: 400,
             color: "#ffffff",
-            letterSpacing: "0.06em",
-            textTransform: "lowercase",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
             textAlign: "center",
             whiteSpace: "nowrap",
             opacity: hovered ? 1 : 0.85,
