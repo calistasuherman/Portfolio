@@ -253,12 +253,7 @@ export default function Home() {
             <div style={{ height: "80px" }} />
 
             <Reveal delay={80}>
-              <WorkSubsection id="youtube-integrations" title={
-                <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", lineHeight: 1 }}>
-                  <span style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(3rem, 6.5vw, 5.6rem)", fontWeight: 400, color: "#f5f0f0", lineHeight: 1, letterSpacing: "-0.01em", position: "relative", zIndex: 1, paddingBottom: "0.04em" }}>YouTube</span>
-                  <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(3.2rem, 7vw, 6rem)", fontWeight: "normal", color: "#f5f0f0", lineHeight: 1, marginLeft: "-0.12em", position: "relative", zIndex: 2 }}>Integrations</span>
-                </div>
-              }>
+              <WorkSubsection id="youtube-integrations" title={<DualHeading serif="YouTube" script="Integrations" size="large" />}>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {youtubeIntegrations.map((item, i) => (
                     <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} />
@@ -398,7 +393,7 @@ function TypingText({ lines, style }: { lines: string[]; style: React.CSSPropert
 
   useEffect(() => {
     if (count >= full.length) return;
-    const t = setTimeout(() => setCount(c => c + 1), 80);
+    const t = setTimeout(() => setCount(c => c + 1), 150);
     return () => clearTimeout(t);
   }, [count, full.length]);
 
