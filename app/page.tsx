@@ -258,7 +258,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection id="youtube-integrations" title={<DualHeading serif="YouTube" script="Integrations" size="sub" />}>
+              <WorkSubsection id="youtube-integrations" title={<DualHeading serif="YouTube" script="Integrations" size="large" />}>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {youtubeIntegrations.map((item, i) => (
                     <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} />
@@ -268,7 +268,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection id="fashion-checks" title={<DualHeading serif="Fashion &" script="Fit Checks" size="sub" />}>
+              <WorkSubsection id="fashion-checks" title={<DualHeading serif="Fashion &" script="Fit Checks" size="sub" noOverlap />}>
                 <div style={{ columns: "3 180px", gap: "12px" }}>
                   {[
                     "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
@@ -295,7 +295,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection id="video-editing" title={<DualHeading serif="Video" script="Editing" size="sub" />}>
+              <WorkSubsection id="video-editing" title={<DualHeading serif="Video" script="Editing" size="large" />}>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   {Array.from({ length: 16 }).map((_, i) => (
                     <VideoCard key={i} label="" src={`/edit${i + 1}.mp4`} staggerDelay={i * 40} />
@@ -463,9 +463,9 @@ function StatCard({
   );
 }
 
-function DualHeading({ serif, script, size = "section" }: { serif: string; script: string; size?: "section" | "sub" }) {
-  const serifSize = size === "section" ? "clamp(2.8rem, 6vw, 5.2rem)" : "clamp(2.6rem, 5vw, 4.2rem)";
-  const scriptSize = size === "section" ? "clamp(3rem, 6.5vw, 5.6rem)" : "clamp(2.8rem, 5.5vw, 4.6rem)";
+function DualHeading({ serif, script, size = "section", noOverlap = false }: { serif: string; script: string; size?: "section" | "sub" | "large"; noOverlap?: boolean }) {
+  const serifSize = size === "section" ? "clamp(2.8rem, 6vw, 5.2rem)" : size === "large" ? "clamp(3rem, 6.5vw, 5.6rem)" : "clamp(2.6rem, 5vw, 4.2rem)";
+  const scriptSize = size === "section" ? "clamp(3rem, 6.5vw, 5.6rem)" : size === "large" ? "clamp(3.2rem, 7vw, 6rem)" : "clamp(2.8rem, 5.5vw, 4.6rem)";
   return (
     <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", lineHeight: 1 }}>
       <span
@@ -490,7 +490,7 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
           fontWeight: "normal",
           color: "#f5f0f0",
           lineHeight: 1,
-          marginLeft: "-0.12em",
+          marginLeft: noOverlap ? "0.15em" : "-0.12em",
           position: "relative",
           zIndex: 2,
         }}
