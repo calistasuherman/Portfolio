@@ -533,7 +533,7 @@ function TrayItem({
         filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
       }}
     >
-      <img src={src} alt={alt} style={{ width: "clamp(144px,18vw,270px)", objectFit: "contain" }} />
+      <img src={src} alt={alt} style={{ width: "clamp(216px,22vw,405px)", objectFit: "contain" }} />
       {label && (
         <span
           className="font-inter text-center"
