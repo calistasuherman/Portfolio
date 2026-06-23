@@ -524,6 +524,7 @@ function TrayItem({
   style,
   imgWidth,
   rotate = 0,
+  labelTop = "50%",
   decorative = false,
 }: {
   href?: string;
@@ -533,6 +534,7 @@ function TrayItem({
   style: React.CSSProperties;
   imgWidth?: string;
   rotate?: number;
+  labelTop?: string;
   decorative?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
@@ -554,7 +556,7 @@ function TrayItem({
         <span
           style={{
             position: "absolute",
-            top: "50%",
+            top: labelTop,
             left: "50%",
             transform: "translate(-50%, -50%)",
             fontFamily: "var(--font-inter)",
@@ -634,6 +636,7 @@ function TrayNav() {
           alt="Video Editing"
           label="video editing"
           imgWidth="clamp(277px,27.9vw,520px)"
+          labelTop="30%"
           style={{ position: "absolute", left: "58%", top: "32%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
