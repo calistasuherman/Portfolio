@@ -238,15 +238,15 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10"
-                style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 300, fontStyle: "italic", color: "#f5f0f0" }}
+                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 400, color: "#f5f0f0" }}
               >
                 About Me
               </h2>
               <div className="space-y-5 font-inter text-text-muted text-sm md:text-[15px] leading-relaxed">
-                <p>CAL1STAR is a fashion &amp; lifestyle content creator and video editor based in San Francisco, CA.</p>
-                <p>With more than 4 years of experience, she aims to relate emotionally to her audience through memorable content.</p>
-                <p>Her work spans YouTube brand integrations, short-form fashion content, and full video production — from concept to final cut.</p>
-                <p>She leans towards clean, cinematic aesthetics that feel personal, not polished to the point of being cold.</p>
+                <p>The name&apos;s Calista — content creator, video editor, chronic over-thinker about frame rates.</p>
+                <p>I&apos;ve been making fashion and lifestyle content for four years, based out of San Francisco with a weakness for New York. The goal has always been simple: make something that doesn&apos;t feel like an ad, even when it is.</p>
+                <p>Seven hundred thousand followers later, I&apos;ve worked with brands like BetterHelp, Aelfric Eden, Teddy Blake, and Lewkin on YouTube integrations that actually sound like me — not a script someone emailed at 11pm.</p>
+                <p>The editing is where it all comes together. That part&apos;s never going to get old.</p>
               </div>
               <AnalyticsGrid />
             </Reveal>
@@ -336,7 +336,7 @@ export default function Home() {
           <div className="max-w-5xl mx-auto">
             <Reveal>
               <div className="text-center mb-14">
-                <p className="font-cormorant italic text-text-muted text-base mb-2">what I offer</p>
+                <p className="text-text-muted text-base mb-2" style={{ fontFamily: "var(--font-melodrama)" }}>what I offer</p>
                 <DualHeading serif="My" script="Services" />
               </div>
             </Reveal>
@@ -363,10 +363,10 @@ export default function Home() {
             style={{ background: "radial-gradient(ellipse at bottom, rgba(139,0,0,0.12) 0%, transparent 70%)" }}
           />
           <Reveal className="relative max-w-xl mx-auto">
-            <p className="font-cormorant italic text-text-muted text-lg mb-2">and, that&apos;s</p>
+            <p className="text-text-muted text-lg mb-2" style={{ fontFamily: "var(--font-melodrama)" }}>and, that&apos;s</p>
             <h2
-              className="font-cormorant italic leading-none mb-6"
-              style={{ fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: 300, color: "#f5f0f0" }}
+              className="leading-none mb-6"
+              style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#f5f0f0" }}
             >
               a wrap.
             </h2>
@@ -521,7 +521,7 @@ function TrayNav() {
         <defs>
           <path id="trayArc" d="M 40,195 A 300,250 0 0,1 640,195" />
         </defs>
-        <text fill="#f5f0f0" style={{ fontFamily: "var(--font-pinyon)", fontSize: "40px" }}>
+        <text fill="#f5f0f0" style={{ fontFamily: "var(--font-melodrama)", fontSize: "36px" }}>
           <textPath href="#trayArc" startOffset="50%" textAnchor="middle">
             what I bring to the table
           </textPath>
@@ -539,8 +539,9 @@ function TrayNav() {
         border: "2px solid rgba(210,198,188,0.6)",
       }}>
         {/* click us! */}
-        <span className="absolute font-cormorant italic" style={{
+        <span className="absolute" style={{
           left: "6%", top: "44%",
+          fontFamily: "var(--font-melodrama)",
           color: "#7f1d1d", fontSize: "clamp(0.9rem,2vw,1.1rem)",
           transform: "rotate(-12deg)", whiteSpace: "nowrap",
         }}>
