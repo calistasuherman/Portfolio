@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /* ── Data ──────────────────────────────────────────────────── */
 
@@ -142,56 +142,12 @@ function useScrollProgress(ref: React.RefObject<HTMLDivElement | null>) {
   return progress;
 }
 
-/* ── Smooth scroll (lerp RAF — no external lib) ─────────────── */
-function useSmoothScroll() {
-  useEffect(() => {
-    let targetY = window.scrollY;
-    let currentY = window.scrollY;
-    let rafId = 0;
-    let ticking = false;
-
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-
-    const animate = () => {
-      currentY = lerp(currentY, targetY, 0.09);
-      const diff = Math.abs(targetY - currentY);
-      if (diff > 0.5) {
-        window.scrollTo(0, currentY);
-        rafId = requestAnimationFrame(animate);
-      } else {
-        window.scrollTo(0, targetY);
-        ticking = false;
-      }
-    };
-
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      targetY = Math.max(0, Math.min(
-        document.body.scrollHeight - window.innerHeight,
-        targetY + e.deltaY * 1.2
-      ));
-      if (!ticking) {
-        ticking = true;
-        rafId = requestAnimationFrame(animate);
-      }
-    };
-
-    window.addEventListener("wheel", onWheel, { passive: false });
-    return () => {
-      window.removeEventListener("wheel", onWheel);
-      cancelAnimationFrame(rafId);
-    };
-  }, []);
-}
-
 /* ── Page ──────────────────────────────────────────────────── */
 
 export default function Home() {
   const [heroVisible, setHeroVisible] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [cursorHover, setCursorHover] = useState(false);
-
-  useSmoothScroll();
 
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 120);
