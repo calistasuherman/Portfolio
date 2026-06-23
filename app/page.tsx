@@ -157,7 +157,7 @@ export default function Home() {
             className="absolute inset-0 w-full h-full object-cover"
             style={{ zIndex: 0 }}
           >
-            <source src="/hero.mov" type="video/mp4" />
+            <source src="/hero.mp4" type="video/mp4" />
           </video>
           {/* Dark overlay so text stays readable */}
           <div
