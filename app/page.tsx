@@ -38,8 +38,12 @@ const analytics = [
 ];
 
 const youtubeIntegrations = [
-  "BypassGPT", "BetterHelp", "Aelfric Eden",
-  "Teddy Blake", "Lewkin", "Just4Kira",
+  { label: "BetterHelp", src: "/betterhelp.mp4" },
+  { label: "Just4Kira", src: "/just4kira.mp4" },
+  { label: "BypassGPT", src: "/bypassgpt.mp4" },
+  { label: "Lewkin", src: "/lewkin.mp4" },
+  { label: "Teddy Blake", src: "/teddyblake.mp4" },
+  { label: "Aelfric Eden", src: "/aelfriceden.mp4" },
 ];
 
 /* ── Hooks ─────────────────────────────────────────────────── */
@@ -165,12 +169,12 @@ export default function Home() {
             style={{ background: "rgba(0,0,0,0.18)", zIndex: 1 }}
           />
 
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6" style={{ zIndex: 3 }}>
+          <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-16" style={{ zIndex: 3 }}>
             {/* Staggered name */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
               <div
                 style={{
-                  fontFamily: "var(--font-pinyon)",
+                  fontFamily: "AstonScript, cursive",
                   fontSize: "clamp(5rem, 18vw, 13rem)",
                   fontWeight: "normal",
                   color: "#7f1d1d",
@@ -182,7 +186,7 @@ export default function Home() {
               </div>
               <div
                 style={{
-                  fontFamily: "var(--font-pinyon)",
+                  fontFamily: "AstonScript, cursive",
                   fontSize: "clamp(5rem, 18vw, 13rem)",
                   fontWeight: "normal",
                   color: "#7f1d1d",
@@ -235,7 +239,7 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10"
-                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3.5rem, 9vw, 7rem)", fontWeight: "normal", color: "#f5f0f0" }}
+                style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3.5rem, 9vw, 7rem)", fontWeight: "normal", color: "#f5f0f0" }}
               >
                 About Me
               </h2>
@@ -286,8 +290,8 @@ export default function Home() {
             <Reveal delay={80}>
               <WorkSubsection title="YouTube Integrations">
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {youtubeIntegrations.map((brand, i) => (
-                    <WorkCard key={brand} label={brand} tag="YouTube" staggerDelay={i * 60} />
+                  {youtubeIntegrations.map((item, i) => (
+                    <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} />
                   ))}
                 </div>
               </WorkSubsection>
@@ -525,6 +529,51 @@ function SectionHeading({ children, sub }: { children: React.ReactNode; sub?: st
       >
         {children}
       </h2>
+    </div>
+  );
+}
+
+function VideoCard({
+  label,
+  src,
+  staggerDelay = 0,
+}: {
+  label: string;
+  src: string;
+  staggerDelay?: number;
+}) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      className="work-card group relative overflow-hidden rounded-lg cursor-pointer"
+      style={{
+        aspectRatio: "16/9",
+        border: "1px solid rgba(139,0,0,0.2)",
+        transitionDelay: `${staggerDelay}ms`,
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <video
+        src={src}
+        muted
+        loop
+        playsInline
+        autoPlay
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      {/* Label overlay at bottom */}
+      <div
+        className="absolute bottom-0 left-0 right-0 px-3 py-2 flex items-center justify-between"
+        style={{ background: "linear-gradient(to top, rgba(13,0,0,0.85), transparent)" }}
+      >
+        <span className="font-inter text-[10px] uppercase tracking-widest text-text-primary">{label}</span>
+        <span className="font-inter text-[9px] uppercase tracking-widest text-text-muted">YouTube</span>
+      </div>
+      <div
+        className="absolute inset-0 transition-opacity duration-300"
+        style={{ opacity: hovered ? 1 : 0, background: "rgba(139,0,0,0.12)" }}
+      />
     </div>
   );
 }

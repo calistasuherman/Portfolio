@@ -9,6 +9,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "AstonScript";
+  src: url("/fonts/AstonScript.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --font-inter: "Inter", sans-serif;
   --font-cormorant: "Cormorant Garamond", serif;
