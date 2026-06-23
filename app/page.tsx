@@ -415,7 +415,7 @@ function TypingText({ lines, style }: { lines: string[]; style: React.CSSPropert
   return (
     <>
       {lines.map((_, i) => (
-        <div key={i} style={style}>
+        <div key={i} style={style} suppressHydrationWarning>
           {displayed[i]}{activeLine === i && <span style={{ opacity: 1 }}>|</span>}
         </div>
       ))}
