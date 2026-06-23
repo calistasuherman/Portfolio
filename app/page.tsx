@@ -475,7 +475,7 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
       </span>
       <span
         style={{
-          fontFamily: "var(--font-pinyon)",
+          fontFamily: "var(--font-luxurious)",
           fontSize: scriptSize,
           fontWeight: "normal",
           color: "#f5f0f0",
@@ -571,13 +571,13 @@ function TrayNav() {
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain" }}
         />
 
-        {/* Croissant — left-center of tray */}
+        {/* Croissant — left side of tray, mid-height */}
         <TrayItem
           href="#youtube-integrations"
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
-          style={{ left: "18%", top: "38%", zIndex: 2 }}
+          style={{ left: "14%", top: "36%", zIndex: 2 }}
         />
 
         {/* Figs — lower center of tray */}
@@ -586,16 +586,16 @@ function TrayNav() {
           src="/tray-figs.png"
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
-          style={{ left: "33%", top: "57%", zIndex: 2 }}
+          style={{ left: "30%", top: "58%", zIndex: 2 }}
         />
 
-        {/* Coffee — center of tray */}
+        {/* Coffee — center-right of tray */}
         <TrayItem
           href="#video-editing"
           src="/tray-coffee.png"
           alt="Video Editing"
           label="video editing"
-          style={{ left: "48%", top: "40%", zIndex: 2 }}
+          style={{ left: "50%", top: "40%", zIndex: 2 }}
         />
 
         {/* Cream + Jam — upper right, decorative */}
@@ -603,7 +603,7 @@ function TrayNav() {
           src="/tray-cream-jam.png"
           alt="Decorative"
           decorative
-          style={{ left: "55%", top: "18%", zIndex: 2 }}
+          style={{ left: "56%", top: "14%", zIndex: 2 }}
         />
       </div>
     </div>

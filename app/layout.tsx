@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond, Pinyon_Script, Instrument_Serif } from "next/font/google";
+import { Inter, Cormorant_Garamond, Pinyon_Script, Instrument_Serif, Luxurious_Script } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -20,6 +20,12 @@ const pinyon = Pinyon_Script({
   variable: "--font-pinyon",
 });
 
+const luxuriousScript = Luxurious_Script({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-luxurious",
+});
+
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: ["400"],
@@ -38,7 +44,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${cormorant.variable} ${pinyon.variable} ${instrumentSerif.variable} bg-bg text-text-primary antialiased`}>
+      <body className={`${inter.variable} ${cormorant.variable} ${pinyon.variable} ${instrumentSerif.variable} ${luxuriousScript.variable} bg-bg text-text-primary antialiased`}>
         {children}
       </body>
     </html>
