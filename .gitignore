@@ -20,3 +20,11 @@
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# large video files (deployed separately via Vercel CLI)
+public/betterhelp.mp4
+public/just4kira.mp4
+public/bypassgpt.mp4
+public/lewkin.mp4
+public/teddyblake.mp4
+public/aelfriceden.mp4
