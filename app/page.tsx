@@ -175,7 +175,7 @@ export default function Home() {
               <div
                 style={{
                   fontFamily: "AstonScript, cursive",
-                  fontSize: "clamp(5rem, 18vw, 13rem)",
+                  fontSize: "clamp(3rem, 10vw, 7rem)",
                   fontWeight: "normal",
                   color: "#7f1d1d",
                   lineHeight: 0.95,
@@ -187,7 +187,7 @@ export default function Home() {
               <div
                 style={{
                   fontFamily: "AstonScript, cursive",
-                  fontSize: "clamp(5rem, 18vw, 13rem)",
+                  fontSize: "clamp(3rem, 10vw, 7rem)",
                   fontWeight: "normal",
                   color: "#7f1d1d",
                   lineHeight: 0.95,
@@ -238,8 +238,8 @@ export default function Home() {
 
             <Reveal className="order-1" direction="left">
               <h2
-                className="leading-none mb-10"
-                style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3.5rem, 9vw, 7rem)", fontWeight: "normal", color: "#f5f0f0" }}
+                className="font-cormorant italic leading-none mb-10"
+                style={{ fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 300, color: "#f5f0f0" }}
               >
                 About Me
               </h2>
