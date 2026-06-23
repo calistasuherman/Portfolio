@@ -249,7 +249,7 @@ export default function Home() {
         </section>
 
         {/* ── Work ── */}
-        <section id="work" className="section-content relative py-12 md:py-16 px-6 md:px-16 lg:px-32">
+        <section id="work" className="section-content relative pt-4 pb-12 px-6 md:px-16 lg:px-32">
           <Divider />
           <div className="max-w-6xl mx-auto">
 
@@ -575,7 +575,7 @@ function TrayNav() {
       </svg>
 
       {/* Let the tray image set the container height naturally */}
-      <div className="relative mx-auto" style={{ marginTop: "60px" }}>
+      <div className="relative mx-auto" style={{ marginTop: "20px" }}>
         <img
           src="/tray-bg.png"
           alt="Tray"
