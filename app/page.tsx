@@ -216,7 +216,7 @@ export default function Home() {
               <a
                 href="#contact"
                 className="inline-block px-8 py-3 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:opacity-80"
-                style={{ background: "rgba(201,169,169,0.85)" }}
+                style={{ background: "rgba(232,228,224,0.85)" }}
               >
                 work with me
               </a>
@@ -566,10 +566,10 @@ function WorkCard({
       >
         <div
           className="w-11 h-11 rounded-full flex items-center justify-center"
-          style={{ border: "1px solid rgba(201,169,169,0.55)", background: "rgba(13,0,0,0.55)", backdropFilter: "blur(6px)" }}
+          style={{ border: "1px solid rgba(232,228,224,0.55)", background: "rgba(13,0,0,0.55)", backdropFilter: "blur(6px)" }}
         >
           <svg width="11" height="13" viewBox="0 0 11 13" fill="none">
-            <path d="M1 1l9 5.5L1 12V1z" fill="rgba(201,169,169,0.9)" />
+            <path d="M1 1l9 5.5L1 12V1z" fill="rgba(232,228,224,0.9)" />
           </svg>
         </div>
       </div>

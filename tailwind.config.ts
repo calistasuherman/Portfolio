@@ -14,7 +14,7 @@ const config: Config = {
         "red-mid": "#3d0000",
         "red-accent": "#8b0000",
         "text-primary": "#f5f0f0",
-        "text-muted": "#c9a9a9",
+        "text-muted": "#e8e4e0",
       },
       fontFamily: {
         serif: ["Cormorant Garamond", "serif"],
