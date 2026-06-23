@@ -525,6 +525,7 @@ function TrayItem({
   imgWidth,
   rotate = 0,
   labelTop = "50%",
+  labelLeft = "50%",
   decorative = false,
 }: {
   href?: string;
@@ -535,6 +536,7 @@ function TrayItem({
   imgWidth?: string;
   rotate?: number;
   labelTop?: string;
+  labelLeft?: string;
   decorative?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
@@ -557,7 +559,7 @@ function TrayItem({
           style={{
             position: "absolute",
             top: labelTop,
-            left: "50%",
+            left: labelLeft,
             transform: "translate(-50%, -50%)",
             fontFamily: "var(--font-inter)",
             fontSize: "6px",
@@ -625,7 +627,7 @@ function TrayNav() {
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
           imgWidth="clamp(277px,27.9vw,520px)"
-          style={{ position: "absolute", left: "51%", top: "60%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "52%", top: "58%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Coffee — center right of tray */}
@@ -636,6 +638,7 @@ function TrayNav() {
           label="video editing"
           imgWidth="clamp(277px,27.9vw,520px)"
           labelTop="38%"
+          labelLeft="55%"
           style={{ position: "absolute", left: "58%", top: "32%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
