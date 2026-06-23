@@ -238,9 +238,9 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10"
-                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: "normal", color: "#f5f0f0" }}
+                style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 300, fontStyle: "italic", color: "#f5f0f0" }}
               >
-                <DualHeading serif="About" script="Me" />
+                About Me
               </h2>
               <div className="space-y-5 font-inter text-text-muted text-sm md:text-[15px] leading-relaxed">
                 <p>CAL1STAR is a fashion &amp; lifestyle content creator and video editor based in San Francisco, CA.</p>
@@ -485,8 +485,8 @@ function StatCard({
 }
 
 function DualHeading({ serif, script, size = "section" }: { serif: string; script: string; size?: "section" | "sub" }) {
-  const serifSize = size === "section" ? "clamp(2.5rem, 6vw, 5rem)" : "clamp(1.8rem, 4vw, 3.2rem)";
-  const scriptSize = size === "section" ? "clamp(2.8rem, 7vw, 5.6rem)" : "clamp(2rem, 4.5vw, 3.6rem)";
+  const serifSize = size === "section" ? "clamp(2.5rem, 6vw, 5rem)" : "clamp(2.4rem, 5vw, 4rem)";
+  const scriptSize = size === "section" ? "clamp(2.8rem, 7vw, 5.6rem)" : "clamp(2.7rem, 5.5vw, 4.5rem)";
   return (
     <div className="flex items-baseline justify-center flex-wrap">
       <span
@@ -656,8 +656,7 @@ function VideoCard({
         className="absolute bottom-0 left-0 right-0 px-3 py-2 flex items-center justify-between"
         style={{ background: "linear-gradient(to top, rgba(13,0,0,0.85), transparent)" }}
       >
-        <span className="font-inter text-[10px] uppercase tracking-widest text-text-primary">{label}</span>
-        <span className="font-inter text-[9px] uppercase tracking-widest text-text-muted">YouTube</span>
+        {label && <span className="font-inter text-[10px] uppercase tracking-widest text-text-primary">{label}</span>}
       </div>
       {/* Mute toggle */}
       <button
