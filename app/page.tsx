@@ -148,12 +148,29 @@ export default function Home() {
 
         {/* ── Hero ── */}
         <section className="section-content relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-16">
+          {/* Video background */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ zIndex: 0 }}
+          >
+            <source src="/hero.mov" type="video/mp4" />
+          </video>
+          {/* Dark overlay so text stays readable */}
+          <div
+            className="absolute inset-0"
+            style={{ background: "rgba(13,0,0,0.62)", zIndex: 1 }}
+          />
+          {/* Red glow */}
           <div
             className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full"
-            style={{ background: "radial-gradient(ellipse at center, rgba(139,0,0,0.22) 0%, transparent 70%)" }}
+            style={{ background: "radial-gradient(ellipse at center, rgba(139,0,0,0.18) 0%, transparent 70%)", zIndex: 2 }}
           />
 
-          <div className="relative">
+          <div className="relative" style={{ zIndex: 3 }}>
             <p
               className={`font-cormorant italic text-text-muted text-base md:text-xl mb-1 tracking-widest hero-item${heroVisible ? " hero-visible" : ""}`}
               style={{ transitionDelay: "0.1s" }}
@@ -210,7 +227,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30">
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30" style={{ zIndex: 3 }}>
             <div className="w-px h-10 bg-text-muted animate-pulse" />
           </div>
         </section>
