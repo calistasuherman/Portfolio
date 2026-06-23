@@ -522,6 +522,7 @@ function TrayItem({
   alt,
   label,
   style,
+  imgWidth,
   decorative = false,
 }: {
   href?: string;
@@ -529,6 +530,7 @@ function TrayItem({
   alt: string;
   label?: string;
   style: React.CSSProperties;
+  imgWidth?: string;
   decorative?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
@@ -545,7 +547,7 @@ function TrayItem({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <img src={src} alt={alt} style={{ width: "clamp(308px,31vw,578px)", objectFit: "contain", display: "block" }} />
+      <img src={src} alt={alt} style={{ width: imgWidth ?? "clamp(308px,31vw,578px)", objectFit: "contain", display: "block" }} />
       {label && (
         <span
           style={{
@@ -618,7 +620,8 @@ function TrayNav() {
           src="/tray-figs.png"
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
-          style={{ position: "absolute", left: "50%", top: "58%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          imgWidth="clamp(277px,27.9vw,520px)"
+          style={{ position: "absolute", left: "52%", top: "53%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Coffee — center right of tray */}
