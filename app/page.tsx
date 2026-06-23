@@ -523,6 +523,7 @@ function TrayItem({
   label,
   style,
   imgWidth,
+  rotate = 0,
   decorative = false,
 }: {
   href?: string;
@@ -531,6 +532,7 @@ function TrayItem({
   label?: string;
   style: React.CSSProperties;
   imgWidth?: string;
+  rotate?: number;
   decorative?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
@@ -541,7 +543,7 @@ function TrayItem({
         display: "inline-block",
         cursor: decorative ? "default" : "pointer",
         transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1)",
-        transform: hovered ? "translateY(-10px) scale(1.08)" : "none",
+        transform: hovered ? `rotate(${rotate}deg) translateY(-10px) scale(1.08)` : `rotate(${rotate}deg)`,
         filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
       }}
       onMouseEnter={() => setHovered(true)}
@@ -611,6 +613,7 @@ function TrayNav() {
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
+          rotate={-15}
           style={{ position: "absolute", left: "40%", top: "46%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
