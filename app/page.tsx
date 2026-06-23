@@ -305,7 +305,6 @@ export default function Home() {
 
         {/* ── Services ── */}
         <section id="services" className="section-content relative py-24 md:py-36 px-6 md:px-16 lg:px-32">
-          <Divider />
           <div className="max-w-5xl mx-auto">
             <Reveal>
               <div className="text-center mb-14">
@@ -330,7 +329,6 @@ export default function Home() {
 
         {/* ── Contact ── */}
         <section id="contact" className="section-content relative py-24 md:py-40 px-6 text-center">
-          <Divider />
           <div
             className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px]"
             style={{ background: "radial-gradient(ellipse at bottom, rgba(139,0,0,0.12) 0%, transparent 70%)" }}
@@ -556,7 +554,7 @@ function TrayItem({
             left: "50%",
             transform: "translate(-50%, -50%)",
             fontFamily: "var(--font-inter)",
-            fontSize: "10px",
+            fontSize: "8px",
             fontWeight: 400,
             color: "#ffffff",
             letterSpacing: "0.2em",
@@ -611,7 +609,7 @@ function TrayNav() {
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
-          style={{ position: "absolute", left: "32%", top: "38%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "38%", top: "38%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Figs — lower center of tray */}
@@ -620,7 +618,7 @@ function TrayNav() {
           src="/tray-figs.png"
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
-          style={{ position: "absolute", left: "56%", top: "72%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "56%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Coffee — center right of tray */}
@@ -629,7 +627,7 @@ function TrayNav() {
           src="/tray-coffee.png"
           alt="Video Editing"
           label="video editing"
-          style={{ position: "absolute", left: "58%", top: "42%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "58%", top: "32%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
       </div>
