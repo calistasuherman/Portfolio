@@ -609,7 +609,7 @@ function TrayNav() {
 
         {/* Right: tray */}
         <div className="relative" style={{ flex: "1 1 auto" }}>
-          <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block" }} />
+          <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))" }} />
 
           <TrayItem
             href="#youtube-integrations"
@@ -636,7 +636,7 @@ function TrayNav() {
             label="video editing"
             imgWidth="clamp(277px,27.9vw,520px)"
             labelTop="38%"
-            labelLeft="55%"
+            labelLeft="48%"
             style={{ position: "absolute", left: "58%", top: "32%", transform: "translate(-50%, -50%)", zIndex: 2 }}
           />
         </div>
