@@ -533,7 +533,7 @@ function TrayItem({
         filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
       }}
     >
-      <img src={src} alt={alt} style={{ width: "clamp(60px,10vw,110px)", objectFit: "contain" }} />
+      <img src={src} alt={alt} style={{ width: "clamp(80px,14vw,150px)", objectFit: "contain" }} />
       {label && (
         <span
           className="font-inter text-center"
@@ -584,31 +584,31 @@ function TrayNav() {
 
         {/* Positions are % of image, centered on the food item via transform */}
 
-        {/* Croissant — left-center */}
+        {/* Croissant — left-center of tray */}
         <TrayItem
           href="#youtube-integrations"
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
-          style={{ position: "absolute", left: "27%", top: "40%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "22%", top: "42%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
-        {/* Figs — lower center-left */}
+        {/* Figs — lower-center of tray */}
         <TrayItem
           href="#fashion-checks"
           src="/tray-figs.png"
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
-          style={{ position: "absolute", left: "37%", top: "65%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "38%", top: "67%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
-        {/* Coffee — center-right */}
+        {/* Coffee — center-right of tray */}
         <TrayItem
           href="#video-editing"
           src="/tray-coffee.png"
           alt="Video Editing"
           label="video editing"
-          style={{ position: "absolute", left: "58%", top: "48%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "57%", top: "48%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Cream + Jam — upper right, decorative */}
@@ -616,7 +616,7 @@ function TrayNav() {
           src="/tray-cream-jam.png"
           alt="Decorative"
           decorative
-          style={{ position: "absolute", left: "60%", top: "24%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "61%", top: "23%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
       </div>
     </div>
