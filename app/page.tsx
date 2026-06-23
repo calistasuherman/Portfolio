@@ -194,7 +194,7 @@ export default function Home() {
                   display: "block",
                 }}
               >
-                Suherman.
+                Suherman
               </div>
             </div>
 
@@ -238,8 +238,8 @@ export default function Home() {
 
             <Reveal className="order-1" direction="left">
               <h2
-                className="font-cormorant italic leading-none mb-10"
-                style={{ fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 300, color: "#f5f0f0" }}
+                className="leading-none mb-10"
+                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: "normal", color: "#f5f0f0" }}
               >
                 About Me
               </h2>
@@ -253,26 +253,19 @@ export default function Home() {
             </Reveal>
 
             <Reveal className="flex justify-center order-2" direction="right" delay={200}>
-              <div className="lace-frame" style={{ padding: "40px" }}>
-                <div className="lace-dots" />
-                <div className="lace-inner">
-                  <div
-                    className="relative overflow-hidden"
-                    style={{
-                      width: "clamp(200px, 28vw, 300px)",
-                      height: "clamp(250px, 35vw, 380px)",
-                      borderRadius: "50% 48% 52% 46% / 46% 52% 48% 54%",
-                      border: "1px solid rgba(201,169,169,0.2)",
-                      background: "rgba(61,0,0,0.4)",
-                    }}
-                  >
-                    <Image src="/portrait.jpg" alt="Calista Suherman" fill className="object-cover object-top" />
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{ background: "radial-gradient(ellipse at center, transparent 40%, rgba(13,0,0,0.5) 100%)" }}
-                    />
-                  </div>
-                </div>
+              <div
+                className="relative overflow-hidden rounded-2xl"
+                style={{
+                  width: "clamp(260px, 32vw, 420px)",
+                  height: "clamp(340px, 42vw, 560px)",
+                  border: "1px solid rgba(139,0,0,0.25)",
+                }}
+              >
+                <Image src="/about.jpg" alt="Calista Suherman" fill className="object-cover object-center" />
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: "linear-gradient(to top, rgba(13,0,0,0.35) 0%, transparent 50%)" }}
+                />
               </div>
             </Reveal>
           </div>
@@ -284,7 +277,11 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
 
             <Reveal>
-              <SectionHeading sub="what I bring to the table">Work</SectionHeading>
+              <div className="text-center mb-14">
+                <h2 style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: "normal", color: "#f5f0f0", lineHeight: 1 }}>
+                  what I bring to the table
+                </h2>
+              </div>
             </Reveal>
 
             <Reveal delay={80}>
