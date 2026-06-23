@@ -250,7 +250,6 @@ export default function Home() {
 
         {/* ── Work ── */}
         <section id="work" className="section-content relative pt-4 pb-12 px-6 md:px-16 lg:px-32">
-          <Divider />
           <div className="max-w-6xl mx-auto">
 
             <Reveal>
