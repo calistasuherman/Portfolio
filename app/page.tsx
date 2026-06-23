@@ -464,12 +464,22 @@ function StatCard({
 }
 
 function DualHeading({ serif, script, size = "section" }: { serif: string; script: string; size?: "section" | "sub" }) {
-  const serifSize = size === "section" ? "clamp(2.5rem, 6vw, 5rem)" : "clamp(2.4rem, 5vw, 4rem)";
-  const scriptSize = size === "section" ? "clamp(2.8rem, 7vw, 5.6rem)" : "clamp(2.7rem, 5.5vw, 4.5rem)";
+  const serifSize = size === "section" ? "clamp(2.8rem, 6vw, 5.2rem)" : "clamp(2.6rem, 5vw, 4.2rem)";
+  const scriptSize = size === "section" ? "clamp(3rem, 6.5vw, 5.6rem)" : "clamp(2.8rem, 5.5vw, 4.6rem)";
   return (
-    <div className="flex items-end justify-center" style={{ position: "relative" }}>
+    <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", lineHeight: 1 }}>
       <span
-        style={{ fontFamily: "var(--font-melodrama)", fontSize: serifSize, fontWeight: 400, color: "#f5f0f0", lineHeight: 1, letterSpacing: "-0.01em", position: "relative", zIndex: 1 }}
+        style={{
+          fontFamily: "var(--font-melodrama)",
+          fontSize: serifSize,
+          fontWeight: 400,
+          color: "#f5f0f0",
+          lineHeight: 1,
+          letterSpacing: "-0.01em",
+          position: "relative",
+          zIndex: 1,
+          paddingBottom: "0.04em",
+        }}
       >
         {serif}
       </span>
@@ -479,8 +489,8 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
           fontSize: scriptSize,
           fontWeight: "normal",
           color: "#f5f0f0",
-          lineHeight: 0.82,
-          marginLeft: "-0.28em",
+          lineHeight: 1,
+          marginLeft: "-0.55em",
           position: "relative",
           zIndex: 2,
         }}
