@@ -168,7 +168,7 @@ export default function Home() {
 
           <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-16" style={{ zIndex: 3 }}>
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-              <TypingText lines={["Calista", "Suherman"]} style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#6b1616", lineHeight: 0.95, display: "block" }} />
+              <TypingText lines={["Calista", "Suherman"]} style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#6b1616", lineHeight: 0.95, display: "block", textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }} />
             </div>
 
             <p
@@ -482,7 +482,7 @@ function StatCard({
 
 function DualHeading({ serif, script, size = "section", noOverlap = false }: { serif: string; script: string; size?: "section" | "sub" | "large"; noOverlap?: boolean }) {
   const serifSize = size === "section" ? "clamp(2.8rem, 6vw, 5.2rem)" : size === "large" ? "clamp(3rem, 6.5vw, 5.6rem)" : "clamp(3rem, 6.5vw, 5.6rem)";
-  const scriptSize = size === "section" ? "clamp(3rem, 6.5vw, 5.6rem)" : size === "large" ? "clamp(3.3rem, 8vw, 7rem)" : "clamp(3.3rem, 8vw, 7rem)";
+  const scriptSize = size === "section" ? "clamp(3rem, 6.5vw, 5.6rem)" : size === "large" ? "clamp(3.3rem, 7vw, 7rem)" : "clamp(3.3rem, 7vw, 7rem)";
   return (
     <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", lineHeight: 1 }}>
       <span
