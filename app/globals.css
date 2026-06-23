@@ -1,10 +1,4 @@
-﻿@font-face {
-  font-family: "RelationshipMelodrame";
-  src: url("/fonts/RelationshipMelodrame.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -27,7 +21,7 @@
   --font-cormorant: "Cormorant Garamond", serif;
   --font-sloop: "SloopScript", cursive;
   --font-pinyon: var(--font-pinyon), cursive;
-  --font-melodrama: "RelationshipMelodrame", cursive;
+  --font-melodrama: var(--font-melodrama), serif;
 }
 
 html {
@@ -164,3 +158,4 @@ body::after {
 }
 
 .service-card:
+
