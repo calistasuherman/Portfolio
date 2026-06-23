@@ -589,58 +589,57 @@ function TrayItem({
 
 function TrayNav() {
   return (
-    <div className="relative mx-auto mb-4" style={{ maxWidth: "1008px", width: "100%" }}>
-      {/* Let the tray image set the container height naturally */}
-      <div className="relative mx-auto" style={{ marginTop: "20px" }}>
-        <svg viewBox="0 0 1000 600" width="100%" style={{ position: "absolute", top: 0, left: 0, zIndex: 3, pointerEvents: "none" }}>
-          <defs>
-            <path id="trayArc" d="M 80,320 A 420,280 0 0,1 920,320" />
-          </defs>
-          <text style={{ fontFamily: "var(--font-melodrama)", fontSize: "38px" }}>
-            <textPath href="#trayArc" startOffset="50%" textAnchor="middle">
-              <tspan fill="#541010">what I </tspan><tspan fill="#541010" style={{ fontFamily: "var(--font-luxurious)", fontSize: "50px" }}>bring</tspan><tspan fill="#541010"> to the table</tspan>
-            </textPath>
-          </text>
-        </svg>
-        <img
-          src="/tray-bg.png"
-          alt="Tray"
-          style={{ width: "100%", display: "block" }}
-        />
+    <div className="mx-auto px-6 md:px-16 lg:px-32" style={{ maxWidth: "1400px" }}>
+      <div className="flex items-center gap-8 md:gap-12">
 
-        {/* Positions are % of image, centered on the food item via transform */}
+        {/* Left: title text */}
+        <div style={{ flex: "0 0 auto", width: "clamp(160px, 22vw, 300px)" }}>
+          <p style={{
+            fontFamily: "var(--font-melodrama)",
+            fontSize: "clamp(2rem, 3.5vw, 3.2rem)",
+            color: "#541010",
+            lineHeight: 1.15,
+            fontWeight: 400,
+          }}>
+            What I{" "}
+            <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(2.4rem, 4.2vw, 3.8rem)" }}>bring</span>
+            <br />to the table
+          </p>
+        </div>
 
-        {/* Croissant — left side of tray */}
-        <TrayItem
-          href="#youtube-integrations"
-          src="/tray-croissant.png"
-          alt="YouTube Integrations"
-          label="youtube integrations"
-          rotate={-15}
-          style={{ position: "absolute", left: "40%", top: "46%", transform: "translate(-50%, -50%)", zIndex: 2 }}
-        />
+        {/* Right: tray */}
+        <div className="relative" style={{ flex: "1 1 auto" }}>
+          <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block" }} />
 
-        {/* Figs — lower center of tray */}
-        <TrayItem
-          href="#fashion-checks"
-          src="/tray-figs.png"
-          alt="Fashion & Fit Checks"
-          label="fashion / fit checks"
-          imgWidth="clamp(277px,27.9vw,520px)"
-          style={{ position: "absolute", left: "52%", top: "58%", transform: "translate(-50%, -50%)", zIndex: 2 }}
-        />
+          <TrayItem
+            href="#youtube-integrations"
+            src="/tray-croissant.png"
+            alt="YouTube Integrations"
+            label="youtube integrations"
+            rotate={-15}
+            style={{ position: "absolute", left: "40%", top: "46%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          />
 
-        {/* Coffee — center right of tray */}
-        <TrayItem
-          href="#video-editing"
-          src="/tray-coffee.png"
-          alt="Video Editing"
-          label="video editing"
-          imgWidth="clamp(277px,27.9vw,520px)"
-          labelTop="38%"
-          labelLeft="55%"
-          style={{ position: "absolute", left: "58%", top: "32%", transform: "translate(-50%, -50%)", zIndex: 2 }}
-        />
+          <TrayItem
+            href="#fashion-checks"
+            src="/tray-figs.png"
+            alt="Fashion & Fit Checks"
+            label="fashion / fit checks"
+            imgWidth="clamp(277px,27.9vw,520px)"
+            style={{ position: "absolute", left: "52%", top: "58%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          />
+
+          <TrayItem
+            href="#video-editing"
+            src="/tray-coffee.png"
+            alt="Video Editing"
+            label="video editing"
+            imgWidth="clamp(277px,27.9vw,520px)"
+            labelTop="38%"
+            labelLeft="55%"
+            style={{ position: "absolute", left: "58%", top: "32%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          />
+        </div>
 
       </div>
     </div>
