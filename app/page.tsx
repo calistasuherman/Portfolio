@@ -38,12 +38,12 @@ const analytics = [
 ];
 
 const youtubeIntegrations = [
-  { label: "BetterHelp", src: "/betterhelp.mp4" },
-  { label: "Just4Kira", src: "/just4kira.mp4" },
-  { label: "BypassGPT", src: "/bypassgpt.mp4" },
-  { label: "Lewkin", src: "/lewkin.mp4" },
-  { label: "Teddy Blake", src: "/teddyblake.mp4" },
-  { label: "Aelfric Eden", src: "/aelfriceden.mp4" },
+  { label: "BetterHelp", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%201.mov" },
+  { label: "Just4Kira", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%202.mov" },
+  { label: "BypassGPT", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%203.mov" },
+  { label: "Lewkin", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%204.mov" },
+  { label: "Teddy Blake", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%205.mov" },
+  { label: "Aelfric Eden", src: "" },
 ];
 
 /* ── Hooks ─────────────────────────────────────────────────── */
