@@ -490,7 +490,7 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
           fontWeight: "normal",
           color: "#f5f0f0",
           lineHeight: 1,
-          marginLeft: "-0.04em",
+          marginLeft: "-0.12em",
           position: "relative",
           zIndex: 2,
         }}
