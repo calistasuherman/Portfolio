@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: "Inter", sans-serif;
+  --font-cormorant: "Cormorant Garamond", serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0d0000;
+  color: #f5f0f0;
+}
+
+/* Bokeh / organic texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 20%, rgba(139, 0, 0, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 70%, rgba(90, 0, 0, 0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 50% 50%, rgba(61, 0, 0, 0.12) 0%, transparent 80%),
+    radial-gradient(ellipse 30% 30% at 70% 15%, rgba(139, 0, 0, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 25% 25% at 25% 80%, rgba(100, 0, 0, 0.14) 0%, transparent 55%);
+}
+
+/* Grain texture */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* Lace / doily frame for portrait */
+.lace-frame {
+  position: relative;
+  display: inline-block;
+}
+
+.lace-frame::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border-radius: 50% 45% 55% 48% / 48% 52% 45% 55%;
+  border: 2px solid rgba(201, 169, 169, 0.5);
+  pointer-events: none;
+}
+
+.lace-frame::after {
+  content: "";
+  position: absolute;
+  inset: -22px;
+  border-radius: 48% 52% 44% 58% / 55% 45% 58% 42%;
+  border: 1px dashed rgba(201, 169, 169, 0.3);
+  pointer-events: none;
+}
+
+.lace-inner {
+  position: relative;
+}
+
+.lace-inner::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50% 48% 52% 46% / 46% 54% 48% 52%;
+  border: 1px solid rgba(201, 169, 169, 0.35);
+  pointer-events: none;
+}
+
+/* Decorative dots ring */
+.lace-dots {
+  position: absolute;
+  inset: -32px;
+  border-radius: 50%;
+  background-image: radial-gradient(circle, rgba(201,169,169,0.4) 1.5px, transparent 1.5px);
+  background-size: 14px 14px;
+  background-position: center;
+  mask-image: radial-gradient(ellipse at center, transparent 60%, black 65%, black 75%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, transparent 60%, black 65%, black 75%, transparent 80%);
+  pointer-events: none;
+}
+
+/* Section above fold elements */
+.section-content {
+  position: relative;
+  z-index: 1;
+}
+
+@layer utilities {
+  .font-cormorant {
+    font-family: var(--font-cormorant);
+  }
+  .font-inter {
+    font-family: var(--font-inter);
+  }
+}
