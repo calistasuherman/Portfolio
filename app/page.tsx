@@ -554,7 +554,7 @@ function TrayItem({
   );
 
   return (
-    <div className="absolute" style={style}>
+    <div style={style}>
       {href ? <a href={href}>{inner}</a> : inner}
     </div>
   );
@@ -562,7 +562,7 @@ function TrayItem({
 
 function TrayNav() {
   return (
-    <div className="relative mx-auto mb-4" style={{ maxWidth: "960px", width: "100%" }}>
+    <div className="relative mx-auto mb-4" style={{ maxWidth: "560px", width: "100%" }}>
       <svg viewBox="0 0 680 200" width="100%" style={{ position: "absolute", top: 0, left: 0, zIndex: 3, pointerEvents: "none" }}>
         <defs>
           <path id="trayArc" d="M 40,195 A 300,250 0 0,1 640,195" />
@@ -574,38 +574,41 @@ function TrayNav() {
         </text>
       </svg>
 
-      <div className="relative mx-auto" style={{ width: "100%", paddingBottom: "65%", marginTop: "110px" }}>
+      {/* Let the tray image set the container height naturally */}
+      <div className="relative mx-auto" style={{ marginTop: "110px" }}>
         <img
           src="/tray-bg.png"
           alt="Tray"
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain" }}
+          style={{ width: "100%", display: "block" }}
         />
 
-        {/* Croissant — left side of tray, mid-height */}
+        {/* Positions are % of image, centered on the food item via transform */}
+
+        {/* Croissant — left-center */}
         <TrayItem
           href="#youtube-integrations"
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
-          style={{ left: "14%", top: "36%", zIndex: 2 }}
+          style={{ position: "absolute", left: "27%", top: "40%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
-        {/* Figs — lower center of tray */}
+        {/* Figs — lower center-left */}
         <TrayItem
           href="#fashion-checks"
           src="/tray-figs.png"
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
-          style={{ left: "30%", top: "58%", zIndex: 2 }}
+          style={{ position: "absolute", left: "37%", top: "65%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
-        {/* Coffee — center-right of tray */}
+        {/* Coffee — center-right */}
         <TrayItem
           href="#video-editing"
           src="/tray-coffee.png"
           alt="Video Editing"
           label="video editing"
-          style={{ left: "50%", top: "40%", zIndex: 2 }}
+          style={{ position: "absolute", left: "58%", top: "48%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Cream + Jam — upper right, decorative */}
@@ -613,7 +616,7 @@ function TrayNav() {
           src="/tray-cream-jam.png"
           alt="Decorative"
           decorative
-          style={{ left: "56%", top: "14%", zIndex: 2 }}
+          style={{ position: "absolute", left: "60%", top: "24%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
       </div>
     </div>
