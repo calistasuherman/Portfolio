@@ -176,7 +176,7 @@ export default function Home() {
             <h1
               className={`hero-item${heroVisible ? " hero-visible" : ""}`}
               style={{
-                fontFamily: "var(--font-sloop)",
+                fontFamily: "var(--font-pinyon)",
                 fontSize: "clamp(4.5rem, 16vw, 11rem)",
                 fontWeight: "normal",
                 color: "#f5f0f0",
@@ -184,7 +184,7 @@ export default function Home() {
                 transitionDelay: "0.28s",
               }}
             >
-              Cal1Star
+              Calista Suherman
             </h1>
 
             <p

@@ -13,6 +13,7 @@
   --font-inter: "Inter", sans-serif;
   --font-cormorant: "Cormorant Garamond", serif;
   --font-sloop: "SloopScript", cursive;
+  --font-pinyon: var(--font-pinyon), cursive;
 }
 
 html {
