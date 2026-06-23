@@ -29,7 +29,11 @@ html {
 }
 
 body {
-  background-color: #0d0000;
+  background-color: #3d0000;
+  background-image: url("/red.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: #f5f0f0;
   cursor: none;
 }
@@ -38,19 +42,14 @@ a, button {
   cursor: none;
 }
 
-/* ── Bokeh overlay ── */
+/* ── Dark overlay for legibility ── */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 15% 20%, rgba(139, 0, 0, 0.18) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 80% 70%, rgba(90, 0, 0, 0.22) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 60% at 50% 50%, rgba(61, 0, 0, 0.12) 0%, transparent 80%),
-    radial-gradient(ellipse 30% 30% at 70% 15%, rgba(139, 0, 0, 0.10) 0%, transparent 60%),
-    radial-gradient(ellipse 25% 25% at 25% 80%, rgba(100, 0, 0, 0.14) 0%, transparent 55%);
+  background: rgba(10, 0, 0, 0.45);
 }
 
 /* ── Grain texture ── */
