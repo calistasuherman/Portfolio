@@ -482,7 +482,7 @@ function StatCard({
 
 function DualHeading({ serif, script, size = "section", noOverlap = false }: { serif: string; script: string; size?: "section" | "sub" | "large"; noOverlap?: boolean }) {
   const serifSize = size === "section" ? "clamp(2.8rem, 6vw, 5.2rem)" : size === "large" ? "clamp(3rem, 6.5vw, 5.6rem)" : "clamp(3rem, 6.5vw, 5.6rem)";
-  const scriptSize = size === "section" ? "clamp(3rem, 6.5vw, 5.6rem)" : size === "large" ? "clamp(3.2rem, 7vw, 7.1rem)" : "clamp(3.2rem, 7vw, 7.1rem)";
+  const scriptSize = size === "section" ? "clamp(3rem, 6.5vw, 5.6rem)" : size === "large" ? "clamp(3.1rem, 7vw, 7.2rem)" : "clamp(3.1rem, 7vw, 7.2rem)";
   return (
     <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", lineHeight: 1 }}>
       <span
