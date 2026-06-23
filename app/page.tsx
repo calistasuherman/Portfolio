@@ -173,7 +173,7 @@ export default function Home() {
                   fontFamily: "var(--font-pinyon)",
                   fontSize: "clamp(5rem, 18vw, 13rem)",
                   fontWeight: "normal",
-                  color: "#8b0000",
+                  color: "#7f1d1d",
                   lineHeight: 0.95,
                   display: "block",
                 }}
@@ -185,7 +185,7 @@ export default function Home() {
                   fontFamily: "var(--font-pinyon)",
                   fontSize: "clamp(5rem, 18vw, 13rem)",
                   fontWeight: "normal",
-                  color: "#8b0000",
+                  color: "#7f1d1d",
                   lineHeight: 0.95,
                   display: "block",
                   marginLeft: "clamp(3rem, 12vw, 10rem)",
@@ -200,7 +200,7 @@ export default function Home() {
               className={`font-inter text-text-muted text-[11px] md:text-xs mt-8 tracking-[0.15em] hero-item${heroVisible ? " hero-visible" : ""}`}
               style={{ transitionDelay: "0.55s" }}
             >
-              Content Creator · Video Editor · Fashion &amp; Lifestyle
+              Fashion &amp; Lifestyle Content Creator · Video Editor
             </p>
 
             <div
