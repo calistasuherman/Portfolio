@@ -174,19 +174,17 @@ export default function Home() {
             </p>
 
             <h1
-              className={`font-cormorant italic leading-none tracking-tight hero-item${heroVisible ? " hero-visible" : ""}`}
+              className={`hero-item${heroVisible ? " hero-visible" : ""}`}
               style={{
+                fontFamily: "var(--font-sloop)",
                 fontSize: "clamp(4.5rem, 16vw, 11rem)",
-                fontWeight: 300,
+                fontWeight: "normal",
                 color: "#f5f0f0",
+                lineHeight: 1,
                 transitionDelay: "0.28s",
               }}
             >
-              <span style={{ fontWeight: 300 }}>C</span>
-              <span style={{ fontWeight: 600 }}>al</span>
-              <span style={{ fontWeight: 300 }}>1</span>
-              <span style={{ fontWeight: 600 }}>St</span>
-              <span style={{ fontWeight: 300 }}>ar</span>
+              Cal1Star
             </h1>
 
             <p
