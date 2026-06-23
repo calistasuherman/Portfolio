@@ -168,10 +168,10 @@ export default function Home() {
 
           <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-16" style={{ zIndex: 3 }}>
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-              <div style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#7f1d1d", lineHeight: 0.95, display: "block" }}>
+              <div style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#6b1616", lineHeight: 0.95, display: "block" }}>
                 Calista
               </div>
-              <div style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#7f1d1d", lineHeight: 0.95, display: "block" }}>
+              <div style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#6b1616", lineHeight: 0.95, display: "block" }}>
                 Suherman
               </div>
             </div>
@@ -467,9 +467,9 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
   const serifSize = size === "section" ? "clamp(2.5rem, 6vw, 5rem)" : "clamp(2.4rem, 5vw, 4rem)";
   const scriptSize = size === "section" ? "clamp(2.8rem, 7vw, 5.6rem)" : "clamp(2.7rem, 5.5vw, 4.5rem)";
   return (
-    <div className="flex items-end justify-center flex-wrap" style={{ gap: "0.15em" }}>
+    <div className="flex items-end justify-center" style={{ position: "relative" }}>
       <span
-        style={{ fontFamily: "var(--font-melodrama)", fontSize: serifSize, fontWeight: 400, color: "#f5f0f0", lineHeight: 1, letterSpacing: "-0.01em", paddingBottom: "0.05em" }}
+        style={{ fontFamily: "var(--font-melodrama)", fontSize: serifSize, fontWeight: 400, color: "#f5f0f0", lineHeight: 1, letterSpacing: "-0.01em", position: "relative", zIndex: 1 }}
       >
         {serif}
       </span>
@@ -479,7 +479,10 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
           fontSize: scriptSize,
           fontWeight: "normal",
           color: "#f5f0f0",
-          lineHeight: 0.85,
+          lineHeight: 0.82,
+          marginLeft: "-0.28em",
+          position: "relative",
+          zIndex: 2,
         }}
       >
         {script}
@@ -549,7 +552,7 @@ function TrayItem({
 
 function TrayNav() {
   return (
-    <div className="relative mx-auto mb-4" style={{ maxWidth: "720px", width: "100%" }}>
+    <div className="relative mx-auto mb-4" style={{ maxWidth: "960px", width: "100%" }}>
       <svg viewBox="0 0 680 200" width="100%" style={{ position: "absolute", top: 0, left: 0, zIndex: 3, pointerEvents: "none" }}>
         <defs>
           <path id="trayArc" d="M 40,195 A 300,250 0 0,1 640,195" />
@@ -561,20 +564,20 @@ function TrayNav() {
         </text>
       </svg>
 
-      <div className="relative mx-auto" style={{ width: "100%", paddingBottom: "62%", marginTop: "110px" }}>
+      <div className="relative mx-auto" style={{ width: "100%", paddingBottom: "65%", marginTop: "110px" }}>
         <img
           src="/tray-bg.png"
           alt="Tray"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain" }}
         />
 
-        {/* Croissant — lower left of tray */}
+        {/* Croissant — left-center of tray */}
         <TrayItem
           href="#youtube-integrations"
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
-          style={{ left: "8%", top: "48%", zIndex: 2 }}
+          style={{ left: "18%", top: "38%", zIndex: 2 }}
         />
 
         {/* Figs — lower center of tray */}
@@ -583,16 +586,16 @@ function TrayNav() {
           src="/tray-figs.png"
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
-          style={{ left: "38%", top: "55%", zIndex: 2 }}
+          style={{ left: "33%", top: "57%", zIndex: 2 }}
         />
 
-        {/* Coffee — center right of tray */}
+        {/* Coffee — center of tray */}
         <TrayItem
           href="#video-editing"
           src="/tray-coffee.png"
           alt="Video Editing"
           label="video editing"
-          style={{ right: "18%", top: "32%", zIndex: 2 }}
+          style={{ left: "48%", top: "40%", zIndex: 2 }}
         />
 
         {/* Cream + Jam — upper right, decorative */}
@@ -600,7 +603,7 @@ function TrayNav() {
           src="/tray-cream-jam.png"
           alt="Decorative"
           decorative
-          style={{ right: "8%", top: "10%", zIndex: 2 }}
+          style={{ left: "55%", top: "18%", zIndex: 2 }}
         />
       </div>
     </div>
