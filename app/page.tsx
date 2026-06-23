@@ -165,7 +165,7 @@ export default function Home() {
             style={{ background: "rgba(0,0,0,0.18)", zIndex: 1 }}
           />
 
-          <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-14" style={{ zIndex: 3 }}>
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6" style={{ zIndex: 3 }}>
             {/* Staggered name */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
               <div
@@ -188,7 +188,6 @@ export default function Home() {
                   color: "#7f1d1d",
                   lineHeight: 0.95,
                   display: "block",
-                  marginLeft: "clamp(3rem, 12vw, 10rem)",
                 }}
               >
                 Suherman.
@@ -234,10 +233,9 @@ export default function Home() {
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
             <Reveal className="order-1" direction="left">
-              <p className="font-cormorant italic text-text-muted text-lg mb-2">who&apos;s that</p>
               <h2
-                className="font-cormorant italic leading-none mb-10"
-                style={{ fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 300, color: "#f5f0f0" }}
+                className="leading-none mb-10"
+                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3.5rem, 9vw, 7rem)", fontWeight: "normal", color: "#f5f0f0" }}
               >
                 About Me
               </h2>
