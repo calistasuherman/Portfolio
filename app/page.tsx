@@ -621,7 +621,7 @@ function TrayNav() {
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
           imgWidth="clamp(277px,27.9vw,520px)"
-          style={{ position: "absolute", left: "52%", top: "60%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          style={{ position: "absolute", left: "54%", top: "55%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
         {/* Coffee — center right of tray */}
