@@ -393,31 +393,22 @@ export default function Home() {
 /* ── Shared Components ──────────────────────────────────────── */
 
 function TypingText({ lines, style }: { lines: string[]; style: React.CSSProperties }) {
-  const [displayed, setDisplayed] = useState<string[]>(lines.map(() => ""));
-  const [activeLine, setActiveLine] = useState(0);
+  const full = lines.join("\n");
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    let lineIdx = 0;
-    let charIdx = 0;
-    const interval = setInterval(() => {
-      if (lineIdx >= lines.length) { clearInterval(interval); setActiveLine(-1); return; }
-      charIdx++;
-      setDisplayed(prev => {
-        const next = [...prev];
-        next[lineIdx] = lines[lineIdx].slice(0, charIdx);
-        return next;
-      });
-      if (charIdx >= lines[lineIdx].length) { lineIdx++; charIdx = 0; setActiveLine(lineIdx); }
-    }, 80);
-    return () => clearInterval(interval);
-  }, []);
+    if (count >= full.length) return;
+    const t = setTimeout(() => setCount(c => c + 1), 80);
+    return () => clearTimeout(t);
+  }, [count, full.length]);
+
+  const typed = full.slice(0, count);
+  const parts = typed.split("\n");
 
   return (
     <>
       {lines.map((_, i) => (
-        <div key={i} style={style} suppressHydrationWarning>
-          {displayed[i]}{activeLine === i && <span style={{ opacity: 1 }}>|</span>}
-        </div>
+        <div key={i} style={style} suppressHydrationWarning>{parts[i] ?? ""}</div>
       ))}
     </>
   );
