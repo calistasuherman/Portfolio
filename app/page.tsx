@@ -533,7 +533,7 @@ function TrayItem({
         filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
       }}
     >
-      <img src={src} alt={alt} style={{ width: "clamp(216px,22vw,405px)", objectFit: "contain" }} />
+      <img src={src} alt={alt} style={{ width: "clamp(324px,33vw,608px)", objectFit: "contain" }} />
       {label && (
         <span
           className="font-inter text-center"
@@ -655,6 +655,10 @@ function VideoCard({
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.muted = true;
+  }, []);
+
   return (
     <div
       className="work-card group relative overflow-hidden rounded-lg cursor-pointer"
@@ -672,6 +676,7 @@ function VideoCard({
         loop
         playsInline
         autoPlay
+        muted
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div
