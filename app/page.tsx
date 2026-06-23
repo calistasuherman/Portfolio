@@ -276,22 +276,11 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
 
             <Reveal>
-              <div className="flex justify-center mb-14">
-                <svg viewBox="0 0 500 260" width="500" height="260" style={{ maxWidth: "90vw" }}>
-                  <defs>
-                    <path id="curve" d="M 50,220 A 200,200 0 0,1 450,220" />
-                  </defs>
-                  <text fill="#f5f0f0" style={{ fontFamily: "var(--font-pinyon)", fontSize: "52px" }}>
-                    <textPath href="#curve" startOffset="50%" textAnchor="middle">
-                      What I bring to the table
-                    </textPath>
-                  </text>
-                </svg>
-              </div>
+              <TrayNav />
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection title={<DualHeading serif="YouTube" script="Integrations" size="sub" />}>
+              <WorkSubsection id="youtube-integrations" title={<DualHeading serif="YouTube" script="Integrations" size="sub" />}>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {youtubeIntegrations.map((item, i) => (
                     <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} />
@@ -301,7 +290,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection title={<DualHeading serif="Fashion &" script="Fit Checks" size="sub" />}>
+              <WorkSubsection id="fashion-checks" title={<DualHeading serif="Fashion &" script="Fit Checks" size="sub" />}>
                 <div style={{ columns: "3 180px", gap: "12px" }}>
                   {[
                     "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
@@ -328,7 +317,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection title={<DualHeading serif="Video" script="Editing" size="sub" />}>
+              <WorkSubsection id="video-editing" title={<DualHeading serif="Video" script="Editing" size="sub" />}>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   {Array.from({ length: 16 }).map((_, i) => (
                     <VideoCard key={i} label="" src={`/edit${i + 1}.mp4`} staggerDelay={i * 40} />
@@ -524,9 +513,65 @@ function DualHeading({ serif, script, size = "section" }: { serif: string; scrip
   );
 }
 
-function WorkSubsection({ title, children }: { title: React.ReactNode; children: React.ReactNode }) {
+function TrayNav() {
   return (
-    <div className="mb-20">
+    <div className="relative mx-auto mb-4" style={{ maxWidth: "680px", width: "100%" }}>
+      {/* Curved title over tray */}
+      <svg viewBox="0 0 680 200" width="100%" style={{ position: "absolute", top: 0, left: 0, zIndex: 3, pointerEvents: "none" }}>
+        <defs>
+          <path id="trayArc" d="M 40,195 A 300,250 0 0,1 640,195" />
+        </defs>
+        <text fill="#f5f0f0" style={{ fontFamily: "var(--font-pinyon)", fontSize: "40px" }}>
+          <textPath href="#trayArc" startOffset="50%" textAnchor="middle">
+            what I bring to the table
+          </textPath>
+        </text>
+      </svg>
+
+      {/* Tray */}
+      <div className="relative mx-auto" style={{
+        width: "100%",
+        paddingBottom: "58%",
+        marginTop: "110px",
+        borderRadius: "50%",
+        background: "radial-gradient(ellipse at 38% 32%, #ece6e0 0%, #c8bab0 45%, #9a8878 100%)",
+        boxShadow: "0 12px 48px rgba(0,0,0,0.5), inset 0 2px 6px rgba(255,255,255,0.5), inset 0 -3px 8px rgba(0,0,0,0.25)",
+        border: "2px solid rgba(210,198,188,0.6)",
+      }}>
+        {/* click us! */}
+        <span className="absolute font-cormorant italic" style={{
+          left: "6%", top: "44%",
+          color: "#7f1d1d", fontSize: "clamp(0.9rem,2vw,1.1rem)",
+          transform: "rotate(-12deg)", whiteSpace: "nowrap",
+        }}>
+          click us!
+        </span>
+
+        {/* Croissant → YouTube Integrations */}
+        <a href="#youtube-integrations" className="tray-item absolute flex flex-col items-center" style={{ left: "16%", top: "32%" }}>
+          <span style={{ fontSize: "clamp(2.5rem,6vw,4rem)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.25))" }}>🥐</span>
+          <span className="font-inter text-center" style={{ fontSize: "clamp(8px,1.2vw,11px)", color: "#3d1a0a", letterSpacing: "0.04em", marginTop: "4px" }}>youtube integrations</span>
+        </a>
+
+        {/* Ice cream → Fashion & Fit Checks */}
+        <a href="#fashion-checks" className="tray-item absolute flex flex-col items-center" style={{ left: "50%", top: "46%", transform: "translateX(-50%)" }}>
+          <span style={{ fontSize: "clamp(2.2rem,5.5vw,3.5rem)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.25))" }}>🍨</span>
+          <span className="font-inter text-center" style={{ fontSize: "clamp(8px,1.2vw,11px)", color: "#3d1a0a", letterSpacing: "0.04em", marginTop: "4px" }}>fashion/fit checks</span>
+        </a>
+
+        {/* Coffee → Video Editing */}
+        <a href="#video-editing" className="tray-item absolute flex flex-col items-center" style={{ right: "14%", top: "24%" }}>
+          <span style={{ fontSize: "clamp(2.5rem,6vw,4rem)", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.25))" }}>☕</span>
+          <span className="font-inter text-center" style={{ fontSize: "clamp(8px,1.2vw,11px)", color: "#3d1a0a", letterSpacing: "0.04em", marginTop: "4px" }}>video editing</span>
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function WorkSubsection({ id, title, children }: { id?: string; title: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <div id={id} className="mb-20" style={{ scrollMarginTop: "80px" }}>
       <div className="mb-8 text-center">
         {title}
       </div>
@@ -573,12 +618,18 @@ function VideoCard({
   const [muted, setMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.muted = true;
+  }, []);
+
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setMuted((m) => {
-      if (videoRef.current) videoRef.current.muted = !m;
-      return !m;
-    });
+    const video = videoRef.current;
+    if (!video) return;
+    const next = !muted;
+    video.muted = next;
+    if (!next) video.play().catch(() => {});
+    setMuted(next);
   };
 
   return (
@@ -595,7 +646,6 @@ function VideoCard({
       <video
         ref={videoRef}
         src={src}
-        muted
         loop
         playsInline
         autoPlay
