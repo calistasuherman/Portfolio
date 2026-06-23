@@ -588,19 +588,18 @@ function TrayItem({
 function TrayNav() {
   return (
     <div className="relative mx-auto mb-4" style={{ maxWidth: "1008px", width: "100%" }}>
-      <svg viewBox="0 0 680 200" width="100%" style={{ position: "absolute", top: 0, left: 0, zIndex: 3, pointerEvents: "none" }}>
-        <defs>
-          <path id="trayArc" d="M 40,195 A 300,250 0 0,1 640,195" />
-        </defs>
-        <text fill="#f5f0f0" style={{ fontFamily: "var(--font-melodrama)", fontSize: "36px" }}>
-          <textPath href="#trayArc" startOffset="50%" textAnchor="middle">
-            What I bring to the table
-          </textPath>
-        </text>
-      </svg>
-
       {/* Let the tray image set the container height naturally */}
       <div className="relative mx-auto" style={{ marginTop: "20px" }}>
+        <svg viewBox="0 0 1000 600" width="100%" style={{ position: "absolute", top: 0, left: 0, zIndex: 3, pointerEvents: "none" }}>
+          <defs>
+            <path id="trayArc" d="M 80,320 A 420,280 0 0,1 920,320" />
+          </defs>
+          <text style={{ fontFamily: "var(--font-melodrama)", fontSize: "38px" }}>
+            <textPath href="#trayArc" startOffset="50%" textAnchor="middle">
+              <tspan fill="#541010">what I </tspan><tspan fill="#541010" style={{ fontFamily: "var(--font-luxurious)", fontSize: "50px" }}>bring</tspan><tspan fill="#541010"> to the table</tspan>
+            </textPath>
+          </text>
+        </svg>
         <img
           src="/tray-bg.png"
           alt="Tray"
