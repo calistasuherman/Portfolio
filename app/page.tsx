@@ -603,11 +603,11 @@ function TrayItem({
 
 function TrayNav() {
   return (
-    <div className="mx-auto px-6 md:px-16 lg:px-32" style={{ maxWidth: "2400px" }}>
-      <div className="flex items-center gap-8 md:gap-12">
+    <div className="mx-auto px-2 md:px-6" style={{ maxWidth: "100%" }}>
+      <div className="flex items-center gap-4 md:gap-8">
 
         {/* Left: title */}
-        <div style={{ flex: "0 0 auto", width: "clamp(160px, 20vw, 280px)" }}>
+        <div style={{ flex: "0 0 auto", width: "clamp(140px, 16vw, 220px)" }}>
           <p style={{ fontFamily: "var(--font-melodrama)", fontSize: "clamp(2rem, 3.2vw, 3.6rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: 400 }}>
             What I{" "}
             <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(2.4rem, 3.8vw, 4.2rem)" }}>bring</span>
