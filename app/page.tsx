@@ -167,13 +167,8 @@ export default function Home() {
           />
 
           <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-24" style={{ zIndex: 3 }}>
-            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", lineHeight: 1 }}>
-              <div style={{ fontFamily: "var(--font-cinzel)", fontSize: "clamp(3rem, 10vw, 8rem)", fontWeight: 900, color: "#e8e0d8", letterSpacing: "0.05em", textTransform: "uppercase", lineHeight: 1, textShadow: "0 4px 24px rgba(0,0,0,0.5)" }}>
-                Calista&apos;s
-              </div>
-              <div style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3.5rem, 12vw, 9.5rem)", fontWeight: "normal", color: "#e8e0d8", lineHeight: 0.9, textShadow: "0 4px 24px rgba(0,0,0,0.45)" }}>
-                Portfolio
-              </div>
+            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
+              <TypingText lines={["Calista", "Suherman"]} style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#8B0000", lineHeight: 0.95, display: "block", textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }} />
             </div>
 
             <p
@@ -572,7 +567,7 @@ function TrayItem({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <img src={src} alt={alt} style={{ width: imgWidth ?? "clamp(616px,62vw,1156px)", objectFit: "contain", display: "block" }} />
+      <img src={src} alt={alt} style={{ width: imgWidth ?? "clamp(500px, 55vw, 1100px)", objectFit: "contain", display: "block" }} />
       {label && (
         <span
           style={{
@@ -608,11 +603,11 @@ function TrayItem({
 
 function TrayNav() {
   return (
-    <div className="mx-auto px-4 md:px-8" style={{ maxWidth: "2000px" }}>
+    <div className="mx-auto px-4 md:px-8" style={{ maxWidth: "2400px" }}>
       <div className="flex items-center gap-8 md:gap-16">
 
         {/* Left: title text */}
-        <div style={{ flex: "0 0 auto", width: "clamp(200px, 26vw, 380px)" }}>
+        <div style={{ flex: "0 0 auto", width: "clamp(200px, 22vw, 360px)" }}>
           <p style={{
             fontFamily: "var(--font-melodrama)",
             fontSize: "clamp(2.6rem, 4.5vw, 4.2rem)",
@@ -644,7 +639,7 @@ function TrayNav() {
             src="/tray-figs.png"
             alt="Fashion & Fit Checks"
             label="fashion / fit checks"
-            imgWidth="clamp(554px,55.8vw,1040px)"
+            imgWidth="clamp(450px, 48vw, 950px)"
             style={{ position: "absolute", left: "52%", top: "58%", transform: "translate(-50%, -50%)", zIndex: 2 }}
           />
 
@@ -653,7 +648,7 @@ function TrayNav() {
             src="/tray-coffee.png"
             alt="Video Editing"
             label="video editing"
-            imgWidth="clamp(554px,55.8vw,1040px)"
+            imgWidth="clamp(450px, 48vw, 950px)"
             labelTop="38%"
             labelLeft="48%"
             style={{ position: "absolute", left: "58%", top: "32%", transform: "translate(-50%, -50%)", zIndex: 2 }}
