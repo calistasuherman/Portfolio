@@ -567,7 +567,7 @@ function TrayItem({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <img src={src} alt={alt} style={{ width: imgWidth ?? "clamp(160px, 28vw, 380px)", objectFit: "contain", display: "block" }} />
+      <img src={src} alt={alt} style={{ width: imgWidth ?? "clamp(320px, 28vw, 760px)", objectFit: "contain", display: "block" }} />
       {label && (
         <span
           style={{
@@ -603,7 +603,7 @@ function TrayItem({
 
 function TrayNav() {
   return (
-    <div className="mx-auto px-6 md:px-16 lg:px-32" style={{ maxWidth: "1200px" }}>
+    <div className="mx-auto px-6 md:px-16 lg:px-32" style={{ maxWidth: "2400px" }}>
       <div className="flex items-center gap-8 md:gap-12">
 
         {/* Left: title */}
