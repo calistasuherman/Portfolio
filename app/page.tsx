@@ -622,7 +622,7 @@ function TrayNav() {
             alt="YouTube Integrations"
             label="youtube integrations"
             rotate={-15}
-            style={{ position: "absolute", left: "20%", top: "55%", transform: "translate(-50%, -50%)", zIndex: 2, width: "30%" }}
+            style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }}
           />
 
           {/* Figs — center */}
