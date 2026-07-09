@@ -567,7 +567,7 @@ function TrayItem({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <img src={src} alt={alt} style={{ width: imgWidth ?? "clamp(500px, 55vw, 1100px)", objectFit: "contain", display: "block" }} />
+      <img src={src} alt={alt} style={{ width: imgWidth ?? "clamp(700px, 80vw, 1500px)", objectFit: "contain", display: "block" }} />
       {label && (
         <span
           style={{
@@ -629,7 +629,7 @@ function TrayNav() {
           src="/tray-croissant.png"
           alt="YouTube Integrations"
           label="youtube integrations"
-          imgWidth="28%"
+          imgWidth="clamp(650px, 72vw, 1350px)"
           rotate={-15}
           style={{ position: "absolute", left: "18%", top: "48%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
@@ -640,7 +640,7 @@ function TrayNav() {
           src="/tray-figs.png"
           alt="Fashion & Fit Checks"
           label="fashion / fit checks"
-          imgWidth="26%"
+          imgWidth="clamp(650px, 72vw, 1350px)"
           style={{ position: "absolute", left: "50%", top: "65%", transform: "translate(-50%, -50%)", zIndex: 2 }}
         />
 
@@ -650,7 +650,7 @@ function TrayNav() {
           src="/tray-coffee.png"
           alt="Video Editing"
           label="video editing"
-          imgWidth="26%"
+          imgWidth="clamp(650px, 72vw, 1350px)"
           labelTop="38%"
           labelLeft="48%"
           style={{ position: "absolute", left: "78%", top: "40%", transform: "translate(-50%, -50%)", zIndex: 2 }}
