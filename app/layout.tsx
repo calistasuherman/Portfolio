@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond, Pinyon_Script, Instrument_Serif, Luxurious_Script } from "next/font/google";
+import { Inter, Cormorant_Garamond, Pinyon_Script, Instrument_Serif, Luxurious_Script, Cinzel } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -26,6 +26,12 @@ const luxuriousScript = Luxurious_Script({
   variable: "--font-luxurious",
 });
 
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  variable: "--font-cinzel",
+});
+
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: ["400"],
@@ -44,7 +50,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${cormorant.variable} ${pinyon.variable} ${instrumentSerif.variable} ${luxuriousScript.variable} bg-bg text-text-primary antialiased`}>
+      <body className={`${inter.variable} ${cormorant.variable} ${pinyon.variable} ${instrumentSerif.variable} ${luxuriousScript.variable} ${cinzel.variable} bg-bg text-text-primary antialiased`}>
         {children}
       </body>
     </html>

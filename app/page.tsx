@@ -167,8 +167,13 @@ export default function Home() {
           />
 
           <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-24" style={{ zIndex: 3 }}>
-            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-              <TypingText lines={["Calista", "Suherman"]} style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#8B0000", lineHeight: 0.95, display: "block", textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }} />
+            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", lineHeight: 1 }}>
+              <div style={{ fontFamily: "var(--font-cinzel)", fontSize: "clamp(3rem, 10vw, 8rem)", fontWeight: 900, color: "#e8e0d8", letterSpacing: "0.05em", textTransform: "uppercase", lineHeight: 1, textShadow: "0 4px 24px rgba(0,0,0,0.5)" }}>
+                Calista&apos;s
+              </div>
+              <div style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3.5rem, 12vw, 9.5rem)", fontWeight: "normal", color: "#e8e0d8", lineHeight: 0.9, textShadow: "0 4px 24px rgba(0,0,0,0.45)" }}>
+                Portfolio
+              </div>
             </div>
 
             <p
@@ -212,7 +217,7 @@ export default function Home() {
                 className="leading-none mb-10"
                 style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 400, color: "#f5f0f0" }}
               >
-                About Me
+                Who&apos;s that star?
               </h2>
               <div className="space-y-3 font-inter text-text-muted text-sm md:text-[15px]">
                 {["Content Creator", "Video Editor", "Coffee Connoisseur", "Frequent Traveler", "Gen Z (21 Y/O)", "Fashion Lover", "SF Based"].map((item) => (
@@ -274,6 +279,16 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
+              <WorkSubsection id="video-editing" title={<DualHeading serif="Video" script="Editing" size="large" />}>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                  {Array.from({ length: 16 }).map((_, i) => (
+                    <VideoCard key={i} label="" src={`/edit${i + 1}.mp4`} staggerDelay={i * 40} />
+                  ))}
+                </div>
+              </WorkSubsection>
+            </Reveal>
+
+            <Reveal delay={80}>
               <WorkSubsection id="fashion-checks" title={<DualHeading serif="Fashion &" script="Fit Checks" size="sub" noOverlap />}>
                 <div style={{ columns: "3 180px", gap: "12px" }}>
                   {[
@@ -295,16 +310,6 @@ export default function Home() {
                         }}
                       />
                     </div>
-                  ))}
-                </div>
-              </WorkSubsection>
-            </Reveal>
-
-            <Reveal delay={80}>
-              <WorkSubsection id="video-editing" title={<DualHeading serif="Video" script="Editing" size="large" />}>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {Array.from({ length: 16 }).map((_, i) => (
-                    <VideoCard key={i} label="" src={`/edit${i + 1}.mp4`} staggerDelay={i * 40} />
                   ))}
                 </div>
               </WorkSubsection>
@@ -567,7 +572,7 @@ function TrayItem({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <img src={src} alt={alt} style={{ width: imgWidth ?? "clamp(308px,31vw,578px)", objectFit: "contain", display: "block" }} />
+      <img src={src} alt={alt} style={{ width: imgWidth ?? "clamp(616px,62vw,1156px)", objectFit: "contain", display: "block" }} />
       {label && (
         <span
           style={{
@@ -603,7 +608,7 @@ function TrayItem({
 
 function TrayNav() {
   return (
-    <div className="mx-auto px-6 md:px-16 lg:px-32" style={{ maxWidth: "1600px" }}>
+    <div className="mx-auto px-4 md:px-8" style={{ maxWidth: "2000px" }}>
       <div className="flex items-center gap-8 md:gap-16">
 
         {/* Left: title text */}
@@ -639,7 +644,7 @@ function TrayNav() {
             src="/tray-figs.png"
             alt="Fashion & Fit Checks"
             label="fashion / fit checks"
-            imgWidth="clamp(277px,27.9vw,520px)"
+            imgWidth="clamp(554px,55.8vw,1040px)"
             style={{ position: "absolute", left: "52%", top: "58%", transform: "translate(-50%, -50%)", zIndex: 2 }}
           />
 
@@ -648,7 +653,7 @@ function TrayNav() {
             src="/tray-coffee.png"
             alt="Video Editing"
             label="video editing"
-            imgWidth="clamp(277px,27.9vw,520px)"
+            imgWidth="clamp(554px,55.8vw,1040px)"
             labelTop="38%"
             labelLeft="48%"
             style={{ position: "absolute", left: "58%", top: "32%", transform: "translate(-50%, -50%)", zIndex: 2 }}
