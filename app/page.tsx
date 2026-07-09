@@ -166,16 +166,16 @@ export default function Home() {
             style={{ background: "rgba(0,0,0,0.18)", zIndex: 1 }}
           />
 
-          <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-16" style={{ zIndex: 3 }}>
+          <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-24" style={{ zIndex: 3 }}>
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-              <TypingText lines={["Calista", "Suherman"]} style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#541010", lineHeight: 0.95, display: "block", textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }} />
+              <TypingText lines={["Calista", "Suherman"]} style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#8B0000", lineHeight: 0.95, display: "block", textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }} />
             </div>
 
             <p
               className={`font-inter text-text-muted text-[11px] md:text-xs mt-8 tracking-[0.15em] hero-item${heroVisible ? " hero-visible" : ""}`}
               style={{ transitionDelay: "0.55s" }}
             >
-              Fashion &amp; Lifestyle Content Creator · Video Editor
+              Content Creator · Video Editor · Videographer
             </p>
 
             <div
@@ -214,13 +214,11 @@ export default function Home() {
               >
                 About Me
               </h2>
-              <div className="space-y-5 font-inter text-text-muted text-sm md:text-[15px] leading-relaxed">
-                <p>The name&apos;s Calista — content creator, video editor, chronic over-thinker about frame rates.</p>
-                <p>I&apos;ve been making fashion and lifestyle content for four years, based out of San Francisco with a weakness for New York. The goal has always been simple: make something that doesn&apos;t feel like an ad, even when it is.</p>
-                <p>Seven hundred thousand followers later, I&apos;ve worked with brands like BetterHelp, Aelfric Eden, Teddy Blake, and Lewkin on YouTube integrations that actually sound like me — not a script someone emailed at 11pm.</p>
-                <p>The editing is where it all comes together. That part&apos;s never going to get old.</p>
+              <div className="space-y-3 font-inter text-text-muted text-sm md:text-[15px]">
+                {["Content Creator", "Video Editor", "Coffee Connoisseur", "Frequent Traveler", "Gen Z (21 Y/O)", "Fashion Lover", "SF Based"].map((item) => (
+                  <p key={item} style={{ letterSpacing: "0.04em" }}>{item}</p>
+                ))}
               </div>
-              <AnalyticsGrid />
             </Reveal>
 
             <Reveal className="flex justify-center order-2" direction="right" delay={200}>
@@ -605,20 +603,20 @@ function TrayItem({
 
 function TrayNav() {
   return (
-    <div className="mx-auto px-6 md:px-16 lg:px-32" style={{ maxWidth: "1400px" }}>
-      <div className="flex items-center gap-8 md:gap-12">
+    <div className="mx-auto px-6 md:px-16 lg:px-32" style={{ maxWidth: "1600px" }}>
+      <div className="flex items-center gap-8 md:gap-16">
 
         {/* Left: title text */}
-        <div style={{ flex: "0 0 auto", width: "clamp(160px, 22vw, 300px)" }}>
+        <div style={{ flex: "0 0 auto", width: "clamp(200px, 26vw, 380px)" }}>
           <p style={{
             fontFamily: "var(--font-melodrama)",
-            fontSize: "clamp(2rem, 3.5vw, 3.2rem)",
-            color: "#541010",
+            fontSize: "clamp(2.6rem, 4.5vw, 4.2rem)",
+            color: "#f5f0f0",
             lineHeight: 1.15,
             fontWeight: 400,
           }}>
             What I{" "}
-            <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(2.4rem, 4.2vw, 3.8rem)" }}>bring</span>
+            <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(3rem, 5.2vw, 4.8rem)" }}>bring</span>
             <br />to the table
           </p>
         </div>
