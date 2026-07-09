@@ -603,21 +603,17 @@ function TrayItem({
 
 function TrayNav() {
   return (
-    <div className="mx-auto px-2 md:px-6" style={{ maxWidth: "100%" }}>
-      <div className="flex items-center gap-4 md:gap-8">
-
-        {/* Left: title */}
-        <div style={{ flex: "0 0 auto", width: "clamp(140px, 16vw, 220px)" }}>
-          <p style={{ fontFamily: "var(--font-melodrama)", fontSize: "clamp(2rem, 3.2vw, 3.6rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: 400 }}>
-            What I{" "}
-            <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(2.4rem, 3.8vw, 4.2rem)" }}>bring</span>
-            <br />to the table
-          </p>
-        </div>
-
-        {/* Right: tray */}
-        <div className="relative" style={{ flex: "1 1 auto" }}>
+    <div style={{ width: "100%" }}>
+      <div className="relative">
           <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))" }} />
+
+          {/* Title overlay — top left */}
+          <div style={{ position: "absolute", left: "3%", top: "8%", zIndex: 4 }}>
+            <p style={{ fontFamily: "var(--font-melodrama)", fontSize: "clamp(1.4rem, 2.8vw, 3.2rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: 400 }}>
+              What I <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(1.7rem, 3.4vw, 3.8rem)" }}>bring</span>
+              <br />to the table
+            </p>
+          </div>
 
           {/* Croissant — left third */}
           <TrayItem
@@ -626,7 +622,7 @@ function TrayNav() {
             alt="YouTube Integrations"
             label="youtube integrations"
             rotate={-15}
-            style={{ position: "absolute", left: "20%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "30%" }}
+            style={{ position: "absolute", left: "20%", top: "55%", transform: "translate(-50%, -50%)", zIndex: 2, width: "30%" }}
           />
 
           {/* Figs — center */}
@@ -635,7 +631,7 @@ function TrayNav() {
             src="/tray-figs.png"
             alt="Fashion & Fit Checks"
             label="fashion / fit checks"
-            style={{ position: "absolute", left: "50%", top: "60%", transform: "translate(-50%, -50%)", zIndex: 3, width: "28%" }}
+            style={{ position: "absolute", left: "50%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "28%" }}
           />
 
           {/* Coffee — right third */}
@@ -644,10 +640,8 @@ function TrayNav() {
             src="/tray-coffee.png"
             alt="Video Editing"
             label="video editing"
-            style={{ position: "absolute", left: "80%", top: "42%", transform: "translate(-50%, -50%)", zIndex: 2, width: "28%" }}
+            style={{ position: "absolute", left: "80%", top: "45%", transform: "translate(-50%, -50%)", zIndex: 2, width: "28%" }}
           />
-        </div>
-
       </div>
     </div>
   );
