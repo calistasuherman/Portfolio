@@ -38,11 +38,11 @@ const analytics = [
 ];
 
 const youtubeIntegrations = [
-  { label: "BetterHelp", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%201.mov" },
-  { label: "Just4Kira", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%202.mov" },
-  { label: "BypassGPT", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%203.mov" },
-  { label: "Lewkin", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%204.mov" },
-  { label: "Teddy Blake", src: "https://fakm96vai58f7jtz.public.blob.vercel-storage.com/Timeline%205.mov" },
+  { label: "BetterHelp", src: "https://www.youtube.com/embed/X0uBLwDX6Ts?si=RX1uBvnDw5RxGOxz" },
+  { label: "Just4Kira", src: "https://www.youtube.com/embed/ZJncNvueOXY?si=luo-or4fzn7k2Sv0" },
+  { label: "BypassGPT", src: "https://www.youtube.com/embed/BE4aL_Et5Qs?si=ljK4XUkZNvvSR22p" },
+  { label: "Lewkin", src: "https://www.youtube.com/embed/XbmPuqKJ-jk?si=f1Sow56iIDepYpyc" },
+  { label: "Teddy Blake", src: "https://www.youtube.com/embed/mPfFQHJJ-OU?si=alXDdnfZo3OeaxDB" },
   { label: "Aelfric Eden", src: "/timeline6.mp4" },
 ];
 
@@ -684,6 +684,7 @@ function VideoCard({
 }) {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const isYouTube = src.includes("youtube.com/embed");
 
   useEffect(() => {
     if (videoRef.current) videoRef.current.muted = true;
@@ -700,15 +701,26 @@ function VideoCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <video
-        ref={videoRef}
-        src={src}
-        loop
-        playsInline
-        autoPlay
-        muted
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+      {isYouTube ? (
+        <iframe
+          src={src}
+          title={label}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="absolute inset-0 w-full h-full"
+          style={{ border: "none" }}
+        />
+      ) : (
+        <video
+          ref={videoRef}
+          src={src}
+          loop
+          playsInline
+          autoPlay
+          muted
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
       <div
         className="absolute bottom-0 left-0 right-0 px-3 py-2 flex items-center justify-between"
         style={{ background: "linear-gradient(to top, rgba(13,0,0,0.85), transparent)" }}
