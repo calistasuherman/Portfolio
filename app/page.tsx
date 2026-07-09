@@ -567,7 +567,7 @@ function TrayItem({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <img src={src} alt={alt} style={{ width: imgWidth ?? "clamp(700px, 80vw, 1500px)", objectFit: "contain", display: "block" }} />
+      <img src={src} alt={alt} style={{ width: imgWidth ?? "clamp(160px, 28vw, 380px)", objectFit: "contain", display: "block" }} />
       {label && (
         <span
           style={{
@@ -603,58 +603,51 @@ function TrayItem({
 
 function TrayNav() {
   return (
-    <div style={{ width: "100vw", position: "relative", left: "50%", transform: "translateX(-50%)" }}>
-      {/* Full-width tray container */}
-      <div className="relative">
-        <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block", filter: "drop-shadow(0 12px 48px rgba(0,0,0,0.4))" }} />
+    <div className="mx-auto px-6 md:px-16 lg:px-32" style={{ maxWidth: "1200px" }}>
+      <div className="flex items-center gap-8 md:gap-12">
 
-        {/* "What I bring to the table" overlaid top-left */}
-        <div style={{ position: "absolute", left: "3%", top: "10%", zIndex: 4 }}>
-          <p style={{
-            fontFamily: "var(--font-melodrama)",
-            fontSize: "clamp(2.6rem, 4.5vw, 5rem)",
-            color: "#f5f0f0",
-            lineHeight: 1.1,
-            fontWeight: 400,
-          }}>
+        {/* Left: title */}
+        <div style={{ flex: "0 0 auto", width: "clamp(160px, 20vw, 280px)" }}>
+          <p style={{ fontFamily: "var(--font-melodrama)", fontSize: "clamp(2rem, 3.2vw, 3.6rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: 400 }}>
             What I{" "}
-            <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(3rem, 5.5vw, 5.8rem)" }}>bring</span>
+            <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(2.4rem, 3.8vw, 4.2rem)" }}>bring</span>
             <br />to the table
           </p>
         </div>
 
-        {/* Croissant — left third */}
-        <TrayItem
-          href="#youtube-integrations"
-          src="/tray-croissant.png"
-          alt="YouTube Integrations"
-          label="youtube integrations"
-          imgWidth="clamp(650px, 72vw, 1350px)"
-          rotate={-15}
-          style={{ position: "absolute", left: "18%", top: "48%", transform: "translate(-50%, -50%)", zIndex: 2 }}
-        />
+        {/* Right: tray */}
+        <div className="relative" style={{ flex: "1 1 auto" }}>
+          <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))" }} />
 
-        {/* Figs — center bottom */}
-        <TrayItem
-          href="#fashion-checks"
-          src="/tray-figs.png"
-          alt="Fashion & Fit Checks"
-          label="fashion / fit checks"
-          imgWidth="clamp(650px, 72vw, 1350px)"
-          style={{ position: "absolute", left: "50%", top: "65%", transform: "translate(-50%, -50%)", zIndex: 2 }}
-        />
+          {/* Croissant — left third */}
+          <TrayItem
+            href="#youtube-integrations"
+            src="/tray-croissant.png"
+            alt="YouTube Integrations"
+            label="youtube integrations"
+            rotate={-15}
+            style={{ position: "absolute", left: "22%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          />
 
-        {/* Coffee — right third */}
-        <TrayItem
-          href="#video-editing"
-          src="/tray-coffee.png"
-          alt="Video Editing"
-          label="video editing"
-          imgWidth="clamp(650px, 72vw, 1350px)"
-          labelTop="38%"
-          labelLeft="48%"
-          style={{ position: "absolute", left: "78%", top: "40%", transform: "translate(-50%, -50%)", zIndex: 2 }}
-        />
+          {/* Figs — center */}
+          <TrayItem
+            href="#fashion-checks"
+            src="/tray-figs.png"
+            alt="Fashion & Fit Checks"
+            label="fashion / fit checks"
+            style={{ position: "absolute", left: "50%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3 }}
+          />
+
+          {/* Coffee — right third */}
+          <TrayItem
+            href="#video-editing"
+            src="/tray-coffee.png"
+            alt="Video Editing"
+            label="video editing"
+            style={{ position: "absolute", left: "78%", top: "38%", transform: "translate(-50%, -50%)", zIndex: 2 }}
+          />
+        </div>
+
       </div>
     </div>
   );
