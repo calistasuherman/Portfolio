@@ -621,7 +621,7 @@ function TrayNav() {
             src="/tray-croissant.png"
             alt="YouTube Integrations"
             label="youtube integrations"
-            rotate={-15}
+            rotate={-10}
             style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }}
           />
 
