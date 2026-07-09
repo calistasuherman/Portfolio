@@ -38,11 +38,11 @@ const analytics = [
 ];
 
 const youtubeIntegrations = [
-  { label: "BetterHelp", src: "https://www.youtube.com/embed/X0uBLwDX6Ts?si=RX1uBvnDw5RxGOxz" },
-  { label: "Just4Kira", src: "https://www.youtube.com/embed/ZJncNvueOXY?si=luo-or4fzn7k2Sv0" },
-  { label: "BypassGPT", src: "https://www.youtube.com/embed/BE4aL_Et5Qs?si=ljK4XUkZNvvSR22p" },
-  { label: "Lewkin", src: "https://www.youtube.com/embed/XbmPuqKJ-jk?si=f1Sow56iIDepYpyc" },
-  { label: "Teddy Blake", src: "https://www.youtube.com/embed/mPfFQHJJ-OU?si=alXDdnfZo3OeaxDB" },
+  { label: "BetterHelp", src: "https://drive.google.com/file/d/1AEuTM3ICaPefspXBHq_6MdZjuvBVhnk8/preview" },
+  { label: "Just4Kira", src: "https://drive.google.com/file/d/17dFdcpQd2scdLZF7_Yh82S7NmQdgn3ri/preview" },
+  { label: "BypassGPT", src: "https://drive.google.com/file/d/1EdR1dsZgxdVDp0pNCxWRjRB9cdgx6Xa6/preview" },
+  { label: "Lewkin", src: "https://drive.google.com/file/d/1RSgNWatSlFoJqI1QcV6WaT1YTGalYssI/preview" },
+  { label: "Teddy Blake", src: "https://drive.google.com/file/d/1CrJ2MoB-A7tW41qDQosg2ZXmgRJ8elvX/preview" },
   { label: "Aelfric Eden", src: "/timeline6.mp4" },
 ];
 
@@ -684,7 +684,7 @@ function VideoCard({
 }) {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const isYouTube = src.includes("youtube.com/embed");
+  const isEmbed = src.includes("youtube.com/embed") || src.includes("drive.google.com");
 
   useEffect(() => {
     if (videoRef.current) videoRef.current.muted = true;
@@ -701,7 +701,7 @@ function VideoCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {isYouTube ? (
+      {isEmbed ? (
         <iframe
           src={src}
           title={label}
