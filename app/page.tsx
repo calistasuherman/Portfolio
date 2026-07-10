@@ -168,8 +168,8 @@ export default function Home() {
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative" }}>
               <div style={{ position: "relative" }} suppressHydrationWarning>
                 {/* Echo layers */}
-                <div aria-hidden="true" style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none" }}>Calista Suherman</div>
-                <div aria-hidden="true" style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.1, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none" }}>Calista Suherman</div>
+                <div aria-hidden="true" style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none" }}>Calista Suherman</div>
+                <div aria-hidden="true" style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none" }}>Calista Suherman</div>
                 {/* Main text */}
                 <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap" }}>Calista Suherman</div>
               </div>
@@ -192,24 +192,26 @@ export default function Home() {
           </div>
 
           {/* CS monogram — bottom right */}
-          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", bottom: "2rem", right: "2.5rem", width: "clamp(60px, 8vw, 100px)", opacity: 0.9, zIndex: 3 }} />
+          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", bottom: "2rem", right: "2.5rem", width: "clamp(30px, 4vw, 50px)", opacity: 0.9, zIndex: 3 }} />
 
         </section>
 
         {/* ── About ── */}
         <section id="about" className="section-content relative pt-24 md:pt-36 pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ backgroundImage: "url('/about-bg.jpg')", backgroundSize: "cover", backgroundPosition: "center top" }}>
+          {/* CS monogram — bottom right of about section */}
+          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", bottom: "2rem", right: "2.5rem", width: "clamp(30px, 4vw, 50px)", opacity: 0.7, zIndex: 4 }} />
           <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10 whitespace-nowrap"
-                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(2rem, 5vw, 4.5rem)", fontWeight: 400, color: "#960018" }}
+                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 10vw, 9rem)", fontWeight: 400, color: "#f5f0f0" }}
               >
                 Who&apos;s that star?
               </h2>
-              <div className="space-y-3 font-inter text-text-muted text-sm md:text-[15px]">
+              <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.8rem, 1.5vw, 1.1rem)" }}>
                 {["Content Creator", "Video Editor", "Coffee Connoisseur", "Frequent Traveler", "Gen Z (21 Y/O)", "Fashion Lover", "SF Based"].map((item) => (
-                  <p key={item} style={{ letterSpacing: "0.04em" }}>{item}</p>
+                  <p key={item} style={{ letterSpacing: "0.04em", textTransform: "uppercase" }}>{item}</p>
                 ))}
               </div>
             </Reveal>
