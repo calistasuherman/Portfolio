@@ -141,7 +141,7 @@ export default function Home() {
               <a
                 key={link.href}
                 href={link.href}
-                className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary transition-colors duration-300"
+                className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary transition-colors duration-300" style={{ fontFamily: "JosefinSans, sans-serif" }}
               >
                 {link.label}
               </a>
@@ -161,16 +161,12 @@ export default function Home() {
           >
             <source src="/hero.mp4" type="video/mp4" />
           </video>
-          <div
-            className="absolute inset-0"
-            style={{ background: "rgba(0,0,0,0.18)", zIndex: 1 }}
-          />
 
           <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-24" style={{ zIndex: 3 }}>
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "0.25em" }} suppressHydrationWarning>
-                <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 0.95, textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }}>Calista</span>
-                <span style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(2rem, 7vw, 5rem)", fontWeight: 300, color: "#960018", lineHeight: 0.95, fontStyle: "italic", textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }}>Suherman</span>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "1.5em" }} suppressHydrationWarning>
+                <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(6rem, 10vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 0.95 }}>Calista</span>
+                <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(6rem, 7vw, 5rem)", fontWeight: 300, color: "#960018", lineHeight: 0.95 }}>Suherman</span>
               </div>
             </div>
 
