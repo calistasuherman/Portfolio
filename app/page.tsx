@@ -603,7 +603,7 @@ function TrayItem({
 function FlipPhoto() {
   const [show, setShow] = useState(false);
   useEffect(() => {
-    const t = setInterval(() => setShow(s => !s), 250);
+    const t = setInterval(() => setShow(s => !s), 500);
     return () => clearInterval(t);
   }, []);
   return (
