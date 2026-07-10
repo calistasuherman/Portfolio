@@ -132,9 +132,9 @@ export default function Home() {
         {/* ── Nav ── */}
         <header className="section-content fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-5 px-6">
           {/* CS monogram — fixed left */}
-          <img src="/cs-monogram.png" alt="CS" style={{ width: "clamp(28px, 3.5vw, 44px)", opacity: 0.9 }} />
-          {/* Nav pill — right */}
-          <nav className="nav-pill flex gap-8 md:gap-12">
+          <img src="/cs-monogram.png" alt="CS" style={{ width: "clamp(42px, 5.25vw, 66px)", opacity: 0.9 }} />
+          {/* Nav — right, no background pill */}
+          <nav className="flex gap-8 md:gap-12">
             {[
               { label: "About", href: "#about" },
               { label: "My Work", href: "#work" },
@@ -144,7 +144,7 @@ export default function Home() {
               <a
                 key={link.href}
                 href={link.href}
-                className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary hover:tracking-[0.28em] transition-all duration-300"
+                className="font-melodrama text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary hover:tracking-[0.28em] transition-all duration-300"
               >
                 {link.label}
               </a>
@@ -165,10 +165,10 @@ export default function Home() {
             <source src="/hero.mp4" type="video/mp4" />
           </video>
 
-          <div className="absolute inset-0 flex flex-col items-start justify-center pt-16" style={{ zIndex: 3, paddingLeft: "clamp(1.5rem, 5vw, 2.5rem)" }}>
+          <div className="absolute inset-0 flex flex-col items-center justify-center pt-16" style={{ zIndex: 3 }}>
 
             {/* Name block with echo effect */}
-            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative" }}>
+            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative", textAlign: "center" }}>
               <div style={{ position: "relative" }} suppressHydrationWarning>
                 <div aria-hidden="true" style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none" }}>Calista Suherman</div>
                 <div aria-hidden="true" style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none" }}>Calista Suherman</div>
@@ -176,31 +176,26 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Tagline + Buttons — below Calista Suherman */}
-            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.5rem", textAlign: "left" }}>
-              <p className="font-inter text-text-muted text-[11px] md:text-xs tracking-[0.12em] mb-6">
+            {/* Tagline + Buttons — below Calista Suherman, centered */}
+            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.5rem", textAlign: "center" }}>
+              <p style={{ fontFamily: "var(--font-melodrama)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
                 Visual storytelling through video, editing &amp; creative direction.
               </p>
-              <div className="flex items-center justify-start gap-4">
-                <a href="#work" className="inline-block px-8 py-3 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)" }}>
+              <div className="flex items-center justify-center gap-4">
+                <a href="#work" className="inline-block px-8 py-3 rounded-full text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "var(--font-melodrama)" }}>
                   explore my work
                 </a>
-                <a href="#contact" className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted font-inter text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95">
+                <a href="#contact" className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "var(--font-melodrama)" }}>
                   work with me
                 </a>
               </div>
             </div>
           </div>
 
-          {/* CS monogram — bottom right */}
-          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", bottom: "0.5rem", right: "0.75rem", width: "clamp(30px, 4vw, 50px)", opacity: 0.9, zIndex: 3 }} />
-
         </section>
 
         {/* ── About ── */}
         <section id="about" className="section-content relative pt-24 md:pt-36 pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ backgroundImage: "url('/about-bg.jpg')", backgroundSize: "cover", backgroundPosition: "center top" }}>
-          {/* CS monogram — bottom right of about section */}
-          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", bottom: "0.5rem", right: "0.75rem", width: "clamp(30px, 4vw, 50px)", opacity: 0.7, zIndex: 4 }} />
           <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
             <Reveal className="order-1" direction="left">
@@ -210,7 +205,7 @@ export default function Home() {
               >
                 Who&apos;s that star?
               </h2>
-              <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.8rem, 1.5vw, 1.1rem)" }}>
+              <div className="space-y-3 font-melodrama text-text-muted" style={{ fontSize: "clamp(0.8rem, 1.5vw, 1.1rem)" }}>
                 {["Content Creator", "Video Editor", "Videographer", "Coffee Connoisseur", "Frequent Traveler", "Gen Z (21 Y/O)", "Fashion Lover", "SF Based"].map((item) => (
                   <p key={item} style={{ letterSpacing: "0.04em", textTransform: "uppercase" }}>{item}</p>
                 ))}
@@ -225,11 +220,11 @@ export default function Home() {
 
         {/* ── Trusted By ── */}
         <section className="section-content relative py-10 overflow-hidden">
-          <p className="text-center font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted mb-6 opacity-60">Trusted by</p>
+          <p className="text-center font-melodrama text-[10px] uppercase tracking-[0.25em] text-text-muted mb-6 opacity-60">Trusted by</p>
           <div className="relative">
             <div style={{ display: "flex", animation: "marquee 28s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
               {[...brands, ...brands].map((b, i) => (
-                <span key={i} className="font-inter text-text-muted opacity-50 hover:opacity-100 transition-opacity duration-300" style={{ fontSize: "clamp(10px,1.2vw,13px)", letterSpacing: "0.18em", textTransform: "uppercase", padding: "0 clamp(16px,2.5vw,36px)" }}>{b}</span>
+                <span key={i} className="font-melodrama text-text-muted opacity-50 hover:opacity-100 transition-opacity duration-300" style={{ fontSize: "clamp(10px,1.2vw,13px)", letterSpacing: "0.18em", textTransform: "uppercase", padding: "0 clamp(16px,2.5vw,36px)" }}>{b}</span>
               ))}
             </div>
           </div>
@@ -274,7 +269,6 @@ export default function Home() {
                     "/fashion5.jpg","/fashion6.jpg","/fashion7.jpg","/fashion8.jpg",
                     "/fashion9.jpg","/fashion10.jpg","/fashion11.jpg","/fashion12.jpg",
                     "/fashion13.jpg","/fashion14.jpg","/fashion15.jpg","/fashion16.jpg",
-                    "/DSCN9257.jpg",
                   ].map((src, i) => (
                     <div key={i} style={{ breakInside: "avoid", marginBottom: "10px" }}>
                       <img
@@ -304,7 +298,7 @@ export default function Home() {
             <Reveal>
               <div className="mb-14 overflow-hidden">
                 <div style={{ lineHeight: 0.85 }}>
-                  <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3.75rem, 9vw, 8.25rem)", fontWeight: "normal", color: "#f5f0f0", whiteSpace: "nowrap" }}>Signature Services</div>
+                  <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 8vw, 8.25rem)", fontWeight: "normal", color: "#f5f0f0" }}>Signature Services</div>
                 </div>
               </div>
             </Reveal>
@@ -315,7 +309,7 @@ export default function Home() {
                     <h4 className="text-text-primary text-xl md:text-2xl mb-3" style={{ fontFamily: "var(--font-melodrama)", fontWeight: 400 }}>
                       {s.title}
                     </h4>
-                    <p className="font-inter text-text-muted text-[13px] leading-relaxed">{s.desc}</p>
+                    <p className="font-melodrama text-text-muted text-[13px] leading-relaxed">{s.desc}</p>
                   </div>
                 </Reveal>
               ))}
@@ -334,7 +328,7 @@ export default function Home() {
 
         {/* ── Footer ── */}
         <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
-          <p className="font-inter text-[10px] uppercase tracking-[0.3em] text-text-muted opacity-40">
+          <p className="font-melodrama text-[10px] uppercase tracking-[0.3em] text-text-muted opacity-40">
             © 2026 CAL1STAR — Calista Suherman
           </p>
         </footer>
@@ -434,7 +428,7 @@ function StatCard({
       <p className="text-2xl md:text-3xl text-text-primary" style={{ fontFamily: "var(--font-melodrama)", fontWeight: 400 }}>
         {display}
       </p>
-      <p className="font-inter text-[10px] uppercase tracking-widest text-text-muted mt-1">{stat.label}</p>
+      <p className="font-melodrama text-[10px] uppercase tracking-widest text-text-muted mt-1">{stat.label}</p>
     </div>
   );
 }
@@ -461,7 +455,7 @@ function DualHeading({ serif, script, size = "section", noOverlap = false }: { s
       </span>
       <span
         style={{
-          fontFamily: "var(--font-luxurious)",
+          fontFamily: "var(--font-melodrama)",
           fontSize: scriptSize,
           fontWeight: "normal",
           color: "#f5f0f0",
@@ -526,7 +520,7 @@ function TrayItem({
             top: labelTop ?? "45%",
             left: labelLeft ?? "50%",
             transform: "translate(-50%, -50%)",
-            fontFamily: "var(--font-inter)",
+            fontFamily: "var(--font-melodrama)",
             fontSize: "6px",
             fontWeight: 400,
             color: "#ffffff",
@@ -609,17 +603,17 @@ function EnvelopeContact() {
           }}>
             <p style={{ fontFamily: "var(--font-melodrama)", color: "#3a1a1a", fontSize: "0.95rem", marginBottom: "0.2rem" }}>and, that&apos;s</p>
             <h2 style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(1.8rem, 5vw, 3.5rem)", fontWeight: "normal", color: "#960018", lineHeight: 1, marginBottom: "0.6rem" }}>a wrap.</h2>
-            <p style={{ fontFamily: "var(--font-inter)", color: "#5a3a3a", fontSize: "0.65rem", marginBottom: "1rem", letterSpacing: "0.04em" }}>
+            <p style={{ fontFamily: "var(--font-melodrama)", color: "#5a3a3a", fontSize: "0.65rem", marginBottom: "1rem", letterSpacing: "0.04em" }}>
               Piqued your interest? Let&apos;s work together.
             </p>
             <a href="mailto:cal1starcollab@gmail.com"
-              style={{ display: "inline-block", padding: "0.45rem 1.1rem", borderRadius: "999px", border: "1px solid rgba(90,40,40,0.4)", color: "#5a2020", fontFamily: "var(--font-inter)", fontSize: "0.55rem", letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: "0.9rem", transition: "all 0.3s" }}>
+              style={{ display: "inline-block", padding: "0.45rem 1.1rem", borderRadius: "999px", border: "1px solid rgba(90,40,40,0.4)", color: "#5a2020", fontFamily: "var(--font-melodrama)", fontSize: "0.55rem", letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: "0.9rem", transition: "all 0.3s" }}>
               cal1starcollab@gmail.com
             </a>
             <div style={{ display: "flex", justifyContent: "center", gap: "1.2rem" }}>
               {[["Instagram","https://instagram.com/cal1star"],["YouTube","https://www.youtube.com/@cal1stvr"],["TikTok","https://www.tiktok.com/@cal1star"]].map(([label,href]) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                  style={{ fontFamily: "var(--font-inter)", fontSize: "0.5rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#5a2020" }}>
+                  style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.5rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#5a2020" }}>
                   {label}
                 </a>
               ))}
@@ -684,7 +678,7 @@ function TrayNav() {
 
           {/* Title overlay — top left */}
           <div style={{ position: "absolute", left: "3%", top: "8%", zIndex: 4 }}>
-            <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(1.4rem, 2.8vw, 3.2rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: 400, fontStyle: "italic" }}>
+            <p style={{ fontFamily: "var(--font-melodrama)", fontSize: "clamp(1.4rem, 2.8vw, 3.2rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: 400, fontStyle: "italic" }}>
               What I Bring To The
             </p>
             <p style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(2.2rem, 4.5vw, 5rem)", color: "#f5f0f0", lineHeight: 1, marginTop: "-0.1em" }}>
@@ -797,7 +791,7 @@ function VideoCard({
         className="absolute bottom-0 left-0 right-0 px-3 py-2 flex items-center justify-between"
         style={{ background: "linear-gradient(to top, rgba(13,0,0,0.85), transparent)" }}
       >
-        {label && <span className="font-inter text-[10px] uppercase tracking-widest text-text-primary">{label}</span>}
+        {label && <span className="font-melodrama text-[10px] uppercase tracking-widest text-text-primary">{label}</span>}
       </div>
       <div
         className="absolute inset-0 transition-opacity duration-300"
