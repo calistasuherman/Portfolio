@@ -162,22 +162,22 @@ export default function Home() {
             <source src="/hero.mp4" type="video/mp4" />
           </video>
 
-          {/* Greyish overlay for legibility */}
-          <div className="absolute inset-0" style={{ background: "rgba(80,75,70,0.35)", zIndex: 1 }} />
+          <div className="absolute inset-0 flex flex-col items-start justify-center px-12 md:px-20 pt-16" style={{ zIndex: 3 }}>
 
-          <div className="absolute inset-0 flex flex-col items-start justify-center px-12 md:px-20 pt-20" style={{ zIndex: 3 }}>
-
-            {/* Name block */}
-            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-              <div style={{ lineHeight: 1 }} suppressHydrationWarning>
-                <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(5rem, 9vw, 8rem)", fontWeight: 300, color: "#960018", lineHeight: 1.1 }}>Calista</div>
-                <div style={{ fontFamily: "var(--font-playfair)", fontSize: "clamp(3.5rem, 7vw, 6.5rem)", fontWeight: 700, color: "#960018", letterSpacing: "0.08em", textTransform: "uppercase", lineHeight: 1, marginTop: "-0.05em" }}>Suherman</div>
+            {/* Name block with echo effect */}
+            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative" }}>
+              <div style={{ position: "relative" }} suppressHydrationWarning>
+                {/* Echo layers */}
+                <div aria-hidden="true" style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none" }}>Calista Suherman</div>
+                <div aria-hidden="true" style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.1, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none" }}>Calista Suherman</div>
+                {/* Main text */}
+                <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap" }}>Calista Suherman</div>
               </div>
             </div>
 
             {/* Tagline */}
-            <p className={`font-inter text-text-muted text-[11px] md:text-xs mt-5 tracking-[0.12em] font-bold hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s" }}>
-              Visual storytelling through video, editing, and creative direction
+            <p className={`font-inter text-text-muted text-[11px] md:text-xs mt-4 tracking-[0.12em] hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s" }}>
+              Visual storytelling through video, editing &amp; creative direction.
             </p>
 
             {/* Buttons */}
@@ -190,6 +190,9 @@ export default function Home() {
               </a>
             </div>
           </div>
+
+          {/* CS monogram — bottom right */}
+          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", bottom: "2rem", right: "2.5rem", width: "clamp(60px, 8vw, 100px)", opacity: 0.9, zIndex: 3 }} />
 
         </section>
 
