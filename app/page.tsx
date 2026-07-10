@@ -168,7 +168,10 @@ export default function Home() {
 
           <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-24" style={{ zIndex: 3 }}>
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-              <TypingText lines={["Calista", "Suherman"]} style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 0.95, display: "block", textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }} />
+              <div style={{ display: "flex", alignItems: "baseline", gap: "0.25em" }} suppressHydrationWarning>
+                <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 0.95, textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }}>Calista</span>
+                <span style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(2rem, 7vw, 5rem)", fontWeight: 300, color: "#960018", lineHeight: 0.95, fontStyle: "italic", textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }}>Suherman</span>
+              </div>
             </div>
 
             <p
@@ -305,10 +308,9 @@ export default function Home() {
         <section id="services" className="section-content relative py-24 md:py-36 px-6 md:px-16 lg:px-32">
           <div className="max-w-5xl mx-auto">
             <Reveal>
-              <div className="text-left mb-14">
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", lineHeight: 1, position: "relative" }}>
-                  <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(3.5rem, 8vw, 8rem)", fontWeight: "normal", color: "#960018", lineHeight: 1, position: "relative", zIndex: 2 }}>Signature</span>
-                  <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(3.5rem, 8vw, 8rem)", fontWeight: "normal", color: "#960018", lineHeight: 1, marginTop: "-0.15em", marginLeft: "0.3em", position: "relative", zIndex: 1 }}>Services</span>
+              <div className="text-center mb-14">
+                <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "8rem", fontWeight: "normal", color: "#f5f0f0", lineHeight: 1 }}>
+                  Signature Services
                 </div>
               </div>
             </Reveal>
