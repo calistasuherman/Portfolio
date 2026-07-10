@@ -162,7 +162,7 @@ export default function Home() {
             <source src="/hero.mp4" type="video/mp4" />
           </video>
 
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pb-0" style={{ zIndex: 3 }}>
+          <div className="absolute inset-0 flex flex-col items-start justify-center px-12 md:px-20 pt-20" style={{ zIndex: 3 }}>
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: "1.5em" }} suppressHydrationWarning>
                 <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(8rem, 7vw, 5rem)", fontWeight: 300, color: "#960018", lineHeight: 1.4 }}>Calista</span>
@@ -197,7 +197,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="absolute bottom-40 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30" style={{ zIndex: 3 }}>
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30" style={{ zIndex: 3 }}>
             <div className="w-px h-10 bg-text-muted animate-pulse" />
           </div>
         </section>
