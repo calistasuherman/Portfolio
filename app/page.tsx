@@ -162,26 +162,24 @@ export default function Home() {
             <source src="/hero.mp4" type="video/mp4" />
           </video>
 
-          <div className="absolute inset-0 flex flex-col items-start justify-center px-6 md:px-10 pt-16" style={{ zIndex: 3 }}>
+          <div className="absolute inset-0 flex flex-col items-start justify-center pt-16" style={{ zIndex: 3, paddingLeft: "clamp(1.5rem, 5vw, 2.5rem)" }}>
 
             {/* Name block with echo effect */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative" }}>
               <div style={{ position: "relative" }} suppressHydrationWarning>
-                {/* Echo layers */}
                 <div aria-hidden="true" style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none" }}>Calista Suherman</div>
                 <div aria-hidden="true" style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none" }}>Calista Suherman</div>
-                {/* Main text */}
                 <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap" }}>Calista Suherman</div>
               </div>
             </div>
 
-            {/* Tagline */}
-            <p className={`font-inter text-text-muted text-[11px] md:text-xs mt-4 tracking-[0.12em] hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s" }}>
+            {/* Tagline — aligned with Calista */}
+            <p className={`font-inter text-text-muted text-[11px] md:text-xs mt-4 tracking-[0.12em] hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginLeft: 0 }}>
               Visual storytelling through video, editing &amp; creative direction.
             </p>
 
-            {/* Buttons */}
-            <div className={`flex items-center gap-4 mt-6 hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.75s" }}>
+            {/* Buttons — aligned with Calista */}
+            <div className={`flex items-center gap-4 mt-6 hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.75s", marginLeft: 0 }}>
               <a href="#work" className="inline-block px-8 py-3 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)" }}>
                 explore my work
               </a>
@@ -205,12 +203,12 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10 whitespace-nowrap"
-                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 10vw, 9rem)", fontWeight: 400, color: "#f5f0f0" }}
+                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 7.5vw, 6.75rem)", fontWeight: 700, color: "#f5f0f0" }}
               >
                 Who&apos;s that star?
               </h2>
               <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.8rem, 1.5vw, 1.1rem)" }}>
-                {["Content Creator", "Video Editor", "Coffee Connoisseur", "Frequent Traveler", "Gen Z (21 Y/O)", "Fashion Lover", "SF Based"].map((item) => (
+                {["Content Creator", "Video Editor", "Videographer", "Coffee Connoisseur", "Frequent Traveler", "Gen Z (21 Y/O)", "Fashion Lover", "SF Based"].map((item) => (
                   <p key={item} style={{ letterSpacing: "0.04em", textTransform: "uppercase" }}>{item}</p>
                 ))}
               </div>
