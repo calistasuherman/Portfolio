@@ -301,12 +301,13 @@ export default function Home() {
 
 
         {/* ── Services ── */}
-        <section id="services" className="section-content relative py-24 md:py-36 px-6 md:px-16 lg:px-32">
-          <div className="max-w-5xl mx-auto">
+        <section id="services" className="section-content relative pt-0 pb-24 md:pb-36 px-0 overflow-hidden">
+          <div className="max-w-5xl mx-auto px-6 md:px-16 lg:px-32">
             <Reveal>
-              <div className="text-center mb-14">
-                <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "8rem", fontWeight: "normal", color: "#f5f0f0", lineHeight: 1 }}>
-                  Signature Services
+              <div className="mb-14 overflow-hidden">
+                <div style={{ lineHeight: 0.85 }}>
+                  <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(5rem, 12vw, 11rem)", fontWeight: "normal", color: "#f5f0f0", display: "block" }}>Signature</div>
+                  <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(5rem, 12vw, 11rem)", fontWeight: "normal", color: "#f5f0f0", display: "block", marginLeft: "0.25em" }}>Services</div>
                 </div>
               </div>
             </Reveal>
@@ -326,7 +327,7 @@ export default function Home() {
         </section>
 
         {/* ── Contact ── */}
-        <section id="contact" className="section-content relative py-24 md:py-40 px-6 text-center">
+        <section id="contact" className="section-content relative pt-0 pb-24 md:pb-40 px-6 text-center">
           <div
             className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px]"
             style={{ background: "radial-gradient(ellipse at bottom, rgba(139,0,0,0.12) 0%, transparent 70%)" }}
