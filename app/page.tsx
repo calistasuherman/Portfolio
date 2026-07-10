@@ -144,7 +144,7 @@ export default function Home() {
               <a
                 key={link.href}
                 href={link.href}
-                className="font-melodrama text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary hover:tracking-[0.28em] transition-all duration-300"
+                className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary hover:tracking-[0.28em] transition-all duration-300"
               >
                 {link.label}
               </a>
@@ -178,14 +178,14 @@ export default function Home() {
 
             {/* Tagline + Buttons — below Calista Suherman, centered */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.5rem", textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-melodrama)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
+              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
                 Visual storytelling through video, editing &amp; creative direction.
               </p>
               <div className="flex items-center justify-center gap-4">
-                <a href="#work" className="inline-block px-8 py-3 rounded-full text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "var(--font-melodrama)" }}>
+                <a href="#work" className="inline-block px-8 py-3 rounded-full text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "var(--font-inter)" }}>
                   explore my work
                 </a>
-                <a href="#contact" className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "var(--font-melodrama)" }}>
+                <a href="#contact" className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "var(--font-inter)" }}>
                   work with me
                 </a>
               </div>
@@ -205,7 +205,7 @@ export default function Home() {
               >
                 Who&apos;s that star?
               </h2>
-              <div className="space-y-3 font-melodrama text-text-muted" style={{ fontSize: "clamp(0.8rem, 1.5vw, 1.1rem)" }}>
+              <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.8rem, 1.5vw, 1.1rem)" }}>
                 {["Content Creator", "Video Editor", "Videographer", "Coffee Connoisseur", "Frequent Traveler", "Gen Z (21 Y/O)", "Fashion Lover", "SF Based"].map((item) => (
                   <p key={item} style={{ letterSpacing: "0.04em", textTransform: "uppercase" }}>{item}</p>
                 ))}
@@ -220,11 +220,11 @@ export default function Home() {
 
         {/* ── Trusted By ── */}
         <section className="section-content relative py-10 overflow-hidden">
-          <p className="text-center font-melodrama text-[10px] uppercase tracking-[0.25em] text-text-muted mb-6 opacity-60">Trusted by</p>
+          <p className="text-center font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted mb-6 opacity-60">Trusted by</p>
           <div className="relative">
             <div style={{ display: "flex", animation: "marquee 28s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
               {[...brands, ...brands].map((b, i) => (
-                <span key={i} className="font-melodrama text-text-muted opacity-50 hover:opacity-100 transition-opacity duration-300" style={{ fontSize: "clamp(10px,1.2vw,13px)", letterSpacing: "0.18em", textTransform: "uppercase", padding: "0 clamp(16px,2.5vw,36px)" }}>{b}</span>
+                <span key={i} className="font-inter text-text-muted opacity-50 hover:opacity-100 transition-opacity duration-300" style={{ fontSize: "clamp(10px,1.2vw,13px)", letterSpacing: "0.18em", textTransform: "uppercase", padding: "0 clamp(16px,2.5vw,36px)" }}>{b}</span>
               ))}
             </div>
           </div>
@@ -309,7 +309,7 @@ export default function Home() {
                     <h4 className="text-text-primary text-xl md:text-2xl mb-3" style={{ fontFamily: "var(--font-melodrama)", fontWeight: 400 }}>
                       {s.title}
                     </h4>
-                    <p className="font-melodrama text-text-muted text-[13px] leading-relaxed">{s.desc}</p>
+                    <p className="font-inter text-text-muted text-[13px] leading-relaxed">{s.desc}</p>
                   </div>
                 </Reveal>
               ))}
@@ -328,7 +328,7 @@ export default function Home() {
 
         {/* ── Footer ── */}
         <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
-          <p className="font-melodrama text-[10px] uppercase tracking-[0.3em] text-text-muted opacity-40">
+          <p className="font-inter text-[10px] uppercase tracking-[0.3em] text-text-muted opacity-40">
             © 2026 CAL1STAR — Calista Suherman
           </p>
         </footer>
@@ -428,7 +428,7 @@ function StatCard({
       <p className="text-2xl md:text-3xl text-text-primary" style={{ fontFamily: "var(--font-melodrama)", fontWeight: 400 }}>
         {display}
       </p>
-      <p className="font-melodrama text-[10px] uppercase tracking-widest text-text-muted mt-1">{stat.label}</p>
+      <p className="font-inter text-[10px] uppercase tracking-widest text-text-muted mt-1">{stat.label}</p>
     </div>
   );
 }
@@ -455,7 +455,7 @@ function DualHeading({ serif, script, size = "section", noOverlap = false }: { s
       </span>
       <span
         style={{
-          fontFamily: "var(--font-melodrama)",
+          fontFamily: "var(--font-luxurious)",
           fontSize: scriptSize,
           fontWeight: "normal",
           color: "#f5f0f0",
@@ -520,7 +520,7 @@ function TrayItem({
             top: labelTop ?? "45%",
             left: labelLeft ?? "50%",
             transform: "translate(-50%, -50%)",
-            fontFamily: "var(--font-melodrama)",
+            fontFamily: "var(--font-inter)",
             fontSize: "6px",
             fontWeight: 400,
             color: "#ffffff",
@@ -678,7 +678,7 @@ function TrayNav() {
 
           {/* Title overlay — top left */}
           <div style={{ position: "absolute", left: "3%", top: "8%", zIndex: 4 }}>
-            <p style={{ fontFamily: "var(--font-melodrama)", fontSize: "clamp(1.4rem, 2.8vw, 3.2rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: 400, fontStyle: "italic" }}>
+            <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(1.4rem, 2.8vw, 3.2rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: 400, fontStyle: "italic" }}>
               What I Bring To The
             </p>
             <p style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(2.2rem, 4.5vw, 5rem)", color: "#f5f0f0", lineHeight: 1, marginTop: "-0.1em" }}>
@@ -791,7 +791,7 @@ function VideoCard({
         className="absolute bottom-0 left-0 right-0 px-3 py-2 flex items-center justify-between"
         style={{ background: "linear-gradient(to top, rgba(13,0,0,0.85), transparent)" }}
       >
-        {label && <span className="font-melodrama text-[10px] uppercase tracking-widest text-text-primary">{label}</span>}
+        {label && <span className="font-inter text-[10px] uppercase tracking-widest text-text-primary">{label}</span>}
       </div>
       <div
         className="absolute inset-0 transition-opacity duration-300"
