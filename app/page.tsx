@@ -171,6 +171,7 @@ export default function Home() {
                 <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(8rem, 7vw, 5rem)", fontWeight: 300, color: "#960018", lineHeight: 1.4 }}>Calista</span>
                 <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(8rem, 7vw, 5rem)", fontWeight: 300, color: "#960018", lineHeight: 1.4 }}>Suherman</span>
               </div>
+              <div style={{ width: "clamp(120px, 30vw, 260px)", height: "1px", background: "rgba(232,228,224,0.45)", margin: "1.2rem auto" }} />
             </div>
 
             <p
@@ -200,9 +201,6 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30" style={{ zIndex: 3 }}>
-            <div className="w-px h-10 bg-text-muted animate-pulse" />
-          </div>
         </section>
 
         {/* ── About ── */}
