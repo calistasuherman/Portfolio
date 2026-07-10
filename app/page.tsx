@@ -197,7 +197,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30" style={{ zIndex: 3 }}>
+          <div className="absolute bottom-40 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30" style={{ zIndex: 3 }}>
             <div className="w-px h-10 bg-text-muted animate-pulse" />
           </div>
         </section>
