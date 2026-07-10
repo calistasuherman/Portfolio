@@ -173,12 +173,12 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Tagline + Buttons — right side */}
-            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", position: "absolute", right: "clamp(1.5rem, 6vw, 5rem)", bottom: "clamp(3rem, 10vh, 7rem)", textAlign: "right" }}>
+            {/* Tagline + Buttons — below Calista Suherman */}
+            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.5rem", textAlign: "left" }}>
               <p className="font-inter text-text-muted text-[11px] md:text-xs tracking-[0.12em] mb-6">
                 Visual storytelling through video, editing &amp; creative direction.
               </p>
-              <div className="flex items-center justify-end gap-4">
+              <div className="flex items-center justify-start gap-4">
                 <a href="#work" className="inline-block px-8 py-3 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)" }}>
                   explore my work
                 </a>
@@ -551,73 +551,109 @@ function TrayItem({
 
 function EnvelopeContact() {
   const ref = useRef<HTMLDivElement>(null);
-  const [phase, setPhase] = useState<"closed" | "opening" | "open">("closed");
+  const [phase, setPhase] = useState<"idle" | "closed" | "flap" | "open">("idle");
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && phase === "closed") {
-          setTimeout(() => setPhase("opening"), 300);
-          setTimeout(() => setPhase("open"), 1100);
+        if (entry.isIntersecting && phase === "idle") {
+          setPhase("closed");
+          setTimeout(() => setPhase("flap"), 700);
+          setTimeout(() => setPhase("open"), 1700);
         }
       },
-      { threshold: 0.4 }
+      { threshold: 0.25 }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, [phase]);
 
+  const showClosed = phase === "idle" || phase === "closed";
+  const showOpen = phase === "flap" || phase === "open";
+  const cardOut = phase === "open";
+
   return (
-    <div ref={ref} style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", width: "min(480px, 90vw)", margin: "0 auto" }}>
-      {/* Envelope */}
-      <div style={{ position: "relative", width: "100%", zIndex: 2 }}>
-        <img
-          src="/envelope-closed.jpg"
-          alt="envelope closed"
-          style={{ width: "100%", display: "block", transition: "opacity 0.6s ease", opacity: phase === "closed" ? 1 : 0, position: phase === "closed" ? "relative" : "absolute", top: 0, left: 0 }}
-        />
-        <img
-          src="/envelope-open.jpg"
-          alt="envelope open"
-          style={{ width: "100%", display: "block", transition: "opacity 0.6s ease", opacity: phase === "closed" ? 0 : 1, position: phase === "closed" ? "absolute" : "relative", top: 0, left: 0 }}
-        />
+    <div ref={ref} style={{ position: "relative", width: "min(800px, 92vw)", margin: "0 auto", paddingTop: "80px" }}>
+      <style>{`
+        @keyframes flapSwing {
+          0%   { transform: perspective(700px) rotateX(0deg); }
+          100% { transform: perspective(700px) rotateX(-175deg); }
+        }
+      `}</style>
+
+      {/* ── Open envelope e2 (2x bigger) — base layer ── */}
+      <div style={{ position: "relative", zIndex: 2, transition: "opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s", opacity: showOpen ? 1 : 0, transform: showOpen ? "scale(1)" : "scale(0.96)" }}>
+        <img src="/envelope-open.jpg" alt="envelope open" style={{ width: "100%", display: "block" }} />
+
+        {/* Card emerges from inside the envelope opening */}
+        <div style={{
+          position: "absolute",
+          left: "20%", right: "20%",
+          bottom: "28%",
+          zIndex: 1,
+          transition: "transform 1.2s cubic-bezier(0.22,1,0.36,1) 0.2s",
+          transform: cardOut ? "translateY(-72%)" : "translateY(0%)",
+        }}>
+          <div style={{
+            background: "#f5f0eb",
+            borderRadius: "3px",
+            padding: "1.6rem 1.3rem",
+            boxShadow: "0 6px 32px rgba(0,0,0,0.16)",
+            opacity: cardOut ? 1 : 0,
+            transition: "opacity 0.35s ease 0.35s",
+          }}>
+            <p style={{ fontFamily: "var(--font-melodrama)", color: "#3a1a1a", fontSize: "0.95rem", marginBottom: "0.2rem" }}>and, that&apos;s</p>
+            <h2 style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(1.8rem, 5vw, 3.5rem)", fontWeight: "normal", color: "#960018", lineHeight: 1, marginBottom: "0.6rem" }}>a wrap.</h2>
+            <p style={{ fontFamily: "var(--font-inter)", color: "#5a3a3a", fontSize: "0.65rem", marginBottom: "1rem", letterSpacing: "0.04em" }}>
+              Piqued your interest? Let&apos;s work together.
+            </p>
+            <a href="mailto:cal1starcollab@gmail.com"
+              style={{ display: "inline-block", padding: "0.45rem 1.1rem", borderRadius: "999px", border: "1px solid rgba(90,40,40,0.4)", color: "#5a2020", fontFamily: "var(--font-inter)", fontSize: "0.55rem", letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: "0.9rem", transition: "all 0.3s" }}>
+              cal1starcollab@gmail.com
+            </a>
+            <div style={{ display: "flex", justifyContent: "center", gap: "1.2rem" }}>
+              {[["Instagram","https://instagram.com/cal1star"],["YouTube","https://www.youtube.com/@cal1stvr"],["TikTok","https://www.tiktok.com/@cal1star"]].map(([label,href]) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                  style={{ fontFamily: "var(--font-inter)", fontSize: "0.5rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#5a2020" }}>
+                  {label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Card sliding out */}
+      {/* ── Closed envelope e — centered, same scale as before ── */}
       <div style={{
-        position: "absolute",
-        top: "8%",
-        left: "10%",
-        right: "10%",
-        background: "rgba(245,240,235,0.97)",
-        borderRadius: "4px",
-        padding: "2rem 1.5rem",
-        zIndex: 1,
-        transition: "transform 0.9s cubic-bezier(0.34,1.1,0.64,1), opacity 0.7s ease",
-        transform: phase === "open" ? "translateY(-55%)" : "translateY(0%)",
-        opacity: phase === "open" ? 1 : 0,
-        boxShadow: "0 8px 40px rgba(0,0,0,0.18)",
+        position: "absolute", top: "20%", left: "25%", width: "50%", zIndex: 4,
+        opacity: showClosed ? 1 : 0,
+        transition: "opacity 0.45s ease",
+        pointerEvents: "none",
       }}>
-        <p style={{ fontFamily: "var(--font-melodrama)", color: "#3a1a1a", fontSize: "1rem", marginBottom: "0.25rem" }}>and, that&apos;s</p>
-        <h2 style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(2rem, 7vw, 4.5rem)", fontWeight: "normal", color: "#960018", lineHeight: 1, marginBottom: "0.75rem" }}>a wrap.</h2>
-        <p style={{ fontFamily: "var(--font-inter)", color: "#5a3a3a", fontSize: "0.72rem", marginBottom: "1.2rem", letterSpacing: "0.04em" }}>
-          Piqued your interest? Let&apos;s work together.
-        </p>
-        <a
-          href="mailto:cal1starcollab@gmail.com"
-          style={{ display: "inline-block", padding: "0.5rem 1.25rem", borderRadius: "999px", border: "1px solid rgba(90,40,40,0.4)", color: "#5a2020", fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "1rem", transition: "all 0.3s" }}
-        >
-          cal1starcollab@gmail.com
-        </a>
-        <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", marginTop: "0.75rem" }}>
-          {[["Instagram", "https://instagram.com/cal1star"], ["YouTube", "https://www.youtube.com/@cal1stvr"], ["TikTok", "https://www.tiktok.com/@cal1star"]].map(([label, href]) => (
-            <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-              style={{ fontFamily: "var(--font-inter)", fontSize: "0.55rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#5a2020", borderBottom: "1px solid transparent", paddingBottom: "2px", transition: "border-color 0.3s" }}>
-              {label}
-            </a>
-          ))}
+        {/* Envelope body (bottom half) — stays flat */}
+        <div style={{ position: "relative", overflow: "hidden" }}>
+          <img src="/envelope-closed.jpg" alt="envelope closed" style={{ width: "100%", display: "block" }} />
+        </div>
+      </div>
+
+      {/* ── Flap animation overlay ── */}
+      <div style={{
+        position: "absolute", top: "20%", left: "25%", width: "50%", zIndex: 5,
+        pointerEvents: "none",
+        opacity: phase === "flap" ? 1 : 0,
+        transition: "opacity 0.2s ease",
+      }}>
+        {/* Top 45% = the flap that swings open */}
+        <div style={{
+          width: "100%",
+          height: "45%",
+          overflow: "hidden",
+          transformOrigin: "center bottom",
+          animation: phase === "flap" ? "flapSwing 0.9s cubic-bezier(0.4,0,0.2,1) forwards" : "none",
+        }}>
+          <img src="/envelope-closed.jpg" alt="" style={{ width: "100%", display: "block" }} />
         </div>
       </div>
     </div>
