@@ -162,7 +162,7 @@ export default function Home() {
             <source src="/hero.mp4" type="video/mp4" />
           </video>
 
-          <div className="absolute inset-0 flex flex-col items-start justify-center px-12 md:px-20 pt-16" style={{ zIndex: 3 }}>
+          <div className="absolute inset-0 flex flex-col items-start justify-center px-6 md:px-10 pt-16" style={{ zIndex: 3 }}>
 
             {/* Name block with echo effect */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative" }}>
@@ -192,14 +192,14 @@ export default function Home() {
           </div>
 
           {/* CS monogram — bottom right */}
-          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", bottom: "2rem", right: "2.5rem", width: "clamp(30px, 4vw, 50px)", opacity: 0.9, zIndex: 3 }} />
+          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", bottom: "0.5rem", right: "0.75rem", width: "clamp(30px, 4vw, 50px)", opacity: 0.9, zIndex: 3 }} />
 
         </section>
 
         {/* ── About ── */}
         <section id="about" className="section-content relative pt-24 md:pt-36 pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ backgroundImage: "url('/about-bg.jpg')", backgroundSize: "cover", backgroundPosition: "center top" }}>
           {/* CS monogram — bottom right of about section */}
-          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", bottom: "2rem", right: "2.5rem", width: "clamp(30px, 4vw, 50px)", opacity: 0.7, zIndex: 4 }} />
+          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", bottom: "0.5rem", right: "0.75rem", width: "clamp(30px, 4vw, 50px)", opacity: 0.7, zIndex: 4 }} />
           <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
             <Reveal className="order-1" direction="left">
