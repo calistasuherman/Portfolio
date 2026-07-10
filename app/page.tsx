@@ -538,7 +538,7 @@ function TrayItem({
   style,
   imgWidth,
   rotate = 0,
-  labelTop = "50%",
+  labelTop = "45%",
   labelLeft = "50%",
   decorative = false,
 }: {
@@ -572,8 +572,8 @@ function TrayItem({
         <span
           style={{
             position: "absolute",
-            top: labelTop,
-            left: labelLeft,
+            top: labelTop ?? "45%",
+            left: labelLeft ?? "50%",
             transform: "translate(-50%, -50%)",
             fontFamily: "var(--font-inter)",
             fontSize: "6px",
@@ -631,7 +631,7 @@ function TrayNav() {
             src="/tray-figs.png"
             alt="Fashion & Fit Checks"
             label="fashion / fit checks"
-            style={{ position: "absolute", left: "50%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "28%" }}
+            style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }}
           />
 
           {/* Coffee — right third */}
@@ -640,7 +640,7 @@ function TrayNav() {
             src="/tray-coffee.png"
             alt="Video Editing"
             label="video editing"
-            style={{ position: "absolute", left: "80%", top: "45%", transform: "translate(-50%, -50%)", zIndex: 2, width: "28%" }}
+            style={{ position: "absolute", left: "59%", top: "34%", transform: "translate(-50%, -50%)", zIndex: 2, width: "40%" }}
           />
       </div>
     </div>
