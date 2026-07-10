@@ -165,37 +165,37 @@ export default function Home() {
           {/* Greyish overlay for legibility */}
           <div className="absolute inset-0" style={{ background: "rgba(80,75,70,0.35)", zIndex: 1 }} />
 
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-12 md:px-20 pt-20" style={{ zIndex: 3 }}>
+          <div className="absolute inset-0 flex flex-col items-start justify-center px-12 md:px-20 pt-20" style={{ zIndex: 3 }}>
+
+            {/* Name block */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "1.5em" }} suppressHydrationWarning>
-                <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(8rem, 7vw, 5rem)", fontWeight: 300, color: "#960018", lineHeight: 1.4 }}>Calista</span>
-                <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(8rem, 7vw, 5rem)", fontWeight: 300, color: "#960018", lineHeight: 1.4 }}>Suherman</span>
+              <div style={{ lineHeight: 1 }} suppressHydrationWarning>
+                <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(5rem, 9vw, 8rem)", fontWeight: 300, color: "#f5f0f0", lineHeight: 1.1 }}>Calista</div>
+                <div style={{ fontFamily: "JosefinSans, sans-serif", fontSize: "clamp(3.5rem, 7vw, 6.5rem)", fontWeight: 700, color: "#f5f0f0", letterSpacing: "0.08em", textTransform: "uppercase", lineHeight: 1, marginTop: "-0.05em" }}>Suherman</div>
               </div>
-              <div style={{ width: "clamp(120px, 30vw, 260px)", height: "1px", background: "rgba(232,228,224,0.45)", margin: "1.2rem auto" }} />
             </div>
 
-            <p
-              className={`font-inter text-text-muted text-[11px] md:text-xs mt-4 tracking-[0.15em] font-bold hero-item${heroVisible ? " hero-visible" : ""}`}
-              style={{ transitionDelay: "0.55s" }}
-            >
+            {/* Social icons */}
+            <div className={`flex items-center gap-4 mt-5 hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.4s" }}>
+              <a href="https://instagram.com/cal1star" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-text-primary transition-colors duration-300" aria-label="Instagram">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </a>
+              <a href="https://www.tiktok.com/@cal1star" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-text-primary transition-colors duration-300" aria-label="TikTok">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
+              </a>
+            </div>
+
+            {/* Tagline */}
+            <p className={`font-inter text-text-muted text-[11px] md:text-xs mt-3 tracking-[0.12em] font-bold hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s" }}>
               Visual storytelling through video, editing, and creative direction
             </p>
 
-            <div
-              className={`flex items-center gap-4 mt-6 hero-item${heroVisible ? " hero-visible" : ""}`}
-              style={{ transitionDelay: "0.75s" }}
-            >
-              <a
-                href="#work"
-                className="inline-block px-8 py-3 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95"
-                style={{ background: "rgba(232,228,224,0.92)" }}
-              >
+            {/* Buttons */}
+            <div className={`flex items-center gap-4 mt-6 hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.75s" }}>
+              <a href="#work" className="inline-block px-8 py-3 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)" }}>
                 explore my work
               </a>
-              <a
-                href="#contact"
-                className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted font-inter text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95"
-              >
+              <a href="#contact" className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted font-inter text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95">
                 work with me
               </a>
             </div>
