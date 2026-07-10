@@ -130,7 +130,10 @@ export default function Home() {
       <main className="relative min-h-screen overflow-x-hidden">
 
         {/* ── Nav ── */}
-        <header className="section-content fixed top-0 left-0 right-0 z-50 flex justify-center items-center py-5 px-6">
+        <header className="section-content fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-5 px-6">
+          {/* CS monogram — fixed left */}
+          <img src="/cs-monogram.png" alt="CS" style={{ width: "clamp(28px, 3.5vw, 44px)", opacity: 0.9 }} />
+          {/* Nav pill — right */}
           <nav className="nav-pill flex gap-8 md:gap-12">
             {[
               { label: "About", href: "#about" },
@@ -265,23 +268,24 @@ export default function Home() {
 
             <Reveal delay={80}>
               <WorkSubsection id="fashion-checks" title={<DualHeading serif="Fashion &" script="Fit Checks" size="sub" noOverlap />}>
-                <div style={{ columns: "3 180px", gap: "12px" }}>
+                <div style={{ columns: "4 140px", gap: "10px" }}>
                   {[
                     "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
                     "/fashion5.jpg","/fashion6.jpg","/fashion7.jpg","/fashion8.jpg",
                     "/fashion9.jpg","/fashion10.jpg","/fashion11.jpg","/fashion12.jpg",
                     "/fashion13.jpg","/fashion14.jpg","/fashion15.jpg","/fashion16.jpg",
+                    "/DSCN9257.jpg",
                   ].map((src, i) => (
-                    <div key={i} style={{ breakInside: "avoid", marginBottom: "12px" }}>
+                    <div key={i} style={{ breakInside: "avoid", marginBottom: "10px" }}>
                       <img
                         src={src}
                         alt={`Look ${i + 1}`}
                         className="fashion-photo"
                         style={{
                           width: "100%",
-                          borderRadius: "12px",
+                          borderRadius: "10px",
                           display: "block",
-                          transform: src === "/fashion16.jpg" ? "rotate(90deg)" : undefined,
+                          transform: src === "/fashion16.jpg" ? "rotate(90deg)" : src === "/DSCN9257.jpg" ? "scaleX(-1)" : undefined,
                         }}
                       />
                     </div>
@@ -300,8 +304,7 @@ export default function Home() {
             <Reveal>
               <div className="mb-14 overflow-hidden">
                 <div style={{ lineHeight: 0.85 }}>
-                  <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(5rem, 12vw, 11rem)", fontWeight: "normal", color: "#f5f0f0", display: "block" }}>Signature</div>
-                  <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(5rem, 12vw, 11rem)", fontWeight: "normal", color: "#f5f0f0", display: "block", marginLeft: "0.25em" }}>Services</div>
+                  <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3.75rem, 9vw, 8.25rem)", fontWeight: "normal", color: "#f5f0f0", whiteSpace: "nowrap" }}>Signature Services</div>
                 </div>
               </div>
             </Reveal>
