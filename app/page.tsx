@@ -321,55 +321,12 @@ export default function Home() {
         </section>
 
         {/* ── Contact ── */}
-        <section id="contact" className="section-content relative pt-0 pb-24 md:pb-40 px-6 text-center">
+        <section id="contact" className="section-content relative py-24 md:py-40 px-6 text-center">
           <div
             className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px]"
             style={{ background: "radial-gradient(ellipse at bottom, rgba(139,0,0,0.12) 0%, transparent 70%)" }}
           />
-          <Reveal className="relative max-w-xl mx-auto">
-            <p className="text-text-muted text-lg mb-2" style={{ fontFamily: "var(--font-melodrama)" }}>and, that&apos;s</p>
-            <h2
-              className="leading-none mb-6"
-              style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#f5f0f0" }}
-            >
-              a wrap.
-            </h2>
-            <p className="font-inter text-text-muted text-sm mb-10 leading-relaxed">
-              Piqued your interest? Let&apos;s work together.
-            </p>
-            <a
-              href="mailto:cal1starcollab@gmail.com"
-              className="inline-block px-10 py-4 rounded-full border border-text-muted text-text-muted font-inter text-[11px] uppercase tracking-[0.25em] hover:border-text-primary hover:text-text-primary transition-all duration-300 mb-10"
-            >
-              cal1starcollab@gmail.com
-            </a>
-            <div className="flex justify-center gap-8 mt-8">
-              <a
-                href="https://instagram.com/cal1star"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted hover:text-text-primary border-b border-transparent hover:border-text-muted pb-0.5 transition-all duration-300"
-              >
-                Instagram
-              </a>
-              <a
-                href="https://www.youtube.com/@cal1stvr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted hover:text-text-primary border-b border-transparent hover:border-text-muted pb-0.5 transition-all duration-300"
-              >
-                YouTube
-              </a>
-              <a
-                href="https://www.tiktok.com/@cal1star?is_from_webapp=1&sender_device=pc"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted hover:text-text-primary border-b border-transparent hover:border-text-muted pb-0.5 transition-all duration-300"
-              >
-                TikTok
-              </a>
-            </div>
-          </Reveal>
+          <EnvelopeContact />
         </section>
 
         {/* ── Footer ── */}
@@ -588,6 +545,81 @@ function TrayItem({
   return (
     <div style={{ ...style, pointerEvents: "none" }}>
       {href ? <a href={href} style={{ pointerEvents: "auto", display: "inline-block" }}>{inner}</a> : inner}
+    </div>
+  );
+}
+
+function EnvelopeContact() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [phase, setPhase] = useState<"closed" | "opening" | "open">("closed");
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && phase === "closed") {
+          setTimeout(() => setPhase("opening"), 300);
+          setTimeout(() => setPhase("open"), 1100);
+        }
+      },
+      { threshold: 0.4 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [phase]);
+
+  return (
+    <div ref={ref} style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", width: "min(480px, 90vw)", margin: "0 auto" }}>
+      {/* Envelope */}
+      <div style={{ position: "relative", width: "100%", zIndex: 2 }}>
+        <img
+          src="/envelope-closed.jpg"
+          alt="envelope closed"
+          style={{ width: "100%", display: "block", transition: "opacity 0.6s ease", opacity: phase === "closed" ? 1 : 0, position: phase === "closed" ? "relative" : "absolute", top: 0, left: 0 }}
+        />
+        <img
+          src="/envelope-open.jpg"
+          alt="envelope open"
+          style={{ width: "100%", display: "block", transition: "opacity 0.6s ease", opacity: phase === "closed" ? 0 : 1, position: phase === "closed" ? "absolute" : "relative", top: 0, left: 0 }}
+        />
+      </div>
+
+      {/* Card sliding out */}
+      <div style={{
+        position: "absolute",
+        top: "8%",
+        left: "10%",
+        right: "10%",
+        background: "rgba(245,240,235,0.97)",
+        borderRadius: "4px",
+        padding: "2rem 1.5rem",
+        zIndex: 1,
+        transition: "transform 0.9s cubic-bezier(0.34,1.1,0.64,1), opacity 0.7s ease",
+        transform: phase === "open" ? "translateY(-55%)" : "translateY(0%)",
+        opacity: phase === "open" ? 1 : 0,
+        boxShadow: "0 8px 40px rgba(0,0,0,0.18)",
+      }}>
+        <p style={{ fontFamily: "var(--font-melodrama)", color: "#3a1a1a", fontSize: "1rem", marginBottom: "0.25rem" }}>and, that&apos;s</p>
+        <h2 style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(2rem, 7vw, 4.5rem)", fontWeight: "normal", color: "#960018", lineHeight: 1, marginBottom: "0.75rem" }}>a wrap.</h2>
+        <p style={{ fontFamily: "var(--font-inter)", color: "#5a3a3a", fontSize: "0.72rem", marginBottom: "1.2rem", letterSpacing: "0.04em" }}>
+          Piqued your interest? Let&apos;s work together.
+        </p>
+        <a
+          href="mailto:cal1starcollab@gmail.com"
+          style={{ display: "inline-block", padding: "0.5rem 1.25rem", borderRadius: "999px", border: "1px solid rgba(90,40,40,0.4)", color: "#5a2020", fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "1rem", transition: "all 0.3s" }}
+        >
+          cal1starcollab@gmail.com
+        </a>
+        <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", marginTop: "0.75rem" }}>
+          {[["Instagram", "https://instagram.com/cal1star"], ["YouTube", "https://www.youtube.com/@cal1stvr"], ["TikTok", "https://www.tiktok.com/@cal1star"]].map(([label, href]) => (
+            <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+              style={{ fontFamily: "var(--font-inter)", fontSize: "0.55rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#5a2020", borderBottom: "1px solid transparent", paddingBottom: "2px", transition: "border-color 0.3s" }}>
+              {label}
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
