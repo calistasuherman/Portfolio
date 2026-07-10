@@ -168,7 +168,7 @@ export default function Home() {
 
           <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-24" style={{ zIndex: 3 }}>
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-              <TypingText lines={["Calista", "Suherman"]} style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#8B0000", lineHeight: 0.95, display: "block", textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }} />
+              <TypingText lines={["Calista", "Suherman"]} style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#8B0000", lineHeight: 0.95, display: "block", textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }} />
             </div>
 
             <p
@@ -205,7 +205,6 @@ export default function Home() {
 
         {/* ── About ── */}
         <section id="about" className="section-content relative pt-24 md:pt-36 pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ backgroundImage: "url('/about-bg.jpg')", backgroundSize: "cover", backgroundPosition: "center top" }}>
-          <div className="absolute inset-0" style={{ background: "rgba(13,0,0,0.45)" }} />
           <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
             <Reveal className="order-1" direction="left">
@@ -223,37 +222,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal className="flex justify-center order-2" direction="right" delay={200}>
-              <div
-                className="relative overflow-hidden rounded-2xl"
-                style={{
-                  width: "clamp(260px, 32vw, 420px)",
-                  height: "clamp(340px, 42vw, 560px)",
-                  border: "1px solid rgba(139,0,0,0.25)",
-                }}
-              >
-                <style>{`
-                  @keyframes crossfade {
-                    0%, 45% { opacity: 1; }
-                    55%, 100% { opacity: 0; }
-                  }
-                  @keyframes crossfade2 {
-                    0%, 45% { opacity: 0; }
-                    55%, 100% { opacity: 1; }
-                  }
-                  .about-photo1 { animation: crossfade 5s ease-in-out infinite; }
-                  .about-photo2 { animation: crossfade2 5s ease-in-out infinite; }
-                `}</style>
-                <div className="about-photo1" style={{ position: "absolute", inset: 0 }}>
-                  <Image src="/about-photo1.png" alt="Calista Suherman" fill className="object-cover object-center" />
-                </div>
-                <div className="about-photo2" style={{ position: "absolute", inset: 0 }}>
-                  <Image src="/about-photo2.png" alt="Calista Suherman" fill className="object-cover object-center" />
-                </div>
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{ background: "linear-gradient(to top, rgba(13,0,0,0.35) 0%, transparent 50%)", zIndex: 1 }}
-                />
-              </div>
+              <FlipPhoto />
             </Reveal>
           </div>
         </section>
@@ -619,6 +588,19 @@ function TrayItem({
   return (
     <div style={{ ...style, pointerEvents: "none" }}>
       {href ? <a href={href} style={{ pointerEvents: "auto", display: "inline-block" }}>{inner}</a> : inner}
+    </div>
+  );
+}
+
+function FlipPhoto() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const t = setInterval(() => setShow(s => !s), 2000);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <div className="relative overflow-hidden rounded-2xl" style={{ width: "clamp(260px, 32vw, 420px)", height: "clamp(340px, 42vw, 560px)", border: "1px solid rgba(139,0,0,0.25)" }}>
+      <Image src={show ? "/about-photo2.png" : "/about-photo1.png"} alt="Calista Suherman" fill className="object-cover object-center" />
     </div>
   );
 }
