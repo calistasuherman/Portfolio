@@ -141,7 +141,7 @@ export default function Home() {
               <a
                 key={link.href}
                 href={link.href}
-                className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary transition-colors duration-300"
+                className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary hover:tracking-[0.28em] transition-all duration-300"
               >
                 {link.label}
               </a>
@@ -162,6 +162,9 @@ export default function Home() {
             <source src="/hero.mp4" type="video/mp4" />
           </video>
 
+          {/* Greyish overlay for legibility */}
+          <div className="absolute inset-0" style={{ background: "rgba(80,75,70,0.35)", zIndex: 1 }} />
+
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-12 md:px-20 pt-20" style={{ zIndex: 3 }}>
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: "1.5em" }} suppressHydrationWarning>
@@ -171,10 +174,10 @@ export default function Home() {
             </div>
 
             <p
-              className={`font-inter text-text-muted text-[11px] md:text-xs mt-4 tracking-[0.15em] hero-item${heroVisible ? " hero-visible" : ""}`}
+              className={`font-inter text-text-muted text-[11px] md:text-xs mt-4 tracking-[0.15em] font-bold hero-item${heroVisible ? " hero-visible" : ""}`}
               style={{ transitionDelay: "0.55s" }}
             >
-              Content Creator · Video Editor · Videographer
+              Visual storytelling through video, editing, and creative direction
             </p>
 
             <div
@@ -183,14 +186,14 @@ export default function Home() {
             >
               <a
                 href="#work"
-                className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted font-inter text-[10px] uppercase tracking-[0.2em] hover:border-text-primary hover:text-text-primary transition-all duration-300"
+                className="inline-block px-8 py-3 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95"
+                style={{ background: "rgba(232,228,224,0.92)" }}
               >
                 explore my work
               </a>
               <a
                 href="#contact"
-                className="inline-block px-8 py-3 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:opacity-80"
-                style={{ background: "rgba(232,228,224,0.85)" }}
+                className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted font-inter text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95"
               >
                 work with me
               </a>
