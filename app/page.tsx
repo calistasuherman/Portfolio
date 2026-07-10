@@ -305,11 +305,10 @@ export default function Home() {
         <section id="services" className="section-content relative py-24 md:py-36 px-6 md:px-16 lg:px-32">
           <div className="max-w-5xl mx-auto">
             <Reveal>
-              <div className="text-center mb-14">
-                <p className="text-text-muted text-base mb-2" style={{ fontFamily: "var(--font-melodrama)" }}>What I offer</p>
-                <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", lineHeight: 1 }}>
-                  <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "clamp(2.52rem, 5.4vw, 4.68rem)", fontWeight: 400, color: "#f5f0f0", lineHeight: 1, letterSpacing: "-0.01em", position: "relative", zIndex: 1, paddingBottom: "0.04em" }}>My</span>
-                  <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(3rem, 6.5vw, 5.6rem)", fontWeight: "normal", color: "#f5f0f0", lineHeight: 1, marginLeft: "-0.12em", position: "relative", zIndex: 2 }}>Services</span>
+              <div className="text-left mb-14">
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", lineHeight: 1, position: "relative" }}>
+                  <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(3.5rem, 8vw, 8rem)", fontWeight: "normal", color: "#960018", lineHeight: 1, position: "relative", zIndex: 2 }}>Signature</span>
+                  <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(3.5rem, 8vw, 8rem)", fontWeight: "normal", color: "#960018", lineHeight: 1, marginTop: "-0.15em", marginLeft: "0.3em", position: "relative", zIndex: 1 }}>Services</span>
                 </div>
               </div>
             </Reveal>
@@ -621,9 +620,11 @@ function TrayNav() {
 
           {/* Title overlay — top left */}
           <div style={{ position: "absolute", left: "3%", top: "8%", zIndex: 4 }}>
-            <p style={{ fontFamily: "var(--font-melodrama)", fontSize: "clamp(1.4rem, 2.8vw, 3.2rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: 400 }}>
-              What I <span style={{ fontFamily: "var(--font-luxurious)", fontSize: "clamp(1.7rem, 3.4vw, 3.8rem)" }}>bring</span>
-              <br />to the table
+            <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(1.4rem, 2.8vw, 3.2rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: 400, fontStyle: "italic" }}>
+              What I Bring To The
+            </p>
+            <p style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(2.2rem, 4.5vw, 5rem)", color: "#f5f0f0", lineHeight: 1, marginTop: "-0.1em" }}>
+              Table
             </p>
           </div>
 
