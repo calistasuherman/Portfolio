@@ -168,7 +168,7 @@ export default function Home() {
 
           <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-24" style={{ zIndex: 3 }}>
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
-              <TypingText lines={["Calista", "Suherman"]} style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#8B0000", lineHeight: 0.95, display: "block", textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }} />
+              <TypingText lines={["Calista", "Suherman"]} style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 10vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 0.95, display: "block", textShadow: "0 4px 24px rgba(0,0,0,0.45), 0 1px 6px rgba(0,0,0,0.3)" }} />
             </div>
 
             <p
@@ -209,8 +209,8 @@ export default function Home() {
 
             <Reveal className="order-1" direction="left">
               <h2
-                className="leading-none mb-10"
-                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 400, color: "#f5f0f0" }}
+                className="leading-none mb-10 whitespace-nowrap"
+                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(2rem, 5vw, 4.5rem)", fontWeight: 400, color: "#960018" }}
               >
                 Who&apos;s that star?
               </h2>
@@ -367,6 +367,14 @@ export default function Home() {
                 className="font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted hover:text-text-primary border-b border-transparent hover:border-text-muted pb-0.5 transition-all duration-300"
               >
                 YouTube
+              </a>
+              <a
+                href="https://www.tiktok.com/@cal1star?is_from_webapp=1&sender_device=pc"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted hover:text-text-primary border-b border-transparent hover:border-text-muted pb-0.5 transition-all duration-300"
+              >
+                TikTok
               </a>
             </div>
           </Reveal>
@@ -595,12 +603,12 @@ function TrayItem({
 function FlipPhoto() {
   const [show, setShow] = useState(false);
   useEffect(() => {
-    const t = setInterval(() => setShow(s => !s), 2000);
+    const t = setInterval(() => setShow(s => !s), 250);
     return () => clearInterval(t);
   }, []);
   return (
-    <div className="relative overflow-hidden rounded-2xl" style={{ width: "clamp(260px, 32vw, 420px)", height: "clamp(340px, 42vw, 560px)", border: "1px solid rgba(139,0,0,0.25)", boxShadow: "0 8px 40px rgba(0,0,0,0.45), 0 2px 12px rgba(0,0,0,0.25)" }}>
-      <Image src={show ? "/about-photo2.png" : "/about-photo1.png"} alt="Calista Suherman" fill className="object-cover object-center" />
+    <div className="relative overflow-hidden rounded-2xl" style={{ width: "clamp(260px, 32vw, 420px)", height: "clamp(340px, 42vw, 560px)", border: "none" }}>
+      <Image src={show ? "/about-photo2.png" : "/about-photo1.png"} alt="Calista Suherman" fill className="object-cover object-top" />
     </div>
   );
 }
