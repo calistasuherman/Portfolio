@@ -173,19 +173,19 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Tagline — aligned with Calista */}
-            <p className={`font-inter text-text-muted text-[11px] md:text-xs mt-4 tracking-[0.12em] hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginLeft: 0 }}>
-              Visual storytelling through video, editing &amp; creative direction.
-            </p>
-
-            {/* Buttons — aligned with Calista */}
-            <div className={`flex items-center gap-4 mt-6 hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.75s", marginLeft: 0 }}>
-              <a href="#work" className="inline-block px-8 py-3 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)" }}>
-                explore my work
-              </a>
-              <a href="#contact" className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted font-inter text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95">
-                work with me
-              </a>
+            {/* Tagline + Buttons — right side */}
+            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", position: "absolute", right: "clamp(1.5rem, 6vw, 5rem)", bottom: "clamp(3rem, 10vh, 7rem)", textAlign: "right" }}>
+              <p className="font-inter text-text-muted text-[11px] md:text-xs tracking-[0.12em] mb-6">
+                Visual storytelling through video, editing &amp; creative direction.
+              </p>
+              <div className="flex items-center justify-end gap-4">
+                <a href="#work" className="inline-block px-8 py-3 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)" }}>
+                  explore my work
+                </a>
+                <a href="#contact" className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted font-inter text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95">
+                  work with me
+                </a>
+              </div>
             </div>
           </div>
 
@@ -203,7 +203,7 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10 whitespace-nowrap"
-                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 7.5vw, 6.75rem)", fontWeight: 700, color: "#f5f0f0" }}
+                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 7.5vw, 6.75rem)", fontWeight: 400, color: "#f5f0f0" }}
               >
                 Who&apos;s that star?
               </h2>
