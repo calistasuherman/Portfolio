@@ -204,8 +204,9 @@ export default function Home() {
         </section>
 
         {/* ── About ── */}
-        <section id="about" className="section-content relative pt-24 md:pt-36 pb-10 md:pb-14 px-6 md:px-16 lg:px-32">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
+        <section id="about" className="section-content relative pt-24 md:pt-36 pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ backgroundImage: "url('/about-bg.jpg')", backgroundSize: "cover", backgroundPosition: "center top" }}>
+          <div className="absolute inset-0" style={{ background: "rgba(13,0,0,0.45)" }} />
+          <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
             <Reveal className="order-1" direction="left">
               <h2
@@ -230,10 +231,27 @@ export default function Home() {
                   border: "1px solid rgba(139,0,0,0.25)",
                 }}
               >
-                <Image src="/about.jpg" alt="Calista Suherman" fill className="object-cover object-center" />
+                <style>{`
+                  @keyframes crossfade {
+                    0%, 45% { opacity: 1; }
+                    55%, 100% { opacity: 0; }
+                  }
+                  @keyframes crossfade2 {
+                    0%, 45% { opacity: 0; }
+                    55%, 100% { opacity: 1; }
+                  }
+                  .about-photo1 { animation: crossfade 5s ease-in-out infinite; }
+                  .about-photo2 { animation: crossfade2 5s ease-in-out infinite; }
+                `}</style>
+                <div className="about-photo1" style={{ position: "absolute", inset: 0 }}>
+                  <Image src="/about-photo1.png" alt="Calista Suherman" fill className="object-cover object-center" />
+                </div>
+                <div className="about-photo2" style={{ position: "absolute", inset: 0 }}>
+                  <Image src="/about-photo2.png" alt="Calista Suherman" fill className="object-cover object-center" />
+                </div>
                 <div
                   className="absolute inset-0 pointer-events-none"
-                  style={{ background: "linear-gradient(to top, rgba(13,0,0,0.35) 0%, transparent 50%)" }}
+                  style={{ background: "linear-gradient(to top, rgba(13,0,0,0.35) 0%, transparent 50%)", zIndex: 1 }}
                 />
               </div>
             </Reveal>
@@ -555,7 +573,11 @@ function TrayItem({
 }) {
   const [hovered, setHovered] = useState(false);
   const inner = (
-    <div style={{ position: "relative", display: "block", width: "100%" }}>
+    <div
+      style={{ position: "relative", display: "inline-block", cursor: decorative ? "default" : "pointer", pointerEvents: "auto" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <img
         src={src}
         alt={alt}
@@ -595,12 +617,8 @@ function TrayItem({
   );
 
   return (
-    <div
-      style={{ ...style, cursor: decorative ? "default" : "pointer" }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {href ? <a href={href}>{inner}</a> : inner}
+    <div style={{ ...style, pointerEvents: "none" }}>
+      {href ? <a href={href} style={{ pointerEvents: "auto", display: "inline-block" }}>{inner}</a> : inner}
     </div>
   );
 }
