@@ -555,19 +555,19 @@ function TrayItem({
 }) {
   const [hovered, setHovered] = useState(false);
   const inner = (
-    <div
-      style={{
-        position: "relative",
-        display: "inline-block",
-        cursor: decorative ? "default" : "pointer",
-        transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1)",
-        transform: hovered ? `rotate(${rotate}deg) translateY(-10px) scale(1.08)` : `rotate(${rotate}deg)`,
-        filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <img src={src} alt={alt} style={{ width: "100%", objectFit: "contain", display: "block" }} />
+    <div style={{ position: "relative", display: "block", width: "100%" }}>
+      <img
+        src={src}
+        alt={alt}
+        style={{
+          width: "100%",
+          objectFit: "contain",
+          display: "block",
+          transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), filter 0.35s ease",
+          transform: hovered ? `rotate(${rotate}deg) translateY(-10px) scale(1.08)` : `rotate(${rotate}deg)`,
+          filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
+        }}
+      />
       {label && (
         <span
           style={{
@@ -595,7 +595,11 @@ function TrayItem({
   );
 
   return (
-    <div style={style}>
+    <div
+      style={{ ...style, cursor: decorative ? "default" : "pointer" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       {href ? <a href={href}>{inner}</a> : inner}
     </div>
   );
