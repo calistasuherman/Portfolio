@@ -130,7 +130,7 @@ export default function Home() {
       <main className="relative min-h-screen overflow-x-hidden">
 
         {/* ── Nav ── */}
-        <header className="section-content fixed top-0 left-0 right-0 z-50 flex justify-center py-5 px-6">
+        <header className="section-content fixed top-0 left-0 right-0 z-50 flex justify-center items-center py-5 px-6">
           <nav className="nav-pill flex gap-8 md:gap-12">
             {[
               { label: "About", href: "#about" },
@@ -162,35 +162,36 @@ export default function Home() {
             <source src="/hero.mp4" type="video/mp4" />
           </video>
 
-          <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-24" style={{ zIndex: 3 }}>
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pb-0" style={{ zIndex: 3 }}>
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s" }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: "1.5em" }} suppressHydrationWarning>
-                <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(6rem, 10vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 0.95 }}>Calista</span>
-                <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(6rem, 7vw, 5rem)", fontWeight: 300, color: "#960018", lineHeight: 0.95 }}>Suherman</span>
+                <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(8rem, 7vw, 5rem)", fontWeight: 300, color: "#960018", lineHeight: 1.4 }}>Calista</span>
+                <span style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(8rem, 7vw, 5rem)", fontWeight: 300, color: "#960018", lineHeight: 1.4 }}>Suherman</span>
               </div>
             </div>
 
             <p
-              className={`font-inter text-text-muted text-[11px] md:text-xs mt-8 tracking-[0.15em] hero-item${heroVisible ? " hero-visible" : ""}`}
-              style={{ transitionDelay: "0.55s" }}
+              className={`text-text-muted text-[11px] md:text-xs mt-4 tracking-[0.15em] hero-item${heroVisible ? " hero-visible" : ""}`}
+              style={{ transitionDelay: "0.55s", fontFamily: "JosefinSans, sans-serif" }}
             >
               Content Creator · Video Editor · Videographer
             </p>
 
             <div
-              className={`flex items-center gap-4 mt-8 hero-item${heroVisible ? " hero-visible" : ""}`}
+              className={`flex items-center gap-4 mt-6 hero-item${heroVisible ? " hero-visible" : ""}`}
               style={{ transitionDelay: "0.75s" }}
             >
               <a
                 href="#work"
-                className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted font-inter text-[10px] uppercase tracking-[0.2em] hover:border-text-primary hover:text-text-primary transition-all duration-300"
+                className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] hover:border-text-primary hover:text-text-primary transition-all duration-300"
+                style={{ fontFamily: "JosefinSans, sans-serif" }}
               >
                 explore my work
               </a>
               <a
                 href="#contact"
-                className="inline-block px-8 py-3 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:opacity-80"
-                style={{ background: "rgba(232,228,224,0.85)" }}
+                className="inline-block px-8 py-3 rounded-full text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:opacity-80"
+                style={{ background: "rgba(232,228,224,0.85)", fontFamily: "JosefinSans, sans-serif" }}
               >
                 work with me
               </a>
