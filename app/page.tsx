@@ -599,7 +599,7 @@ function FlipPhoto() {
     return () => clearInterval(t);
   }, []);
   return (
-    <div className="relative overflow-hidden rounded-2xl" style={{ width: "clamp(260px, 32vw, 420px)", height: "clamp(340px, 42vw, 560px)", border: "1px solid rgba(139,0,0,0.25)" }}>
+    <div className="relative overflow-hidden rounded-2xl" style={{ width: "clamp(260px, 32vw, 420px)", height: "clamp(340px, 42vw, 560px)", border: "1px solid rgba(139,0,0,0.25)", boxShadow: "0 8px 40px rgba(0,0,0,0.45), 0 2px 12px rgba(0,0,0,0.25)" }}>
       <Image src={show ? "/about-photo2.png" : "/about-photo1.png"} alt="Calista Suherman" fill className="object-cover object-center" />
     </div>
   );
