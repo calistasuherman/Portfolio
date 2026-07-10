@@ -141,7 +141,7 @@ export default function Home() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary transition-colors duration-300" style={{ fontFamily: "JosefinSans, sans-serif" }}
+                className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary transition-colors duration-300"
               >
                 {link.label}
               </a>
@@ -171,8 +171,8 @@ export default function Home() {
             </div>
 
             <p
-              className={`text-text-muted text-[11px] md:text-xs mt-4 tracking-[0.15em] hero-item${heroVisible ? " hero-visible" : ""}`}
-              style={{ transitionDelay: "0.55s", fontFamily: "JosefinSans, sans-serif" }}
+              className={`font-inter text-text-muted text-[11px] md:text-xs mt-4 tracking-[0.15em] hero-item${heroVisible ? " hero-visible" : ""}`}
+              style={{ transitionDelay: "0.55s" }}
             >
               Content Creator · Video Editor · Videographer
             </p>
@@ -183,15 +183,14 @@ export default function Home() {
             >
               <a
                 href="#work"
-                className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] hover:border-text-primary hover:text-text-primary transition-all duration-300"
-                style={{ fontFamily: "JosefinSans, sans-serif" }}
+                className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted font-inter text-[10px] uppercase tracking-[0.2em] hover:border-text-primary hover:text-text-primary transition-all duration-300"
               >
                 explore my work
               </a>
               <a
                 href="#contact"
-                className="inline-block px-8 py-3 rounded-full text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:opacity-80"
-                style={{ background: "rgba(232,228,224,0.85)", fontFamily: "JosefinSans, sans-serif" }}
+                className="inline-block px-8 py-3 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:opacity-80"
+                style={{ background: "rgba(232,228,224,0.85)" }}
               >
                 work with me
               </a>
