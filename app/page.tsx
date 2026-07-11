@@ -130,11 +130,11 @@ export default function Home() {
       <main className="relative min-h-screen overflow-x-hidden">
 
         {/* ── Nav ── */}
-        <header className="section-content fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-2 px-6">
-          {/* CS monogram — fixed left, 2x bigger */}
-          <img src="/cs-monogram.png" alt="CS" style={{ width: "clamp(84px, 10.5vw, 132px)", opacity: 0.9 }} />
-          {/* Nav — right, no background pill */}
-          <nav className="flex gap-8 md:gap-12">
+        <header className="section-content fixed top-0 left-0 right-0 z-50 py-2 px-6">
+          {/* CS monogram — absolutely positioned top-left, independent of nav */}
+          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", top: "0.5rem", left: "1.5rem", width: "clamp(84px, 10.5vw, 132px)", opacity: 0.9 }} />
+          {/* Nav — centered independently */}
+          <nav className="flex justify-center gap-8 md:gap-12">
             {[
               { label: "About", href: "#about" },
               { label: "My Work", href: "#work" },
@@ -174,7 +174,7 @@ export default function Home() {
               <div style={{ position: "relative" }} suppressHydrationWarning>
                 <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
                 <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
-                <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
+                <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "bold", color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
               </div>
             </div>
 
