@@ -131,8 +131,8 @@ export default function Home() {
 
         {/* ── Nav ── */}
         <header className="section-content fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-5 px-6">
-          {/* CS monogram — fixed left */}
-          <img src="/cs-monogram.png" alt="CS" style={{ width: "clamp(42px, 5.25vw, 66px)", opacity: 0.9 }} />
+          {/* CS monogram — fixed left, 2x bigger */}
+          <img src="/cs-monogram.png" alt="CS" style={{ width: "clamp(84px, 10.5vw, 132px)", opacity: 0.9 }} />
           {/* Nav — right, no background pill */}
           <nav className="flex gap-8 md:gap-12">
             {[
@@ -145,6 +145,7 @@ export default function Home() {
                 key={link.href}
                 href={link.href}
                 className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary hover:tracking-[0.28em] transition-all duration-300"
+                style={{ textDecoration: "underline", textUnderlineOffset: "4px" }}
               >
                 {link.label}
               </a>
@@ -167,19 +168,20 @@ export default function Home() {
 
           <div className="absolute inset-0 flex flex-col items-center justify-center pt-16" style={{ zIndex: 3 }}>
 
-            {/* Name block with echo effect */}
+            {/* est.2026 + Name block */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative", textAlign: "center" }}>
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.5rem" }}>est. 2026</p>
               <div style={{ position: "relative" }} suppressHydrationWarning>
-                <div aria-hidden="true" style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none" }}>Calista Suherman</div>
-                <div aria-hidden="true" style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none" }}>Calista Suherman</div>
-                <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: 300, color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap" }}>Calista Suherman</div>
+                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
+                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
+                <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
               </div>
             </div>
 
             {/* Tagline + Buttons — below Calista Suherman, centered */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.5rem", textAlign: "center" }}>
               <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
-                Visual storytelling through video, editing &amp; creative direction.
+                Video editing is my language. Videography is my storytelling.
               </p>
               <div className="flex items-center justify-center gap-4">
                 <a href="#work" className="inline-block px-8 py-3 rounded-full text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "var(--font-inter)" }}>
@@ -201,7 +203,7 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10 whitespace-nowrap"
-                style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 7.5vw, 6.75rem)", fontWeight: 400, color: "#f5f0f0" }}
+                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(3rem, 7.5vw, 6.75rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em" }}
               >
                 Who&apos;s that star?
               </h2>
@@ -218,13 +220,37 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Trusted By ── */}
+        <section className="section-content relative py-10 overflow-hidden">
+          <p className="text-center font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted mb-6 opacity-60">Trusted by</p>
+          <div className="relative">
+            <div style={{ display: "flex", animation: "marquee 28s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
+              {[...brands, ...brands].map((b, i) => (
+                <span key={i} className="font-inter text-text-muted opacity-50 hover:opacity-100 transition-opacity duration-300" style={{ fontSize: "clamp(10px,1.2vw,13px)", letterSpacing: "0.18em", textTransform: "uppercase", padding: "0 clamp(16px,2.5vw,36px)" }}>{b}</span>
+              ))}
+            </div>
+          </div>
+          <style>{`@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
+        </section>
+
         {/* ── Portfolio Strip ── */}
-        <section className="section-content relative py-8 overflow-hidden">
+        <section className="section-content relative py-6 overflow-hidden">
           <div className="relative">
             <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
-              {[...Array.from({length: 14}, (_, i) => `/portfolio${i + 1}.png`), ...Array.from({length: 14}, (_, i) => `/portfolio${i + 1}.png`)].map((src, i) => (
-                <div key={i} style={{ display: "inline-block", margin: "0 10px", flexShrink: 0 }}>
-                  <img src={src} alt={`Portfolio ${(i % 14) + 1}`} style={{ height: "72px", width: "auto", borderRadius: "6px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block" }}
+              {[...Array.from({length: 14}, (_, i) => i + 1), ...Array.from({length: 14}, (_, i) => i + 1)].map((n, i) => (
+                <div key={i} style={{ display: "inline-block", margin: "0 18px", flexShrink: 0 }}>
+                  <img
+                    src={`/portfolio${n}.png`}
+                    alt={`Portfolio ${n}`}
+                    style={{
+                      height: n === 7 ? "18px" : "36px",
+                      width: "auto",
+                      borderRadius: "4px",
+                      objectFit: "cover",
+                      opacity: 0.75,
+                      transition: "opacity 0.3s",
+                      display: "block",
+                    }}
                     onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
                     onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
                   />
@@ -232,7 +258,6 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <style>{`@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
         </section>
 
         {/* ── Work ── */}
