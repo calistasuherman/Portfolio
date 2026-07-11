@@ -235,7 +235,7 @@ export default function Home() {
                     src={`/portfolio${n}.png`}
                     alt={`Portfolio ${n}`}
                     style={{
-                      height: n === 7 ? "18px" : "36px",
+                      height: "36px",
                       width: "auto",
                       borderRadius: "4px",
                       objectFit: "cover",
