@@ -222,7 +222,7 @@ export default function Home() {
 
         {/* ── Trusted By ── */}
         <section className="section-content relative py-6 overflow-hidden">
-          <p className="text-center font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted opacity-60">Trusted by</p>
+          <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "1rem" }}>Trusted by</p>
         </section>
 
         {/* ── Portfolio Strip ── */}
