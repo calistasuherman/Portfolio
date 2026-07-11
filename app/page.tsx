@@ -130,7 +130,7 @@ export default function Home() {
       <main className="relative min-h-screen overflow-x-hidden">
 
         {/* ── Nav ── */}
-        <header className="section-content fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-5 px-6">
+        <header className="section-content fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-2 px-6">
           {/* CS monogram — fixed left, 2x bigger */}
           <img src="/cs-monogram.png" alt="CS" style={{ width: "clamp(84px, 10.5vw, 132px)", opacity: 0.9 }} />
           {/* Nav — right, no background pill */}
@@ -170,7 +170,7 @@ export default function Home() {
 
             {/* est.2026 + Name block */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative", textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.5rem", marginTop: "-2rem" }}>est. 2026</p>
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.5rem", marginTop: "-4rem" }}>est. 2026</p>
               <div style={{ position: "relative" }} suppressHydrationWarning>
                 <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
                 <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
@@ -180,7 +180,7 @@ export default function Home() {
 
             {/* Tagline + Buttons — below Calista Suherman, centered */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.5rem", textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.375rem, 0.6vw, 0.5rem)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
+              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
                 Video editing is my language. Videography is my storytelling.
               </p>
               <div className="flex items-center justify-center gap-4">
@@ -203,7 +203,7 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10 whitespace-nowrap"
-                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.5rem, 3.75vw, 3.375rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em" }}
+                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 5vw, 4.5rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em" }}
               >
                 Who&apos;s that star?
               </h2>
