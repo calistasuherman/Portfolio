@@ -145,7 +145,7 @@ export default function Home() {
                 key={link.href}
                 href={link.href}
                 className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary hover:tracking-[0.28em] transition-all duration-300"
-                style={{ textDecoration: "underline", textUnderlineOffset: "4px" }}
+                style={{ textDecoration: "none" }}
               >
                 {link.label}
               </a>
@@ -170,7 +170,7 @@ export default function Home() {
 
             {/* est.2026 + Name block */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative", textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.5rem" }}>est. 2026</p>
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.5rem", marginTop: "-2rem" }}>est. 2026</p>
               <div style={{ position: "relative" }} suppressHydrationWarning>
                 <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
                 <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
@@ -180,7 +180,7 @@ export default function Home() {
 
             {/* Tagline + Buttons — below Calista Suherman, centered */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.5rem", textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
+              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.375rem, 0.6vw, 0.5rem)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
                 Video editing is my language. Videography is my storytelling.
               </p>
               <div className="flex items-center justify-center gap-4">
@@ -203,7 +203,7 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10 whitespace-nowrap"
-                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(3rem, 7.5vw, 6.75rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em" }}
+                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.5rem, 3.75vw, 3.375rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em" }}
               >
                 Who&apos;s that star?
               </h2>
@@ -221,16 +221,8 @@ export default function Home() {
         </section>
 
         {/* ── Trusted By ── */}
-        <section className="section-content relative py-10 overflow-hidden">
-          <p className="text-center font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted mb-6 opacity-60">Trusted by</p>
-          <div className="relative">
-            <div style={{ display: "flex", animation: "marquee 28s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
-              {[...brands, ...brands].map((b, i) => (
-                <span key={i} className="font-inter text-text-muted opacity-50 hover:opacity-100 transition-opacity duration-300" style={{ fontSize: "clamp(10px,1.2vw,13px)", letterSpacing: "0.18em", textTransform: "uppercase", padding: "0 clamp(16px,2.5vw,36px)" }}>{b}</span>
-              ))}
-            </div>
-          </div>
-          <style>{`@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
+        <section className="section-content relative py-6 overflow-hidden">
+          <p className="text-center font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted opacity-60">Trusted by</p>
         </section>
 
         {/* ── Portfolio Strip ── */}
@@ -577,109 +569,76 @@ function TrayItem({
 
 function EnvelopeContact() {
   const ref = useRef<HTMLDivElement>(null);
-  const [phase, setPhase] = useState<"idle" | "closed" | "flap" | "open">("idle");
+  const [isOpen, setIsOpen] = useState(false);
+  const [triggered, setTriggered] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && phase === "idle") {
-          setPhase("closed");
-          setTimeout(() => setPhase("flap"), 700);
-          setTimeout(() => setPhase("open"), 1700);
+        if (entry.isIntersecting && !triggered) {
+          setTriggered(true);
+          setTimeout(() => setIsOpen(true), 600);
         }
       },
-      { threshold: 0.25 }
+      { threshold: 0.3 }
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [phase]);
-
-  const showClosed = phase === "idle" || phase === "closed";
-  const showOpen = phase === "flap" || phase === "open";
-  const cardOut = phase === "open";
+  }, [triggered]);
 
   return (
-    <div ref={ref} style={{ position: "relative", width: "min(800px, 92vw)", margin: "0 auto", paddingTop: "80px" }}>
+    <div ref={ref} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0" }}>
       <style>{`
-        @keyframes flapSwing {
-          0%   { transform: perspective(700px) rotateX(0deg); }
-          100% { transform: perspective(700px) rotateX(-175deg); }
+        .env-scene { width: 320px; height: 280px; position: relative; display: grid; place-items: center; cursor: pointer; user-select: none; }
+        .env-wrap { position: relative; width: 260px; height: 180px; filter: drop-shadow(0 18px 28px rgba(0,0,0,0.28)); }
+        .env-card {
+          position: absolute; left: 50%; bottom: 28px; width: 210px; height: 150px;
+          transform: translateX(-50%) translateY(38px);
+          background: linear-gradient(180deg,#ffffff 0%,#fffdf8 100%);
+          border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+          padding: 18px; text-align: center; color: #3b2f2a;
+          transition: transform 900ms cubic-bezier(.2,.9,.2,1), opacity 500ms ease;
+          opacity: 0; z-index: 1;
+          display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
+        .env-envelope { position: absolute; inset: auto 0 0 0; width: 260px; height: 150px; margin: auto; bottom: 0; z-index: 2; }
+        .env-base { position: absolute; inset: 0; background: linear-gradient(180deg,#d8a66c 0%,#c88d4c 100%); clip-path: polygon(0 100%,50% 50%,100% 100%,100% 0,0 0); border-radius: 10px; }
+        .env-front { position: absolute; inset: 0; background: linear-gradient(180deg,#e3b37b 0%,#d59a58 100%); clip-path: polygon(0 100%,50% 58%,100% 100%,100% 0,0 0); z-index: 3; }
+        .env-flap { position: absolute; inset: 0; background: linear-gradient(180deg,#e8bb84 0%,#cf9550 100%); clip-path: polygon(0 0,50% 52%,100% 0); transform-origin: top center; transform: rotateX(0deg); transition: transform 800ms cubic-bezier(.2,.9,.2,1); z-index: 4; backface-visibility: hidden; }
+        .env-seal { position: absolute; left: 50%; top: 74px; width: 24px; height: 24px; transform: translateX(-50%); background: #960018; border-radius: 50%; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.08); z-index: 5; transition: transform 500ms ease, opacity 400ms ease; }
+        .env-open .env-flap { transform: rotateX(180deg); }
+        .env-open .env-card { transform: translateX(-50%) translateY(-120px); opacity: 1; }
+        .env-open .env-seal { transform: translateX(-50%) scale(0.8); opacity: 0.2; }
       `}</style>
 
-      {/* ── Open envelope e2 (2x bigger) — base layer ── */}
-      <div style={{ position: "relative", zIndex: 2, transition: "opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s", opacity: showOpen ? 1 : 0, transform: showOpen ? "scale(1)" : "scale(0.96)" }}>
-        <img src="/envelope-open.jpg" alt="envelope open" style={{ width: "100%", display: "block" }} />
-
-        {/* Card emerges from inside the envelope opening */}
-        <div style={{
-          position: "absolute",
-          left: "20%", right: "20%",
-          bottom: "28%",
-          zIndex: 1,
-          transition: "transform 1.2s cubic-bezier(0.22,1,0.36,1) 0.2s",
-          transform: cardOut ? "translateY(-72%)" : "translateY(0%)",
-        }}>
-          <div style={{
-            background: "#f5f0eb",
-            borderRadius: "3px",
-            padding: "1.6rem 1.3rem",
-            boxShadow: "0 6px 32px rgba(0,0,0,0.16)",
-            opacity: cardOut ? 1 : 0,
-            transition: "opacity 0.35s ease 0.35s",
-          }}>
-            <p style={{ fontFamily: "var(--font-melodrama)", color: "#3a1a1a", fontSize: "0.95rem", marginBottom: "0.2rem" }}>and, that&apos;s</p>
-            <h2 style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(1.8rem, 5vw, 3.5rem)", fontWeight: "normal", color: "#960018", lineHeight: 1, marginBottom: "0.6rem" }}>a wrap.</h2>
-            <p style={{ fontFamily: "var(--font-melodrama)", color: "#5a3a3a", fontSize: "0.65rem", marginBottom: "1rem", letterSpacing: "0.04em" }}>
-              Piqued your interest? Let&apos;s work together.
-            </p>
-            <a href="mailto:cal1starcollab@gmail.com"
-              style={{ display: "inline-block", padding: "0.45rem 1.1rem", borderRadius: "999px", border: "1px solid rgba(90,40,40,0.4)", color: "#5a2020", fontFamily: "var(--font-melodrama)", fontSize: "0.55rem", letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: "0.9rem", transition: "all 0.3s" }}>
-              cal1starcollab@gmail.com
-            </a>
-            <div style={{ display: "flex", justifyContent: "center", gap: "1.2rem" }}>
+      <div
+        className={`env-scene${isOpen ? " env-open" : ""}`}
+        onClick={() => setIsOpen(o => !o)}
+        role="button"
+        aria-label="Envelope animation"
+        tabIndex={0}
+        onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setIsOpen(o => !o); } }}
+      >
+        <div className="env-wrap">
+          <div className="env-card">
+            <p style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.75rem", opacity: 0.7, marginBottom: "4px" }}>and, that&apos;s</p>
+            <h2 style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(1.4rem, 4vw, 2.2rem)", fontWeight: "normal", color: "#960018", lineHeight: 1, margin: "0 0 8px" }}>a wrap.</h2>
+            <p style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.55rem", opacity: 0.85, margin: "0 0 10px", letterSpacing: "0.04em" }}>Piqued your interest? Let&apos;s work together.</p>
+            <a href="mailto:cal1starcollab@gmail.com" style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.45rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#5a2020", display: "block", marginBottom: "8px" }}>cal1starcollab@gmail.com</a>
+            <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
               {[["Instagram","https://instagram.com/cal1star"],["YouTube","https://www.youtube.com/@cal1stvr"],["TikTok","https://www.tiktok.com/@cal1star"]].map(([label,href]) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                  style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.5rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#5a2020" }}>
-                  {label}
-                </a>
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.4rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#5a2020" }}>{label}</a>
               ))}
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* ── Closed envelope e — centered, same scale as before ── */}
-      <div style={{
-        position: "absolute", top: "20%", left: "25%", width: "50%", zIndex: 4,
-        opacity: showClosed ? 1 : 0,
-        transition: "opacity 0.45s ease",
-        pointerEvents: "none",
-      }}>
-        {/* Envelope body (bottom half) — stays flat */}
-        <div style={{ position: "relative", overflow: "hidden" }}>
-          <img src="/envelope-closed.jpg" alt="envelope closed" style={{ width: "100%", display: "block" }} />
-        </div>
-      </div>
-
-      {/* ── Flap animation overlay ── */}
-      <div style={{
-        position: "absolute", top: "20%", left: "25%", width: "50%", zIndex: 5,
-        pointerEvents: "none",
-        opacity: phase === "flap" ? 1 : 0,
-        transition: "opacity 0.2s ease",
-      }}>
-        {/* Top 45% = the flap that swings open */}
-        <div style={{
-          width: "100%",
-          height: "45%",
-          overflow: "hidden",
-          transformOrigin: "center bottom",
-          animation: phase === "flap" ? "flapSwing 0.9s cubic-bezier(0.4,0,0.2,1) forwards" : "none",
-        }}>
-          <img src="/envelope-closed.jpg" alt="" style={{ width: "100%", display: "block" }} />
+          <div className="env-envelope">
+            <div className="env-base" />
+            <div className="env-front" />
+            <div className="env-flap" />
+            <div className="env-seal" />
+          </div>
         </div>
       </div>
     </div>
