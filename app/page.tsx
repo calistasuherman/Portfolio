@@ -178,20 +178,20 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Tagline + Buttons — below Calista Suherman, centered */}
-            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.5rem", textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
-                Video editing is my language. Videography is my storytelling.
-              </p>
-              <div className="flex items-center justify-center gap-4">
-                <a href="#work" className="inline-block px-8 py-3 rounded-full text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "var(--font-inter)" }}>
-                  explore my work
-                </a>
-                <a href="#contact" className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "var(--font-inter)" }}>
-                  work with me
-                </a>
-              </div>
+            {/* Tagline — slightly below name */}
+            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "3rem", textAlign: "center" }}>
+              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.08em", whiteSpace: "pre" }}>{"Video   editing    is my      language.     Videography     is    my         storytelling."}</p>
             </div>
+          </div>
+
+          {/* Buttons — pinned to bottom of hero */}
+          <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.8s", position: "absolute", bottom: "clamp(2.5rem, 6vh, 5rem)", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "1rem", zIndex: 3 }}>
+            <a href="#work" className="inline-block px-8 py-3 rounded-full text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "var(--font-inter)" }}>
+              explore my work
+            </a>
+            <a href="#contact" className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "var(--font-inter)" }}>
+              work with me
+            </a>
           </div>
 
         </section>
