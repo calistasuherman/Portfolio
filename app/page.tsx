@@ -130,7 +130,7 @@ export default function Home() {
       <main className="relative min-h-screen overflow-x-hidden">
 
         {/* ── Nav ── */}
-        <header className="section-content fixed top-0 left-0 right-0 z-50 py-2 px-6">
+        <header className="section-content fixed top-0 left-0 right-0 z-50 py-5 px-6">
           {/* CS monogram — absolutely positioned top-left, independent of nav */}
           <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", top: "0.5rem", left: "1.5rem", width: "clamp(84px, 10.5vw, 132px)", opacity: 0.9 }} />
           {/* Nav — top right */}
