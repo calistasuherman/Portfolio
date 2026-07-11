@@ -132,7 +132,7 @@ export default function Home() {
         {/* ── Nav ── */}
         <header className="section-content fixed top-0 left-0 right-0 z-50 py-5 px-6">
           {/* CS monogram — absolutely positioned top-left, independent of nav */}
-          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", top: "0.5rem", left: "-1.25rem", width: "clamp(58px, 7vw, 90px)", opacity: 0.9 }} />
+          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", top: "0.5rem", left: "0.5rem", width: "clamp(58px, 7vw, 90px)", opacity: 0.9 }} />
           {/* Nav — top right */}
           <nav className="flex justify-end gap-8 md:gap-12">
             {[
@@ -180,7 +180,7 @@ export default function Home() {
 
             {/* Tagline — slightly below name */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "3rem", textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.55rem, 0.85vw, 0.75rem)", letterSpacing: "0.08em", whiteSpace: "pre" }}>{"\"Video   editing    is  my    language.     Videography     is    my      storytelling.\""}</p>
+              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.55rem, 0.85vw, 0.75rem)", letterSpacing: "0.08em", whiteSpace: "pre" }}>{"Video   editing    is  my    language.     Videography     is    my      storytelling."}</p>
             </div>
           </div>
 
