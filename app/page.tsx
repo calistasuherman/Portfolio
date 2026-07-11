@@ -222,11 +222,11 @@ export default function Home() {
 
         {/* ── Trusted By ── */}
         <section className="section-content relative py-6 overflow-hidden">
-          <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "1rem" }}>Trusted by</p>
+          <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
         </section>
 
         {/* ── Portfolio Strip ── */}
-        <section className="section-content relative py-6 overflow-hidden">
+        <section className="section-content relative py-4 overflow-hidden">
           <div className="relative">
             <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
               {[...Array.from({length: 14}, (_, i) => i + 1), ...Array.from({length: 14}, (_, i) => i + 1)].map((n, i) => (
