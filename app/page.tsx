@@ -203,7 +203,7 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10 whitespace-nowrap"
-                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em" }}
+                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em", marginLeft: "-1.5rem" }}
               >
                 Who&apos;s that star?
               </h2>
