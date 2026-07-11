@@ -218,13 +218,17 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Trusted By ── */}
-        <section className="section-content relative py-10 overflow-hidden">
-          <p className="text-center font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted mb-6 opacity-60">Trusted by</p>
+        {/* ── Portfolio Strip ── */}
+        <section className="section-content relative py-8 overflow-hidden">
           <div className="relative">
-            <div style={{ display: "flex", animation: "marquee 28s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
-              {[...brands, ...brands].map((b, i) => (
-                <span key={i} className="font-inter text-text-muted opacity-50 hover:opacity-100 transition-opacity duration-300" style={{ fontSize: "clamp(10px,1.2vw,13px)", letterSpacing: "0.18em", textTransform: "uppercase", padding: "0 clamp(16px,2.5vw,36px)" }}>{b}</span>
+            <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
+              {[...Array.from({length: 14}, (_, i) => `/portfolio${i + 1}.png`), ...Array.from({length: 14}, (_, i) => `/portfolio${i + 1}.png`)].map((src, i) => (
+                <div key={i} style={{ display: "inline-block", margin: "0 10px", flexShrink: 0 }}>
+                  <img src={src} alt={`Portfolio ${(i % 14) + 1}`} style={{ height: "72px", width: "auto", borderRadius: "6px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block" }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
+                  />
+                </div>
               ))}
             </div>
           </div>
