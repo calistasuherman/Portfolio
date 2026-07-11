@@ -180,7 +180,7 @@ export default function Home() {
 
             {/* Tagline — slightly below name */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "3rem", textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.55rem, 0.85vw, 0.75rem)", letterSpacing: "0.08em", whiteSpace: "pre" }}>{"Video   editing    is my      language.     Videography     is    my         storytelling."}</p>
+              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.55rem, 0.85vw, 0.75rem)", letterSpacing: "0.08em", whiteSpace: "pre" }}>{"\"Video   editing    is  my    language.     Videography     is    my      storytelling.\""}</p>
             </div>
           </div>
 
