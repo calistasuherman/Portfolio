@@ -130,7 +130,7 @@ export default function Home() {
       <main className="relative min-h-screen overflow-x-hidden">
 
         {/* ── Nav ── */}
-        <header className="section-content fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-5 px-6">
+        <header className="section-content fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-2 px-6">
           {/* CS monogram — fixed left, 2x bigger */}
           <img src="/cs-monogram.png" alt="CS" style={{ width: "clamp(84px, 10.5vw, 132px)", opacity: 0.9 }} />
           {/* Nav — right, no background pill */}
@@ -170,17 +170,17 @@ export default function Home() {
 
             {/* est.2026 + Name block */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative", textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.5rem", marginTop: "-2rem" }}>est. 2026</p>
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.5rem", marginTop: "-5rem" }}>est. 2026</p>
               <div style={{ position: "relative" }} suppressHydrationWarning>
-                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
-                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
-                <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
+                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#f5f0f0", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
+                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#f5f0f0", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
+                <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#f5f0f0", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
               </div>
             </div>
 
             {/* Tagline + Buttons — below Calista Suherman, centered */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.5rem", textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.375rem, 0.6vw, 0.5rem)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
+              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.7)", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
                 Video editing is my language. Videography is my storytelling.
               </p>
               <div className="flex items-center justify-center gap-4">
@@ -203,7 +203,7 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10 whitespace-nowrap"
-                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.5rem, 3.75vw, 3.375rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em" }}
+                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.2rem, 5.5vw, 5rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em" }}
               >
                 Who&apos;s that star?
               </h2>
@@ -214,15 +214,12 @@ export default function Home() {
               </div>
             </Reveal>
 
-            <Reveal className="flex justify-center order-2" direction="right" delay={200}>
-              <FlipPhoto />
-            </Reveal>
           </div>
         </section>
 
         {/* ── Trusted By ── */}
         <section className="section-content relative py-6 overflow-hidden">
-          <p className="text-center font-inter text-[10px] uppercase tracking-[0.25em] text-text-muted opacity-60">Trusted by</p>
+          <p className="text-center font-inter text-[18px] uppercase tracking-[0.25em] font-bold text-white opacity-90">Trusted by</p>
         </section>
 
         {/* ── Portfolio Strip ── */}
@@ -263,17 +260,17 @@ export default function Home() {
             <div style={{ height: "80px" }} />
 
             <Reveal delay={80}>
-              <WorkSubsection id="youtube-integrations" title={<DualHeading serif="YouTube" script="Integrations" size="large" />}>
+              <WorkSubsection id="youtube-integrations" title={<DualHeading serif="YouTube" script="Integrations" size="large" billaMount />}>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {youtubeIntegrations.map((item, i) => (
-                    <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} />
+                    <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} labelOffset={item.label === "BetterHelp" ? "8px" : undefined} />
                   ))}
                 </div>
               </WorkSubsection>
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection id="video-editing" title={<DualHeading serif="Video" script="Editing" size="large" />}>
+              <WorkSubsection id="video-editing" title={<DualHeading serif="Video" script="Editing" size="large" billaMount />}>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   {Array.from({ length: 16 }).map((_, i) => (
                     <VideoCard key={i} label="" src={`/edit${i + 1}.mp4`} staggerDelay={i * 40} />
@@ -283,7 +280,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection id="fashion-checks" title={<DualHeading serif="Fashion &" script="Fit Checks" size="sub" noOverlap />}>
+              <WorkSubsection id="fashion-checks" title={<DualHeading serif="Fashion &" script="Fit Checks" size="sub" noOverlap billaMount />}>
                 <div style={{ columns: "4 140px", gap: "10px" }}>
                   {[
                     "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
@@ -319,7 +316,7 @@ export default function Home() {
             <Reveal>
               <div className="mb-14 overflow-hidden">
                 <div style={{ lineHeight: 0.85 }}>
-                  <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 8vw, 8.25rem)", fontWeight: "normal", color: "#f5f0f0" }}>Signature Services</div>
+                  <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(3rem, 8vw, 8.25rem)", fontWeight: "normal", color: "#f5f0f0" }}>Signature Services</div>
                 </div>
               </div>
             </Reveal>
@@ -454,9 +451,18 @@ function StatCard({
   );
 }
 
-function DualHeading({ serif, script, size = "section", noOverlap = false }: { serif: string; script: string; size?: "section" | "sub" | "large"; noOverlap?: boolean }) {
+function DualHeading({ serif, script, size = "section", noOverlap = false, billaMount = false }: { serif: string; script: string; size?: "section" | "sub" | "large"; noOverlap?: boolean; billaMount?: boolean }) {
   const serifSize = size === "section" ? "clamp(2.8rem, 6vw, 5.2rem)" : size === "large" ? "clamp(2.7rem, 5.85vw, 5.04rem)" : "clamp(2.7rem, 5.85vw, 5.04rem)";
   const scriptSize = size === "section" ? "clamp(3rem, 6.5vw, 5.6rem)" : size === "large" ? "clamp(3rem, 7vw, 7.3rem)" : "clamp(3rem, 7vw, 7.3rem)";
+  if (billaMount) {
+    return (
+      <div style={{ textAlign: "center", lineHeight: 1 }}>
+        <span style={{ fontFamily: "BillaMount, cursive", fontSize: scriptSize, fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.04em" }}>
+          {serif} {script}
+        </span>
+      </div>
+    );
+  }
   return (
     <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", lineHeight: 1 }}>
       <span
@@ -731,10 +737,12 @@ function VideoCard({
   label,
   src,
   staggerDelay = 0,
+  labelOffset,
 }: {
   label: string;
   src: string;
   staggerDelay?: number;
+  labelOffset?: string;
 }) {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -777,7 +785,7 @@ function VideoCard({
       )}
       <div
         className="absolute bottom-0 left-0 right-0 px-3 py-2 flex items-center justify-between"
-        style={{ background: "linear-gradient(to top, rgba(13,0,0,0.85), transparent)" }}
+        style={{ background: "linear-gradient(to top, rgba(13,0,0,0.85), transparent)", paddingBottom: labelOffset ?? "8px" }}
       >
         {label && <span className="font-inter text-[10px] uppercase tracking-widest text-text-primary">{label}</span>}
       </div>
