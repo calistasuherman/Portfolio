@@ -226,7 +226,7 @@ export default function Home() {
         </section>
 
         {/* ── Portfolio Strip ── */}
-        <section className="section-content relative py-4 overflow-hidden">
+        <section className="section-content relative py-1 overflow-hidden">
           <div className="relative">
             <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
               {[...Array.from({length: 14}, (_, i) => i + 1), ...Array.from({length: 14}, (_, i) => i + 1)].map((n, i) => (
