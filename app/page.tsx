@@ -132,7 +132,7 @@ export default function Home() {
         {/* ── Nav ── */}
         <header className="section-content fixed top-0 left-0 right-0 z-50 py-5 px-6">
           {/* CS monogram — absolutely positioned top-left, independent of nav */}
-          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", top: "0.5rem", left: "1.5rem", width: "clamp(84px, 10.5vw, 132px)", opacity: 0.9 }} />
+          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", top: "0.5rem", left: "1.5rem", width: "clamp(68px, 8.5vw, 108px)", opacity: 0.9 }} />
           {/* Nav — top right */}
           <nav className="flex justify-end gap-8 md:gap-12">
             {[
@@ -197,13 +197,13 @@ export default function Home() {
         </section>
 
         {/* ── About ── */}
-        <section id="about" className="section-content relative pt-24 md:pt-36 pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ backgroundImage: "url('/about-bg.jpg')", backgroundSize: "cover", backgroundPosition: "center top" }}>
+        <section id="about" className="section-content relative pt-12 md:pt-20 pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ backgroundImage: "url('/about-bg.jpg')", backgroundSize: "cover", backgroundPosition: "center top" }}>
           <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10 whitespace-nowrap"
-                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 5vw, 4.5rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em" }}
+                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.5rem, 6vw, 5.5rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em" }}
               >
                 Who&apos;s that star?
               </h2>
