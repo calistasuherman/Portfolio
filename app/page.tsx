@@ -207,7 +207,7 @@ export default function Home() {
               >
                 Who&apos;s that star?
               </h2>
-              <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.8rem, 1.5vw, 1.1rem)", marginTop: "1.5rem", paddingLeft: "1.5rem" }}>
+              <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.8rem, 1.5vw, 1.1rem)", marginTop: "6rem", paddingLeft: "1.5rem" }}>
                 {["Content Creator", "Video Editor", "Videographer", "Coffee Connoisseur", "Frequent Traveler", "Gen Z (21 Y/O)", "Fashion Lover", "SF Based"].map((item) => (
                   <p key={item} style={{ letterSpacing: "0.04em", textTransform: "uppercase" }}>{item}</p>
                 ))}
