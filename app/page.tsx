@@ -214,11 +214,9 @@ export default function Home() {
               </div>
             </Reveal>
 
-            <div style={{ marginTop: "2rem" }}>
-              <Reveal className="flex justify-center order-2" direction="right" delay={200}>
-                <FlipPhoto />
-              </Reveal>
-            </div>
+            <Reveal className="flex justify-center order-2" direction="right" delay={200}>
+              <FlipPhoto />
+            </Reveal>
           </div>
         </section>
 
@@ -321,7 +319,7 @@ export default function Home() {
             <Reveal>
               <div className="mb-14 overflow-hidden">
                 <div style={{ lineHeight: 0.85 }}>
-                  <div style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(3rem, 8vw, 8.25rem)", fontWeight: "normal", color: "#f5f0f0" }}>Signature Services</div>
+                  <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.4rem, 5.5vw, 5.5rem)", fontWeight: "normal", color: "#f5f0f0" }}>Signature Services</div>
                 </div>
               </div>
             </Reveal>
