@@ -203,7 +203,7 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10 whitespace-nowrap"
-                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em", marginLeft: "-1.5rem" }}
+                style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em", marginLeft: "-1.5rem", marginTop: "2rem" }}
               >
                 Who&apos;s that star?
               </h2>
@@ -214,9 +214,11 @@ export default function Home() {
               </div>
             </Reveal>
 
-            <Reveal className="flex justify-center order-2" direction="right" delay={200}>
-              <FlipPhoto />
-            </Reveal>
+            <div style={{ marginTop: "2rem" }}>
+              <Reveal className="flex justify-center order-2" direction="right" delay={200}>
+                <FlipPhoto />
+              </Reveal>
+            </div>
           </div>
         </section>
 
@@ -226,7 +228,7 @@ export default function Home() {
         </section>
 
         {/* ── Portfolio Strip ── */}
-        <section className="section-content relative py-1 overflow-hidden">
+        <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
           <div className="relative">
             <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
               {[...Array.from({length: 14}, (_, i) => i + 1), ...Array.from({length: 14}, (_, i) => i + 1)].map((n, i) => (
