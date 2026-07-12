@@ -223,7 +223,7 @@ export default function Home() {
         </section>
 
         {/* ── Trusted By ── */}
-        <section id="work" className="section-content relative py-6 overflow-hidden">
+        <section className="section-content relative py-6 overflow-hidden">
           <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
         </section>
 
@@ -255,7 +255,7 @@ export default function Home() {
         </section>
 
         {/* ── Work ── */}
-        <section className="section-content relative pt-4 pb-12 px-6 md:px-16 lg:px-32">
+        <section id="work" className="section-content relative pt-4 pb-12 px-6 md:px-16 lg:px-32" style={{ scrollMarginTop: "80px" }}>
           <div className="max-w-6xl mx-auto">
 
             <Reveal>
@@ -265,7 +265,13 @@ export default function Home() {
             <div style={{ height: "80px" }} />
 
             <Reveal delay={80}>
-              <WorkSubsection id="youtube-integrations" title={<DualHeading serif="YouTube" script="Integrations" size="large" />}>
+              <WorkSubsection id="youtube-integrations" title={
+                <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", lineHeight: 1 }}>
+                  <span style={{ fontFamily: "Ballet, cursive", fontSize: "clamp(2.7rem, 5.85vw, 5.04rem)", fontWeight: "normal", color: "#f5f0f0" }}>Y</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2.7rem, 5.85vw, 5.04rem)", fontWeight: "normal", color: "#f5f0f0" }}>ouTube</span>
+                  <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "clamp(3rem, 7vw, 7.3rem)", fontWeight: "normal", color: "rgba(245,240,240,0.55)", fontStyle: "italic", marginLeft: "0.4em" }}>Integrations</span>
+                </div>
+              }>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {youtubeIntegrations.map((item, i) => (
                     <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} />
@@ -319,7 +325,7 @@ export default function Home() {
         <section id="services" className="section-content relative pt-0 pb-24 md:pb-36 px-0 overflow-hidden">
           <div className="max-w-5xl mx-auto px-6 md:px-16 lg:px-32">
             <Reveal>
-              <div className="mb-14 overflow-hidden">
+              <div className="mb-14">
                 <div style={{ lineHeight: 1.1 }}>
                   <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.4rem, 5.5vw, 5.5rem)", fontWeight: "normal", color: "#f5f0f0" }}>Signature Services</div>
                 </div>

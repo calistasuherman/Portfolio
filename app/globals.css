@@ -30,6 +30,20 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Ballet";
+  src: url("/fonts/Ballet-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PerandoryCondensed";
+  src: url("/fonts/Perandory-Condensed.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --font-inter: "Inter", sans-serif;
   --font-cormorant: "Cormorant Garamond", serif;
