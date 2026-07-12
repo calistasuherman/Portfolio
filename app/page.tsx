@@ -214,8 +214,8 @@ export default function Home() {
               </div>
             </Reveal>
 
-            <div style={{ marginTop: "2rem" }}>
-              <Reveal className="flex justify-center order-2" direction="right" delay={200}>
+            <div className="order-2 flex justify-center" style={{ marginTop: "2rem" }}>
+              <Reveal direction="right" delay={200}>
                 <FlipPhoto />
               </Reveal>
             </div>
