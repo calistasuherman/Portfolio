@@ -223,7 +223,7 @@ export default function Home() {
         </section>
 
         {/* ── Trusted By ── */}
-        <section className="section-content relative py-6 overflow-hidden">
+        <section id="work" className="section-content relative py-6 overflow-hidden">
           <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
         </section>
 
@@ -255,7 +255,7 @@ export default function Home() {
         </section>
 
         {/* ── Work ── */}
-        <section id="work" className="section-content relative pt-4 pb-12 px-6 md:px-16 lg:px-32">
+        <section className="section-content relative pt-4 pb-12 px-6 md:px-16 lg:px-32">
           <div className="max-w-6xl mx-auto">
 
             <Reveal>
@@ -320,7 +320,7 @@ export default function Home() {
           <div className="max-w-5xl mx-auto px-6 md:px-16 lg:px-32">
             <Reveal>
               <div className="mb-14 overflow-hidden">
-                <div style={{ lineHeight: 0.85 }}>
+                <div style={{ lineHeight: 1.1 }}>
                   <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.4rem, 5.5vw, 5.5rem)", fontWeight: "normal", color: "#f5f0f0" }}>Signature Services</div>
                 </div>
               </div>
