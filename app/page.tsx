@@ -186,10 +186,10 @@ export default function Home() {
 
           {/* Buttons — pinned to bottom of hero */}
           <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.8s", position: "absolute", bottom: "clamp(2.5rem, 6vh, 5rem)", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "1rem", zIndex: 3 }}>
-            <a href="#work" className="inline-block px-8 py-3 rounded-full text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "var(--font-inter)" }}>
+            <a href="#work" className="inline-block px-8 py-3 rounded-none text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "var(--font-inter)" }}>
               explore my work
             </a>
-            <a href="#contact" className="inline-block px-8 py-3 rounded-full border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "var(--font-inter)" }}>
+            <a href="#contact" className="inline-block px-8 py-3 rounded-none border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "var(--font-inter)" }}>
               work with me
             </a>
           </div>
