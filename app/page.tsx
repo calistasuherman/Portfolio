@@ -312,24 +312,40 @@ export default function Home() {
 
         {/* ── Editing Toolkit ── */}
         <section className="section-content relative" style={{ paddingTop: "2rem", paddingBottom: "4rem", overflow: "hidden" }}>
-          <div style={{ position: "relative", maxWidth: "860px", margin: "0 auto", height: "clamp(440px, 60vw, 620px)" }}>
+          <div style={{ position: "relative", maxWidth: "780px", margin: "0 auto", height: "clamp(500px, 70vw, 700px)" }}>
 
-            {/* Camera — top left */}
-            <div style={{ position: "absolute", top: "0%", left: "0%", width: "clamp(130px, 20vw, 210px)" }}>
+            {/* TOP ROW: camera (left) · DR (center) · FCP (right) */}
+            <div style={{ position: "absolute", top: "0%", left: "2%", width: "clamp(100px, 16vw, 170px)", textAlign: "center" }}>
               <img src="/camera.png" alt="DJI Osmo Pocket" style={{ width: "100%", display: "block" }} />
+              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>DJI Osmo Pocket 3</p>
+            </div>
+            <div style={{ position: "absolute", top: "3%", left: "50%", transform: "translateX(-50%)", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
+              <img src="/dr.png" alt="DaVinci Resolve" style={{ width: "100%", display: "block" }} />
+              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>DaVinci Resolve</p>
+            </div>
+            <div style={{ position: "absolute", top: "0%", right: "2%", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
+              <img src="/fcp.png" alt="Final Cut Pro" style={{ width: "100%", display: "block" }} />
+              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>Final Cut Pro</p>
             </div>
 
-            {/* Top row: DR (top-center-left) · FC (top-center-right) */}
-            <img src="/dr.png" alt="DaVinci Resolve" style={{ position: "absolute", top: "4%", left: "30%", width: "clamp(80px, 12vw, 130px)" }} />
-            <img src="/fcp.png" alt="Final Cut Pro"   style={{ position: "absolute", top: "4%", right: "18%", width: "clamp(80px, 12vw, 130px)" }} />
+            {/* MIDDLE ROW: VS (left) · title (center) · CC (right) */}
+            <div style={{ position: "absolute", top: "44%", left: "2%", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
+              <img src="/vs.png" alt="Video Star" style={{ width: "100%", display: "block" }} />
+              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>Video Star</p>
+            </div>
+            <div style={{ position: "absolute", top: "44%", right: "2%", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
+              <img src="/cc.png" alt="CapCut" style={{ width: "100%", display: "block" }} />
+              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>CapCut</p>
+            </div>
 
-            {/* Bottom row: VS · CC · C — evenly spread */}
-            <img src="/vs.png" alt="Video Star" style={{ position: "absolute", bottom: "4%", left: "18%",  width: "clamp(80px, 12vw, 130px)" }} />
-            <img src="/cc.png" alt="CapCut"     style={{ position: "absolute", bottom: "4%", left: "50%", transform: "translateX(-50%)", width: "clamp(80px, 12vw, 130px)" }} />
-            <img src="/c.png"  alt="Canva"      style={{ position: "absolute", bottom: "4%", right: "8%", width: "clamp(80px, 12vw, 130px)" }} />
+            {/* BOTTOM CENTER: Canva */}
+            <div style={{ position: "absolute", bottom: "0%", left: "50%", transform: "translateX(-50%)", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
+              <img src="/c.png" alt="Canva" style={{ width: "100%", display: "block" }} />
+              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>Canva</p>
+            </div>
 
-            {/* Title — center */}
-            <div style={{ position: "absolute", top: "50%", left: "58%", transform: "translate(-50%, -50%)", textAlign: "center", whiteSpace: "nowrap" }}>
+            {/* TITLE — absolute center */}
+            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center", whiteSpace: "nowrap" }}>
               <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 4.5vw, 4.5rem)", color: "#f5f0f0", lineHeight: 0.88, marginBottom: "0.1em" }}>My</div>
               <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88 }}>Editing</div>
               <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 4.5vw, 4.5rem)", color: "#f5f0f0", lineHeight: 0.88, marginTop: "0.1em" }}>Toolkit</div>
