@@ -326,6 +326,9 @@ export default function Home() {
                   <VideoCard key="sd" label="" src="/sd.mp4" staggerDelay={120} square={false} />
                   <VideoCard key="iced" label="" src="/icedbananalatte.mp4" staggerDelay={160} square={false} />
                   <VideoCard key="temple" label="" src="/temple.mov" staggerDelay={200} square={false} />
+                  <VideoCard key="walking" label="" src="/walking.mp4" staggerDelay={240} square={false} />
+                  <VideoCard key="running" label="" src="/running.mp4" staggerDelay={280} square={false} />
+                  <VideoCard key="colorgrading" label="" src="/colorgrading.mp4" staggerDelay={320} square={false} />
                 </div>
               </WorkSubsection>
             </Reveal>
