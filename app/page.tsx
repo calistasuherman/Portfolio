@@ -172,8 +172,8 @@ export default function Home() {
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative", textAlign: "center" }}>
               <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "1rem", marginTop: "-4rem" }}>est. 2026</p>
               <div style={{ position: "relative" }} suppressHydrationWarning>
-                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
-                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
+                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
+                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.12, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
                 <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
               </div>
             </div>
@@ -203,12 +203,12 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10 whitespace-nowrap"
-                style={{ fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em", marginTop: "2rem" }}
+                style={{ fontWeight: "normal", color: "#960018", letterSpacing: "0.05em", marginTop: "3.5rem" }}
               >
                 <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)" }}>W</span>
                 <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)" }}>ho&apos;s that star?</span>
               </h2>
-              <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "5rem", paddingLeft: "1.5rem" }}>
+              <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "3.5rem", paddingLeft: "1.5rem" }}>
                 {[
                   { label: "Content Creator", bold: false },
                   { label: "Video Editor", bold: true },
@@ -297,7 +297,7 @@ export default function Home() {
         </section>
 
         {/* ── Work ── */}
-        <section id="work" className="section-content relative pt-4 pb-12 px-6 md:px-16 lg:px-32" style={{ scrollMarginTop: "80px" }}>
+        <section id="work" className="section-content relative pt-4 pb-12 px-6 md:px-16 lg:px-32" style={{ scrollMarginTop: "20px" }}>
           <div className="max-w-6xl mx-auto">
 
             <Reveal>
@@ -344,7 +344,7 @@ export default function Home() {
 
             <Reveal delay={80}>
               <WorkSubsection id="fashion-checks" title={
-                <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+                <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1, marginTop: "2rem" }}>
                   <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>F</span>
                   <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ashion &amp;</span>
                   {" "}
@@ -354,7 +354,7 @@ export default function Home() {
                   <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>hecks</span>
                 </div>
               }>
-                <div style={{ columns: "4 140px", gap: "10px" }}>
+                <div style={{ columns: "4 140px", gap: "10px", marginTop: "1.5rem" }}>
                   {[
                     "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
                     "/fashion5.jpg","/fashion6.jpg","/fashion7.jpg","/fashion8.jpg",
@@ -718,7 +718,7 @@ function TrayNav() {
               <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.8rem, 3.6vw, 4rem)", color: "#f5f0f0", fontWeight: "normal" }}>Bring </span>
               <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.2rem, 2.4vw, 2.6rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.1em" }}>to the</span>
             </p>
-            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 4.4rem)", color: "#f5f0f0", lineHeight: 1, fontWeight: "normal", marginTop: "-0.05em" }}>
+            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 4.4rem)", color: "#f5f0f0", lineHeight: 1, fontWeight: "normal", marginTop: "0.3em" }}>
               Table
             </p>
           </div>
