@@ -210,7 +210,7 @@ export default function Home() {
                   <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal" }}>W</span>
                   <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)", fontWeight: "normal" }}>ho&apos;s that star?</span>
                 </div>
-                <h2 style={{ fontWeight: "normal", color: "#960018", letterSpacing: "0.05em", position: "relative" }}>
+                <h2 style={{ fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em", position: "relative" }}>
                   <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)" }}>W</span>
                   <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)" }}>ho&apos;s that star?</span>
                 </h2>
@@ -272,7 +272,7 @@ export default function Home() {
         </section>
 
         {/* ── Signature Services ── */}
-        <section id="trusted" className="section-content relative px-6 md:px-16 lg:px-32" style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: "6rem", paddingBottom: "6rem", scrollMarginTop: "0px" }}>
+        <section id="trusted" className="section-content relative px-6 md:px-16 lg:px-32" style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: "6rem", paddingBottom: "6rem", scrollMarginTop: "-1px" }}>
           <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
             <Reveal>
               <h2 style={{ lineHeight: 1.1, marginBottom: "2rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
@@ -303,34 +303,28 @@ export default function Home() {
         </section>
 
         {/* ── Editing Toolkit ── */}
-        <section className="section-content relative" style={{ padding: "6rem 0", overflow: "hidden" }}>
-          <div style={{ position: "relative", maxWidth: "900px", margin: "0 auto", height: "clamp(480px, 65vw, 680px)" }}>
+        <section className="section-content relative" style={{ paddingTop: "2rem", paddingBottom: "4rem", overflow: "hidden" }}>
+          <div style={{ position: "relative", maxWidth: "860px", margin: "0 auto", height: "clamp(440px, 60vw, 620px)" }}>
 
             {/* Camera — top left */}
-            <div style={{ position: "absolute", top: "0%", left: "2%", width: "clamp(130px, 20vw, 210px)" }}>
+            <div style={{ position: "absolute", top: "0%", left: "0%", width: "clamp(130px, 20vw, 210px)" }}>
               <img src="/camera.png" alt="DJI Osmo Pocket" style={{ width: "100%", display: "block" }} />
             </div>
 
-            {/* DR — top right */}
-            <img src="/dr.png" alt="DaVinci Resolve" style={{ position: "absolute", top: "2%", right: "5%", width: "clamp(60px, 9vw, 100px)" }} />
+            {/* Top row: DR (top-center-left) · FC (top-center-right) */}
+            <img src="/dr.png" alt="DaVinci Resolve" style={{ position: "absolute", top: "4%", left: "30%", width: "clamp(80px, 12vw, 130px)" }} />
+            <img src="/fcp.png" alt="Final Cut Pro"   style={{ position: "absolute", top: "4%", right: "18%", width: "clamp(80px, 12vw, 130px)" }} />
 
-            {/* FC — middle right */}
-            <img src="/fcp.png" alt="Final Cut Pro" style={{ position: "absolute", top: "38%", right: "2%", width: "clamp(60px, 9vw, 100px)" }} />
-
-            {/* VS — bottom left */}
-            <img src="/vs.png" alt="Video Star" style={{ position: "absolute", bottom: "8%", left: "5%", width: "clamp(60px, 9vw, 100px)" }} />
-
-            {/* CC — bottom center-right */}
-            <img src="/cc.png" alt="CapCut" style={{ position: "absolute", bottom: "4%", right: "18%", width: "clamp(60px, 9vw, 100px)" }} />
-
-            {/* C — bottom right */}
-            <img src="/c.png" alt="Canva" style={{ position: "absolute", bottom: "10%", right: "2%", width: "clamp(60px, 9vw, 100px)" }} />
+            {/* Bottom row: VS · CC · C — evenly spread */}
+            <img src="/vs.png" alt="Video Star" style={{ position: "absolute", bottom: "4%", left: "18%",  width: "clamp(80px, 12vw, 130px)" }} />
+            <img src="/cc.png" alt="CapCut"     style={{ position: "absolute", bottom: "4%", left: "50%", transform: "translateX(-50%)", width: "clamp(80px, 12vw, 130px)" }} />
+            <img src="/c.png"  alt="Canva"      style={{ position: "absolute", bottom: "4%", right: "8%", width: "clamp(80px, 12vw, 130px)" }} />
 
             {/* Title — center */}
-            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center", whiteSpace: "nowrap" }}>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88, marginBottom: "0.15em" }}>My</div>
+            <div style={{ position: "absolute", top: "50%", left: "58%", transform: "translate(-50%, -50%)", textAlign: "center", whiteSpace: "nowrap" }}>
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 4.5vw, 4.5rem)", color: "#f5f0f0", lineHeight: 0.88, marginBottom: "0.1em" }}>My</div>
               <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88 }}>Editing</div>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88, marginTop: "0.15em" }}>Toolkit</div>
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 4.5vw, 4.5rem)", color: "#f5f0f0", lineHeight: 0.88, marginTop: "0.1em" }}>Toolkit</div>
             </div>
 
           </div>
