@@ -322,8 +322,7 @@ export default function Home() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   <VideoCard key={1} label="" src="/edit1.mp4" staggerDelay={0} square={false} />
                   <VideoCard key={11} label="" src="/edit11.mp4" staggerDelay={40} square={false} />
-                  <VideoCard key="ny" label="" src="/NY.MOV" staggerDelay={80} square={false} />
-                  <VideoCard key="sd" label="" src="/sd.mp4" staggerDelay={120} square={false} />
+                  <VideoCard key="sd" label="" src="/sd.mp4" staggerDelay={80} square={false} />
                   <VideoCard key="iced" label="" src="/icedbananalatte.mp4" staggerDelay={160} square={false} />
                   <VideoCard key="temple" label="" src="/temple.mov" staggerDelay={200} square={false} />
                   <VideoCard key="walking" label="" src="/walking.mp4" staggerDelay={240} square={false} />
@@ -344,6 +343,7 @@ export default function Home() {
                 </div>
               }>
                 <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
+                  <VideoCard key="ny" label="" src="/NY.MOV" staggerDelay={0} square={false} />
                   {[
                     { n: 2,  square: true  },
                     { n: 3,  square: true  },
@@ -726,13 +726,10 @@ function TrayNav() {
           </div>
 
           {/* Croissant — left third */}
-          <TrayItem
-            href="#cinematography"
+          <img
             src="/tray-croissant.png"
-            alt="Cinematography"
-            label="cinematography"
-            rotate={-10}
-            style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }}
+            alt="Croissant"
+            style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%) rotate(-10deg)", zIndex: 2, width: "50%", pointerEvents: "none" }}
           />
 
           {/* Figs — center */}
