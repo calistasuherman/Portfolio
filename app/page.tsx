@@ -286,7 +286,7 @@ export default function Home() {
             </Reveal>
             {[
               { label: "VIDEOGRAPHY & EDITING", sublabel: null, desc: "From concept to final cut, I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design across YouTube, Reels, and TikTok." },
-              { label: "YOUTUBE INTEGRATIONS", sublabel: "1–2 WEEKS", desc: "Seamless sponsored segments woven naturally into my YouTube content. Full creative direction from script to screen, with an audience that trusts my recommendations." },
+              { label: "YOUTUBE INTEGRATIONS", sublabel: null, desc: "Seamless sponsored segments woven naturally into my YouTube content. Full creative direction from script to screen, with an audience that trusts my recommendations." },
               { label: "COLLABORATIONS", sublabel: null, desc: "Open to long-term brand partnerships, gifting collabs, and co-created campaigns. Whether you're a small business or an established brand, I bring the same level of creativity, authenticity, and care to every partnership." },
             ].map((row, i) => (
               <Reveal key={i} delay={i * 80}>
@@ -313,20 +313,13 @@ export default function Home() {
             <div style={{ height: "80px" }} />
 
             <Reveal delay={80}>
-              <WorkSubsection id="youtube-integrations" title={
+              <WorkSubsection id="cinematography" title={
                 <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
-                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>Y</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ouTube</span>
-                  {" "}
-                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>I</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ntegrations</span>
+                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>C</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>inematography</span>
                 </div>
               }>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {youtubeIntegrations.map((item, i) => (
-                    <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} />
-                  ))}
-                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4" />
               </WorkSubsection>
             </Reveal>
 
@@ -356,6 +349,24 @@ export default function Home() {
                     { n: 12, square: true  },
                   ].map(({ n, square }, i) => (
                     <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} square={square} />
+                  ))}
+                </div>
+              </WorkSubsection>
+            </Reveal>
+
+            <Reveal delay={80}>
+              <WorkSubsection id="youtube-integrations" title={
+                <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>Y</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ouTube</span>
+                  {" "}
+                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>I</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ntegrations</span>
+                </div>
+              }>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {youtubeIntegrations.map((item, i) => (
+                    <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} />
                   ))}
                 </div>
               </WorkSubsection>
@@ -546,7 +557,7 @@ function TrayItem({
   const [hovered, setHovered] = useState(false);
   const inner = (
     <div
-      style={{ position: "relative", display: "inline-block", cursor: decorative ? "default" : "pointer", pointerEvents: "auto", padding: "20px 10px 0" }}
+      style={{ position: "relative", display: "inline-block", cursor: decorative ? "default" : "pointer", pointerEvents: "auto" }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -708,20 +719,20 @@ function TrayNav() {
 
           {/* Croissant — left third */}
           <TrayItem
-            href="#youtube-integrations"
+            href="#cinematography"
             src="/tray-croissant.png"
-            alt="YouTube Integrations"
-            label="youtube integrations"
+            alt="Cinematography"
+            label="cinematography"
             rotate={-10}
             style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }}
           />
 
           {/* Figs — center */}
           <TrayItem
-            href="#fashion-checks"
+            href="#youtube-integrations"
             src="/tray-figs.png"
-            alt="Fashion & Fit Checks"
-            label="fashion / fit checks"
+            alt="YouTube Integrations"
+            label="youtube integrations"
             style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }}
           />
 
@@ -741,7 +752,7 @@ function TrayNav() {
 
 function WorkSubsection({ id, title, children }: { id?: string; title: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div id={id} className={id === "video-editing" ? "mb-0" : "mb-20"} style={{ scrollMarginTop: "80px", minHeight: id === "youtube-integrations" ? "100vh" : undefined }}>
+    <div id={id} className={id === "video-editing" ? "mb-0" : "mb-20"} style={{ scrollMarginTop: "80px", minHeight: id === "cinematography" ? "100vh" : undefined }}>
       <div className="mb-8 text-center">
         {title}
       </div>
