@@ -146,6 +146,11 @@ export default function Home() {
                 href={link.href}
                 className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary hover:tracking-[0.28em] transition-all duration-300"
                 style={{ textDecoration: "none" }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.querySelector(link.href);
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}
               >
                 {link.label}
               </a>
