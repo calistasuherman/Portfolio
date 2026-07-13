@@ -238,6 +238,14 @@ export default function Home() {
                 ].map(({ label, bold }) => (
                   <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: bold ? 700 : 400 }}>{label}</p>
                 ))}
+                <div style={{ marginTop: "1.5rem", display: "flex", flexDirection: "column", gap: "0.15rem" }}>
+                  <p style={{ fontFamily: "var(--font-inter)", letterSpacing: "0.04em", fontWeight: 400 }}>4K+ FOLLOWERS</p>
+                  <a href="https://instagram.com/cal1star" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.1rem, 1.8vw, 1.5rem)", color: "#f5f0f0", textDecoration: "none", lineHeight: 1.1 }}>Instagram</a>
+                </div>
+                <div style={{ marginTop: "0.75rem", display: "flex", flexDirection: "column", gap: "0.15rem" }}>
+                  <p style={{ fontFamily: "var(--font-inter)", letterSpacing: "0.04em", fontWeight: 400 }}>4K+ SUBSCRIBERS</p>
+                  <a href="https://www.youtube.com/@cal1stvr" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.1rem, 1.8vw, 1.5rem)", color: "#f5f0f0", textDecoration: "none", lineHeight: 1.1 }}>YouTube</a>
+                </div>
               </div>
             </Reveal>
 
@@ -315,7 +323,7 @@ export default function Home() {
 
             {/* Title */}
             <Reveal>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2.8rem, 5.5vw, 5.5rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "3rem" }}>
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 3.8vw, 3.8rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "4.5rem" }}>
                 My Editing Toolkit
               </div>
             </Reveal>
@@ -424,30 +432,37 @@ export default function Home() {
 
 
         {/* ── Contact ── */}
-        <section id="contact" className="section-content relative" style={{ display: "flex", alignItems: "stretch", overflow: "hidden" }}>
-          {/* Left — text + contact */}
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "4rem clamp(2rem, 5vw, 5rem)" }}>
-            <div style={{ marginBottom: "2rem" }}>
-              <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(2.5rem, 5.5vw, 5.5rem)", color: "#f5f0f0", lineHeight: 1 }}>and that&apos;s</div>
-              <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(0.85rem, 1.6vw, 1.4rem)", color: "#f5f0f0", letterSpacing: "0.25em", textTransform: "uppercase", lineHeight: 2 }}>a</div>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(4.5rem, 10vw, 10rem)", color: "#f5f0f0", lineHeight: 0.85 }}>wrap.</div>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-              <a href="mailto:cal1starcollab@gmail.com" style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.9rem, 1.5vw, 1.2rem)", color: "rgba(245,240,240,0.7)", letterSpacing: "0.08em", textDecoration: "none" }}>cal1starcollab@gmail.com</a>
-              <div style={{ display: "flex", gap: "2rem", marginTop: "0.5rem" }}>
-                {[["Instagram","https://instagram.com/cal1star"],["YouTube","https://www.youtube.com/@cal1stvr"],["TikTok","https://www.tiktok.com/@cal1star"]].map(([label,href]) => (
-                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", textDecoration: "none" }}>{label}</a>
-                ))}
+        <section id="contact" className="section-content relative" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "5rem clamp(2rem, 6vw, 6rem)" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "clamp(3rem, 8vw, 8rem)", width: "100%", maxWidth: "1100px", margin: "0 auto" }}>
+
+            {/* Left — typography + contact */}
+            <div style={{ flex: "0 0 auto", textAlign: "left" }}>
+              {/* "and that's a" stacked directly above "Wrap." */}
+              <div style={{ lineHeight: 1 }}>
+                <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1.6rem, 3.2vw, 3.2rem)", color: "#f5f0f0", letterSpacing: "0.02em", marginBottom: "-0.05em" }}>and that&apos;s a</div>
+                <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(5rem, 10vw, 10rem)", color: "#f5f0f0", lineHeight: 0.88 }}>Wrap.</div>
+              </div>
+
+              {/* Contact info */}
+              <div style={{ marginTop: "2.5rem", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                <a href="mailto:cal1starcollab@gmail.com" style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.72rem, 1.1vw, 0.92rem)", color: "rgba(245,240,240,0.65)", letterSpacing: "0.06em", textDecoration: "none" }}>cal1starcollab@gmail.com</a>
+                <div style={{ display: "flex", gap: "2rem", marginTop: "0.3rem" }}>
+                  {[["Instagram","https://instagram.com/cal1star"],["YouTube","https://www.youtube.com/@cal1stvr"],["TikTok","https://www.tiktok.com/@cal1star"]].map(([label,href]) => (
+                    <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.75rem, 1.1vw, 0.95rem)", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(245,240,240,0.45)", textDecoration: "none" }}>{label}</a>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-          {/* Right — car photo, full natural size */}
-          <div style={{ flexShrink: 0 }}>
-            <img
-              src="/car.jpg"
-              alt=""
-              style={{ display: "block", height: "100%", width: "auto", maxHeight: "100vh" }}
-            />
+
+            {/* Right — car photo, contained */}
+            <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <img
+                src="/car.jpg"
+                alt=""
+                style={{ display: "block", height: "clamp(320px, 55vh, 580px)", width: "auto", objectFit: "contain", borderRadius: "2px" }}
+              />
+            </div>
+
           </div>
         </section>
 
