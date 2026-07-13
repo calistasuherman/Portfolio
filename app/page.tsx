@@ -203,12 +203,12 @@ export default function Home() {
             <Reveal className="order-1" direction="left">
               <h2
                 className="leading-none mb-10 whitespace-nowrap"
-                style={{ fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em" }}
+                style={{ fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em", marginTop: "2rem" }}
               >
-                <span style={{ fontFamily: "BillaMount, cursive" }}>W</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif" }}>ho&apos;s that star?</span>
+                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)" }}>W</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)" }}>ho&apos;s that star?</span>
               </h2>
-              <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.8rem, 1.5vw, 1.1rem)", marginTop: "5rem", paddingLeft: "1.5rem" }}>
+              <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "5rem", paddingLeft: "1.5rem" }}>
                 {[
                   { label: "Content Creator", bold: false },
                   { label: "Video Editor", bold: true },
