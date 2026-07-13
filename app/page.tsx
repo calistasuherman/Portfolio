@@ -726,10 +726,13 @@ function TrayNav() {
           </div>
 
           {/* Croissant — left third */}
-          <img
+          <TrayItem
+            href="#cinematography"
             src="/tray-croissant.png"
-            alt="Croissant"
-            style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%) rotate(-10deg)", zIndex: 2, width: "50%", pointerEvents: "none" }}
+            alt="Cinematography"
+            label="cinematography"
+            rotate={-10}
+            style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }}
           />
 
           {/* Figs — center */}
@@ -791,8 +794,16 @@ function VideoCard({
   const isEmbed = src.includes("youtube.com/embed") || src.includes("drive.google.com");
 
   useEffect(() => {
-    if (videoRef.current) videoRef.current.muted = true;
-  }, []);
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    if (hovered) {
+      v.play().catch(() => {});
+    } else {
+      v.pause();
+      v.currentTime = 0;
+    }
+  }, [hovered]);
 
   return (
     <div
@@ -820,8 +831,8 @@ function VideoCard({
           src={src}
           loop
           playsInline
-          autoPlay
           muted
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover"
         />
       )}
