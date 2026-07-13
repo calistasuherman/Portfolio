@@ -137,8 +137,8 @@ export default function Home() {
           <nav className="flex justify-end gap-8 md:gap-12">
             {[
               { label: "About", href: "#about" },
-              { label: "My Work", href: "#work" },
               { label: "Services", href: "#services" },
+              { label: "My Work", href: "#work" },
               { label: "Contact", href: "#contact" },
             ].map((link) => (
               <a
@@ -272,8 +272,8 @@ export default function Home() {
         </section>
 
         {/* ── Signature Services ── */}
-        <section id="services" className="section-content relative py-16 px-6 md:px-16 lg:px-32">
-          <div className="max-w-5xl mx-auto">
+        <section id="services" className="section-content relative px-6 md:px-16 lg:px-32" style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: "6rem", paddingBottom: "6rem" }}>
+          <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
             <Reveal>
               <h2 style={{ lineHeight: 1.1, marginBottom: "2rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
                 <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
@@ -386,8 +386,41 @@ export default function Home() {
 
 
         {/* ── Contact ── */}
-        <section id="contact" className="section-content relative" style={{ minHeight: "100vh", background: "#fdf8f4", overflow: "hidden" }}>
-          <EnvelopeContact />
+        <section id="contact" className="section-content relative px-6 md:px-16 lg:px-32" style={{ minHeight: "100vh", display: "flex", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", width: "100%", maxWidth: "1200px", margin: "0 auto", gap: "4rem" }}>
+            {/* Left — text + contact */}
+            <div style={{ flex: 1 }}>
+              {/* Stacked title like screenshot */}
+              <div style={{ lineHeight: 1, marginBottom: "2rem" }}>
+                <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(3rem, 7vw, 7rem)", color: "#f5f0f0", lineHeight: 0.9 }}>and</div>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.3em" }}>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(2rem, 5vw, 5rem)", color: "#f5f0f0", lineHeight: 0.9 }}>that&apos;s</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(0.8rem, 1.4vw, 1.2rem)", color: "#f5f0f0", letterSpacing: "0.2em", textTransform: "uppercase" }}>a</span>
+                </div>
+                <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(4.5rem, 11vw, 11rem)", color: "#f5f0f0", lineHeight: 0.85 }}>wrap.</div>
+              </div>
+              {/* Contact info */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                <a href="mailto:cal1starcollab@gmail.com" style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.9rem, 1.5vw, 1.2rem)", color: "rgba(245,240,240,0.7)", letterSpacing: "0.08em", textDecoration: "none" }}>cal1starcollab@gmail.com</a>
+                <div style={{ display: "flex", gap: "2rem", marginTop: "0.5rem" }}>
+                  {[["Instagram","https://instagram.com/cal1star"],["YouTube","https://www.youtube.com/@cal1stvr"],["TikTok","https://www.tiktok.com/@cal1star"]].map(([label,href]) => (
+                    <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", textDecoration: "none" }}>{label}</a>
+                  ))}
+                </div>
+              </div>
+            </div>
+            {/* Right — machine video */}
+            <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <video
+                src="/machine.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{ width: "100%", maxWidth: "560px", borderRadius: "8px", objectFit: "cover" }}
+              />
+            </div>
+          </div>
         </section>
 
         {/* ── Footer ── */}
