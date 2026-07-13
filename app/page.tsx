@@ -96,9 +96,31 @@ export default function Home() {
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [cursorHover, setCursorHover] = useState(false);
 
+  const slideContainerRef = useRef<HTMLDivElement>(null);
+  const toolkitSlideRef = useRef<HTMLDivElement>(null);
+  const trayNavSlideRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 120);
     return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    const container = slideContainerRef.current;
+    const toolkit = toolkitSlideRef.current;
+    const trayNav = trayNavSlideRef.current;
+    if (!container || !toolkit || !trayNav) return;
+    const onScroll = () => {
+      const scrolled = -container.getBoundingClientRect().top;
+      const vh = window.innerHeight;
+      const p2 = Math.max(0, Math.min(1, scrolled / vh));
+      toolkit.style.transform = `translateY(${(1 - p2) * 100}%)`;
+      const p3 = Math.max(0, Math.min(1, (scrolled - vh) / vh));
+      trayNav.style.transform = `translateY(${(1 - p3) * 100}%)`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
@@ -280,92 +302,87 @@ export default function Home() {
         </section>
 
         {/* ── Slide sequence: Services → Toolkit → TrayNav ── */}
-        {/* ── Signature Services ── */}
-        <section id="trusted" className="relative px-6 md:px-16 lg:px-32" style={{ position: "sticky", top: 0, height: "100vh", zIndex: 1, overflow: "hidden", display: "flex", alignItems: "center", scrollMarginTop: "0", backgroundImage: "url('/red2.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}>
-          <div style={{ position: "absolute", inset: 0, background: "rgba(10,0,0,0.5)", zIndex: 0 }} />
-          <div className="max-w-5xl mx-auto" style={{ width: "100%", position: "relative", zIndex: 1 }}>
-            <Reveal>
-              <h2 style={{ lineHeight: 1.1, marginBottom: "2rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ignature</span>
-                {" "}
-                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ervices</span>
-              </h2>
-              <div style={{ borderBottom: "1px solid rgba(245,240,240,0.2)", marginBottom: "0" }} />
-            </Reveal>
-            {[
-              { label: "VIDEOGRAPHY & EDITING", sublabel: null, desc: "From concept to final cut, I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design across YouTube, Reels, and TikTok." },
-              { label: "YOUTUBE INTEGRATIONS", sublabel: null, desc: "Seamless sponsored segments woven naturally into my YouTube content. Full creative direction from script to screen, with an audience that trusts my recommendations." },
-              { label: "COLLABORATIONS", sublabel: null, desc: "Open to long-term brand partnerships, gifting collabs, and co-created campaigns. Whether you're a small business or an established brand, I bring the same level of creativity, authenticity, and care to every partnership." },
-            ].map((row, i) => (
-              <Reveal key={i} delay={i * 80}>
-                <div style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: "2rem", padding: "1.75rem 0", borderBottom: "1px solid rgba(245,240,240,0.15)" }}>
-                  <div>
+        <div ref={slideContainerRef} style={{ height: "300vh", position: "relative" }}>
+          {/* Single pinned viewport — background lives here so it's seamless */}
+          <div style={{
+            position: "sticky", top: 0, height: "100vh", overflow: "hidden",
+            backgroundImage: "url('/red2.jpg')", backgroundSize: "cover",
+            backgroundPosition: "center", backgroundAttachment: "fixed",
+            backgroundColor: "#7a0000",
+          }}>
+            {/* Shared dark overlay */}
+            <div style={{ position: "absolute", inset: 0, background: "rgba(10,0,0,0.45)", zIndex: 0, pointerEvents: "none" }} />
+
+            {/* Page 1 — Signature Services */}
+            <div id="trusted" style={{ position: "absolute", inset: 0, zIndex: 1, display: "flex", alignItems: "center", padding: "0 clamp(1.5rem, 8vw, 8rem)", paddingTop: "80px", scrollMarginTop: "0" }}>
+              <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
+                <h2 style={{ lineHeight: 1.1, marginBottom: "2rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
+                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ignature</span>
+                  {" "}
+                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ervices</span>
+                </h2>
+                <div style={{ borderBottom: "1px solid rgba(245,240,240,0.2)", marginBottom: "0" }} />
+                {[
+                  { label: "VIDEOGRAPHY & EDITING", desc: "From concept to final cut, I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design across YouTube, Reels, and TikTok." },
+                  { label: "YOUTUBE INTEGRATIONS", desc: "Seamless sponsored segments woven naturally into my YouTube content. Full creative direction from script to screen, with an audience that trusts my recommendations." },
+                  { label: "COLLABORATIONS", desc: "Open to long-term brand partnerships, gifting collabs, and co-created campaigns. Whether you're a small business or an established brand, I bring the same level of creativity, authenticity, and care to every partnership." },
+                ].map((row, i) => (
+                  <div key={i} style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: "2rem", padding: "1.75rem 0", borderBottom: "1px solid rgba(245,240,240,0.15)" }}>
                     <p style={{ fontFamily: "var(--font-inter)", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#f5f0f0" }}>{row.label}</p>
-                    {row.sublabel && <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(245,240,240,0.45)", marginTop: "0.3rem" }}>{row.sublabel}</p>}
+                    <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.75rem", color: "rgba(245,240,240,0.65)", lineHeight: 1.8 }}>{row.desc}</p>
                   </div>
-                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.75rem", color: "rgba(245,240,240,0.65)", lineHeight: 1.8 }}>{row.desc}</p>
+                ))}
+              </div>
+            </div>
+
+            {/* Page 2 — Editing Toolkit (slides up from below) */}
+            <div ref={toolkitSlideRef} style={{ position: "absolute", inset: 0, zIndex: 2, display: "flex", alignItems: "center", justifyContent: "center", transform: "translateY(100%)", willChange: "transform", backgroundImage: "url('/red2.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", backgroundColor: "#7a0000", paddingTop: "80px", boxSizing: "border-box" }}>
+              <div style={{ position: "absolute", inset: 0, background: "rgba(10,0,0,0.45)", pointerEvents: "none" }} />
+              <div style={{ position: "relative", width: "100%", maxWidth: "780px", margin: "0 auto", height: "clamp(380px, 55vh, 600px)" }}>
+                <div style={{ position: "absolute", top: "0%", left: "2%", width: "clamp(100px, 16vw, 170px)", textAlign: "center" }}>
+                  <img src="/camera.png" alt="DJI Osmo Pocket" style={{ width: "100%", display: "block" }} />
+                  <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>DJI Osmo Pocket 3</p>
                 </div>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        {/* ── Editing Toolkit ── */}
-        <section className="relative" style={{ position: "sticky", top: 0, height: "100vh", zIndex: 2, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", backgroundImage: "url('/red2.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}>
-          <div style={{ position: "absolute", inset: 0, background: "rgba(10,0,0,0.5)", zIndex: 0 }} />
-          <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "780px", margin: "0 auto", height: "clamp(500px, 70vw, 700px)" }}>
-
-            {/* TOP ROW: camera (left) · DR (center) · FCP (right) */}
-            <div style={{ position: "absolute", top: "0%", left: "2%", width: "clamp(100px, 16vw, 170px)", textAlign: "center" }}>
-              <img src="/camera.png" alt="DJI Osmo Pocket" style={{ width: "100%", display: "block" }} />
-              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>DJI Osmo Pocket 3</p>
-            </div>
-            <div style={{ position: "absolute", top: "3%", left: "50%", transform: "translateX(-50%)", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
-              <img src="/dr.png" alt="DaVinci Resolve" style={{ width: "100%", display: "block" }} />
-              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>DaVinci Resolve</p>
-            </div>
-            <div style={{ position: "absolute", top: "0%", right: "2%", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
-              <img src="/fcp.png" alt="Final Cut Pro" style={{ width: "100%", display: "block" }} />
-              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>Final Cut Pro</p>
-            </div>
-
-            {/* MIDDLE ROW: VS (left) · title (center) · CC (right) */}
-            <div style={{ position: "absolute", top: "44%", left: "2%", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
-              <img src="/vs.png" alt="Video Star" style={{ width: "100%", display: "block" }} />
-              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>Video Star</p>
-            </div>
-            <div style={{ position: "absolute", top: "44%", right: "2%", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
-              <img src="/cc.png" alt="CapCut" style={{ width: "100%", display: "block" }} />
-              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>CapCut</p>
+                <div style={{ position: "absolute", top: "3%", left: "50%", transform: "translateX(-50%)", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
+                  <img src="/dr.png" alt="DaVinci Resolve" style={{ width: "100%", display: "block" }} />
+                  <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>DaVinci Resolve</p>
+                </div>
+                <div style={{ position: "absolute", top: "0%", right: "2%", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
+                  <img src="/fcp.png" alt="Final Cut Pro" style={{ width: "100%", display: "block" }} />
+                  <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>Final Cut Pro</p>
+                </div>
+                <div style={{ position: "absolute", top: "44%", left: "2%", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
+                  <img src="/vs.png" alt="Video Star" style={{ width: "100%", display: "block" }} />
+                  <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>Video Star</p>
+                </div>
+                <div style={{ position: "absolute", top: "44%", right: "2%", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
+                  <img src="/cc.png" alt="CapCut" style={{ width: "100%", display: "block" }} />
+                  <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>CapCut</p>
+                </div>
+                <div style={{ position: "absolute", bottom: "0%", left: "50%", transform: "translateX(-50%)", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
+                  <img src="/c.png" alt="Canva" style={{ width: "100%", display: "block" }} />
+                  <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>Canva</p>
+                </div>
+                <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center", whiteSpace: "nowrap" }}>
+                  <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 4.5vw, 4.5rem)", color: "#f5f0f0", lineHeight: 0.88, marginBottom: "0.1em" }}>My</div>
+                  <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88 }}>Editing</div>
+                  <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 4.5vw, 4.5rem)", color: "#f5f0f0", lineHeight: 0.88, marginTop: "0.1em" }}>Toolkit</div>
+                </div>
+              </div>
             </div>
 
-            {/* BOTTOM CENTER: Canva */}
-            <div style={{ position: "absolute", bottom: "0%", left: "50%", transform: "translateX(-50%)", width: "clamp(80px, 12vw, 120px)", textAlign: "center" }}>
-              <img src="/c.png" alt="Canva" style={{ width: "100%", display: "block" }} />
-              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.6rem, 0.9vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.1em", marginTop: "0.3rem" }}>Canva</p>
-            </div>
-
-            {/* TITLE — absolute center */}
-            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center", whiteSpace: "nowrap" }}>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 4.5vw, 4.5rem)", color: "#f5f0f0", lineHeight: 0.88, marginBottom: "0.1em" }}>My</div>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88 }}>Editing</div>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 4.5vw, 4.5rem)", color: "#f5f0f0", lineHeight: 0.88, marginTop: "0.1em" }}>Toolkit</div>
+            {/* Page 3 — What I Bring to the Table / TrayNav (slides up from below) */}
+            <div id="work" ref={trayNavSlideRef} style={{ position: "absolute", inset: 0, zIndex: 3, display: "flex", alignItems: "center", justifyContent: "center", transform: "translateY(100%)", willChange: "transform", scrollMarginTop: "20px", backgroundImage: "url('/red2.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", backgroundColor: "#7a0000", paddingTop: "80px", boxSizing: "border-box" }}>
+              <div style={{ position: "absolute", inset: 0, background: "rgba(10,0,0,0.45)", pointerEvents: "none" }} />
+              <div style={{ position: "relative", width: "100%" }}>
+                <TrayNav />
+              </div>
             </div>
 
           </div>
-        </section>
-
-        {/* ── What I Bring to the Table (TrayNav) — slide 3 ── */}
-        <section id="work" className="relative" style={{ position: "sticky", top: 0, height: "100vh", zIndex: 3, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", backgroundImage: "url('/red2.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", scrollMarginTop: "20px" }}>
-          <div style={{ position: "absolute", inset: 0, background: "rgba(10,0,0,0.5)", zIndex: 0 }} />
-          <div style={{ position: "relative", zIndex: 1, width: "100%" }}>
-            <Reveal>
-              <TrayNav />
-            </Reveal>
-          </div>
-        </section>
+        </div>
 
         {/* ── Work subsections (after slide sequence) ── */}
         <section className="section-content relative pt-12 pb-12 px-6 md:px-16 lg:px-32">
