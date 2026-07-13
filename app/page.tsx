@@ -403,12 +403,12 @@ export default function Home() {
               </div>
             </div>
           </div>
-          {/* Right — car photo, full height */}
-          <div style={{ flex: 1, position: "relative", minHeight: "600px" }}>
+          {/* Right — car photo, full natural size */}
+          <div style={{ flexShrink: 0 }}>
             <img
               src="/car.jpg"
               alt=""
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
+              style={{ display: "block", height: "100%", width: "auto", maxHeight: "100vh" }}
             />
           </div>
         </section>
