@@ -342,21 +342,11 @@ export default function Home() {
                 </div>
               }>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {[
-                    { n: 1,  square: false },
-                    { n: 11, square: false },
-                    { n: 2,  square: true },
-                    { n: 3,  square: true },
-                    { n: 4,  square: true },
-                    { n: 6,  square: true },
-                    { n: 7,  square: true },
-                    { n: 9,  square: true },
-                    { n: 10, square: true },
-                    { n: 12, square: true },
-                    { n: 14, square: true },
-                    { n: 16, square: true },
-                  ].map(({ n, square }, i) => (
-                    <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} square={square} />
+                  {[1,2].map((n, i) => (
+                    <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} square={false} />
+                  ))}
+                  {Array.from({ length: 10 }, (_, i) => i + 3).map((n, i) => (
+                    <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={(i + 2) * 40} square={true} />
                   ))}
                 </div>
               </WorkSubsection>
