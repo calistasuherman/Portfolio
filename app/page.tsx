@@ -322,13 +322,10 @@ export default function Home() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   <VideoCard key={1} label="" src="/edit1.mp4" staggerDelay={0} square={false} />
                   <VideoCard key={11} label="" src="/edit11.mp4" staggerDelay={40} square={false} />
-                  <VideoCard key="cine1" label="" src="/cine1.mp4" staggerDelay={80} square={false} />
-                  <VideoCard key="cine2" label="" src="/cine2.mp4" staggerDelay={120} square={false} />
-                  <VideoCard key="cine3" label="" src="/cine3.mov" staggerDelay={160} square={false} />
-                  <VideoCard key="ny" label="" src="/NY.MOV" staggerDelay={200} square={false} />
-                  <VideoCard key="sd" label="" src="/sd.mp4" staggerDelay={240} square={false} />
-                  <VideoCard key="iced" label="" src="/icedbananalatte.mp4" staggerDelay={280} square={false} />
-                  <VideoCard key="temple" label="" src="/temple.mov" staggerDelay={320} square={false} />
+                  <VideoCard key="ny" label="" src="/NY.MOV" staggerDelay={80} square={false} />
+                  <VideoCard key="sd" label="" src="/sd.mp4" staggerDelay={120} square={false} />
+                  <VideoCard key="iced" label="" src="/icedbananalatte.mp4" staggerDelay={160} square={false} />
+                  <VideoCard key="temple" label="" src="/temple.mov" staggerDelay={200} square={false} />
                 </div>
               </WorkSubsection>
             </Reveal>
