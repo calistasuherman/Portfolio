@@ -272,7 +272,7 @@ export default function Home() {
         </section>
 
         {/* ── Signature Services ── */}
-        <section id="trusted" className="section-content relative px-6 md:px-16 lg:px-32" style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: "6rem", paddingBottom: "6rem", scrollMarginTop: "-1px" }}>
+        <section id="trusted" className="section-content relative px-6 md:px-16 lg:px-32" style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: "6rem", paddingBottom: "6rem", scrollMarginTop: "0" }}>
           <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
             <Reveal>
               <h2 style={{ lineHeight: 1.1, marginBottom: "2rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
