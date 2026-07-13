@@ -96,7 +96,6 @@ export default function Home() {
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [cursorHover, setCursorHover] = useState(false);
 
-  const [hoveredTool, setHoveredTool] = useState<string | null>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 120);
@@ -311,42 +310,33 @@ export default function Home() {
         </section>
 
         {/* ── Editing Toolkit ── */}
-        <section className="relative" style={{ paddingTop: "4rem", paddingBottom: "5rem", overflow: "hidden" }}>
-          <div style={{ position: "relative", maxWidth: "780px", margin: "0 auto", height: "clamp(500px, 70vw, 700px)" }}>
+        <section className="relative" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
+          <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 2rem", textAlign: "center" }}>
 
-            {/* TOP ROW: camera (left) · DR (center) · FCP (right) */}
-            {[
-              { key: "camera", src: "/camera.png", alt: "DJI Osmo Pocket", label: "DJI Osmo Pocket 3", style: { top: "0%", left: "2%", width: "clamp(100px, 16vw, 170px)" } },
-              { key: "dr", src: "/dr.png", alt: "DaVinci Resolve", label: "DaVinci Resolve", style: { top: "3%", left: "50%", transform: "translateX(-50%)", width: "clamp(80px, 12vw, 120px)" } },
-              { key: "fcp", src: "/fcp.png", alt: "Final Cut Pro", label: "Final Cut Pro", style: { top: "0%", right: "2%", width: "clamp(80px, 12vw, 120px)" } },
-              { key: "vs", src: "/vs.png", alt: "Video Star", label: "Video Star", style: { top: "44%", left: "2%", width: "clamp(80px, 12vw, 120px)" } },
-              { key: "cc", src: "/cc.png", alt: "CapCut", label: "CapCut", style: { top: "44%", right: "2%", width: "clamp(80px, 12vw, 120px)" } },
-              { key: "c", src: "/c.png", alt: "Canva", label: "Canva", style: { bottom: "0%", left: "50%", transform: "translateX(-50%)", width: "clamp(80px, 12vw, 120px)" } },
-            ].map(({ key, src, alt, label, style }) => (
-              <div
-                key={key}
-                style={{ position: "absolute", textAlign: "center", ...style }}
-                onMouseEnter={() => setHoveredTool(key)}
-                onMouseLeave={() => setHoveredTool(null)}
-              >
-                <img
-                  src={src}
-                  alt={alt}
-                  style={{
-                    width: "100%",
-                    display: "block",
-                    transform: hoveredTool === key ? "scale(1.18) translateY(-10px)" : "scale(1) translateY(0)",
-                    transition: "transform 0.45s cubic-bezier(0.34,1.56,0.64,1), filter 0.3s ease",
-                    filter: hoveredTool === key ? "drop-shadow(0 12px 28px rgba(200,40,40,0.55)) brightness(1.08)" : "drop-shadow(0 0 0 transparent)",
-                  }}
-                />
-                <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 0.8vw, 0.7rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.06em", marginTop: "0.35rem", transition: "color 0.3s ease", ...(hoveredTool === key ? { color: "rgba(245,240,240,0.85)" } : {}) }}>{label}</p>
+            {/* Title */}
+            <Reveal>
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2.8rem, 5.5vw, 5.5rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "3rem" }}>
+                My Editing Toolkit
               </div>
-            ))}
+            </Reveal>
 
-            {/* TITLE — absolute center, one line */}
-            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center", whiteSpace: "nowrap" }}>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2.8rem, 5.5vw, 5.5rem)", color: "#f5f0f0", lineHeight: 1 }}>My Editing Toolkit</div>
+            {/* Apps row — equal spacing, slide up with stagger */}
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: "clamp(1.2rem, 4vw, 3.5rem)" }}>
+              {[
+                { key: "dr",     src: "/dr.png",     alt: "DaVinci Resolve", label: "DaVinci Resolve" },
+                { key: "fcp",    src: "/fcp.png",    alt: "Final Cut Pro",   label: "Final Cut Pro"   },
+                { key: "vs",     src: "/vs.png",     alt: "Video Star",      label: "Video Star"      },
+                { key: "cc",     src: "/cc.png",     alt: "CapCut",          label: "CapCut"          },
+                { key: "c",      src: "/c.png",      alt: "Canva",           label: "Canva"           },
+                { key: "claude", src: "/claude.png", alt: "Claude",          label: "Claude"          },
+              ].map(({ key, src, alt, label }, i) => (
+                <Reveal key={key} direction="up" delay={i * 90}>
+                  <div style={{ textAlign: "center", width: "clamp(64px, 9vw, 100px)" }}>
+                    <img src={src} alt={alt} style={{ width: "100%", display: "block", borderRadius: "22%" }} />
+                    <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.52rem, 0.75vw, 0.68rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.05em", marginTop: "0.4rem" }}>{label}</p>
+                  </div>
+                </Reveal>
+              ))}
             </div>
 
           </div>
