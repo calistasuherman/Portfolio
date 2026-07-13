@@ -38,12 +38,12 @@ const analytics = [
 ];
 
 const youtubeIntegrations = [
-  { label: "Aelfric Eden", src: "/timeline6.mp4" },
-  { label: "BetterHelp", src: "https://drive.google.com/file/d/1AEuTM3ICaPefspXBHq_6MdZjuvBVhnk8/preview" },
-  { label: "Just4Kira", src: "https://drive.google.com/file/d/17dFdcpQd2scdLZF7_Yh82S7NmQdgn3ri/preview" },
-  { label: "Lewkin", src: "https://drive.google.com/file/d/1RSgNWatSlFoJqI1QcV6WaT1YTGalYssI/preview" },
-  { label: "Teddy Blake", src: "https://drive.google.com/file/d/1CrJ2MoB-A7tW41qDQosg2ZXmgRJ8elvX/preview" },
-  { label: "BypassGPT", src: "https://drive.google.com/file/d/1EdR1dsZgxdVDp0pNCxWRjRB9cdgx6Xa6/preview" },
+  { label: "Aelfric Eden", src: "/aelfriceden.mp4" },
+  { label: "BetterHelp", src: "/betterhelp.mp4" },
+  { label: "Just4Kira", src: "/just4kira.mp4" },
+  { label: "Lewkin", src: "/lewkin.mp4" },
+  { label: "Teddy Blake", src: "/teddyblake.mp4" },
+  { label: "BypassGPT", src: "/bypassgpt.mp4" },
 ];
 
 
