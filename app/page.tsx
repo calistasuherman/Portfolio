@@ -127,7 +127,7 @@ export default function Home() {
         }}
       />
 
-      <main className="relative min-h-screen overflow-x-hidden">
+      <main className="relative min-h-screen overflow-x-clip">
 
         {/* ── Nav ── */}
         <header className="section-content fixed top-0 left-0 right-0 z-50 py-5 px-6">
@@ -279,9 +279,11 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Slide sequence: Services → Toolkit → TrayNav ── */}
         {/* ── Signature Services ── */}
-        <section id="trusted" className="section-content relative px-6 md:px-16 lg:px-32" style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: "6rem", paddingBottom: "6rem", scrollMarginTop: "0" }}>
-          <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
+        <section id="trusted" className="relative px-6 md:px-16 lg:px-32" style={{ position: "sticky", top: 0, height: "100vh", zIndex: 1, overflow: "hidden", display: "flex", alignItems: "center", scrollMarginTop: "0", backgroundImage: "url('/red2.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}>
+          <div style={{ position: "absolute", inset: 0, background: "rgba(10,0,0,0.5)", zIndex: 0 }} />
+          <div className="max-w-5xl mx-auto" style={{ width: "100%", position: "relative", zIndex: 1 }}>
             <Reveal>
               <h2 style={{ lineHeight: 1.1, marginBottom: "2rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
                 <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
@@ -311,8 +313,9 @@ export default function Home() {
         </section>
 
         {/* ── Editing Toolkit ── */}
-        <section className="section-content relative" style={{ paddingTop: "2rem", paddingBottom: "4rem", overflow: "hidden" }}>
-          <div style={{ position: "relative", maxWidth: "780px", margin: "0 auto", height: "clamp(500px, 70vw, 700px)" }}>
+        <section className="relative" style={{ position: "sticky", top: 0, height: "100vh", zIndex: 2, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", backgroundImage: "url('/red2.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}>
+          <div style={{ position: "absolute", inset: 0, background: "rgba(10,0,0,0.5)", zIndex: 0 }} />
+          <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "780px", margin: "0 auto", height: "clamp(500px, 70vw, 700px)" }}>
 
             {/* TOP ROW: camera (left) · DR (center) · FCP (right) */}
             <div style={{ position: "absolute", top: "0%", left: "2%", width: "clamp(100px, 16vw, 170px)", textAlign: "center" }}>
@@ -354,15 +357,21 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Work ── */}
-        <section id="work" className="section-content relative pt-4 pb-12 px-6 md:px-16 lg:px-32" style={{ scrollMarginTop: "20px" }}>
-          <div className="max-w-6xl mx-auto">
-
+        {/* ── What I Bring to the Table (TrayNav) — slide 3 ── */}
+        <section id="work" className="relative" style={{ position: "sticky", top: 0, height: "100vh", zIndex: 3, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", backgroundImage: "url('/red2.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", scrollMarginTop: "20px" }}>
+          <div style={{ position: "absolute", inset: 0, background: "rgba(10,0,0,0.5)", zIndex: 0 }} />
+          <div style={{ position: "relative", zIndex: 1, width: "100%" }}>
             <Reveal>
               <TrayNav />
             </Reveal>
+          </div>
+        </section>
 
-            <div style={{ height: "80px" }} />
+        {/* ── Work subsections (after slide sequence) ── */}
+        <section className="section-content relative pt-12 pb-12 px-6 md:px-16 lg:px-32">
+          <div className="max-w-6xl mx-auto">
+
+            <div style={{ height: "40px" }} />
 
             <Reveal delay={80}>
               <WorkSubsection id="cinematography" title={
