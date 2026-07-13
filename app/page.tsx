@@ -302,6 +302,37 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Editing Toolkit ── */}
+        <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "6rem", paddingBottom: "6rem" }}>
+          <div style={{ maxWidth: "900px", margin: "0 auto", display: "flex", gap: "6rem", alignItems: "flex-start" }}>
+            {/* Title — stacked script like screenshot */}
+            <Reveal>
+              <div style={{ flexShrink: 0, lineHeight: 0.85 }}>
+                <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3.5rem, 7vw, 7rem)", color: "#f5f0f0" }}>My</div>
+                <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3.5rem, 7vw, 7rem)", color: "#f5f0f0" }}>Editing</div>
+                <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3.5rem, 7vw, 7rem)", color: "#f5f0f0" }}>Toolkit</div>
+              </div>
+            </Reveal>
+            {/* Tools list */}
+            <Reveal delay={80}>
+              <div style={{ paddingTop: "1rem", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                {[
+                  { tool: "Adobe Premiere Pro", desc: "Primary editing software for all short-form and long-form cuts, multicam, and timeline work." },
+                  { tool: "Adobe After Effects", desc: "Motion graphics, text animations, visual effects, and compositing." },
+                  { tool: "DaVinci Resolve", desc: "Color grading and color correction for cinematic looks." },
+                  { tool: "Adobe Audition", desc: "Audio mixing, noise reduction, and sound design." },
+                  { tool: "CapCut", desc: "Fast-turnaround mobile edits and Reels/TikTok content." },
+                ].map(({ tool, desc }, i) => (
+                  <div key={i} style={{ borderBottom: "1px solid rgba(245,240,240,0.12)", paddingBottom: "1.25rem" }}>
+                    <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1rem, 1.6vw, 1.3rem)", color: "#f5f0f0", letterSpacing: "0.05em", marginBottom: "0.3rem" }}>{tool}</p>
+                    <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.7rem", color: "rgba(245,240,240,0.5)", lineHeight: 1.7 }}>{desc}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
         {/* ── Work ── */}
         <section id="work" className="section-content relative pt-4 pb-12 px-6 md:px-16 lg:px-32" style={{ scrollMarginTop: "20px" }}>
           <div className="max-w-6xl mx-auto">
