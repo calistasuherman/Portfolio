@@ -308,13 +308,12 @@ export default function Home() {
 
             <Reveal delay={80}>
               <WorkSubsection id="youtube-integrations" title={
-                <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", lineHeight: 1 }}>
-                  <span style={{ fontFamily: "Ballet, cursive", fontSize: "clamp(2.7rem, 5.85vw, 5.04rem)", fontWeight: "normal", color: "#f5f0f0" }}>Y</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2.7rem, 5.85vw, 5.04rem)", fontWeight: "normal", color: "#f5f0f0" }}>ouTube</span>
-                  <span style={{ marginLeft: "0.4em" }}>
-                    <span style={{ fontFamily: "Ballet, cursive", fontSize: "clamp(3rem, 7vw, 7.3rem)", fontWeight: "normal", color: "rgba(245,240,240,0.55)" }}>i</span>
-                    <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(3rem, 7vw, 7.3rem)", fontWeight: "normal", color: "rgba(245,240,240,0.55)" }}>ntegrations</span>
-                  </span>
+                <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>Y</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ouTube</span>
+                  {" "}
+                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>I</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ntegrations</span>
                 </div>
               }>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -326,7 +325,15 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection id="video-editing" title={<DualHeading serif="Video" script="Editing" size="large" />}>
+              <WorkSubsection id="video-editing" title={
+                <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>V</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ideo</span>
+                  {" "}
+                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>E</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>diting</span>
+                </div>
+              }>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   {Array.from({ length: 16 }).map((_, i) => (
                     <VideoCard key={i} label="" src={`/edit${i + 1}.mp4`} staggerDelay={i * 40} />
@@ -336,7 +343,17 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection id="fashion-checks" title={<DualHeading serif="Fashion &" script="Fit Checks" size="sub" noOverlap />}>
+              <WorkSubsection id="fashion-checks" title={
+                <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>F</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ashion &amp;</span>
+                  {" "}
+                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>F</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>it </span>
+                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>C</span>
+                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>hecks</span>
+                </div>
+              }>
                 <div style={{ columns: "4 140px", gap: "10px" }}>
                   {[
                     "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
@@ -694,10 +711,14 @@ function TrayNav() {
 
           {/* Title overlay — top left */}
           <div style={{ position: "absolute", left: "3%", top: "8%", zIndex: 4 }}>
-            <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(1.4rem, 2.8vw, 3.2rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: 400, fontStyle: "italic" }}>
-              What I Bring To The
+            <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.2rem, 2.4vw, 2.6rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: "normal", letterSpacing: "0.15em" }}>
+              WHAT&nbsp;&nbsp;&nbsp;I
             </p>
-            <p style={{ fontFamily: "var(--font-pinyon)", fontSize: "clamp(2.2rem, 4.5vw, 5rem)", color: "#f5f0f0", lineHeight: 1, marginTop: "-0.1em" }}>
+            <p style={{ lineHeight: 1.05, marginTop: "0.05em" }}>
+              <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.8rem, 3.6vw, 4rem)", color: "#f5f0f0", fontWeight: "normal" }}>Bring </span>
+              <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.2rem, 2.4vw, 2.6rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.1em" }}>to the</span>
+            </p>
+            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 4.4rem)", color: "#f5f0f0", lineHeight: 1, fontWeight: "normal", marginTop: "-0.05em" }}>
               Table
             </p>
           </div>
