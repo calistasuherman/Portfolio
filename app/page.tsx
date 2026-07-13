@@ -390,14 +390,14 @@ export default function Home() {
           <div style={{ display: "flex", alignItems: "center", width: "100%", maxWidth: "1200px", margin: "0 auto", gap: "4rem" }}>
             {/* Left — text + contact */}
             <div style={{ flex: 1 }}>
-              {/* Stacked title like screenshot */}
-              <div style={{ lineHeight: 1, marginBottom: "2rem" }}>
-                <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(3rem, 7vw, 7rem)", color: "#f5f0f0", lineHeight: 0.9 }}>and</div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.3em" }}>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(2rem, 5vw, 5rem)", color: "#f5f0f0", lineHeight: 0.9 }}>that&apos;s</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(0.8rem, 1.4vw, 1.2rem)", color: "#f5f0f0", letterSpacing: "0.2em", textTransform: "uppercase" }}>a</span>
-                </div>
-                <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(4.5rem, 11vw, 11rem)", color: "#f5f0f0", lineHeight: 0.85 }}>wrap.</div>
+              {/* Stacked alternating type like screenshot */}
+              <div style={{ marginBottom: "2rem" }}>
+                {/* "and that's" — PerandoryCondensed, large */}
+                <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(2.5rem, 5.5vw, 5.5rem)", color: "#f5f0f0", lineHeight: 1 }}>and that&apos;s</div>
+                {/* "a" — PerandoryCondensed small uppercase, like "FASHION ICON" in screenshot */}
+                <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(0.85rem, 1.6vw, 1.4rem)", color: "#f5f0f0", letterSpacing: "0.25em", textTransform: "uppercase", lineHeight: 2 }}>a</div>
+                {/* "wrap." — BillaMount script, very large */}
+                <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(4.5rem, 10vw, 10rem)", color: "#f5f0f0", lineHeight: 0.85 }}>wrap.</div>
               </div>
               {/* Contact info */}
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -409,7 +409,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            {/* Right — machine video */}
+            {/* Right — machine video, half size */}
             <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
               <video
                 src="/machine.mp4"
@@ -417,7 +417,7 @@ export default function Home() {
                 loop
                 muted
                 playsInline
-                style={{ width: "100%", maxWidth: "560px", borderRadius: "8px", objectFit: "cover" }}
+                style={{ width: "50%", maxWidth: "280px", borderRadius: "8px", objectFit: "cover" }}
               />
             </div>
           </div>
