@@ -231,12 +231,21 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── My Niches & Services ── */}
+        {/* ── Trusted By ── */}
+        <section className="section-content relative py-6 overflow-hidden">
+          <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
+        </section>
+
+        {/* ── Signature Services ── */}
         <section id="services" className="section-content relative py-16 px-6 md:px-16 lg:px-32">
           <div className="max-w-5xl mx-auto">
             <Reveal>
-              <h2 style={{ fontFamily: "var(--font-inter)", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", lineHeight: 1.1, marginBottom: "2rem", letterSpacing: "0.02em" }}>
-                MY NICHES<br />&amp; SERVICES
+              <h2 style={{ lineHeight: 1.1, marginBottom: "2rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
+                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ignature</span>
+                {" "}
+                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ervices</span>
               </h2>
               <div style={{ borderBottom: "1px solid rgba(245,240,240,0.2)", marginBottom: "0" }} />
             </Reveal>
@@ -257,11 +266,6 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
-        </section>
-
-        {/* ── Trusted By ── */}
-        <section className="section-content relative py-6 overflow-hidden">
-          <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
         </section>
 
         {/* ── Portfolio Strip ── */}
