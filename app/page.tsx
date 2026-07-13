@@ -208,8 +208,17 @@ export default function Home() {
                 Who&apos;s that star?
               </h2>
               <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.8rem, 1.5vw, 1.1rem)", marginTop: "5rem", paddingLeft: "1.5rem" }}>
-                {["Content Creator", "Video Editor", "Videographer", "Coffee Connoisseur", "Frequent Traveler", "Gen Z (21 Y/O)", "Fashion Lover", "SF Based"].map((item) => (
-                  <p key={item} style={{ letterSpacing: "0.04em", textTransform: "uppercase" }}>{item}</p>
+                {[
+                  { label: "Content Creator", bold: false },
+                  { label: "Video Editor", bold: true },
+                  { label: "Videographer", bold: false },
+                  { label: "Coffee Connoisseur", bold: true },
+                  { label: "Frequent Traveler", bold: false },
+                  { label: "Gen Z (21 Y/O)", bold: true },
+                  { label: "Fashion Lover", bold: false },
+                  { label: "SF Based", bold: true },
+                ].map(({ label, bold }) => (
+                  <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: bold ? 700 : 400 }}>{label}</p>
                 ))}
               </div>
             </Reveal>
