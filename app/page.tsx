@@ -222,6 +222,34 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── My Niches & Services ── */}
+        <section id="services" className="section-content relative py-16 px-6 md:px-16 lg:px-32">
+          <div className="max-w-5xl mx-auto">
+            <Reveal>
+              <h2 style={{ fontFamily: "var(--font-inter)", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", lineHeight: 1.1, marginBottom: "2rem", letterSpacing: "0.02em" }}>
+                MY NICHES<br />&amp; SERVICES
+              </h2>
+              <div style={{ borderBottom: "1px solid rgba(245,240,240,0.2)", marginBottom: "0" }} />
+            </Reveal>
+            {[
+              { label: "MY NICHE", sublabel: null, desc: "As a content creator specializing in health, fitness, beauty, skincare, travel, and all things lifestyle-related, I'm here to bring your brand to life through captivating imagery and engaging videos." },
+              { label: "PHOTOGRAPHY", sublabel: "2–4 DAYS", desc: "I capture authentic product pictures that showcase your offerings in their best light, highlighting their unique features and benefits." },
+              { label: "VIDEO", sublabel: "1–2 WEEKS", desc: "Reviews, testimonials, unboxing, get ready with me sessions, how-to guides, and voiceovers. Whether it's sharing personal experiences, demonstrating product usage, or providing valuable tips, I create videos that resonate with your audience and drive engagement." },
+              { label: "BRAND INTEGRATION", sublabel: null, desc: "Seamless sponsored content that feels native to your audience. Script-to-screen execution with full creative direction." },
+            ].map((row, i) => (
+              <Reveal key={i} delay={i * 80}>
+                <div style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: "2rem", padding: "1.75rem 0", borderBottom: "1px solid rgba(245,240,240,0.15)" }}>
+                  <div>
+                    <p style={{ fontFamily: "var(--font-inter)", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#f5f0f0" }}>{row.label}</p>
+                    {row.sublabel && <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(245,240,240,0.45)", marginTop: "0.3rem" }}>{row.sublabel}</p>}
+                  </div>
+                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.75rem", color: "rgba(245,240,240,0.65)", lineHeight: 1.8 }}>{row.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
         {/* ── Trusted By ── */}
         <section className="section-content relative py-6 overflow-hidden">
           <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
@@ -323,31 +351,6 @@ export default function Home() {
           </div>
         </section>
 
-
-        {/* ── Services ── */}
-        <section id="services" className="section-content relative pt-0 pb-24 md:pb-36 px-0 overflow-hidden">
-          <div className="max-w-5xl mx-auto px-6 md:px-16 lg:px-32">
-            <Reveal>
-              <div className="mb-14">
-                <div style={{ lineHeight: 1.1 }}>
-                  <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.4rem, 5.5vw, 5.5rem)", fontWeight: "normal", color: "#f5f0f0" }}>Signature Services</div>
-                </div>
-              </div>
-            </Reveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {services.map((s, i) => (
-                <Reveal key={s.title} delay={i * 100}>
-                  <div className="service-card p-7 rounded-xl h-full">
-                    <h4 className="text-text-primary text-xl md:text-2xl mb-3" style={{ fontFamily: "var(--font-melodrama)", fontWeight: 400 }}>
-                      {s.title}
-                    </h4>
-                    <p className="font-inter text-text-muted text-[13px] leading-relaxed">{s.desc}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ── Contact ── */}
         <section id="contact" className="section-content relative py-24 md:py-40 px-6 text-center">
