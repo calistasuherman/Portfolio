@@ -345,16 +345,16 @@ export default function Home() {
                   {[
                     { n: 1,  square: false },
                     { n: 11, square: false },
-                    { n: 2,  square: false },
-                    { n: 3,  square: false },
-                    { n: 4,  square: false },
-                    { n: 6,  square: false },
-                    { n: 7,  square: false },
-                    { n: 9,  square: false },
-                    { n: 10, square: false },
+                    { n: 2,  square: true },
+                    { n: 3,  square: true },
+                    { n: 4,  square: true },
+                    { n: 6,  square: true },
+                    { n: 7,  square: true },
+                    { n: 9,  square: true },
+                    { n: 10, square: true },
                     { n: 12, square: true },
-                    { n: 14, square: false },
-                    { n: 16, square: false },
+                    { n: 14, square: true },
+                    { n: 16, square: true },
                   ].map(({ n, square }, i) => (
                     <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} square={square} />
                   ))}
