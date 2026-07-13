@@ -172,9 +172,9 @@ export default function Home() {
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative", textAlign: "center" }}>
               <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "1rem", marginTop: "-4rem" }}>est. 2026</p>
               <div style={{ position: "relative" }} suppressHydrationWarning>
-                <div aria-hidden="true" style={{ fontFamily: "Ballet, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
-                <div aria-hidden="true" style={{ fontFamily: "Ballet, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
-                <div style={{ fontFamily: "Ballet, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
+                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.08, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
+                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.05, transform: "translate(12px, 12px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
+                <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
               </div>
             </div>
 
@@ -236,6 +236,33 @@ export default function Home() {
           <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
         </section>
 
+        {/* ── Portfolio Strip ── */}
+        <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
+          <div className="relative">
+            <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
+              {[...Array.from({length: 14}, (_, i) => i + 1), ...Array.from({length: 14}, (_, i) => i + 1)].map((n, i) => (
+                <div key={i} style={{ display: "inline-block", margin: "0 18px", flexShrink: 0 }}>
+                  <img
+                    src={`/portfolio${n}.png`}
+                    alt={`Portfolio ${n}`}
+                    style={{
+                      height: "36px",
+                      width: "auto",
+                      borderRadius: "4px",
+                      objectFit: "cover",
+                      opacity: 0.75,
+                      transition: "opacity 0.3s",
+                      display: "block",
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── Signature Services ── */}
         <section id="services" className="section-content relative py-16 px-6 md:px-16 lg:px-32">
           <div className="max-w-5xl mx-auto">
@@ -265,33 +292,6 @@ export default function Home() {
                 </div>
               </Reveal>
             ))}
-          </div>
-        </section>
-
-        {/* ── Portfolio Strip ── */}
-        <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
-          <div className="relative">
-            <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
-              {[...Array.from({length: 14}, (_, i) => i + 1), ...Array.from({length: 14}, (_, i) => i + 1)].map((n, i) => (
-                <div key={i} style={{ display: "inline-block", margin: "0 18px", flexShrink: 0 }}>
-                  <img
-                    src={`/portfolio${n}.png`}
-                    alt={`Portfolio ${n}`}
-                    style={{
-                      height: "36px",
-                      width: "auto",
-                      borderRadius: "4px",
-                      objectFit: "cover",
-                      opacity: 0.75,
-                      transition: "opacity 0.3s",
-                      display: "block",
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-                    onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
-                  />
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
