@@ -277,10 +277,10 @@ export default function Home() {
               <div style={{ borderBottom: "1px solid rgba(245,240,240,0.2)", marginBottom: "0" }} />
             </Reveal>
             {[
-              { label: "MY NICHE", sublabel: null, desc: "As a content creator specializing in health, fitness, beauty, skincare, travel, and all things lifestyle-related, I'm here to bring your brand to life through captivating imagery and engaging videos." },
-              { label: "PHOTOGRAPHY", sublabel: "2–4 DAYS", desc: "I capture authentic product pictures that showcase your offerings in their best light, highlighting their unique features and benefits." },
-              { label: "VIDEO", sublabel: "1–2 WEEKS", desc: "Reviews, testimonials, unboxing, get ready with me sessions, how-to guides, and voiceovers. Whether it's sharing personal experiences, demonstrating product usage, or providing valuable tips, I create videos that resonate with your audience and drive engagement." },
-              { label: "BRAND INTEGRATION", sublabel: null, desc: "Seamless sponsored content that feels native to your audience. Script-to-screen execution with full creative direction." },
+              { label: "VIDEOGRAPHY & EDITING", sublabel: null, desc: "From concept to final cut — I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design across YouTube, Reels, and TikTok." },
+              { label: "FASHION & BRAND PHOTOS", sublabel: "2–4 DAYS", desc: "As a fashion lover at heart, I wear and style your pieces on camera and in photos — bringing them to life in a way that feels personal, aspirational, and effortlessly editorial. Perfect for brands looking for authentic try-on and fit content." },
+              { label: "YOUTUBE INTEGRATIONS", sublabel: "1–2 WEEKS", desc: "Seamless sponsored segments woven naturally into my YouTube content — from dedicated reviews and unboxings to mid-roll integrations. Full creative direction from script to screen, with an audience that trusts my recommendations." },
+              { label: "COLLABORATIONS", sublabel: null, desc: "Open to long-term brand partnerships, gifting collabs, and co-created campaigns. Whether you're a small business or an established brand, I bring the same level of creativity, authenticity, and care to every partnership." },
             ].map((row, i) => (
               <Reveal key={i} delay={i * 80}>
                 <div style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: "2rem", padding: "1.75rem 0", borderBottom: "1px solid rgba(245,240,240,0.15)" }}>
