@@ -38,12 +38,12 @@ const analytics = [
 ];
 
 const youtubeIntegrations = [
+  { label: "Aelfric Eden", src: "/timeline6.mp4" },
   { label: "BetterHelp", src: "https://drive.google.com/file/d/1AEuTM3ICaPefspXBHq_6MdZjuvBVhnk8/preview" },
   { label: "Just4Kira", src: "https://drive.google.com/file/d/17dFdcpQd2scdLZF7_Yh82S7NmQdgn3ri/preview" },
-  { label: "BypassGPT", src: "https://drive.google.com/file/d/1EdR1dsZgxdVDp0pNCxWRjRB9cdgx6Xa6/preview" },
   { label: "Lewkin", src: "https://drive.google.com/file/d/1RSgNWatSlFoJqI1QcV6WaT1YTGalYssI/preview" },
   { label: "Teddy Blake", src: "https://drive.google.com/file/d/1CrJ2MoB-A7tW41qDQosg2ZXmgRJ8elvX/preview" },
-  { label: "Aelfric Eden", src: "/timeline6.mp4" },
+  { label: "BypassGPT", src: "https://drive.google.com/file/d/1EdR1dsZgxdVDp0pNCxWRjRB9cdgx6Xa6/preview" },
 ];
 
 
@@ -322,6 +322,10 @@ export default function Home() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   <VideoCard key={1} label="" src="/edit1.mp4" staggerDelay={0} square={false} />
                   <VideoCard key={11} label="" src="/edit11.mp4" staggerDelay={40} square={false} />
+                  <VideoCard key="cine1" label="" src="/cine1.mp4" staggerDelay={80} square={false} />
+                  <VideoCard key="cine2" label="" src="/cine2.mp4" staggerDelay={120} square={false} />
+                  <VideoCard key="cine3" label="" src="/cine3.mov" staggerDelay={160} square={false} />
+                  <VideoCard key="ny" label="" src="/edit0.mov" staggerDelay={200} square={false} />
                 </div>
               </WorkSubsection>
             </Reveal>
@@ -336,7 +340,7 @@ export default function Home() {
                   <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>diting</span>
                 </div>
               }>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
                   {[
                     { n: 2,  square: true  },
                     { n: 3,  square: true  },
