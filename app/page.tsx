@@ -362,42 +362,6 @@ export default function Home() {
               </WorkSubsection>
             </Reveal>
 
-            <Reveal delay={80}>
-              <WorkSubsection id="fashion-checks" title={
-                <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1, marginTop: "2rem" }}>
-                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>F</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ashion &amp;</span>
-                  {" "}
-                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>F</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>it </span>
-                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>C</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>hecks</span>
-                </div>
-              }>
-                <div style={{ columns: "4 140px", gap: "10px", marginTop: "1.5rem" }}>
-                  {[
-                    "/fashion1.jpg","/fashion2.jpg","/fashion3.jpg","/fashion4.jpg",
-                    "/fashion5.jpg","/fashion6.jpg","/fashion7.jpg","/fashion8.jpg",
-                    "/fashion9.jpg","/fashion10.jpg","/fashion11.jpg","/fashion12.jpg",
-                    "/fashion13.jpg","/fashion14.jpg","/fashion15.jpg","/fashion16.jpg",
-                  ].map((src, i) => (
-                    <div key={i} style={{ breakInside: "avoid", marginBottom: "10px" }}>
-                      <img
-                        src={src}
-                        alt={`Look ${i + 1}`}
-                        className="fashion-photo"
-                        style={{
-                          width: "100%",
-                          borderRadius: "10px",
-                          display: "block",
-                          transform: src === "/fashion16.jpg" ? "rotate(90deg)" : src === "/DSCN9257.jpg" ? "scaleX(-1)" : undefined,
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </WorkSubsection>
-            </Reveal>
 
           </div>
         </section>
