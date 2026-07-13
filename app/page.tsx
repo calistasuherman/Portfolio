@@ -137,7 +137,7 @@ export default function Home() {
           <nav className="flex justify-end gap-8 md:gap-12">
             {[
               { label: "About", href: "#about" },
-              { label: "Services", href: "#services" },
+              { label: "Services", href: "#trusted" },
               { label: "My Work", href: "#work" },
               { label: "Contact", href: "#contact" },
             ].map((link) => (
@@ -272,7 +272,7 @@ export default function Home() {
         </section>
 
         {/* ── Signature Services ── */}
-        <section id="services" className="section-content relative px-6 md:px-16 lg:px-32" style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: "6rem", paddingBottom: "6rem" }}>
+        <section id="trusted" className="section-content relative px-6 md:px-16 lg:px-32" style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: "6rem", paddingBottom: "6rem", scrollMarginTop: "0px" }}>
           <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
             <Reveal>
               <h2 style={{ lineHeight: 1.1, marginBottom: "2rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
@@ -304,26 +304,33 @@ export default function Home() {
 
         {/* ── Editing Toolkit ── */}
         <section className="section-content relative" style={{ padding: "6rem 0", overflow: "hidden" }}>
-          <div style={{ position: "relative", maxWidth: "900px", margin: "0 auto", height: "clamp(420px, 60vw, 620px)" }}>
+          <div style={{ position: "relative", maxWidth: "900px", margin: "0 auto", height: "clamp(480px, 65vw, 680px)" }}>
 
             {/* Camera — top left */}
-            <div style={{ position: "absolute", top: "0%", left: "2%", width: "clamp(140px, 22vw, 240px)" }}>
+            <div style={{ position: "absolute", top: "0%", left: "2%", width: "clamp(130px, 20vw, 210px)" }}>
               <img src="/camera.png" alt="DJI Osmo Pocket" style={{ width: "100%", display: "block" }} />
-              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.65rem, 1vw, 0.85rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginTop: "0.5rem" }}>DJI Osmo Pocket 3</p>
             </div>
 
-            {/* Apps — bottom right */}
-            <div style={{ position: "absolute", bottom: "0%", right: "2%", width: "clamp(180px, 30vw, 320px)" }}>
-              <img src="/apps.png" alt="Editing Apps" style={{ width: "100%", display: "block" }} />
-              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.65rem, 1vw, 0.85rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginTop: "0.5rem" }}>DaVinci · iMovie · Canva · Final Cut · CapCut</p>
-            </div>
+            {/* DR — top right */}
+            <img src="/dr.png" alt="DaVinci Resolve" style={{ position: "absolute", top: "2%", right: "5%", width: "clamp(60px, 9vw, 100px)" }} />
+
+            {/* FC — middle right */}
+            <img src="/fcp.png" alt="Final Cut Pro" style={{ position: "absolute", top: "38%", right: "2%", width: "clamp(60px, 9vw, 100px)" }} />
+
+            {/* VS — bottom left */}
+            <img src="/vs.png" alt="Video Star" style={{ position: "absolute", bottom: "8%", left: "5%", width: "clamp(60px, 9vw, 100px)" }} />
+
+            {/* CC — bottom center-right */}
+            <img src="/cc.png" alt="CapCut" style={{ position: "absolute", bottom: "4%", right: "18%", width: "clamp(60px, 9vw, 100px)" }} />
+
+            {/* C — bottom right */}
+            <img src="/c.png" alt="Canva" style={{ position: "absolute", bottom: "10%", right: "2%", width: "clamp(60px, 9vw, 100px)" }} />
 
             {/* Title — center */}
-            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center", lineHeight: 0.85, whiteSpace: "nowrap" }}>
-              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(0.7rem, 1.1vw, 0.95rem)", color: "rgba(245,240,240,0.45)", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5em" }}>essentials of a</p>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88 }}>My</div>
+            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center", whiteSpace: "nowrap" }}>
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88, marginBottom: "0.15em" }}>My</div>
               <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88 }}>Editing</div>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88 }}>Toolkit</div>
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88, marginTop: "0.15em" }}>Toolkit</div>
             </div>
 
           </div>
