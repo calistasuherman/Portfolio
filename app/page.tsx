@@ -132,7 +132,7 @@ export default function Home() {
         {/* ── Nav ── */}
         <header className="section-content fixed top-0 left-0 right-0 z-50 py-5 px-6">
           {/* CS monogram — absolutely positioned top-left, independent of nav */}
-          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", top: "0.5rem", left: "0.5rem", width: "clamp(58px, 7vw, 90px)", opacity: 0.9 }} />
+          <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", top: "0.5rem", left: "-1rem", width: "clamp(58px, 7vw, 90px)", opacity: 0.9 }} />
           {/* Nav — top right */}
           <nav className="flex justify-end gap-8 md:gap-12">
             {[
