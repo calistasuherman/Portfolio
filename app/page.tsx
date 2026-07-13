@@ -149,7 +149,10 @@ export default function Home() {
                 onClick={(e) => {
                   e.preventDefault();
                   const el = document.querySelector(link.href);
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                  if (el) {
+                    const top = el.getBoundingClientRect().top + window.scrollY;
+                    window.scrollTo({ top: link.href === "#trusted" ? top : top - 80, behavior: "smooth" });
+                  }
                 }}
               >
                 {link.label}
