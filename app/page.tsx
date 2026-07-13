@@ -386,40 +386,30 @@ export default function Home() {
 
 
         {/* ── Contact ── */}
-        <section id="contact" className="section-content relative px-6 md:px-16 lg:px-32" style={{ minHeight: "100vh", display: "flex", alignItems: "center" }}>
-          <div style={{ display: "flex", alignItems: "center", width: "100%", maxWidth: "1200px", margin: "0 auto", gap: "4rem" }}>
-            {/* Left — text + contact */}
-            <div style={{ flex: 1 }}>
-              {/* Stacked alternating type like screenshot */}
-              <div style={{ marginBottom: "2rem" }}>
-                {/* "and that's" — PerandoryCondensed, large */}
-                <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(2.5rem, 5.5vw, 5.5rem)", color: "#f5f0f0", lineHeight: 1 }}>and that&apos;s</div>
-                {/* "a" — PerandoryCondensed small uppercase, like "FASHION ICON" in screenshot */}
-                <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(0.85rem, 1.6vw, 1.4rem)", color: "#f5f0f0", letterSpacing: "0.25em", textTransform: "uppercase", lineHeight: 2 }}>a</div>
-                {/* "wrap." — BillaMount script, very large */}
-                <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(4.5rem, 10vw, 10rem)", color: "#f5f0f0", lineHeight: 0.85 }}>wrap.</div>
-              </div>
-              {/* Contact info */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <a href="mailto:cal1starcollab@gmail.com" style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.9rem, 1.5vw, 1.2rem)", color: "rgba(245,240,240,0.7)", letterSpacing: "0.08em", textDecoration: "none" }}>cal1starcollab@gmail.com</a>
-                <div style={{ display: "flex", gap: "2rem", marginTop: "0.5rem" }}>
-                  {[["Instagram","https://instagram.com/cal1star"],["YouTube","https://www.youtube.com/@cal1stvr"],["TikTok","https://www.tiktok.com/@cal1star"]].map(([label,href]) => (
-                    <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", textDecoration: "none" }}>{label}</a>
-                  ))}
-                </div>
+        <section id="contact" className="section-content relative" style={{ display: "flex", alignItems: "stretch", overflow: "hidden" }}>
+          {/* Left — text + contact */}
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "4rem clamp(2rem, 5vw, 5rem)" }}>
+            <div style={{ marginBottom: "2rem" }}>
+              <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(2.5rem, 5.5vw, 5.5rem)", color: "#f5f0f0", lineHeight: 1 }}>and that&apos;s</div>
+              <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(0.85rem, 1.6vw, 1.4rem)", color: "#f5f0f0", letterSpacing: "0.25em", textTransform: "uppercase", lineHeight: 2 }}>a</div>
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(4.5rem, 10vw, 10rem)", color: "#f5f0f0", lineHeight: 0.85 }}>wrap.</div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <a href="mailto:cal1starcollab@gmail.com" style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.9rem, 1.5vw, 1.2rem)", color: "rgba(245,240,240,0.7)", letterSpacing: "0.08em", textDecoration: "none" }}>cal1starcollab@gmail.com</a>
+              <div style={{ display: "flex", gap: "2rem", marginTop: "0.5rem" }}>
+                {[["Instagram","https://instagram.com/cal1star"],["YouTube","https://www.youtube.com/@cal1stvr"],["TikTok","https://www.tiktok.com/@cal1star"]].map(([label,href]) => (
+                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.75rem, 1.2vw, 1rem)", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", textDecoration: "none" }}>{label}</a>
+                ))}
               </div>
             </div>
-            {/* Right — machine video, half size */}
-            <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <video
-                src="/machine.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{ width: "50%", maxWidth: "280px", borderRadius: "8px", objectFit: "cover" }}
-              />
-            </div>
+          </div>
+          {/* Right — car photo, full height */}
+          <div style={{ flex: 1, position: "relative", minHeight: "600px" }}>
+            <img
+              src="/car.jpg"
+              alt=""
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
+            />
           </div>
         </section>
 
