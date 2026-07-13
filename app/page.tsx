@@ -286,7 +286,6 @@ export default function Home() {
             </Reveal>
             {[
               { label: "VIDEOGRAPHY & EDITING", sublabel: null, desc: "From concept to final cut — I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design across YouTube, Reels, and TikTok." },
-              { label: "FASHION & BRAND PHOTOS", sublabel: "2–4 DAYS", desc: "As a fashion lover at heart, I wear and style your pieces on camera and in photos — bringing them to life in a way that feels personal, aspirational, and effortlessly editorial. Perfect for brands looking for authentic try-on and fit content." },
               { label: "YOUTUBE INTEGRATIONS", sublabel: "1–2 WEEKS", desc: "Seamless sponsored segments woven naturally into my YouTube content — from dedicated reviews and unboxings to mid-roll integrations. Full creative direction from script to screen, with an audience that trusts my recommendations." },
               { label: "COLLABORATIONS", sublabel: null, desc: "Open to long-term brand partnerships, gifting collabs, and co-created campaigns. Whether you're a small business or an established brand, I bring the same level of creativity, authenticity, and care to every partnership." },
             ].map((row, i) => (
