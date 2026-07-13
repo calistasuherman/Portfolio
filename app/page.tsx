@@ -344,6 +344,7 @@ export default function Home() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   {[
                     { n: 1,  square: false },
+                    { n: 11, square: false },
                     { n: 2,  square: true  },
                     { n: 3,  square: true  },
                     { n: 4,  square: true  },
@@ -353,7 +354,6 @@ export default function Home() {
                     { n: 8,  square: true  },
                     { n: 9,  square: true  },
                     { n: 10, square: true  },
-                    { n: 11, square: false },
                     { n: 12, square: true  },
                   ].map(({ n, square }, i) => (
                     <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} square={square} />
