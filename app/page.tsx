@@ -386,11 +386,7 @@ export default function Home() {
 
 
         {/* ── Contact ── */}
-        <section id="contact" className="section-content relative py-24 md:py-40 px-6 text-center">
-          <div
-            className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px]"
-            style={{ background: "radial-gradient(ellipse at bottom, rgba(139,0,0,0.12) 0%, transparent 70%)" }}
-          />
+        <section id="contact" className="section-content relative" style={{ minHeight: "100vh", background: "#fdf8f4", overflow: "hidden" }}>
           <EnvelopeContact />
         </section>
 
@@ -616,78 +612,89 @@ function TrayItem({
 
 function EnvelopeContact() {
   const ref = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [triggered, setTriggered] = useState(false);
+  const [cardUp, setCardUp] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !triggered) {
-          setTriggered(true);
-          setTimeout(() => setIsOpen(true), 600);
-        }
-      },
-      { threshold: 0.3 }
+      ([entry]) => { if (entry.isIntersecting) { setTimeout(() => setCardUp(true), 400); obs.disconnect(); } },
+      { threshold: 0.2 }
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [triggered]);
+  }, []);
 
   return (
-    <div ref={ref} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0" }}>
+    <div ref={ref} style={{ position: "relative", width: "100%", minHeight: "100vh", background: "#fdf8f4", overflow: "hidden" }}>
       <style>{`
-        .env-scene { width: 320px; height: 280px; position: relative; display: grid; place-items: center; cursor: pointer; user-select: none; }
-        .env-wrap { position: relative; width: 260px; height: 180px; filter: drop-shadow(0 18px 28px rgba(0,0,0,0.28)); }
-        .env-card {
-          position: absolute; left: 50%; bottom: 28px; width: 210px; height: 150px;
-          transform: translateX(-50%) translateY(38px);
-          background: linear-gradient(180deg,#ffffff 0%,#fffdf8 100%);
-          border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-          padding: 18px; text-align: center; color: #3b2f2a;
-          transition: transform 900ms cubic-bezier(.2,.9,.2,1), opacity 500ms ease;
-          opacity: 0; z-index: 1;
-          display: flex; flex-direction: column; align-items: center; justify-content: center;
+        .contact-card {
+          position: absolute;
+          left: 50%; bottom: 34%;
+          transform: translateX(-50%) translateY(0);
+          width: clamp(180px, 28vw, 320px);
+          background: #fff;
+          border: 1px solid #e8ddd6;
+          border-radius: 4px;
+          padding: clamp(16px, 2.5vw, 28px) clamp(20px, 3vw, 36px);
+          text-align: center;
+          z-index: 3;
+          transition: transform 1.1s cubic-bezier(.2,.9,.2,1);
+          box-shadow: 0 4px 24px rgba(0,0,0,0.10);
         }
-        .env-envelope { position: absolute; inset: auto 0 0 0; width: 260px; height: 150px; margin: auto; bottom: 0; z-index: 2; }
-        .env-base { position: absolute; inset: 0; background: linear-gradient(180deg,#d8a66c 0%,#c88d4c 100%); clip-path: polygon(0 100%,50% 50%,100% 100%,100% 0,0 0); border-radius: 10px; }
-        .env-front { position: absolute; inset: 0; background: linear-gradient(180deg,#e3b37b 0%,#d59a58 100%); clip-path: polygon(0 100%,50% 58%,100% 100%,100% 0,0 0); z-index: 3; }
-        .env-flap { position: absolute; inset: 0; background: linear-gradient(180deg,#e8bb84 0%,#cf9550 100%); clip-path: polygon(0 0,50% 52%,100% 0); transform-origin: top center; transform: rotateX(0deg); transition: transform 800ms cubic-bezier(.2,.9,.2,1); z-index: 4; backface-visibility: hidden; }
-        .env-seal { position: absolute; left: 50%; top: 74px; width: 24px; height: 24px; transform: translateX(-50%); background: #960018; border-radius: 50%; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.08); z-index: 5; transition: transform 500ms ease, opacity 400ms ease; }
-        .env-open .env-flap { transform: rotateX(180deg); }
-        .env-open .env-card { transform: translateX(-50%) translateY(-120px); opacity: 1; }
-        .env-open .env-seal { transform: translateX(-50%) scale(0.8); opacity: 0.2; }
+        .contact-card.up {
+          transform: translateX(-50%) translateY(-42%);
+        }
       `}</style>
 
-      <div
-        className={`env-scene${isOpen ? " env-open" : ""}`}
-        onClick={() => setIsOpen(o => !o)}
-        role="button"
-        aria-label="Envelope animation"
-        tabIndex={0}
-        onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setIsOpen(o => !o); } }}
-      >
-        <div className="env-wrap">
-          <div className="env-card">
-            <p style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.75rem", opacity: 0.7, marginBottom: "4px" }}>and, that&apos;s</p>
-            <h2 style={{ fontFamily: "AstonScript, cursive", fontSize: "clamp(1.4rem, 4vw, 2.2rem)", fontWeight: "normal", color: "#960018", lineHeight: 1, margin: "0 0 8px" }}>a wrap.</h2>
-            <p style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.55rem", opacity: 0.85, margin: "0 0 10px", letterSpacing: "0.04em" }}>Piqued your interest? Let&apos;s work together.</p>
-            <a href="mailto:cal1starcollab@gmail.com" style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.45rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#5a2020", display: "block", marginBottom: "8px" }}>cal1starcollab@gmail.com</a>
-            <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-              {[["Instagram","https://instagram.com/cal1star"],["YouTube","https://www.youtube.com/@cal1stvr"],["TikTok","https://www.tiktok.com/@cal1star"]].map(([label,href]) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.4rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#5a2020" }}>{label}</a>
-              ))}
-            </div>
-          </div>
-          <div className="env-envelope">
-            <div className="env-base" />
-            <div className="env-front" />
-            <div className="env-flap" />
-            <div className="env-seal" />
-          </div>
-        </div>
+      {/* "and," — top right */}
+      <span style={{
+        position: "absolute", top: "8%", right: "6%",
+        fontFamily: "BillaMount, cursive", fontWeight: "normal",
+        fontSize: "clamp(3rem, 8vw, 7rem)", color: "#8b0000",
+        lineHeight: 1, zIndex: 5, pointerEvents: "none",
+      }}>and,</span>
+
+      {/* "that's" — right, below "and," */}
+      <span style={{
+        position: "absolute", top: "22%", right: "4%",
+        fontFamily: "BillaMount, cursive", fontWeight: "normal",
+        fontSize: "clamp(3rem, 8vw, 7rem)", color: "#8b0000",
+        lineHeight: 1, zIndex: 5, pointerEvents: "none",
+      }}>that&apos;s</span>
+
+      {/* "a wrap." — bottom left */}
+      <span style={{
+        position: "absolute", bottom: "10%", left: "4%",
+        fontFamily: "BillaMount, cursive", fontWeight: "normal",
+        fontSize: "clamp(3rem, 8vw, 7rem)", color: "#8b0000",
+        lineHeight: 1, zIndex: 5, pointerEvents: "none",
+      }}>a wrap.</span>
+
+      {/* Card sliding out */}
+      <div className={`contact-card${cardUp ? " up" : ""}`}>
+        <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.75rem, 1.4vw, 1rem)", color: "#3b2020", lineHeight: 1.5, marginBottom: "0.6em" }}>
+          Thank you for taking the time to look through<br />my portfolio! Piqued your interest?<br />Let&apos;s work together!
+        </p>
+        <a href="mailto:cal1starcollab@gmail.com" style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.7rem, 1.2vw, 0.9rem)", color: "#8b0000", fontWeight: "bold", letterSpacing: "0.02em" }}>
+          cal1starcollab@gmail.com
+        </a>
       </div>
+
+      {/* Envelope photo — open, centered, fills bottom portion */}
+      <img
+        src="/envelope-open.jpg"
+        alt="Envelope"
+        style={{
+          position: "absolute",
+          bottom: 0, left: "50%",
+          transform: "translateX(-50%)",
+          width: "clamp(320px, 55vw, 700px)",
+          zIndex: 4,
+          pointerEvents: "none",
+          userSelect: "none",
+        }}
+      />
     </div>
   );
 }
