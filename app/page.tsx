@@ -752,7 +752,7 @@ function TrayNav() {
 
 function WorkSubsection({ id, title, children }: { id?: string; title: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div id={id} className={id === "video-editing" ? "mb-0" : "mb-20"} style={{ scrollMarginTop: "80px", minHeight: id === "cinematography" ? "100vh" : undefined }}>
+    <div id={id} className={id === "video-editing" ? "mb-0" : "mb-20"} style={{ scrollMarginTop: "80px", minHeight: id === "cinematography" ? "100vh" : undefined, paddingTop: id === "youtube-integrations" ? "6rem" : undefined }}>
       <div className="mb-8 text-center">
         {title}
       </div>
