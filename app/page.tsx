@@ -342,8 +342,21 @@ export default function Home() {
                 </div>
               }>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {[1,2,3,4,6,7,9,10,11,12,14,16].map((n, i) => (
-                    <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} />
+                  {[
+                    { n: 1,  square: false },
+                    { n: 11, square: false },
+                    { n: 2,  square: true },
+                    { n: 3,  square: true },
+                    { n: 4,  square: true },
+                    { n: 6,  square: true },
+                    { n: 7,  square: true },
+                    { n: 9,  square: true },
+                    { n: 10, square: true },
+                    { n: 12, square: true },
+                    { n: 14, square: false },
+                    { n: 16, square: false },
+                  ].map(({ n, square }, i) => (
+                    <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} square={square} />
                   ))}
                 </div>
               </WorkSubsection>
@@ -787,10 +800,12 @@ function VideoCard({
   label,
   src,
   staggerDelay = 0,
+  square = false,
 }: {
   label: string;
   src: string;
   staggerDelay?: number;
+  square?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -804,7 +819,7 @@ function VideoCard({
     <div
       className="work-card group relative overflow-hidden rounded-lg cursor-pointer"
       style={{
-        aspectRatio: "16/9",
+        aspectRatio: square ? "1/1" : "16/9",
         border: "1px solid rgba(139,0,0,0.2)",
         transitionDelay: `${staggerDelay}ms`,
       }}
