@@ -303,33 +303,29 @@ export default function Home() {
         </section>
 
         {/* ── Editing Toolkit ── */}
-        <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "6rem", paddingBottom: "6rem" }}>
-          <div style={{ maxWidth: "900px", margin: "0 auto", display: "flex", gap: "6rem", alignItems: "flex-start" }}>
-            {/* Title — stacked script like screenshot */}
-            <Reveal>
-              <div style={{ flexShrink: 0, lineHeight: 0.85 }}>
-                <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3.5rem, 7vw, 7rem)", color: "#f5f0f0" }}>My</div>
-                <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3.5rem, 7vw, 7rem)", color: "#f5f0f0" }}>Editing</div>
-                <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3.5rem, 7vw, 7rem)", color: "#f5f0f0" }}>Toolkit</div>
-              </div>
-            </Reveal>
-            {/* Tools list */}
-            <Reveal delay={80}>
-              <div style={{ paddingTop: "1rem", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-                {[
-                  { tool: "Adobe Premiere Pro", desc: "Primary editing software for all short-form and long-form cuts, multicam, and timeline work." },
-                  { tool: "Adobe After Effects", desc: "Motion graphics, text animations, visual effects, and compositing." },
-                  { tool: "DaVinci Resolve", desc: "Color grading and color correction for cinematic looks." },
-                  { tool: "Adobe Audition", desc: "Audio mixing, noise reduction, and sound design." },
-                  { tool: "CapCut", desc: "Fast-turnaround mobile edits and Reels/TikTok content." },
-                ].map(({ tool, desc }, i) => (
-                  <div key={i} style={{ borderBottom: "1px solid rgba(245,240,240,0.12)", paddingBottom: "1.25rem" }}>
-                    <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1rem, 1.6vw, 1.3rem)", color: "#f5f0f0", letterSpacing: "0.05em", marginBottom: "0.3rem" }}>{tool}</p>
-                    <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.7rem", color: "rgba(245,240,240,0.5)", lineHeight: 1.7 }}>{desc}</p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
+        <section className="section-content relative" style={{ padding: "6rem 0", overflow: "hidden" }}>
+          <div style={{ position: "relative", maxWidth: "900px", margin: "0 auto", height: "clamp(420px, 60vw, 620px)" }}>
+
+            {/* Camera — top left */}
+            <div style={{ position: "absolute", top: "0%", left: "2%", width: "clamp(140px, 22vw, 240px)" }}>
+              <img src="/camera.png" alt="DJI Osmo Pocket" style={{ width: "100%", display: "block" }} />
+              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.65rem, 1vw, 0.85rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginTop: "0.5rem" }}>DJI Osmo Pocket 3</p>
+            </div>
+
+            {/* Apps — bottom right */}
+            <div style={{ position: "absolute", bottom: "0%", right: "2%", width: "clamp(180px, 30vw, 320px)" }}>
+              <img src="/apps.png" alt="Editing Apps" style={{ width: "100%", display: "block" }} />
+              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.65rem, 1vw, 0.85rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginTop: "0.5rem" }}>DaVinci · iMovie · Canva · Final Cut · CapCut</p>
+            </div>
+
+            {/* Title — center */}
+            <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center", lineHeight: 0.85, whiteSpace: "nowrap" }}>
+              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(0.7rem, 1.1vw, 0.95rem)", color: "rgba(245,240,240,0.45)", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5em" }}>essentials of a</p>
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88 }}>My</div>
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88 }}>Editing</div>
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(3rem, 6.5vw, 6.5rem)", color: "#f5f0f0", lineHeight: 0.88 }}>Toolkit</div>
+            </div>
+
           </div>
         </section>
 
