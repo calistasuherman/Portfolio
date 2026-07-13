@@ -285,8 +285,8 @@ export default function Home() {
               <div style={{ borderBottom: "1px solid rgba(245,240,240,0.2)", marginBottom: "0" }} />
             </Reveal>
             {[
-              { label: "VIDEOGRAPHY & EDITING", sublabel: null, desc: "From concept to final cut — I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design across YouTube, Reels, and TikTok." },
-              { label: "YOUTUBE INTEGRATIONS", sublabel: "1–2 WEEKS", desc: "Seamless sponsored segments woven naturally into my YouTube content — from dedicated reviews and unboxings to mid-roll integrations. Full creative direction from script to screen, with an audience that trusts my recommendations." },
+              { label: "VIDEOGRAPHY & EDITING", sublabel: null, desc: "From concept to final cut, I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design across YouTube, Reels, and TikTok." },
+              { label: "YOUTUBE INTEGRATIONS", sublabel: "1–2 WEEKS", desc: "Seamless sponsored segments woven naturally into my YouTube content. Full creative direction from script to screen, with an audience that trusts my recommendations." },
               { label: "COLLABORATIONS", sublabel: null, desc: "Open to long-term brand partnerships, gifting collabs, and co-created campaigns. Whether you're a small business or an established brand, I bring the same level of creativity, authenticity, and care to every partnership." },
             ].map((row, i) => (
               <Reveal key={i} delay={i * 80}>
@@ -546,7 +546,7 @@ function TrayItem({
   const [hovered, setHovered] = useState(false);
   const inner = (
     <div
-      style={{ position: "relative", display: "inline-block", cursor: decorative ? "default" : "pointer", pointerEvents: "auto" }}
+      style={{ position: "relative", display: "inline-block", cursor: decorative ? "default" : "pointer", pointerEvents: "auto", padding: "20px 10px 0" }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -741,7 +741,7 @@ function TrayNav() {
 
 function WorkSubsection({ id, title, children }: { id?: string; title: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div id={id} className={id === "video-editing" ? "mb-0" : "mb-20"} style={{ scrollMarginTop: "80px" }}>
+    <div id={id} className={id === "video-editing" ? "mb-0" : "mb-20"} style={{ scrollMarginTop: "80px", minHeight: id === "youtube-integrations" ? "100vh" : undefined }}>
       <div className="mb-8 text-center">
         {title}
       </div>
