@@ -319,7 +319,10 @@ export default function Home() {
                   <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>inematography</span>
                 </div>
               }>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4" />
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                  <VideoCard key={1} label="" src="/edit1.mp4" staggerDelay={0} square={false} />
+                  <VideoCard key={11} label="" src="/edit11.mp4" staggerDelay={40} square={false} />
+                </div>
               </WorkSubsection>
             </Reveal>
 
@@ -335,8 +338,6 @@ export default function Home() {
               }>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   {[
-                    { n: 1,  square: false },
-                    { n: 11, square: false },
                     { n: 2,  square: true  },
                     { n: 3,  square: true  },
                     { n: 4,  square: true  },
