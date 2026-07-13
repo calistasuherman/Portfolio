@@ -342,8 +342,8 @@ export default function Home() {
                 </div>
               }>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {Array.from({ length: 13 }, (_, i) => i + 4).map((n, i) => (
-                    <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} />
+                  {Array.from({ length: 16 }).map((_, i) => (
+                    <VideoCard key={i} label="" src={`/edit${i + 1}.mp4`} staggerDelay={i * 40} />
                   ))}
                 </div>
               </WorkSubsection>
