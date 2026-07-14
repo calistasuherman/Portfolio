@@ -227,22 +227,46 @@ function VideoCard({ label, src, staggerDelay = 0, square = false, fill = false 
   );
 }
 
-/* ── CinemaRow — slow continuous rightward drift ── */
+/* ── CinemaVideoCard — autoplays immediately ── */
+function CinemaVideoCard({ src }: { src: string }) {
+  return (
+    <div style={{ width: "100%", height: "100%", position: "relative" }}>
+      <video
+        src={src} autoPlay loop muted playsInline
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      />
+    </div>
+  );
+}
+
+/* ── CinemaRow — seamless rightward drift ── */
 function CinemaRow() {
   const clips = ["/edit1.mp4", "/edit11.mp4", "/sd.mp4", "/icedbananalatte.mp4", "/temple.mov", "/walking.mp4", "/running.mp4", "/colorgrading.mp4"];
-  // Duplicate for seamless loop
-  const all = [...clips, ...clips];
+  const GAP = 14; // px — use marginRight so 50% calc is exact
 
   return (
     <div style={{ overflow: "hidden", marginLeft: "-2rem", marginRight: "-2rem" }}>
+      {/* strip is 2× clips; animate translateX(0) → translateX(-50%) for rightward feel requires going opposite */}
+      {/* rightward = content moves right = translateX goes from -50% → 0% */}
       <div style={{
-        display: "flex", gap: "16px", flexWrap: "nowrap",
-        animation: "cinemaSlideRight 40s linear infinite",
+        display: "flex", flexWrap: "nowrap",
+        animation: "cinemaSlideRight 28s linear infinite",
         willChange: "transform",
       }}>
-        {all.map((src, i) => (
-          <div key={i} style={{ flexShrink: 0, width: "clamp(300px, 32vw, 520px)", aspectRatio: "16/9", borderRadius: "8px", overflow: "hidden", border: "1px solid rgba(139,0,0,0.2)" }}>
-            <VideoCard label="" src={src} fill />
+        {[...clips, ...clips].map((src, i) => (
+          <div
+            key={i}
+            style={{
+              flexShrink: 0,
+              width: "clamp(280px, 30vw, 480px)",
+              aspectRatio: "16/9",
+              borderRadius: "8px",
+              overflow: "hidden",
+              border: "1px solid rgba(139,0,0,0.2)",
+              marginRight: GAP,
+            }}
+          >
+            <CinemaVideoCard src={src} />
           </div>
         ))}
       </div>

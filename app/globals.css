@@ -150,6 +150,11 @@ body::after {
   to   { transform: translateX(0%); }
 }
 
+@keyframes cinemaSlideRightSeamless {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(-50%); }
+}
+
 .marquee-track {
   animation: marquee 28s linear infinite;
   will-change: transform;

@@ -1,4 +1,5 @@
 "use client";
+
 export default function ContactPage() {
   return (
     <>
@@ -11,7 +12,7 @@ export default function ContactPage() {
             alignItems: "center",
             justifyContent: "center",
             padding: "5rem clamp(2rem, 6vw, 6rem)",
-            paddingTop: "calc(80px + 5rem)",
+            paddingTop: "calc(80px + 3rem)",
           }}
         >
           <div style={{
@@ -23,9 +24,10 @@ export default function ContactPage() {
             maxWidth: "1100px",
             margin: "0 auto",
           }}>
-            {/* Left — typography + contact */}
+            {/* Left — heading + swinging notepad */}
             <div style={{ flex: "0 0 auto", textAlign: "left" }}>
-              <div style={{ lineHeight: 1 }}>
+              {/* "and that's a Wrap." moved up */}
+              <div style={{ lineHeight: 1, marginBottom: "2.2rem" }}>
                 <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1.6rem, 3.2vw, 3.2rem)", color: "#f5f0f0", letterSpacing: "0.02em", marginBottom: "-0.05em" }}>
                   and that&apos;s a
                 </div>
@@ -33,29 +35,38 @@ export default function ContactPage() {
                   Wrap.
                 </div>
               </div>
-              <div style={{ marginTop: "2.5rem", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                <a
-                  href="mailto:cal1starcollab@gmail.com"
-                  style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.72rem, 1.1vw, 0.92rem)", color: "rgba(245,240,240,0.65)", letterSpacing: "0.06em", textDecoration: "none" }}
-                >
-                  cal1starcollab@gmail.com
-                </a>
-                <div style={{ display: "flex", gap: "2rem", marginTop: "0.3rem" }}>
-                  {[
-                    ["Instagram", "https://instagram.com/cal1star"],
-                    ["YouTube",   "https://www.youtube.com/@cal1stvr"],
-                    ["TikTok",    "https://www.tiktok.com/@cal1star"],
-                  ].map(([label, href]) => (
-                    <a
-                      key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(0.75rem, 1.1vw, 0.95rem)", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(245,240,240,0.45)", textDecoration: "none" }}
-                    >
-                      {label}
-                    </a>
-                  ))}
+
+              {/* Swinging notepad with contact info */}
+              <div style={{ transformOrigin: "top center", animation: "noteSwing 4s ease-in-out infinite", display: "inline-block" }}>
+                {/* Tape */}
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: "-8px", position: "relative", zIndex: 2 }}>
+                  <div style={{ width: "72px", height: "26px", background: "rgba(155,150,143,0.52)", borderRadius: "2px", boxShadow: "inset 0 1px 3px rgba(0,0,0,0.1)" }} />
+                </div>
+                {/* Note card */}
+                <div style={{ background: "#eae6de", borderRadius: "2px", padding: "1.6rem 2rem 1.8rem", width: "240px", boxShadow: "0 6px 24px rgba(0,0,0,0.32), inset 0 0 0 1px rgba(255,255,255,0.2)" }}>
+                  <a
+                    href="mailto:cal1starcollab@gmail.com"
+                    style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.06em", color: "#1a1a1a", textDecoration: "none", display: "block", marginBottom: "1rem" }}
+                  >
+                    cal1starcollab@gmail.com
+                  </a>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+                    {[
+                      ["Instagram", "https://instagram.com/cal1star"],
+                      ["YouTube",   "https://www.youtube.com/@cal1stvr"],
+                      ["TikTok",    "https://www.tiktok.com/@cal1star"],
+                    ].map(([label, href]) => (
+                      <a
+                        key={label}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#1a1a1a", textDecoration: "none" }}
+                      >
+                        {label}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
