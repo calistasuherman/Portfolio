@@ -95,6 +95,10 @@ export default function Home() {
   const [heroVisible, setHeroVisible] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [cursorHover, setCursorHover] = useState(false);
+  const [spotifyOpen, setSpotifyOpen] = useState(false);
+
+  // Replace PLAYLIST_ID with your Spotify playlist ID from the share link
+  const SPOTIFY_PLAYLIST_ID = "37i9dQZF1DX4WYpdgoIcn6";
 
 
   useEffect(() => {
@@ -324,7 +328,7 @@ export default function Home() {
             {/* Title */}
             <Reveal>
               <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 3.8vw, 3.8rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "4.5rem" }}>
-                My Editing Toolkit
+                My Toolkit
               </div>
             </Reveal>
 
@@ -472,6 +476,51 @@ export default function Home() {
             © 2026 CAL1STAR — Calista Suherman
           </p>
         </footer>
+
+        {/* ── Spotify floating player ── */}
+        <div style={{ position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 200, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.6rem" }}>
+          {/* Embed — slides up when open */}
+          <div style={{
+            overflow: "hidden",
+            borderRadius: "12px",
+            maxHeight: spotifyOpen ? "80px" : "0",
+            opacity: spotifyOpen ? 1 : 0,
+            transform: spotifyOpen ? "translateY(0)" : "translateY(10px)",
+            transition: "max-height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease, transform 0.35s ease",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+          }}>
+            <iframe
+              src={`https://open.spotify.com/embed/playlist/${SPOTIFY_PLAYLIST_ID}?utm_source=generator&theme=0`}
+              width="300"
+              height="80"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              style={{ display: "block", borderRadius: "12px" }}
+            />
+          </div>
+
+          {/* Spotify button */}
+          <button
+            onClick={() => setSpotifyOpen(o => !o)}
+            style={{
+              width: "44px", height: "44px", borderRadius: "50%",
+              background: spotifyOpen ? "#1DB954" : "rgba(20,20,20,0.85)",
+              border: "1.5px solid rgba(29,185,84,0.6)",
+              backdropFilter: "blur(12px)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "none",
+              transition: "background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease",
+              boxShadow: spotifyOpen ? "0 0 20px rgba(29,185,84,0.45)" : "0 4px 16px rgba(0,0,0,0.4)",
+              transform: spotifyOpen ? "scale(1.08)" : "scale(1)",
+            }}
+            aria-label="Toggle Spotify player"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 11-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.72a.779.779 0 01-1.072.256c-2.687-1.652-6.785-2.131-9.965-1.166a.778.778 0 01-.973-.519.781.781 0 01.52-.972c3.632-1.102 8.147-.568 11.234 1.329a.78.78 0 01.256 1.072zm.105-2.83C14.692 8.95 9.375 8.775 6.297 9.71a.937.937 0 11-.543-1.794c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 01-.955 1.62z" fill={spotifyOpen ? "#000" : "#1DB954"}/>
+            </svg>
+          </button>
+        </div>
 
       </main>
     </>
