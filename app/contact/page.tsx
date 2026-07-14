@@ -18,7 +18,7 @@ export default function ContactPage() {
             zIndex: 2,
             minHeight: "100vh",
             display: "flex",
-            alignItems: "center",
+            alignItems: "flex-start",
             justifyContent: "space-between",
             gap: "2rem",
             padding: "5rem clamp(2rem, 8vw, 8rem)",
@@ -34,32 +34,32 @@ export default function ContactPage() {
                 {/* Text overlaid on note */}
                 <div style={{
                   position: "absolute",
-                  top: "30%", left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  width: "70%",
-                  textAlign: "left",
+                  top: "28%", left: "50%",
+                  transform: "translateX(-50%)",
+                  width: "75%",
+                  textAlign: "center",
                 }}>
-                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.4rem, 2.2vw, 2rem)", color: "#1a1a1a", lineHeight: 1, marginBottom: "1.2rem" }}>
+                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.8rem, 2.8vw, 2.6rem)", color: "#1a1a1a", lineHeight: 1, marginBottom: "1.4rem" }}>
                     Contact me
                   </p>
                   <a
                     href="mailto:cal1starcollab@gmail.com"
-                    style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 0.85vw, 0.75rem)", letterSpacing: "0.04em", color: "#1a1a1a", textDecoration: "none", display: "block", marginBottom: "1rem" }}
+                    style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.6rem, 0.95vw, 0.82rem)", letterSpacing: "0.03em", color: "#1a1a1a", textDecoration: "none", display: "block", marginBottom: "1.1rem" }}
                   >
                     cal1starcollab@gmail.com
                   </a>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                  <div style={{ display: "flex", justifyContent: "center", gap: "1.2rem" }}>
                     {[
                       ["Instagram", "https://instagram.com/cal1star"],
-                      ["YouTube",   "https://www.youtube.com/@cal1stvr"],
-                      ["TikTok",    "https://www.tiktok.com/@cal1star"],
+                      ["Youtube",   "https://www.youtube.com/@cal1stvr"],
+                      ["Tiktok",    "https://www.tiktok.com/@cal1star"],
                     ].map(([label, href]) => (
                       <a
                         key={label}
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.48rem, 0.72vw, 0.62rem)", letterSpacing: "0.12em", textTransform: "uppercase", color: "#1a1a1a", textDecoration: "none" }}
+                        style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.5rem, 0.75vw, 0.65rem)", letterSpacing: "0.08em", color: "#1a1a1a", textDecoration: "none" }}
                       >
                         {label}
                       </a>
@@ -70,14 +70,14 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Right — "and that's a Wrap." */}
-          <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
+          {/* Right — "and that's a Wrap!" */}
+          <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "flex-start", paddingTop: "2rem" }}>
             <div style={{ textAlign: "center" }}>
-              <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1.6rem, 3.2vw, 3.2rem)", color: "#f5f0f0", letterSpacing: "0.02em", marginBottom: "-0.05em" }}>
+              <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1.6rem, 3.2vw, 3.2rem)", color: "#f5f0f0", letterSpacing: "0.02em", marginBottom: "0.4rem" }}>
                 and that&apos;s a
               </div>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(5rem, 10vw, 10rem)", color: "#f5f0f0", lineHeight: 0.88 }}>
-                Wrap.
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(5rem, 10vw, 10rem)", color: "#f5f0f0", lineHeight: 1 }}>
+                Wrap!
               </div>
             </div>
           </div>
