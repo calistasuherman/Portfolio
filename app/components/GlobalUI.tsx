@@ -123,7 +123,7 @@ export default function NavHeader() {
           }}>
             {/* Track info */}
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-              <img src="/vinyl.png" alt="" style={{ width: "34px", height: "34px", borderRadius: "50%", animation: "vinylSpin 3s linear infinite", flexShrink: 0 }} />
+              <img src="/vinyl.png" alt="" style={{ width: "34px", height: "34px", objectFit: "contain", animation: "vinylSpin 3s linear infinite", flexShrink: 0 }} />
               <div style={{ overflow: "hidden" }}>
                 <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#f5f0f0", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Loving You</p>
                 <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.55rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.04em" }}>Michael Jackson</p>
@@ -167,7 +167,7 @@ export default function NavHeader() {
           <img
             src="/vinyl.png"
             alt="Vinyl"
-            style={{ width: "64px", height: "64px", borderRadius: "50%", animation: "vinylSpin 3s linear infinite" }}
+            style={{ width: "64px", height: "64px", objectFit: "contain", animation: "vinylSpin 3s linear infinite" }}
           />
         </button>
       </div>
