@@ -139,12 +139,12 @@ export default function WorkPage() {
   return (
     <>
       <main className="relative min-h-screen overflow-x-clip">
-        <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "120px", paddingBottom: "1rem" }}>
+        <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "72px", paddingBottom: "1rem" }}>
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <TrayNav />
             </Reveal>
-            <div style={{ height: "80px" }} />
+            <div style={{ height: "32px" }} />
 
             <Reveal delay={80}>
               <WorkSubsection id="cinematography" title={

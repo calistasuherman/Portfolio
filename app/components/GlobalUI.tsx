@@ -1,17 +1,27 @@
 "use client";
 import { useState, useEffect } from "react";
 
-/* ── Module-level audio singleton ─────────────────────────────
-   Lives outside React so it is NEVER destroyed on re-render
-   or page navigation. One instance for the entire session.
-──────────────────────────────────────────────────────────────── */
+/* ── Playlist ─────────────────────────────────────────────────── */
+const SONGS = [
+  { title: "The Girl Is Mine", artist: "Michael Jackson", src: "/mj-girl-is-mine.mp4" },
+  { title: "Song 5",           artist: "♪",               src: "/song5.mp4"           },
+  { title: "Song 6",           artist: "♪",               src: "/song6.mp4"           },
+  { title: "Song 7",           artist: "♪",               src: "/song7.mp4"           },
+  { title: "Song 8",           artist: "♪",               src: "/song8.mp4"           },
+  { title: "Song 9",           artist: "♪",               src: "/song9.mp4"           },
+];
+
+/* ── Module-level audio singleton ────────────────────────────────
+   Lives outside React — never destroyed on navigation/re-render.
+─────────────────────────────────────────────────────────────────── */
 let _audio: HTMLAudioElement | null = null;
+let _trackIndex = 0;
 
 function getAudio(): HTMLAudioElement | null {
   if (typeof window === "undefined") return null;
   if (!_audio) {
-    _audio = new Audio("/mj-girl-is-mine.mp4");
-    _audio.loop = true;
+    _audio = new Audio(SONGS[0].src);
+    _audio.loop = false;
   }
   return _audio;
 }
@@ -23,6 +33,7 @@ export default function GlobalUI() {
   const [playerOpen, setPlayerOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [trackIndex, setTrackIndex] = useState(0);
 
   /* cursor */
   useEffect(() => {
@@ -46,21 +57,38 @@ export default function GlobalUI() {
     return () => obs.disconnect();
   }, []);
 
-  /* audio listeners — attach once, survive re-renders */
+  /* audio event listeners */
   useEffect(() => {
     const audio = getAudio();
     if (!audio) return;
     const onTime = () => setProgress(audio.currentTime);
     const onMeta = () => setDuration(audio.duration);
+    const onEnded = () => skipTo(_trackIndex + 1);
     audio.addEventListener("timeupdate", onTime);
     audio.addEventListener("loadedmetadata", onMeta);
-    /* sync playing state in case audio was already running */
+    audio.addEventListener("ended", onEnded);
     setPlaying(!audio.paused);
     return () => {
       audio.removeEventListener("timeupdate", onTime);
       audio.removeEventListener("loadedmetadata", onMeta);
+      audio.removeEventListener("ended", onEnded);
     };
   }, []);
+
+  function skipTo(idx: number) {
+    const audio = getAudio();
+    if (!audio) return;
+    const next = ((idx % SONGS.length) + SONGS.length) % SONGS.length;
+    _trackIndex = next;
+    setTrackIndex(next);
+    setProgress(0);
+    setDuration(0);
+    audio.src = SONGS[next].src;
+    audio.load();
+    audio.play().catch(() => {});
+    setPlaying(true);
+    setPlayerOpen(true);
+  }
 
   function togglePlay() {
     const audio = getAudio();
@@ -103,6 +131,15 @@ export default function GlobalUI() {
     { label: "Contact", href: "/contact" },
   ];
 
+  const song = SONGS[trackIndex];
+
+  /* icon style reused for prev/next/play buttons */
+  const ctrlBtn: React.CSSProperties = {
+    background: "none", border: "none", cursor: "none",
+    padding: "4px", color: "#f5f0f0", flexShrink: 0,
+    display: "flex", alignItems: "center", justifyContent: "center",
+  };
+
   return (
     <>
       {/* Custom cursor */}
@@ -137,12 +174,12 @@ export default function GlobalUI() {
       </header>
 
       {/* Music player */}
-      <div style={{ position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 200, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.5rem" }}>
+      <div style={{ position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 200, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.6rem" }}>
 
         {/* Expanded player card */}
         <div style={{
           overflow: "hidden",
-          maxHeight: playerOpen ? "110px" : "0",
+          maxHeight: playerOpen ? "140px" : "0",
           opacity: playerOpen ? 1 : 0,
           transform: playerOpen ? "translateY(0) scale(1)" : "translateY(8px) scale(0.97)",
           transition: "max-height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease, transform 0.35s ease",
@@ -153,34 +190,44 @@ export default function GlobalUI() {
             border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "14px",
             padding: "12px 16px",
-            width: "240px",
+            width: "256px",
             boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
           }}>
+            {/* Track info row */}
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
               <img
                 src="/vinyl.png"
                 alt=""
-                style={{ width: "34px", height: "34px", objectFit: "contain", animation: "vinylSpin 3s linear infinite", flexShrink: 0 }}
+                style={{ width: "36px", height: "36px", objectFit: "contain", animation: "vinylSpin 3s linear infinite", flexShrink: 0 }}
               />
-              <div style={{ overflow: "hidden" }}>
-                <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#f5f0f0", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>The Girl Is Mine</p>
-                <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.55rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.04em" }}>Michael Jackson</p>
+              <div style={{ overflow: "hidden", flex: 1 }}>
+                <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#f5f0f0", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{song.title}</p>
+                <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.55rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.04em" }}>{song.artist}</p>
               </div>
-              <button
-                onClick={togglePlay}
-                style={{ marginLeft: "auto", background: "none", border: "none", cursor: "none", padding: "4px", color: "#f5f0f0", flexShrink: 0 }}
-              >
+            </div>
+
+            {/* Controls */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", marginBottom: "10px" }}>
+              {/* Prev */}
+              <button onClick={() => skipTo(trackIndex - 1)} style={ctrlBtn}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,5 9,12 19,19"/><rect x="5" y="5" width="2" height="14"/></svg>
+              </button>
+              {/* Play/Pause */}
+              <button onClick={togglePlay} style={{ ...ctrlBtn, width: "28px", height: "28px", borderRadius: "50%", background: "rgba(245,240,240,0.12)" }}>
                 {playing ? (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                 ) : (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
                 )}
               </button>
+              {/* Next */}
+              <button onClick={() => skipTo(trackIndex + 1)} style={ctrlBtn}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,5 15,12 5,19"/><rect x="17" y="5" width="2" height="14"/></svg>
+              </button>
             </div>
-            <div
-              onClick={seek}
-              style={{ width: "100%", height: "3px", background: "rgba(255,255,255,0.12)", borderRadius: "2px", cursor: "none", position: "relative" }}
-            >
+
+            {/* Progress bar */}
+            <div onClick={seek} style={{ width: "100%", height: "3px", background: "rgba(255,255,255,0.12)", borderRadius: "2px", cursor: "none" }}>
               <div style={{ height: "100%", background: "rgba(245,240,240,0.7)", borderRadius: "2px", width: duration ? `${(progress / duration) * 100}%` : "0%", transition: "width 0.5s linear" }} />
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px" }}>
@@ -190,27 +237,26 @@ export default function GlobalUI() {
           </div>
         </div>
 
-        {/* Vinyl / star button */}
+        {/* Spinning star / vinyl button — 2× size = 128px */}
         <button
           onClick={handleVinylClick}
           aria-label="Toggle music player"
           style={{
-            width: "64px", height: "64px",
-            border: "none",
-            background: "transparent",
+            width: "128px", height: "128px",
+            border: "none", background: "transparent",
             display: "flex", alignItems: "center", justifyContent: "center",
             cursor: "none", padding: 0,
             transition: "transform 0.2s ease",
-            transform: playerOpen ? "scale(1.08)" : "scale(1)",
+            transform: playerOpen ? "scale(1.05)" : "scale(1)",
             filter: playing
-              ? "drop-shadow(0 0 10px rgba(139,0,0,0.6))"
-              : "drop-shadow(0 4px 12px rgba(0,0,0,0.6))",
+              ? "drop-shadow(0 0 14px rgba(139,0,0,0.65))"
+              : "drop-shadow(0 4px 16px rgba(0,0,0,0.65))",
           }}
         >
           <img
             src="/vinyl.png"
-            alt="Vinyl"
-            style={{ width: "64px", height: "64px", objectFit: "contain", animation: "vinylSpin 3s linear infinite" }}
+            alt="Music player"
+            style={{ width: "128px", height: "128px", objectFit: "contain", animation: "vinylSpin 3s linear infinite" }}
           />
         </button>
       </div>
