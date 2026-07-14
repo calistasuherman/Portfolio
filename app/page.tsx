@@ -290,6 +290,15 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Love language quote ── */}
+        <section className="relative py-10 px-6 overflow-hidden">
+          <Reveal>
+            <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(0.95rem, 2vw, 1.55rem)", color: "rgba(245,240,240,0.35)", letterSpacing: "0.38em", textTransform: "uppercase", textAlign: "center", wordSpacing: "0.6em" }}>
+              Video&nbsp; &nbsp;editing&nbsp; &nbsp;&amp;&nbsp; &nbsp;videography&nbsp; &nbsp;is&nbsp; &nbsp;my&nbsp; &nbsp;love&nbsp; &nbsp;language.
+            </p>
+          </Reveal>
+        </section>
+
         {/* ── Signature Services ── */}
         <section id="trusted" className="relative px-6 md:px-16 lg:px-32" style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: "7rem", paddingBottom: "6rem", scrollMarginTop: "0" }}>
           <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
@@ -469,70 +478,46 @@ export default function Home() {
 
         {/* ── Footer ── */}
         <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
-          <p className="font-inter text-[10px] uppercase tracking-[0.3em] text-text-muted opacity-40">
-            © 2026 CAL1STAR — Calista Suherman
+          <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
+            made with love — calista suherman
           </p>
         </footer>
 
-        {/* ── Spotify vinyl widget ── */}
-        <div style={{ position: "fixed", bottom: "1.8rem", left: "1.8rem", zIndex: 200, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}>
-
-          {/* Compact player — slides up behind vinyl */}
+        {/* ── Spotify widget ── */}
+        <div style={{ position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 200, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.6rem" }}>
           <div style={{
-            overflow: "hidden",
-            borderRadius: "14px",
-            width: "280px",
+            overflow: "hidden", borderRadius: "12px",
             maxHeight: spotifyOpen ? "80px" : "0",
             opacity: spotifyOpen ? 1 : 0,
-            transform: spotifyOpen ? "translateY(0) scale(1)" : "translateY(12px) scale(0.97)",
-            transition: "max-height 0.45s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1)",
-            boxShadow: "0 12px 40px rgba(0,0,0,0.65)",
+            transform: spotifyOpen ? "translateY(0)" : "translateY(10px)",
+            transition: "max-height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease, transform 0.35s ease",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.55)",
           }}>
             <iframe
               src="https://open.spotify.com/embed/artist/0du5cEVh5yTK9QJze8zA0C?utm_source=generator&theme=0"
-              width="280"
-              height="80"
-              frameBorder="0"
+              width="300" height="80" frameBorder="0"
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
-              style={{ display: "block", borderRadius: "14px" }}
+              style={{ display: "block", borderRadius: "12px" }}
             />
           </div>
-
-          {/* Vinyl record */}
           <button
             onClick={() => setSpotifyOpen(o => !o)}
             aria-label="Toggle Spotify player"
             style={{
-              width: "72px", height: "72px", borderRadius: "50%", border: "none", padding: 0,
-              cursor: "none", position: "relative", flexShrink: 0,
-              animation: `vinylSpin ${spotifyOpen ? "3s" : "18s"} linear infinite`,
-              boxShadow: spotifyOpen
-                ? "0 0 0 3px rgba(29,185,84,0.5), 0 8px 32px rgba(0,0,0,0.7)"
-                : "0 4px 20px rgba(0,0,0,0.6)",
-              transition: "box-shadow 0.4s ease",
-              background: [
-                "radial-gradient(circle, #111 0%, #111 8%,",          // hole
-                "#c0392b 8%, #a93226 34%,",                            // red label
-                "#1a1a1a 34%, #1a1a1a 36%,",                          // groove gap
-                "#222 36%, #1c1c1c 40%,",
-                "#1a1a1a 40%, #222 46%,",
-                "#1c1c1c 46%, #1a1a1a 52%,",
-                "#222 52%, #1c1c1c 58%,",
-                "#1a1a1a 58%, #222 64%,",
-                "#1c1c1c 64%, #1a1a1a 72%,",
-                "#222 72%, #1c1c1c 80%,",
-                "#1a1a1a 80%, #1a1a1a 100%)",
-              ].join(" "),
+              width: "42px", height: "42px", borderRadius: "50%", border: "1.5px solid rgba(29,185,84,0.55)",
+              background: spotifyOpen ? "#1DB954" : "rgba(15,15,15,0.82)",
+              backdropFilter: "blur(14px)", display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "none",
+              transition: "background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease",
+              boxShadow: spotifyOpen ? "0 0 18px rgba(29,185,84,0.4)" : "0 4px 14px rgba(0,0,0,0.45)",
+              transform: spotifyOpen ? "scale(1.07)" : "scale(1)",
             }}
           >
-            {/* Shine highlight */}
-            <div style={{
-              position: "absolute", inset: 0, borderRadius: "50%", pointerEvents: "none",
-              background: "radial-gradient(ellipse at 35% 30%, rgba(255,255,255,0.12) 0%, transparent 55%)",
-            }} />
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 11-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.72a.779.779 0 01-1.072.256c-2.687-1.652-6.785-2.131-9.965-1.166a.778.778 0 01-.973-.519.781.781 0 01.52-.972c3.632-1.102 8.147-.568 11.234 1.329a.78.78 0 01.256 1.072zm.105-2.83C14.692 8.95 9.375 8.775 6.297 9.71a.937.937 0 11-.543-1.794c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 01-.955 1.62z" fill={spotifyOpen ? "#000" : "#1DB954"}/>
+            </svg>
           </button>
-
         </div>
 
       </main>
