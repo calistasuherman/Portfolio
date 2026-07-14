@@ -33,12 +33,12 @@ export default function ContactPage() {
                 {/* Text overlaid on note */}
                 <div style={{
                   position: "absolute",
-                  top: "38%", left: "50%",
+                  top: "38%", left: "46%",
                   transform: "translateX(-50%)",
-                  width: "75%",
+                  width: "80%",
                   textAlign: "center",
                 }}>
-                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.2rem, 3.4vw, 3.8rem)", color: "#960018", lineHeight: 1, marginBottom: "2.5rem" }}>
+                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.6rem, 4vw, 4.5rem)", color: "#960018", lineHeight: 1, marginBottom: "4rem" }}>
                     Contact me
                   </p>
                   <a
