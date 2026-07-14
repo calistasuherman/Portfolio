@@ -144,6 +144,18 @@ export default function Home() {
               <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "3.5rem", paddingLeft: "1.5rem", lineHeight: 1.85, maxWidth: "34ch" }}>
                 Hey there! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
               </p>
+              <div className="font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.45rem 2rem" }}>
+                {[
+                  { label: "Content Creator",    bold: false },
+                  { label: "Gen Z (21 Y/O)",     bold: true  },
+                  { label: "Coffee Connoisseur", bold: true  },
+                  { label: "Fashion Lover",      bold: false },
+                  { label: "Frequent Traveler",  bold: false },
+                  { label: "SF Based",           bold: true  },
+                ].map(({ label, bold }) => (
+                  <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: bold ? 700 : 400 }}>{label}</p>
+                ))}
+              </div>
             </Reveal>
 
             <div className="order-2 flex justify-center" style={{ marginTop: "2rem" }}>
