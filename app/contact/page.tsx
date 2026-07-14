@@ -28,7 +28,7 @@ export default function ContactPage() {
           {/* Left — note image */}
           <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-start" }}>
             <div style={{ transformOrigin: "top center", animation: "noteSwing 4s ease-in-out infinite", display: "inline-block", position: "relative" }}>
-              <div style={{ position: "relative", width: "clamp(440px, 48vw, 680px)" }}>
+              <div style={{ position: "relative", width: "clamp(500px, 54vw, 760px)" }}>
                 <img src="/note.png" alt="" style={{ width: "100%", display: "block" }} />
                 {/* Text overlaid on note */}
                 <div style={{
@@ -38,7 +38,7 @@ export default function ContactPage() {
                   width: "75%",
                   textAlign: "center",
                 }}>
-                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.8rem, 2.8vw, 3rem)", color: "#960018", lineHeight: 1, marginBottom: "1.4rem" }}>
+                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.2rem, 3.4vw, 3.8rem)", color: "#960018", lineHeight: 1, marginBottom: "2.5rem" }}>
                     Contact me
                   </p>
                   <a
