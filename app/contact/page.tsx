@@ -21,14 +21,13 @@ export default function ContactPage() {
             alignItems: "flex-start",
             justifyContent: "space-between",
             gap: "2rem",
-            padding: "5rem clamp(2rem, 8vw, 8rem)",
-            paddingTop: "calc(80px + 3rem)",
+            padding: "5rem clamp(1rem, 4vw, 4rem)",
+            paddingTop: "calc(80px + 1rem)",
           }}
         >
-          {/* Left / center — note image */}
-          <div style={{ flex: 3, display: "flex", justifyContent: "center", alignItems: "center" }}>
+          {/* Left — note image */}
+          <div style={{ flex: 3, display: "flex", justifyContent: "flex-start", alignItems: "flex-start" }}>
             <div style={{ transformOrigin: "top center", animation: "noteSwing 4s ease-in-out infinite", display: "inline-block", position: "relative" }}>
-              {/* note.png as background card */}
               <div style={{ position: "relative", width: "clamp(700px, 75vw, 1100px)" }}>
                 <img src="/note.png" alt="" style={{ width: "100%", display: "block" }} />
                 {/* Text overlaid on note */}
@@ -71,7 +70,7 @@ export default function ContactPage() {
           </div>
 
           {/* Right — "and that's a Wrap" */}
-          <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "flex-start", paddingTop: "2rem" }}>
+          <div style={{ flex: 1, display: "flex", justifyContent: "flex-start", alignItems: "flex-start", paddingTop: "2rem" }}>
             <div style={{ textAlign: "left" }}>
               <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1.2rem, 2vw, 2rem)", color: "#f5f0f0", letterSpacing: "0.02em", marginBottom: "0.4rem" }}>
                 and that&apos;s a
