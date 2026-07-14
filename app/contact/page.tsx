@@ -28,12 +28,12 @@ export default function ContactPage() {
           {/* Left — note image */}
           <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-start" }}>
             <div style={{ transformOrigin: "top center", animation: "noteSwing 4s ease-in-out infinite", display: "inline-block", position: "relative" }}>
-              <div style={{ position: "relative", width: "clamp(380px, 42vw, 600px)" }}>
+              <div style={{ position: "relative", width: "clamp(440px, 48vw, 680px)" }}>
                 <img src="/note.png" alt="" style={{ width: "100%", display: "block" }} />
                 {/* Text overlaid on note */}
                 <div style={{
                   position: "absolute",
-                  top: "32%", left: "50%",
+                  top: "38%", left: "50%",
                   transform: "translateX(-50%)",
                   width: "75%",
                   textAlign: "center",
