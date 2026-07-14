@@ -28,7 +28,7 @@ export default function ContactPage() {
           {/* Left — note image */}
           <div style={{ flex: 3, display: "flex", justifyContent: "flex-start", alignItems: "flex-start" }}>
             <div style={{ transformOrigin: "top center", animation: "noteSwing 4s ease-in-out infinite", display: "inline-block", position: "relative" }}>
-              <div style={{ position: "relative", width: "clamp(700px, 75vw, 1100px)" }}>
+              <div style={{ position: "relative", width: "clamp(350px, 38vw, 550px)" }}>
                 <img src="/note.png" alt="" style={{ width: "100%", display: "block" }} />
                 {/* Text overlaid on note */}
                 <div style={{
@@ -38,12 +38,12 @@ export default function ContactPage() {
                   width: "75%",
                   textAlign: "center",
                 }}>
-                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(3.5rem, 5.5vw, 6rem)", color: "#960018", lineHeight: 1, marginBottom: "1.4rem" }}>
+                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.8rem, 2.8vw, 3rem)", color: "#960018", lineHeight: 1, marginBottom: "1.4rem" }}>
                     Contact me
                   </p>
                   <a
                     href="mailto:cal1starcollab@gmail.com"
-                    style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(1rem, 1.8vw, 1.6rem)", letterSpacing: "0.03em", color: "#1a1a1a", textDecoration: "none", display: "block", marginBottom: "1.1rem" }}
+                    style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 0.9vw, 0.82rem)", letterSpacing: "0.03em", color: "#1a1a1a", textDecoration: "none", display: "block", marginBottom: "1.1rem" }}
                   >
                     cal1starcollab@gmail.com
                   </a>
@@ -58,7 +58,7 @@ export default function ContactPage() {
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.75rem, 1.2vw, 1.1rem)", letterSpacing: "0.08em", color: "#1a1a1a", textDecoration: "none" }}
+                        style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.45rem, 0.7vw, 0.65rem)", letterSpacing: "0.08em", color: "#1a1a1a", textDecoration: "none" }}
                       >
                         {label}
                       </a>
