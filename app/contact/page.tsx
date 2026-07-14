@@ -60,11 +60,14 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Right — car photo */}
+            {/* Right — car video */}
             <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <img
-                src="/car.jpg"
-                alt=""
+              <video
+                src="/car.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
                 style={{ display: "block", height: "clamp(320px, 55vh, 580px)", width: "auto", objectFit: "contain", borderRadius: "2px" }}
               />
             </div>
