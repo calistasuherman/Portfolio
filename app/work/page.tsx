@@ -190,8 +190,8 @@ function WorkSubsection({ id, title, children, noBottomMargin }: { id?: string; 
 }
 
 /* ── VideoCard ── */
-function VideoCard({ label, src, staggerDelay = 0, square = false }: {
-  label: string; src: string; staggerDelay?: number; square?: boolean;
+function VideoCard({ label, src, staggerDelay = 0, square = false, fill = false }: {
+  label: string; src: string; staggerDelay?: number; square?: boolean; fill?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -208,7 +208,7 @@ function VideoCard({ label, src, staggerDelay = 0, square = false }: {
   return (
     <div
       className="work-card group relative overflow-hidden rounded-lg cursor-pointer"
-      style={{ aspectRatio: square ? "1/1" : "16/9", border: "1px solid rgba(139,0,0,0.2)", transitionDelay: `${staggerDelay}ms` }}
+      style={{ ...(fill ? { width: "100%", height: "100%" } : { aspectRatio: square ? "1/1" : "16/9" }), border: "1px solid rgba(139,0,0,0.2)", transitionDelay: `${staggerDelay}ms` }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -223,6 +223,51 @@ function VideoCard({ label, src, staggerDelay = 0, square = false }: {
         {label && <span className="font-inter text-[10px] uppercase tracking-widest text-text-primary">{label}</span>}
       </div>
       <div className="absolute inset-0 transition-opacity duration-300" style={{ opacity: hovered ? 1 : 0, background: "rgba(139,0,0,0.12)" }} />
+    </div>
+  );
+}
+
+/* ── ScrollRow — horizontal position driven by scroll progress ── */
+function CinemaRow() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const rowRef     = useRef<HTMLDivElement>(null);
+  const [tx, setTx] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const rect     = section.getBoundingClientRect();
+      const winH     = window.innerHeight;
+      // progress 0 → 1 as section travels from entering bottom of screen to leaving top
+      const progress = 1 - rect.top / (winH + rect.height);
+      const clamped  = Math.max(0, Math.min(1, progress));
+      // row shifts up to 520px to the right
+      setTx(clamped * 520);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const clips = ["/edit1.mp4", "/edit11.mp4", "/sd.mp4", "/icedbananalatte.mp4", "/temple.mov", "/walking.mp4", "/running.mp4", "/colorgrading.mp4"];
+
+  return (
+    <div ref={sectionRef} style={{ overflow: "hidden", marginLeft: "-2rem", marginRight: "-2rem", paddingLeft: "2rem" }}>
+      <div
+        ref={rowRef}
+        style={{
+          display: "flex", gap: "16px", flexWrap: "nowrap",
+          transform: `translateX(${tx}px)`,
+          willChange: "transform",
+        }}
+      >
+        {clips.map((src, i) => (
+          <div key={src} style={{ flexShrink: 0, width: "clamp(300px, 32vw, 520px)", aspectRatio: "16/9", borderRadius: "8px", overflow: "hidden", border: "1px solid rgba(139,0,0,0.2)" }}>
+            <VideoCard label="" src={src} staggerDelay={i * 40} fill />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -245,16 +290,7 @@ export default function WorkPage() {
                 <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>inematography</span>
               </div>
             }>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                <VideoCard label="" src="/edit1.mp4"           staggerDelay={0}   square={false} />
-                <VideoCard label="" src="/edit11.mp4"          staggerDelay={40}  square={false} />
-                <VideoCard label="" src="/sd.mp4"              staggerDelay={80}  square={false} />
-                <VideoCard label="" src="/icedbananalatte.mp4" staggerDelay={160} square={false} />
-                <VideoCard label="" src="/temple.mov"          staggerDelay={200} square={false} />
-                <VideoCard label="" src="/walking.mp4"         staggerDelay={240} square={false} />
-                <VideoCard label="" src="/running.mp4"         staggerDelay={280} square={false} />
-                <VideoCard label="" src="/colorgrading.mp4"    staggerDelay={320} square={false} />
-              </div>
+              <CinemaRow />
             </WorkSubsection>
           </Reveal>
 

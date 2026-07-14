@@ -6,7 +6,7 @@ const SONGS = [
   { title: "The Girl Is Mine",                  artist: "Michael Jackson", src: "/mj-girl-is-mine.mp4" },
   { title: "The Lady in My Life",               artist: "Michael Jackson", src: "/song5.mp4"           },
   { title: "(I Like) The Way You Love Me",      artist: "Michael Jackson", src: "/song6.mp4"           },
-  { title: "Is Loving You",                     artist: "Michael Jackson", src: "/4.mp4"               },
+  { title: "Loving You",                         artist: "Michael Jackson", src: "/4.mp4"               },
   { title: "The Girl Is Mine ft. Paul McCartney", artist: "Michael Jackson", src: "/song8.mp4"         },
   { title: "You Rock My World",                 artist: "Michael Jackson", src: "/song9.mp4"           },
 ];
