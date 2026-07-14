@@ -26,7 +26,7 @@ export default function ContactPage() {
           }}
         >
           {/* Left — note image */}
-          <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-start" }}>
+          <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-start", marginLeft: "-4rem" }}>
             <div style={{ transformOrigin: "top center", animation: "noteSwing 4s ease-in-out infinite", display: "inline-block", position: "relative" }}>
               <div style={{ position: "relative", width: "clamp(500px, 54vw, 760px)" }}>
                 <img src="/note.png" alt="" style={{ width: "100%", display: "block" }} />
@@ -43,7 +43,7 @@ export default function ContactPage() {
                   </p>
                   <a
                     href="mailto:cal1starcollab@gmail.com"
-                    style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 0.9vw, 0.82rem)", letterSpacing: "0.03em", color: "#1a1a1a", textDecoration: "none", display: "block", marginBottom: "1.1rem" }}
+                    style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.75rem, 1.2vw, 1.1rem)", letterSpacing: "0.03em", color: "#1a1a1a", textDecoration: "none", display: "block", marginBottom: "1.1rem" }}
                   >
                     cal1starcollab@gmail.com
                   </a>
@@ -58,7 +58,7 @@ export default function ContactPage() {
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.45rem, 0.7vw, 0.65rem)", letterSpacing: "0.08em", color: "#1a1a1a", textDecoration: "none" }}
+                        style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 1vw, 0.9rem)", letterSpacing: "0.08em", color: "#1a1a1a", textDecoration: "none" }}
                       >
                         {label}
                       </a>
@@ -75,7 +75,7 @@ export default function ContactPage() {
               <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1.2rem, 2vw, 2rem)", color: "#f5f0f0", letterSpacing: "0.02em", marginBottom: "0.4rem" }}>
                 and that&apos;s a
               </div>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(4rem, 7vw, 7rem)", color: "#f5f0f0", lineHeight: 1 }}>
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(6rem, 10vw, 10rem)", color: "#f5f0f0", lineHeight: 1 }}>
                 Wrap
               </div>
             </div>
