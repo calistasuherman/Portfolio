@@ -142,23 +142,24 @@ export default function Home() {
                 </h2>
               </div>
               <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "3.5rem", paddingLeft: "1.5rem" }}>
-                <p style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400 }}>Content Creator</p>
-                {/* Swinging notepad */}
-                <div style={{ marginTop: "1rem", marginBottom: "0.5rem", display: "flex" }}>
+                {/* Content Creator + swinging notepad side by side */}
+                <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+                  <p style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, flexShrink: 0 }}>Content Creator</p>
+                  {/* Swinging notepad */}
                   <div style={{ transformOrigin: "top center", animation: "noteSwing 4s ease-in-out infinite", display: "inline-block" }}>
                     {/* Tape */}
-                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "-6px", position: "relative", zIndex: 2 }}>
-                      <div style={{ width: "52px", height: "18px", background: "rgba(160,155,148,0.55)", backdropFilter: "blur(2px)", borderRadius: "2px", boxShadow: "inset 0 1px 2px rgba(0,0,0,0.08)" }} />
+                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "-8px", position: "relative", zIndex: 2 }}>
+                      <div style={{ width: "72px", height: "26px", background: "rgba(155,150,143,0.52)", borderRadius: "2px", boxShadow: "inset 0 1px 3px rgba(0,0,0,0.1)" }} />
                     </div>
                     {/* Note card */}
-                    <div style={{ background: "#e8e4dc", borderRadius: "2px", padding: "1.1rem 1.4rem 1.2rem", width: "160px", boxShadow: "0 4px 18px rgba(0,0,0,0.28), inset 0 0 0 1px rgba(255,255,255,0.25)", position: "relative" }}>
-                      <div style={{ marginBottom: "0.9rem" }}>
-                        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", letterSpacing: "0.12em", color: "#2a2a2a", fontWeight: 700, textTransform: "uppercase", marginBottom: "0.15rem" }}>4K+ FOLLOWERS</p>
-                        <a href="https://instagram.com/cal1star" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "BillaMount, cursive", fontSize: "1.35rem", color: "#1a1a1a", textDecoration: "none", lineHeight: 1, display: "block" }}>Instagram</a>
+                    <div style={{ background: "#eae6de", borderRadius: "2px", padding: "1.6rem 2rem 1.8rem", width: "220px", boxShadow: "0 6px 24px rgba(0,0,0,0.32), inset 0 0 0 1px rgba(255,255,255,0.2)", textAlign: "center" }}>
+                      <div style={{ marginBottom: "1.2rem" }}>
+                        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.14em", color: "#2a2a2a", fontWeight: 700, textTransform: "uppercase", marginBottom: "0.2rem" }}>4K+ FOLLOWERS</p>
+                        <a href="https://instagram.com/cal1star" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "BillaMount, cursive", fontSize: "1.9rem", color: "#1a1a1a", textDecoration: "none", lineHeight: 1.1, display: "block" }}>Instagram</a>
                       </div>
                       <div>
-                        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", letterSpacing: "0.12em", color: "#2a2a2a", fontWeight: 700, textTransform: "uppercase", marginBottom: "0.15rem" }}>4K+ SUBSCRIBERS</p>
-                        <a href="https://www.youtube.com/@cal1stvr" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "BillaMount, cursive", fontSize: "1.35rem", color: "#1a1a1a", textDecoration: "none", lineHeight: 1, display: "block" }}>Youtube</a>
+                        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.14em", color: "#2a2a2a", fontWeight: 700, textTransform: "uppercase", marginBottom: "0.2rem" }}>4K+ SUBSCRIBERS</p>
+                        <a href="https://www.youtube.com/@cal1stvr" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "BillaMount, cursive", fontSize: "1.9rem", color: "#1a1a1a", textDecoration: "none", lineHeight: 1.1, display: "block" }}>Youtube</a>
                       </div>
                     </div>
                   </div>
