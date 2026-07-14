@@ -18,22 +18,22 @@ export default function ContactPage() {
             zIndex: 2,
             minHeight: "100vh",
             display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-            gap: "2rem",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "3rem",
             padding: "5rem clamp(1rem, 4vw, 4rem)",
             paddingTop: "calc(80px + 1rem)",
           }}
         >
           {/* Left — note image */}
-          <div style={{ flex: 3, display: "flex", justifyContent: "flex-start", alignItems: "flex-start" }}>
+          <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-start" }}>
             <div style={{ transformOrigin: "top center", animation: "noteSwing 4s ease-in-out infinite", display: "inline-block", position: "relative" }}>
-              <div style={{ position: "relative", width: "clamp(350px, 38vw, 550px)" }}>
+              <div style={{ position: "relative", width: "clamp(380px, 42vw, 600px)" }}>
                 <img src="/note.png" alt="" style={{ width: "100%", display: "block" }} />
                 {/* Text overlaid on note */}
                 <div style={{
                   position: "absolute",
-                  top: "28%", left: "50%",
+                  top: "32%", left: "50%",
                   transform: "translateX(-50%)",
                   width: "75%",
                   textAlign: "center",
@@ -70,7 +70,7 @@ export default function ContactPage() {
           </div>
 
           {/* Right — "and that's a Wrap" */}
-          <div style={{ flex: 1, display: "flex", justifyContent: "flex-start", alignItems: "flex-start", paddingTop: "2rem" }}>
+          <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start", paddingTop: "2rem" }}>
             <div style={{ textAlign: "left" }}>
               <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1.2rem, 2vw, 2rem)", color: "#f5f0f0", letterSpacing: "0.02em", marginBottom: "0.4rem" }}>
                 and that&apos;s a
