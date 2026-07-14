@@ -227,44 +227,22 @@ function VideoCard({ label, src, staggerDelay = 0, square = false, fill = false 
   );
 }
 
-/* ── ScrollRow — horizontal position driven by scroll progress ── */
+/* ── CinemaRow — slow continuous rightward drift ── */
 function CinemaRow() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const rowRef     = useRef<HTMLDivElement>(null);
-  const [tx, setTx] = useState(0);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const section = sectionRef.current;
-      if (!section) return;
-      const rect     = section.getBoundingClientRect();
-      const winH     = window.innerHeight;
-      // progress 0 → 1 as section travels from entering bottom of screen to leaving top
-      const progress = 1 - rect.top / (winH + rect.height);
-      const clamped  = Math.max(0, Math.min(1, progress));
-      // row shifts up to 520px to the right
-      setTx(clamped * 520);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   const clips = ["/edit1.mp4", "/edit11.mp4", "/sd.mp4", "/icedbananalatte.mp4", "/temple.mov", "/walking.mp4", "/running.mp4", "/colorgrading.mp4"];
+  // Duplicate for seamless loop
+  const all = [...clips, ...clips];
 
   return (
-    <div ref={sectionRef} style={{ overflow: "hidden", marginLeft: "-2rem", marginRight: "-2rem", paddingLeft: "2rem" }}>
-      <div
-        ref={rowRef}
-        style={{
-          display: "flex", gap: "16px", flexWrap: "nowrap",
-          transform: `translateX(${tx}px)`,
-          willChange: "transform",
-        }}
-      >
-        {clips.map((src, i) => (
-          <div key={src} style={{ flexShrink: 0, width: "clamp(300px, 32vw, 520px)", aspectRatio: "16/9", borderRadius: "8px", overflow: "hidden", border: "1px solid rgba(139,0,0,0.2)" }}>
-            <VideoCard label="" src={src} staggerDelay={i * 40} fill />
+    <div style={{ overflow: "hidden", marginLeft: "-2rem", marginRight: "-2rem" }}>
+      <div style={{
+        display: "flex", gap: "16px", flexWrap: "nowrap",
+        animation: "cinemaSlideRight 40s linear infinite",
+        willChange: "transform",
+      }}>
+        {all.map((src, i) => (
+          <div key={i} style={{ flexShrink: 0, width: "clamp(300px, 32vw, 520px)", aspectRatio: "16/9", borderRadius: "8px", overflow: "hidden", border: "1px solid rgba(139,0,0,0.2)" }}>
+            <VideoCard label="" src={src} fill />
           </div>
         ))}
       </div>

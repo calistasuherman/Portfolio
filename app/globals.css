@@ -145,6 +145,11 @@ body::after {
   100% { transform: rotate(-2.5deg); }
 }
 
+@keyframes cinemaSlideRight {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0%); }
+}
+
 .marquee-track {
   animation: marquee 28s linear infinite;
   will-change: transform;

@@ -68,7 +68,7 @@ export default function ContactPage() {
                 loop
                 muted
                 playsInline
-                style={{ display: "block", height: "clamp(320px, 55vh, 580px)", width: "auto", objectFit: "contain", borderRadius: "2px" }}
+                style={{ display: "block", height: "clamp(320px, 55vh, 580px)", width: "auto", objectFit: "contain", borderRadius: "16px" }}
               />
             </div>
           </div>
