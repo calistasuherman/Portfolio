@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 /* ── Playlist ─────────────────────────────────────────────────── */
 const SONGS = [
@@ -34,6 +34,19 @@ export default function GlobalUI() {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [trackIndex, setTrackIndex] = useState(0);
+  const playerRef = useRef<HTMLDivElement>(null);
+
+  /* click outside player → close popup */
+  useEffect(() => {
+    if (!playerOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (playerRef.current && !playerRef.current.contains(e.target as Node)) {
+        setPlayerOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [playerOpen]);
 
   /* cursor */
   useEffect(() => {
@@ -174,7 +187,7 @@ export default function GlobalUI() {
       </header>
 
       {/* Music player */}
-      <div style={{ position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 200, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.6rem" }}>
+      <div ref={playerRef} style={{ position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 200, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.6rem" }}>
 
         {/* Expanded player card */}
         <div style={{

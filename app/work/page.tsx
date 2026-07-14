@@ -11,28 +11,77 @@ const youtubeIntegrations = [
   { label: "BypassGPT",   src: "/bypassgpt.mp4"   },
 ];
 
-/* ── TrayItem ── */
+/* ── Draggable TrayItem ─────────────────────────────────────── */
 function TrayItem({
-  href, src, alt, label, style, rotate = 0, labelTop = "45%", labelLeft = "50%", decorative = false,
+  src, alt, label, style, rotate = 0, labelTop = "45%", labelLeft = "50%",
 }: {
-  href?: string; src: string; alt: string; label?: string;
+  src: string; alt: string; label?: string;
   style: React.CSSProperties; rotate?: number;
-  labelTop?: string; labelLeft?: string; decorative?: boolean;
+  labelTop?: string; labelLeft?: string;
 }) {
   const [hovered, setHovered] = useState(false);
-  const inner = (
+  const [freed, setFreed]     = useState(false);
+  const [pos, setPos]         = useState({ x: 0, y: 0 });
+  const [freedW, setFreedW]   = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const anchorRef  = useRef<HTMLDivElement>(null);
+  const offsetRef  = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (!dragging) return;
+    const onMove = (e: MouseEvent) => {
+      setPos({ x: e.clientX - offsetRef.current.x, y: e.clientY - offsetRef.current.y });
+    };
+    const onUp = () => setDragging(false);
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup",  onUp);
+    return () => {
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseup",  onUp);
+    };
+  }, [dragging]);
+
+  function onMouseDown(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!freed) {
+      const el = anchorRef.current;
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        offsetRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+        setFreedW(rect.width);
+        setPos({ x: rect.left, y: rect.top });
+        setFreed(true);
+      }
+    } else {
+      offsetRef.current = { x: e.clientX - pos.x, y: e.clientY - pos.y };
+    }
+    setDragging(true);
+  }
+
+  const content = (
     <div
-      style={{ position: "relative", display: "inline-block", cursor: decorative ? "default" : "pointer", pointerEvents: "auto" }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onMouseDown={onMouseDown}
+      style={{
+        position: "relative", display: "inline-block",
+        cursor: dragging ? "grabbing" : "grab",
+        userSelect: "none", pointerEvents: "auto",
+        width: "100%",
+      }}
     >
       <img
-        src={src} alt={alt}
+        src={src} alt={alt} draggable={false}
         style={{
           width: "100%", objectFit: "contain", display: "block",
-          transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), filter 0.35s ease",
-          transform: hovered ? `rotate(${rotate}deg) translateY(-10px) scale(1.08)` : `rotate(${rotate}deg)`,
-          filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
+          transition: dragging ? "none" : "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), filter 0.35s ease",
+          transform: hovered && !dragging
+            ? `rotate(${rotate}deg) translateY(-10px) scale(1.08)`
+            : `rotate(${rotate}deg)`,
+          filter: hovered
+            ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))"
+            : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
         }}
       />
       {label && (
@@ -50,9 +99,26 @@ function TrayItem({
       )}
     </div>
   );
+
+  if (freed) {
+    return (
+      <>
+        {/* invisible ghost keeps tray layout intact */}
+        <div ref={anchorRef} style={{ ...style, opacity: 0, pointerEvents: "none" }} />
+        {/* floating element at viewport coords */}
+        <div style={{
+          position: "fixed", left: pos.x, top: pos.y,
+          width: freedW, zIndex: 500, pointerEvents: "none",
+        }}>
+          <div style={{ pointerEvents: "auto" }}>{content}</div>
+        </div>
+      </>
+    );
+  }
+
   return (
-    <div style={{ ...style, pointerEvents: "none" }}>
-      {href ? <a href={href} style={{ pointerEvents: "auto", display: "inline-block" }}>{inner}</a> : inner}
+    <div ref={anchorRef} style={{ ...style, pointerEvents: "none" }}>
+      <div style={{ pointerEvents: "auto" }}>{content}</div>
     </div>
   );
 }
@@ -60,9 +126,11 @@ function TrayItem({
 /* ── TrayNav ── */
 function TrayNav() {
   return (
-    <div style={{ width: "100%" }}>
-      <div className="relative">
+    <div style={{ width: "100%", position: "relative" }}>
+      <div className="relative" style={{ marginTop: "-1.5rem" }}>
         <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))" }} />
+
+        {/* Title */}
         <div style={{ position: "absolute", left: "3%", top: "8%", zIndex: 4 }}>
           <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.2rem, 2.4vw, 2.6rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: "normal", letterSpacing: "0.15em" }}>
             WHAT&nbsp;&nbsp;&nbsp;I
@@ -75,12 +143,26 @@ function TrayNav() {
             Table
           </p>
         </div>
-        <TrayItem href="#cinematography" src="/tray-croissant.png" alt="Cinematography" label="cinematography" rotate={-10}
+
+        {/* Food elements — draggable */}
+        <TrayItem src="/tray-croissant.png" alt="Cinematography" label="cinematography" rotate={-10}
           style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }} />
-        <TrayItem href="#youtube-integrations" src="/tray-figs.png" alt="YouTube Integrations" label="youtube integrations"
+        <TrayItem src="/tray-figs.png" alt="YouTube Integrations" label="youtube integrations"
           style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }} />
-        <TrayItem href="#video-editing" src="/tray-coffee.png" alt="Video Editing" label="video editing" labelTop="40%"
+        <TrayItem src="/tray-coffee.png" alt="Video Editing" label="video editing" labelTop="40%"
           style={{ position: "absolute", left: "59%", top: "34%", transform: "translate(-50%, -50%)", zIndex: 2, width: "40%" }} />
+
+        {/* "click me" hint */}
+        <p style={{
+          position: "absolute", right: "-4rem", top: "50%",
+          transform: "translateY(-50%) rotate(90deg)",
+          fontFamily: "var(--font-inter)", fontSize: "0.52rem",
+          letterSpacing: "0.22em", textTransform: "uppercase",
+          color: "rgba(245,240,240,0.38)", whiteSpace: "nowrap",
+          zIndex: 10, pointerEvents: "none",
+        }}>
+          click me
+        </p>
       </div>
     </div>
   );
@@ -137,91 +219,89 @@ function VideoCard({ label, src, staggerDelay = 0, square = false }: {
 /* ── Page ── */
 export default function WorkPage() {
   return (
-    <>
-      <main className="relative min-h-screen overflow-x-clip">
-        <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "72px", paddingBottom: "1rem" }}>
-          <div className="max-w-6xl mx-auto">
-            <Reveal>
-              <TrayNav />
-            </Reveal>
-            <div style={{ height: "32px" }} />
+    <main className="relative min-h-screen overflow-x-clip">
+      <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "60px", paddingBottom: "1rem" }}>
+        <div className="max-w-6xl mx-auto">
+          <Reveal>
+            <TrayNav />
+          </Reveal>
+          <div style={{ height: "32px" }} />
 
-            <Reveal delay={80}>
-              <WorkSubsection id="cinematography" title={
-                <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
-                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>C</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>inematography</span>
-                </div>
-              }>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  <VideoCard label="" src="/edit1.mp4"             staggerDelay={0}   square={false} />
-                  <VideoCard label="" src="/edit11.mp4"            staggerDelay={40}  square={false} />
-                  <VideoCard label="" src="/sd.mp4"                staggerDelay={80}  square={false} />
-                  <VideoCard label="" src="/icedbananalatte.mp4"   staggerDelay={160} square={false} />
-                  <VideoCard label="" src="/temple.mov"            staggerDelay={200} square={false} />
-                  <VideoCard label="" src="/walking.mp4"           staggerDelay={240} square={false} />
-                  <VideoCard label="" src="/running.mp4"           staggerDelay={280} square={false} />
-                  <VideoCard label="" src="/colorgrading.mp4"      staggerDelay={320} square={false} />
-                </div>
-              </WorkSubsection>
-            </Reveal>
+          <Reveal delay={80}>
+            <WorkSubsection id="cinematography" title={
+              <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>C</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>inematography</span>
+              </div>
+            }>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                <VideoCard label="" src="/edit1.mp4"           staggerDelay={0}   square={false} />
+                <VideoCard label="" src="/edit11.mp4"          staggerDelay={40}  square={false} />
+                <VideoCard label="" src="/sd.mp4"              staggerDelay={80}  square={false} />
+                <VideoCard label="" src="/icedbananalatte.mp4" staggerDelay={160} square={false} />
+                <VideoCard label="" src="/temple.mov"          staggerDelay={200} square={false} />
+                <VideoCard label="" src="/walking.mp4"         staggerDelay={240} square={false} />
+                <VideoCard label="" src="/running.mp4"         staggerDelay={280} square={false} />
+                <VideoCard label="" src="/colorgrading.mp4"    staggerDelay={320} square={false} />
+              </div>
+            </WorkSubsection>
+          </Reveal>
 
-            <Reveal delay={80}>
-              <WorkSubsection id="video-editing" title={
-                <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
-                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>V</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ideo</span>
-                  {" "}
-                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>E</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>diting</span>
-                </div>
-              }>
-                <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
-                  <VideoCard label="" src="/NY.MOV" staggerDelay={0} square={false} />
-                  {[
-                    { n: 2,  square: true },
-                    { n: 3,  square: true },
-                    { n: 4,  square: true },
-                    { n: 5,  square: true },
-                    { n: 6,  square: true },
-                    { n: 7,  square: true },
-                    { n: 8,  square: true },
-                    { n: 9,  square: true },
-                    { n: 10, square: true },
-                    { n: 12, square: true },
-                  ].map(({ n, square }, i) => (
-                    <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} square={square} />
-                  ))}
-                </div>
-              </WorkSubsection>
-            </Reveal>
+          <Reveal delay={80}>
+            <WorkSubsection id="video-editing" title={
+              <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>V</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ideo</span>
+                {" "}
+                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>E</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>diting</span>
+              </div>
+            }>
+              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
+                <VideoCard label="" src="/NY.MOV" staggerDelay={0} square={false} />
+                {[
+                  { n: 2,  square: true },
+                  { n: 3,  square: true },
+                  { n: 4,  square: true },
+                  { n: 5,  square: true },
+                  { n: 6,  square: true },
+                  { n: 7,  square: true },
+                  { n: 8,  square: true },
+                  { n: 9,  square: true },
+                  { n: 10, square: true },
+                  { n: 12, square: true },
+                ].map(({ n, square }, i) => (
+                  <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} square={square} />
+                ))}
+              </div>
+            </WorkSubsection>
+          </Reveal>
 
-            <Reveal delay={80}>
-              <WorkSubsection id="youtube-integrations" noBottomMargin title={
-                <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
-                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>Y</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ouTube</span>
-                  {" "}
-                  <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>I</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ntegrations</span>
-                </div>
-              }>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {youtubeIntegrations.map((item, i) => (
-                    <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} />
-                  ))}
-                </div>
-              </WorkSubsection>
-            </Reveal>
-          </div>
-        </section>
+          <Reveal delay={80}>
+            <WorkSubsection id="youtube-integrations" noBottomMargin title={
+              <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>Y</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ouTube</span>
+                {" "}
+                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>I</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ntegrations</span>
+              </div>
+            }>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                {youtubeIntegrations.map((item, i) => (
+                  <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} />
+                ))}
+              </div>
+            </WorkSubsection>
+          </Reveal>
+        </div>
+      </section>
 
-        <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
-          <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
-            MADE WITH LOVE - @CAL1STAR 2026
-          </p>
-        </footer>
-      </main>
-    </>
+      <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
+        <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
+          MADE WITH LOVE - @CAL1STAR 2026
+        </p>
+      </footer>
+    </main>
   );
 }
