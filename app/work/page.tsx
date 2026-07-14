@@ -241,7 +241,7 @@ function CinemaVideoCard({ src }: { src: string }) {
 
 /* ── CinemaRow — seamless rightward drift via RAF ── */
 function CinemaRow() {
-  const clips = ["/edit1.mp4", "/edit11.mp4", "/sd.mp4", "/icedbananalatte.mp4", "/cine1.mp4", "/cine2.mp4", "/walking.mp4", "/running.mp4", "/colorgrading.mp4"];
+  const clips = ["/edit1.mp4", "/edit11.mp4", "/sd.mp4", "/icedbananalatte.mp4", "/temple.mp4", "/cine1.mp4", "/cine2.mp4", "/walking.mp4", "/running.mp4", "/colorgrading.mp4"];
   const GAP = 14;
   const rowRef = useRef<HTMLDivElement>(null);
   const txRef  = useRef(0);
@@ -298,7 +298,7 @@ export default function WorkPage() {
           <Reveal>
             <TrayNav />
           </Reveal>
-          <div style={{ height: "32px" }} />
+          <div style={{ height: "80px" }} />
 
           <Reveal delay={80}>
             <WorkSubsection id="cinematography" title={
