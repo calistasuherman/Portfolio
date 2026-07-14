@@ -29,7 +29,7 @@ export default function ContactPage() {
           <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
             <div style={{ transformOrigin: "top center", animation: "noteSwing 4s ease-in-out infinite", display: "inline-block", position: "relative" }}>
               {/* note.png as background card */}
-              <div style={{ position: "relative", width: "clamp(280px, 28vw, 400px)" }}>
+              <div style={{ position: "relative", width: "clamp(360px, 38vw, 540px)" }}>
                 <img src="/note.png" alt="" style={{ width: "100%", display: "block" }} />
                 {/* Text overlaid on note */}
                 <div style={{
@@ -39,7 +39,7 @@ export default function ContactPage() {
                   width: "75%",
                   textAlign: "center",
                 }}>
-                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.8rem, 2.8vw, 2.6rem)", color: "#1a1a1a", lineHeight: 1, marginBottom: "1.4rem" }}>
+                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.8rem, 2.8vw, 2.6rem)", color: "#960018", lineHeight: 1, marginBottom: "1.4rem" }}>
                     Contact me
                   </p>
                   <a
@@ -70,14 +70,14 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Right — "and that's a Wrap!" */}
+          {/* Right — "and that's a Wrap" */}
           <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "flex-start", paddingTop: "2rem" }}>
-            <div style={{ textAlign: "center" }}>
+            <div style={{ textAlign: "left" }}>
               <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1.6rem, 3.2vw, 3.2rem)", color: "#f5f0f0", letterSpacing: "0.02em", marginBottom: "0.4rem" }}>
                 and that&apos;s a
               </div>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(5rem, 10vw, 10rem)", color: "#f5f0f0", lineHeight: 1 }}>
-                Wrap!
+              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(6rem, 13vw, 13rem)", color: "#f5f0f0", lineHeight: 1 }}>
+                Wrap
               </div>
             </div>
           </div>
