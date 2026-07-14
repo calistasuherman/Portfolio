@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond, Pinyon_Script, Instrument_Serif, Luxurious_Script, Cinzel, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import GlobalUI from "./components/GlobalUI";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -58,6 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${cormorant.variable} ${pinyon.variable} ${instrumentSerif.variable} ${luxuriousScript.variable} ${cinzel.variable} ${playfair.variable} bg-bg text-text-primary antialiased`}>
+        <GlobalUI />
         {children}
       </body>
     </html>

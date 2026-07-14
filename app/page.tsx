@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import NavHeader from "./components/NavHeader";
 import { Reveal, useReveal } from "./components/Reveal";
 
 /* ── Data ──────────────────────────────────────────────────── */
@@ -78,8 +77,6 @@ export default function Home() {
 
   return (
     <>
-      <NavHeader />
-
       <main className="relative min-h-screen overflow-x-clip">
 
         {/* ── Hero ── */}
@@ -109,7 +106,7 @@ export default function Home() {
 
             {/* Tagline */}
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.75rem", textAlign: "center" }}>
-              <p style={{ fontFamily: "PerandoryCondensed, sans-serif", color: "rgba(245,240,240,0.6)", fontSize: "clamp(0.85rem, 1.4vw, 1.2rem)", letterSpacing: "0.32em", textTransform: "uppercase", whiteSpace: "pre" }}>{"Video    editing   &     videography      is    my    love       language."}</p>
+              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.6)", fontSize: "clamp(0.55rem, 0.85vw, 0.72rem)", letterSpacing: "0.18em", whiteSpace: "pre" }}>{"Video    editing   &     videography      is    my    love       language."}</p>
             </div>
           </div>
 
@@ -201,7 +198,7 @@ export default function Home() {
         </section>
 
         {/* ── Signature Services ── */}
-        <section id="trusted" className="relative px-6 md:px-16 lg:px-32" style={{ display: "flex", alignItems: "center", paddingTop: "3rem", paddingBottom: "4rem", scrollMarginTop: "0" }}>
+        <section id="trusted" className="relative px-6 md:px-16 lg:px-32" style={{ display: "flex", alignItems: "center", paddingTop: "6rem", paddingBottom: "4rem", scrollMarginTop: "0" }}>
           <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
             <Reveal>
               <h2 style={{ lineHeight: 1.1, marginBottom: "2rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>

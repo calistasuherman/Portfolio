@@ -1,10 +1,7 @@
 "use client";
-import NavHeader from "../components/NavHeader";
-
 export default function ContactPage() {
   return (
     <>
-      <NavHeader />
       <main className="relative min-h-screen overflow-x-clip">
         <section
           className="section-content relative"

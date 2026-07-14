@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import NavHeader from "../components/NavHeader";
 import { Reveal } from "../components/Reveal";
 
 const youtubeIntegrations = [
@@ -139,7 +138,6 @@ function VideoCard({ label, src, staggerDelay = 0, square = false }: {
 export default function WorkPage() {
   return (
     <>
-      <NavHeader />
       <main className="relative min-h-screen overflow-x-clip">
         <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "120px", paddingBottom: "1rem" }}>
           <div className="max-w-6xl mx-auto">
