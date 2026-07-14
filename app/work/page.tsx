@@ -239,20 +239,35 @@ function CinemaVideoCard({ src }: { src: string }) {
   );
 }
 
-/* ── CinemaRow — seamless rightward drift ── */
+/* ── CinemaRow — seamless rightward drift via RAF ── */
 function CinemaRow() {
   const clips = ["/edit1.mp4", "/edit11.mp4", "/sd.mp4", "/icedbananalatte.mp4", "/temple.mov", "/walking.mp4", "/running.mp4", "/colorgrading.mp4"];
-  const GAP = 14; // px — use marginRight so 50% calc is exact
+  const GAP = 14;
+  const rowRef = useRef<HTMLDivElement>(null);
+  const txRef  = useRef(0);
+  const rafRef = useRef<number>();
+
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row) return;
+    // half = one full set of clips, for seamless reset
+    const getHalf = () => row.scrollWidth / 2;
+
+    const tick = () => {
+      txRef.current += 0.5; // speed px/frame — increase for faster
+      const half = getHalf();
+      if (half > 0 && txRef.current >= half) txRef.current -= half;
+      row.style.transform = `translateX(${txRef.current}px)`;
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, []);
 
   return (
     <div style={{ overflow: "hidden", marginLeft: "-2rem", marginRight: "-2rem" }}>
-      {/* strip is 2× clips; animate translateX(0) → translateX(-50%) for rightward feel requires going opposite */}
-      {/* rightward = content moves right = translateX goes from -50% → 0% */}
-      <div style={{
-        display: "flex", flexWrap: "nowrap",
-        animation: "cinemaSlideRight 28s linear infinite",
-        willChange: "transform",
-      }}>
+      <div ref={rowRef} style={{ display: "flex", flexWrap: "nowrap", willChange: "transform" }}>
         {[...clips, ...clips].map((src, i) => (
           <div
             key={i}
