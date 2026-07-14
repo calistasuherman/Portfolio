@@ -255,7 +255,7 @@ export default function Home() {
                 { key: "c",      src: "/c.png",      alt: "Canva",           label: "Canva"           },
                 { key: "claude", src: "/claude.png", alt: "Claude",          label: "Claude"          },
               ].map(({ key, src, alt, label }, i) => (
-                <Reveal key={key} direction="up" delay={i * 90}>
+                <Reveal key={key} direction="left" delay={i * 90}>
                   <div style={{ textAlign: "center", width: "clamp(64px, 9vw, 100px)" }}>
                     <img src={src} alt={alt} style={{ width: "100%", display: "block", borderRadius: "22%" }} />
                     <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.52rem, 0.75vw, 0.68rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.05em", marginTop: "0.4rem" }}>{label}</p>
