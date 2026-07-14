@@ -201,8 +201,17 @@ function VideoCard({ label, src, staggerDelay = 0, square = false, fill = false 
     const v = videoRef.current;
     if (!v) return;
     v.muted = true;
+    // show first frame immediately after metadata loads
+    const onMeta = () => { v.currentTime = 0.001; };
+    v.addEventListener("loadedmetadata", onMeta);
+    return () => v.removeEventListener("loadedmetadata", onMeta);
+  }, []);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
     if (hovered) { v.play().catch(() => {}); }
-    else { v.pause(); v.currentTime = 0; }
+    else { v.pause(); v.currentTime = 0.001; }
   }, [hovered]);
 
   return (
@@ -216,7 +225,7 @@ function VideoCard({ label, src, staggerDelay = 0, square = false, fill = false 
         <iframe src={src} title={label} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen className="absolute inset-0 w-full h-full" style={{ border: "none" }} />
       ) : (
-        <video ref={videoRef} src={src} loop playsInline muted preload="none" className="absolute inset-0 w-full h-full object-cover" />
+        <video ref={videoRef} src={src} loop playsInline muted preload="metadata" className="absolute inset-0 w-full h-full object-cover" />
       )}
       <div className="absolute bottom-0 left-0 right-0 px-3 py-2 flex items-center justify-between"
         style={{ background: "linear-gradient(to top, rgba(13,0,0,0.85), transparent)" }}>
@@ -227,12 +236,23 @@ function VideoCard({ label, src, staggerDelay = 0, square = false, fill = false 
   );
 }
 
-/* ── CinemaVideoCard — autoplays immediately ── */
+/* ── CinemaVideoCard — plays only when visible ── */
 function CinemaVideoCard({ src }: { src: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { v.play().catch(() => {}); }
+      else { v.pause(); }
+    }, { threshold: 0.1 });
+    obs.observe(v);
+    return () => obs.disconnect();
+  }, []);
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <video
-        src={src} autoPlay loop muted playsInline preload="auto"
+        ref={ref} src={src} loop muted playsInline preload="metadata"
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
       />
     </div>
