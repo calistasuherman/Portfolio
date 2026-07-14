@@ -13,19 +13,20 @@ const youtubeIntegrations = [
 
 /* ── Draggable TrayItem ─────────────────────────────────────── */
 function TrayItem({
-  src, alt, label, style, rotate = 0, labelTop = "45%", labelLeft = "50%",
+  src, alt, label, style, rotate = 0, labelTop = "45%", labelLeft = "50%", href,
 }: {
   src: string; alt: string; label?: string;
   style: React.CSSProperties; rotate?: number;
-  labelTop?: string; labelLeft?: string;
+  labelTop?: string; labelLeft?: string; href?: string;
 }) {
   const [hovered, setHovered] = useState(false);
   const [freed, setFreed]     = useState(false);
   const [pos, setPos]         = useState({ x: 0, y: 0 });
   const [freedW, setFreedW]   = useState(0);
   const [dragging, setDragging] = useState(false);
-  const anchorRef  = useRef<HTMLDivElement>(null);
-  const offsetRef  = useRef({ x: 0, y: 0 });
+  const anchorRef   = useRef<HTMLDivElement>(null);
+  const offsetRef   = useRef({ x: 0, y: 0 });
+  const mouseDownPos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     if (!dragging) return;
@@ -44,6 +45,7 @@ function TrayItem({
   function onMouseDown(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
+    mouseDownPos.current = { x: e.clientX, y: e.clientY };
     if (!freed) {
       const el = anchorRef.current;
       if (el) {
@@ -59,11 +61,20 @@ function TrayItem({
     setDragging(true);
   }
 
+  function onMouseUp(e: React.MouseEvent) {
+    const dx = Math.abs(e.clientX - mouseDownPos.current.x);
+    const dy = Math.abs(e.clientY - mouseDownPos.current.y);
+    if (dx < 5 && dy < 5 && href) {
+      document.getElementById(href)?.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
   const content = (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
       style={{
         position: "relative", display: "inline-block",
         cursor: dragging ? "grabbing" : "grab",
@@ -145,11 +156,11 @@ function TrayNav() {
         </div>
 
         {/* Food elements — draggable */}
-        <TrayItem src="/tray-croissant.png" alt="Cinematography" label="cinematography" rotate={-10}
+        <TrayItem src="/tray-croissant.png" alt="Cinematography" label="cinematography" rotate={-10} href="cinematography"
           style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }} />
-        <TrayItem src="/tray-figs.png" alt="YouTube Integrations" label="youtube integrations"
+        <TrayItem src="/tray-figs.png" alt="YouTube Integrations" label="youtube integrations" href="youtube-integrations"
           style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }} />
-        <TrayItem src="/tray-coffee.png" alt="Video Editing" label="video editing" labelTop="40%"
+        <TrayItem src="/tray-coffee.png" alt="Video Editing" label="video editing" labelTop="40%" href="video-editing"
           style={{ position: "absolute", left: "59%", top: "34%", transform: "translate(-50%, -50%)", zIndex: 2, width: "40%" }} />
 
         {/* "click me" hint */}

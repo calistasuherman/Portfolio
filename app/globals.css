@@ -139,6 +139,12 @@ body::after {
   to   { transform: rotate(360deg); }
 }
 
+@keyframes noteSwing {
+  0%   { transform: rotate(-2.5deg); }
+  50%  { transform: rotate(2.5deg); }
+  100% { transform: rotate(-2.5deg); }
+}
+
 .marquee-track {
   animation: marquee 28s linear infinite;
   will-change: transform;
