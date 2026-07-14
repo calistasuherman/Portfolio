@@ -142,8 +142,21 @@ export default function Home() {
                 </h2>
               </div>
               <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "3.5rem", paddingLeft: "1.5rem" }}>
+                {/* Content Creator row with social stats alongside */}
+                <div style={{ display: "flex", alignItems: "flex-start", gap: "2rem" }}>
+                  <p style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, flexShrink: 0 }}>Content Creator</p>
+                  <div style={{ display: "flex", gap: "1.5rem" }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
+                      <p style={{ fontFamily: "var(--font-inter)", letterSpacing: "0.04em", fontWeight: 400 }}>4K+ FOLLOWERS</p>
+                      <a href="https://instagram.com/cal1star" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.1rem, 1.8vw, 1.5rem)", color: "#f5f0f0", textDecoration: "none", lineHeight: 1.1 }}>Instagram</a>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
+                      <p style={{ fontFamily: "var(--font-inter)", letterSpacing: "0.04em", fontWeight: 400 }}>4K+ SUBSCRIBERS</p>
+                      <a href="https://www.youtube.com/@cal1stvr" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.1rem, 1.8vw, 1.5rem)", color: "#f5f0f0", textDecoration: "none", lineHeight: 1.1 }}>YouTube</a>
+                    </div>
+                  </div>
+                </div>
                 {[
-                  { label: "Content Creator", bold: false },
                   { label: "Video Editor", bold: true },
                   { label: "Videographer", bold: false },
                   { label: "Coffee Connoisseur", bold: true },
@@ -154,14 +167,6 @@ export default function Home() {
                 ].map(({ label, bold }) => (
                   <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: bold ? 700 : 400 }}>{label}</p>
                 ))}
-                <div style={{ marginTop: "1.5rem", display: "flex", flexDirection: "column", gap: "0.15rem" }}>
-                  <p style={{ fontFamily: "var(--font-inter)", letterSpacing: "0.04em", fontWeight: 400 }}>4K+ FOLLOWERS</p>
-                  <a href="https://instagram.com/cal1star" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.1rem, 1.8vw, 1.5rem)", color: "#f5f0f0", textDecoration: "none", lineHeight: 1.1 }}>Instagram</a>
-                </div>
-                <div style={{ marginTop: "0.75rem", display: "flex", flexDirection: "column", gap: "0.15rem" }}>
-                  <p style={{ fontFamily: "var(--font-inter)", letterSpacing: "0.04em", fontWeight: 400 }}>4K+ SUBSCRIBERS</p>
-                  <a href="https://www.youtube.com/@cal1stvr" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.1rem, 1.8vw, 1.5rem)", color: "#f5f0f0", textDecoration: "none", lineHeight: 1.1 }}>YouTube</a>
-                </div>
               </div>
             </Reveal>
 
