@@ -250,18 +250,22 @@ function CinemaRow() {
   useEffect(() => {
     const row = rowRef.current;
     if (!row) return;
-    // half = one full set of clips, for seamless reset
-    const getHalf = () => row.scrollWidth / 2;
 
-    const tick = () => {
-      txRef.current += 0.5; // speed px/frame — increase for faster
-      const half = getHalf();
-      if (half > 0 && txRef.current >= half) txRef.current -= half;
-      row.style.transform = `translateX(${txRef.current}px)`;
+    // wait one frame so scrollWidth is measured after layout
+    rafRef.current = requestAnimationFrame(() => {
+      const half = row.scrollWidth / 2;
+      txRef.current = -half; // start showing second set (identical to first)
+
+      const tick = () => {
+        txRef.current += 0.5; // rightward: strip moves right
+        if (txRef.current >= 0) txRef.current -= half; // seamless reset
+        row.style.transform = `translateX(${txRef.current}px)`;
+        rafRef.current = requestAnimationFrame(tick);
+      };
+
       rafRef.current = requestAnimationFrame(tick);
-    };
+    });
 
-    rafRef.current = requestAnimationFrame(tick);
     return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
   }, []);
 
