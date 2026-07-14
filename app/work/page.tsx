@@ -232,7 +232,7 @@ function CinemaVideoCard({ src }: { src: string }) {
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <video
-        src={src} autoPlay loop muted playsInline
+        src={src} autoPlay loop muted playsInline preload="auto"
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
       />
     </div>
@@ -283,6 +283,7 @@ function CinemaRow() {
               overflow: "hidden",
               border: "1px solid rgba(139,0,0,0.2)",
               marginRight: GAP,
+              boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
             }}
           >
             <CinemaVideoCard src={src} />
