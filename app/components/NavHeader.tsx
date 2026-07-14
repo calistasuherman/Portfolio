@@ -24,10 +24,9 @@ export default function NavHeader() {
   }, []);
 
   const navLinks = [
-    { label: "About",    href: isHome ? "#about"   : "/#about",   anchor: isHome },
-    { label: "Services", href: isHome ? "#trusted"  : "/#trusted", anchor: isHome, sectionId: "#trusted" },
-    { label: "My Work",  href: "/work",    anchor: false },
-    { label: "Contact",  href: "/contact", anchor: false },
+    { label: "Home",    href: "/",        anchor: false },
+    { label: "My Work", href: "/work",    anchor: false },
+    { label: "Contact", href: "/contact", anchor: false },
   ];
 
   return (

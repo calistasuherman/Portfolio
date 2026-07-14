@@ -88,9 +88,9 @@ function TrayNav() {
 }
 
 /* ── WorkSubsection ── */
-function WorkSubsection({ id, title, children }: { id?: string; title: React.ReactNode; children: React.ReactNode }) {
+function WorkSubsection({ id, title, children, noBottomMargin }: { id?: string; title: React.ReactNode; children: React.ReactNode; noBottomMargin?: boolean }) {
   return (
-    <div id={id} className="mb-20" style={{ scrollMarginTop: "80px" }}>
+    <div id={id} className={noBottomMargin ? "mb-4" : "mb-20"} style={{ scrollMarginTop: "80px" }}>
       <div className="mb-8 text-center">{title}</div>
       {children}
     </div>
@@ -141,7 +141,7 @@ export default function WorkPage() {
     <>
       <NavHeader />
       <main className="relative min-h-screen overflow-x-clip">
-        <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "120px", paddingBottom: "5rem" }}>
+        <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "120px", paddingBottom: "1rem" }}>
           <div className="max-w-6xl mx-auto">
             <Reveal>
               <TrayNav />
@@ -199,7 +199,7 @@ export default function WorkPage() {
             </Reveal>
 
             <Reveal delay={80}>
-              <WorkSubsection id="youtube-integrations" title={
+              <WorkSubsection id="youtube-integrations" noBottomMargin title={
                 <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
                   <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>Y</span>
                   <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ouTube</span>

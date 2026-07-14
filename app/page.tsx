@@ -200,17 +200,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Love language quote ── */}
-        <section className="relative py-10 px-6 overflow-hidden">
-          <Reveal>
-            <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(0.95rem, 2vw, 1.55rem)", color: "rgba(245,240,240,0.35)", letterSpacing: "0.38em", textTransform: "uppercase", textAlign: "center", wordSpacing: "0.6em" }}>
-              Video&nbsp; &nbsp;editing&nbsp; &nbsp;&amp;&nbsp; &nbsp;videography&nbsp; &nbsp;is&nbsp; &nbsp;my&nbsp; &nbsp;love&nbsp; &nbsp;language.
-            </p>
-          </Reveal>
-        </section>
-
         {/* ── Signature Services ── */}
-        <section id="trusted" className="relative px-6 md:px-16 lg:px-32" style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: "7rem", paddingBottom: "6rem", scrollMarginTop: "0" }}>
+        <section id="trusted" className="relative px-6 md:px-16 lg:px-32" style={{ display: "flex", alignItems: "center", paddingTop: "3rem", paddingBottom: "4rem", scrollMarginTop: "0" }}>
           <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
             <Reveal>
               <h2 style={{ lineHeight: 1.1, marginBottom: "2rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
@@ -238,8 +229,8 @@ export default function Home() {
         </section>
 
         {/* ── Editing Toolkit ── */}
-        <section className="relative" style={{ paddingTop: "1.5rem", paddingBottom: "4rem" }}>
-          <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 2rem", textAlign: "center" }}>
+        <section className="relative" style={{ paddingTop: "1.5rem", paddingBottom: "4rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div style={{ maxWidth: "900px", width: "100%", padding: "0 2rem", textAlign: "center" }}>
             <Reveal>
               <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 3.8vw, 3.8rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "4.5rem" }}>
                 My Toolkit
