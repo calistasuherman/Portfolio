@@ -190,8 +190,8 @@ function WorkSubsection({ id, title, children, noBottomMargin }: { id?: string; 
 }
 
 /* ── VideoCard ── */
-function VideoCard({ label, src, staggerDelay = 0, square = false, fill = false }: {
-  label: string; src: string; staggerDelay?: number; square?: boolean; fill?: boolean;
+function VideoCard({ label, src, staggerDelay = 0, square = false, fill = false, autoplay = false }: {
+  label: string; src: string; staggerDelay?: number; square?: boolean; fill?: boolean; autoplay?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -201,18 +201,22 @@ function VideoCard({ label, src, staggerDelay = 0, square = false, fill = false 
     const v = videoRef.current;
     if (!v) return;
     v.muted = true;
-    // show first frame immediately after metadata loads
+    if (autoplay) {
+      v.play().catch(() => {});
+      return;
+    }
     const onMeta = () => { v.currentTime = 0.001; };
     v.addEventListener("loadedmetadata", onMeta);
     return () => v.removeEventListener("loadedmetadata", onMeta);
-  }, []);
+  }, [autoplay]);
 
   useEffect(() => {
+    if (autoplay) return;
     const v = videoRef.current;
     if (!v) return;
     if (hovered) { v.play().catch(() => {}); }
     else { v.pause(); v.currentTime = 0.001; }
-  }, [hovered]);
+  }, [hovered, autoplay]);
 
   return (
     <div
@@ -347,7 +351,7 @@ export default function WorkPage() {
               </div>
             }>
               <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
-                <VideoCard label="" src="/NY.MOV" staggerDelay={0} square={false} />
+                <VideoCard label="" src="/NY.MOV" staggerDelay={0} square={false} autoplay />
                 {[
                   { n: 2,  square: true },
                   { n: 3,  square: true },
@@ -360,7 +364,7 @@ export default function WorkPage() {
                   { n: 10, square: true },
                   { n: 12, square: true },
                 ].map(({ n, square }, i) => (
-                  <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} square={square} />
+                  <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} square={square} autoplay />
                 ))}
               </div>
             </WorkSubsection>
@@ -378,7 +382,7 @@ export default function WorkPage() {
             }>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {youtubeIntegrations.map((item, i) => (
-                  <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} />
+                  <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} autoplay />
                 ))}
               </div>
             </WorkSubsection>
