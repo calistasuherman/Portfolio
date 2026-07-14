@@ -141,20 +141,9 @@ export default function Home() {
                   <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)" }}>ho&apos;s that star?</span>
                 </h2>
               </div>
-              <div className="space-y-3 font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "3.5rem", paddingLeft: "1.5rem" }}>
-                <p style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400 }}>Content Creator</p>
-                {[
-                  { label: "Video Editor", bold: true },
-                  { label: "Videographer", bold: false },
-                  { label: "Coffee Connoisseur", bold: true },
-                  { label: "Frequent Traveler", bold: false },
-                  { label: "Gen Z (21 Y/O)", bold: true },
-                  { label: "Fashion Lover", bold: false },
-                  { label: "SF Based", bold: true },
-                ].map(({ label, bold }) => (
-                  <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: bold ? 700 : 400 }}>{label}</p>
-                ))}
-              </div>
+              <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "3.5rem", paddingLeft: "1.5rem", lineHeight: 1.85, maxWidth: "34ch" }}>
+                Hey there! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
+              </p>
             </Reveal>
 
             <div className="order-2 flex justify-center" style={{ marginTop: "2rem" }}>
