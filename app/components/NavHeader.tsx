@@ -123,7 +123,7 @@ export default function NavHeader() {
           }}>
             {/* Track info */}
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-              <img src="/vinyl.png" alt="" style={{ width: "34px", height: "34px", borderRadius: "50%", animation: playing ? "vinylSpin 2s linear infinite" : "none", flexShrink: 0 }} />
+              <img src="/vinyl.png" alt="" style={{ width: "34px", height: "34px", borderRadius: "50%", animation: "vinylSpin 3s linear infinite", flexShrink: 0 }} />
               <div style={{ overflow: "hidden" }}>
                 <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#f5f0f0", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Loving You</p>
                 <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.55rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.04em" }}>Michael Jackson</p>
@@ -154,21 +154,20 @@ export default function NavHeader() {
           onClick={handleVinylClick}
           aria-label="Toggle music player"
           style={{
-            width: "44px", height: "44px", borderRadius: "50%",
-            border: playing ? "1.5px solid rgba(245,240,240,0.3)" : "1.5px solid rgba(245,240,240,0.12)",
-            background: "rgba(10,0,0,0.75)",
-            backdropFilter: "blur(14px)",
+            width: "64px", height: "64px", borderRadius: "50%",
+            border: "none",
+            background: "transparent",
             display: "flex", alignItems: "center", justifyContent: "center",
             cursor: "none", padding: 0,
-            transition: "border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease",
-            boxShadow: playing ? "0 0 16px rgba(245,240,240,0.12)" : "0 4px 14px rgba(0,0,0,0.5)",
-            transform: playerOpen ? "scale(1.06)" : "scale(1)",
+            transition: "transform 0.2s ease",
+            transform: playerOpen ? "scale(1.08)" : "scale(1)",
+            filter: playing ? "drop-shadow(0 0 10px rgba(139,0,0,0.5))" : "drop-shadow(0 4px 12px rgba(0,0,0,0.6))",
           }}
         >
           <img
             src="/vinyl.png"
             alt="Vinyl"
-            style={{ width: "32px", height: "32px", borderRadius: "50%", animation: playing ? "vinylSpin 2s linear infinite" : "none" }}
+            style={{ width: "64px", height: "64px", borderRadius: "50%", animation: "vinylSpin 3s linear infinite" }}
           />
         </button>
       </div>
