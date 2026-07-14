@@ -283,7 +283,7 @@ function CinemaRow() {
               overflow: "hidden",
               border: "1px solid rgba(139,0,0,0.2)",
               marginRight: GAP,
-              boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
+              boxShadow: "0 6px 8px -2px rgba(0,0,0,0.75)",
             }}
           >
             <CinemaVideoCard src={src} />
