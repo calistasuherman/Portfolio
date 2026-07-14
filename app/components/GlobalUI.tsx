@@ -1,17 +1,30 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 
-export default function NavHeader() {
+/* ── Module-level audio singleton ─────────────────────────────
+   Lives outside React so it is NEVER destroyed on re-render
+   or page navigation. One instance for the entire session.
+──────────────────────────────────────────────────────────────── */
+let _audio: HTMLAudioElement | null = null;
+
+function getAudio(): HTMLAudioElement | null {
+  if (typeof window === "undefined") return null;
+  if (!_audio) {
+    _audio = new Audio("/mj-girl-is-mine.mp4");
+    _audio.loop = true;
+  }
+  return _audio;
+}
+
+export default function GlobalUI() {
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [cursorHover, setCursorHover] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [playerOpen, setPlayerOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const pathname = usePathname();
 
+  /* cursor */
   useEffect(() => {
     const move = (e: MouseEvent) => setCursorPos({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", move);
@@ -19,53 +32,70 @@ export default function NavHeader() {
   }, []);
 
   useEffect(() => {
-    const els = document.querySelectorAll("a, button");
     const on = () => setCursorHover(true);
     const off = () => setCursorHover(false);
-    els.forEach(el => { el.addEventListener("mouseenter", on); el.addEventListener("mouseleave", off); });
-    return () => els.forEach(el => { el.removeEventListener("mouseenter", on); el.removeEventListener("mouseleave", off); });
+    const attach = () => {
+      document.querySelectorAll("a, button").forEach(el => {
+        el.addEventListener("mouseenter", on);
+        el.addEventListener("mouseleave", off);
+      });
+    };
+    attach();
+    const obs = new MutationObserver(attach);
+    obs.observe(document.body, { childList: true, subtree: true });
+    return () => obs.disconnect();
   }, []);
 
+  /* audio listeners — attach once, survive re-renders */
   useEffect(() => {
-    const audio = audioRef.current;
+    const audio = getAudio();
     if (!audio) return;
     const onTime = () => setProgress(audio.currentTime);
-    const onLoad = () => setDuration(audio.duration);
+    const onMeta = () => setDuration(audio.duration);
     audio.addEventListener("timeupdate", onTime);
-    audio.addEventListener("loadedmetadata", onLoad);
-    return () => { audio.removeEventListener("timeupdate", onTime); audio.removeEventListener("loadedmetadata", onLoad); };
+    audio.addEventListener("loadedmetadata", onMeta);
+    /* sync playing state in case audio was already running */
+    setPlaying(!audio.paused);
+    return () => {
+      audio.removeEventListener("timeupdate", onTime);
+      audio.removeEventListener("loadedmetadata", onMeta);
+    };
   }, []);
 
   function togglePlay() {
-    const audio = audioRef.current;
+    const audio = getAudio();
     if (!audio) return;
-    if (playing) {
-      audio.pause();
-      setPlaying(false);
-    } else {
+    if (audio.paused) {
       audio.play().catch(() => {});
       setPlaying(true);
       setPlayerOpen(true);
+    } else {
+      audio.pause();
+      setPlaying(false);
     }
   }
 
   function handleVinylClick() {
-    setPlayerOpen(o => !o);
-    if (!playing) {
-      const audio = audioRef.current;
-      if (audio) { audio.play().catch(() => {}); setPlaying(true); }
+    const audio = getAudio();
+    if (!audio) return;
+    if (audio.paused) {
+      audio.play().catch(() => {});
+      setPlaying(true);
+      setPlayerOpen(true);
+    } else {
+      setPlayerOpen(o => !o);
     }
   }
 
   function seek(e: React.MouseEvent<HTMLDivElement>) {
-    const audio = audioRef.current;
+    const audio = getAudio();
     if (!audio || !duration) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const ratio = (e.clientX - rect.left) / rect.width;
-    audio.currentTime = ratio * duration;
+    audio.currentTime = ((e.clientX - rect.left) / rect.width) * duration;
   }
 
-  const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+  const fmt = (s: number) =>
+    `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
   const navLinks = [
     { label: "Home",    href: "/" },
@@ -75,18 +105,23 @@ export default function NavHeader() {
 
   return (
     <>
-      {/* Hidden audio element */}
-      <audio ref={audioRef} src="/mj-loving-you.mp4" loop preload="none" />
-
       {/* Custom cursor */}
       <div
         className="cursor-dot"
-        style={{ left: cursorPos.x, top: cursorPos.y, transform: `translate(-50%, -50%) scale(${cursorHover ? 2.8 : 1})` }}
+        style={{
+          left: cursorPos.x,
+          top: cursorPos.y,
+          transform: `translate(-50%, -50%) scale(${cursorHover ? 2.8 : 1})`,
+        }}
       />
 
       {/* Fixed header */}
       <header className="section-content fixed top-0 left-0 right-0 z-50 py-5 px-6">
-        <img src="/cs-monogram.png" alt="CS" style={{ position: "absolute", top: "0.5rem", left: "-1rem", width: "clamp(58px, 7vw, 90px)", opacity: 0.9 }} />
+        <img
+          src="/cs-monogram.png"
+          alt="CS"
+          style={{ position: "absolute", top: "0.5rem", left: "-1rem", width: "clamp(58px, 7vw, 90px)", opacity: 0.9 }}
+        />
         <nav className="flex justify-end gap-8 md:gap-12">
           {navLinks.map((link) => (
             <a
@@ -118,18 +153,23 @@ export default function NavHeader() {
             border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: "14px",
             padding: "12px 16px",
-            width: "230px",
+            width: "240px",
             boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
           }}>
-            {/* Track info */}
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-              <img src="/vinyl.png" alt="" style={{ width: "34px", height: "34px", objectFit: "contain", animation: "vinylSpin 3s linear infinite", flexShrink: 0 }} />
+              <img
+                src="/vinyl.png"
+                alt=""
+                style={{ width: "34px", height: "34px", objectFit: "contain", animation: "vinylSpin 3s linear infinite", flexShrink: 0 }}
+              />
               <div style={{ overflow: "hidden" }}>
-                <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#f5f0f0", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Loving You</p>
+                <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#f5f0f0", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>The Girl Is Mine</p>
                 <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.55rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.04em" }}>Michael Jackson</p>
               </div>
-              {/* Play/pause */}
-              <button onClick={togglePlay} style={{ marginLeft: "auto", background: "none", border: "none", cursor: "none", padding: "4px", color: "#f5f0f0", flexShrink: 0 }}>
+              <button
+                onClick={togglePlay}
+                style={{ marginLeft: "auto", background: "none", border: "none", cursor: "none", padding: "4px", color: "#f5f0f0", flexShrink: 0 }}
+              >
                 {playing ? (
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                 ) : (
@@ -137,9 +177,10 @@ export default function NavHeader() {
                 )}
               </button>
             </div>
-
-            {/* Progress bar */}
-            <div onClick={seek} style={{ width: "100%", height: "3px", background: "rgba(255,255,255,0.12)", borderRadius: "2px", cursor: "none", position: "relative" }}>
+            <div
+              onClick={seek}
+              style={{ width: "100%", height: "3px", background: "rgba(255,255,255,0.12)", borderRadius: "2px", cursor: "none", position: "relative" }}
+            >
               <div style={{ height: "100%", background: "rgba(245,240,240,0.7)", borderRadius: "2px", width: duration ? `${(progress / duration) * 100}%` : "0%", transition: "width 0.5s linear" }} />
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px" }}>
@@ -149,19 +190,21 @@ export default function NavHeader() {
           </div>
         </div>
 
-        {/* Vinyl button */}
+        {/* Vinyl / star button */}
         <button
           onClick={handleVinylClick}
           aria-label="Toggle music player"
           style={{
-            width: "64px", height: "64px", borderRadius: "50%",
+            width: "64px", height: "64px",
             border: "none",
             background: "transparent",
             display: "flex", alignItems: "center", justifyContent: "center",
             cursor: "none", padding: 0,
             transition: "transform 0.2s ease",
             transform: playerOpen ? "scale(1.08)" : "scale(1)",
-            filter: playing ? "drop-shadow(0 0 10px rgba(139,0,0,0.5))" : "drop-shadow(0 4px 12px rgba(0,0,0,0.6))",
+            filter: playing
+              ? "drop-shadow(0 0 10px rgba(139,0,0,0.6))"
+              : "drop-shadow(0 4px 12px rgba(0,0,0,0.6))",
           }}
         >
           <img
