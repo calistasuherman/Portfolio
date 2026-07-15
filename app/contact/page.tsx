@@ -33,17 +33,17 @@ export default function ContactPage() {
                 {/* Text overlaid on note */}
                 <div style={{
                   position: "absolute",
-                  top: "38%", left: "44%",
+                  top: "42%", left: "47%",
                   transform: "translateX(-50%)",
                   width: "80%",
                   textAlign: "center",
                 }}>
-                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.6rem, 4vw, 4.5rem)", color: "#960018", lineHeight: 1, marginBottom: "4rem" }}>
+                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.6rem, 4vw, 4.5rem)", color: "#960018", lineHeight: 1, marginBottom: "3rem" }}>
                     Contact me
                   </p>
                   <a
                     href="mailto:cal1starcollab@gmail.com"
-                    style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.75rem, 1.2vw, 1.1rem)", letterSpacing: "0.03em", color: "#1a1a1a", textDecoration: "none", display: "block", marginBottom: "1.1rem" }}
+                    style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.8rem, 1.2vw, 1.1rem)", letterSpacing: "0.03em", color: "#1a1a1a", textDecoration: "none", display: "block", marginBottom: "0.5rem" }}
                   >
                     cal1starcollab@gmail.com
                   </a>
