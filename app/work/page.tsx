@@ -335,7 +335,7 @@ export default function WorkPage() {
                 <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>inematography</span>
               </div>
             }>
-              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
+              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
                 {["/edit1.mp4", "/edit11.mp4", "/sd.mp4", "/icedbananalatte.mp4", "/temple.mp4", "/cine1.mp4", "/cine2.mp4", "/walking.mp4", "/running.mp4", "/colorgrading.mp4"].map((src, i) => (
                   <VideoCard key={src} label="" src={src} staggerDelay={i * 40} autoplay />
                 ))}
