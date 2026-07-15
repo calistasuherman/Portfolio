@@ -120,7 +120,7 @@ export default function ContactPage() {
             @2026 CALISTA SUHERMAN.&nbsp;&nbsp;PSALM 46:5
           </p>
           <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
-            CURRENTLY IN: SAN FRANCISCO
+            <span style={{ fontStyle: "italic" }}>CURRENTLY IN: SAN FRANCISCO</span>
           </p>
         </footer>
       </main>
