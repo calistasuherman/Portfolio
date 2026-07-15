@@ -163,15 +163,15 @@ function TrayNav() {
         <TrayItem src="/tray-coffee.png" alt="Video Editing" label="video editing" labelTop="40%" href="video-editing"
           style={{ position: "absolute", left: "59%", top: "34%", transform: "translate(-50%, -50%)", zIndex: 2, width: "40%" }} />
 
-        {/* "click a section to explore" hint */}
+        {/* "move or click me" hint */}
         <p style={{
-          position: "absolute", left: "3%", top: "38%",
+          position: "absolute", left: "3%", top: "55%",
           fontFamily: "var(--font-inter)", fontSize: "clamp(0.42rem, 0.7vw, 0.58rem)",
           letterSpacing: "0.18em", textTransform: "uppercase",
           color: "rgba(245,240,240,0.38)", whiteSpace: "nowrap",
           zIndex: 10, pointerEvents: "none",
         }}>
-          click a section to explore
+          move or click me
         </p>
       </div>
     </div>
@@ -335,7 +335,11 @@ export default function WorkPage() {
                 <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>inematography</span>
               </div>
             }>
-              <CinemaRow />
+              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
+                {["/edit1.mp4", "/edit11.mp4", "/sd.mp4", "/icedbananalatte.mp4", "/temple.mp4", "/cine1.mp4", "/cine2.mp4", "/walking.mp4", "/running.mp4", "/colorgrading.mp4"].map((src, i) => (
+                  <VideoCard key={src} label="" src={src} staggerDelay={i * 40} autoplay />
+                ))}
+              </div>
             </WorkSubsection>
           </Reveal>
 
