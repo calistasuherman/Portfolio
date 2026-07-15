@@ -355,7 +355,7 @@ export default function WorkPage() {
             }>
               <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
                 {["ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4","ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4","ve11.mp4","ve12.mp4","ve13.mp4","ve14.mp4","ve15.mp4"].map((f, i) => (
-                  <VideoCard key={f} label="" src={`/ve/${f}`} staggerDelay={i * 40} autoplay />
+                  <VideoCard key={f} label="" src={`/ve/${f}`} staggerDelay={i * 40} square={i >= 5} autoplay />
                 ))}
               </div>
             </WorkSubsection>
