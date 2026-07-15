@@ -195,7 +195,6 @@ export default function Home() {
                 Hi! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
               </p>
               <TypewriterLabels />
-              <img src="/metrics.png" alt="Metrics" style={{ width: "100%", borderRadius: "8px", opacity: 0.9, marginTop: "1.5rem", paddingLeft: "1.5rem" }} />
             </Reveal>
 
             <div className="order-2 flex justify-center" style={{ marginTop: "2rem" }}>
