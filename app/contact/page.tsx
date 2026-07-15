@@ -24,7 +24,7 @@ export default function ContactPage() {
       if (!dragging.current) return;
       setNotePos({ x: e.clientX - offset.current.x, y: e.clientY - offset.current.y });
     };
-    const onUp = () => { dragging.current = false; };
+    const onUp = () => { dragging.current = false; setSwinging(true); };
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
     return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
