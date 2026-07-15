@@ -336,7 +336,7 @@ export default function WorkPage() {
               </div>
             }>
               <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
-                {["/c1.mp4", "/c2.mp4", "/c3.mp4", "/c4.mp4", "/c5.mp4", "/edit1.mp4", "/edit11.mp4", "/sd.mp4", "/icedbananalatte.mp4", "/temple.mp4", "/cine1.mp4", "/cine2.mp4", "/walking.mp4", "/running.mp4", "/colorgrading.mp4"].map((src, i) => (
+                {["/cinema/cinema1.mp4","/cinema/cinema2.mp4","/cinema/cinema3.mp4","/cinema/cinema4.mp4","/cinema/cinema5.mp4","/cinema/cinema6.mp4","/cinema/cinema7.mp4","/cinema/cinema8.mp4","/cinema/cinema9.mov","/cinema/cinema10.MOV","/cinema/cinema11.mp4","/cinema/cinema12.MP4"].map((src, i) => (
                   <VideoCard key={src} label="" src={src} staggerDelay={i * 40} autoplay />
                 ))}
               </div>
@@ -354,20 +354,8 @@ export default function WorkPage() {
               </div>
             }>
               <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
-                <VideoCard label="" src="/NY.MOV" staggerDelay={0} square={false} autoplay />
-                {[
-                  { n: 2,  square: true },
-                  { n: 3,  square: true },
-                  { n: 4,  square: true },
-                  { n: 5,  square: true },
-                  { n: 6,  square: true },
-                  { n: 7,  square: true },
-                  { n: 8,  square: true },
-                  { n: 9,  square: true },
-                  { n: 10, square: true },
-                  { n: 12, square: true },
-                ].map(({ n, square }, i) => (
-                  <VideoCard key={n} label="" src={`/edit${n}.mp4`} staggerDelay={i * 40} square={square} autoplay />
+                {["ve1.mp4","ve2.mp4","ve3.mp4","ve4.MOV","ve5.mp4","ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4","ve11.mp4","ve12.mp4","ve13.mp4","ve14.mp4","ve15.mp4"].map((f, i) => (
+                  <VideoCard key={f} label="" src={`/ve/${f}`} staggerDelay={i * 40} autoplay />
                 ))}
               </div>
             </WorkSubsection>
