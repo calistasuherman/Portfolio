@@ -1,6 +1,10 @@
 "use client";
+import { useEffect, useState } from "react";
 
 export default function ContactPage() {
+  const [stamped, setStamped] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setStamped(true), 600); return () => clearTimeout(t); }, []);
+
   return (
     <>
       <main className="relative min-h-screen overflow-x-clip">
@@ -30,6 +34,20 @@ export default function ContactPage() {
             <div style={{ transformOrigin: "top center", animation: "noteSwing 4s ease-in-out infinite", display: "inline-block", position: "relative" }}>
               <div style={{ position: "relative", width: "clamp(500px, 54vw, 760px)" }}>
                 <img src="/note.png" alt="" style={{ width: "100%", display: "block" }} />
+                {/* Wax seal stamp */}
+                {stamped && (
+                  <div className="stamp-seal" style={{
+                    position: "absolute", top: "6%", right: "8%",
+                    width: "clamp(60px, 7vw, 100px)", height: "clamp(60px, 7vw, 100px)",
+                    borderRadius: "50%",
+                    background: "radial-gradient(circle at 40% 35%, #c0001a, #7a0000)",
+                    boxShadow: "0 2px 12px rgba(0,0,0,0.45), inset 0 1px 3px rgba(255,255,255,0.1)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    zIndex: 5,
+                  }}>
+                    <span style={{ color: "rgba(245,240,240,0.9)", fontSize: "clamp(1.4rem, 2vw, 2.2rem)", lineHeight: 1 }}>✦</span>
+                  </div>
+                )}
                 {/* Text overlaid on note */}
                 <div style={{
                   position: "absolute",
