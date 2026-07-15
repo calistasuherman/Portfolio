@@ -171,7 +171,7 @@ function TrayNav() {
           color: "rgba(245,240,240,0.38)", whiteSpace: "nowrap",
           zIndex: 10, pointerEvents: "none",
         }}>
-          move or click me
+          move or click me!
         </p>
       </div>
     </div>

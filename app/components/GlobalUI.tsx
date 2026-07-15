@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import Lenis from "lenis";
 
 /* ── Playlist ─────────────────────────────────────────────────── */
 const SONGS = [
@@ -53,6 +54,15 @@ export default function GlobalUI() {
     const move = (e: MouseEvent) => setCursorPos({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
+  }, []);
+
+  /* Lenis smooth scroll */
+  useEffect(() => {
+    const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+    let raf: number;
+    const loop = (time: number) => { lenis.raf(time); raf = requestAnimationFrame(loop); };
+    raf = requestAnimationFrame(loop);
+    return () => { lenis.destroy(); cancelAnimationFrame(raf); };
   }, []);
 
   /* page-fade on link clicks */
