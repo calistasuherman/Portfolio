@@ -4,6 +4,40 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Reveal, useReveal } from "./components/Reveal";
 
+const LABELS = ["Content Creator", "Gen Z (21 Y/O)", "Coffee Connoisseur", "Fashion Lover", "Frequent Traveler", "SF Based"];
+
+function TypewriterLabels() {
+  const [visible, setVisible] = useState<string[]>([]);
+  const ref = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !started.current) {
+        started.current = true;
+        LABELS.forEach((label, i) => {
+          setTimeout(() => setVisible(prev => [...prev, label]), i * 220);
+        });
+      }
+    }, { threshold: 0.3 });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.45rem 2rem" }}>
+      {LABELS.map(label => (
+        <p key={label} style={{
+          letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400,
+          opacity: visible.includes(label) ? 1 : 0,
+          transform: visible.includes(label) ? "translateY(0)" : "translateY(6px)",
+          transition: "opacity 0.4s ease, transform 0.4s ease",
+        }}>{label}</p>
+      ))}
+    </div>
+  );
+}
+
 /* ── Data ──────────────────────────────────────────────────── */
 
 const brands = [
@@ -144,18 +178,7 @@ export default function Home() {
               <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "3.5rem", paddingLeft: "1.5rem", lineHeight: 1.85, textShadow: "0 2px 12px rgba(0,0,0,0.55)", fontWeight: 400 }}>
                 Hey there! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
               </p>
-              <div className="font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.45rem 2rem" }}>
-                {[
-                  { label: "Content Creator",    bold: false },
-                  { label: "Gen Z (21 Y/O)",     bold: false },
-                  { label: "Coffee Connoisseur", bold: false },
-                  { label: "Fashion Lover",      bold: false },
-                  { label: "Frequent Traveler",  bold: false },
-                  { label: "SF Based",           bold: false },
-                ].map(({ label, bold }) => (
-                  <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: bold ? 700 : 400 }}>{label}</p>
-                ))}
-              </div>
+              <TypewriterLabels />
             </Reveal>
 
             <div className="order-2 flex justify-center" style={{ marginTop: "2rem" }}>
@@ -247,9 +270,12 @@ export default function Home() {
         </section>
 
         {/* ── Footer ── */}
-        <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
+        <footer className="section-content py-8" style={{ borderTop: "1px solid rgba(139,0,0,0.2)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
-            MADE WITH LOVE - @CAL1STAR 2026
+            @2026 CALISTA SUHERMAN.&nbsp;&nbsp;MADE WITH LOVE
+          </p>
+          <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
+            CURRENTLY IN: SAN FRANCISCO
           </p>
         </footer>
 

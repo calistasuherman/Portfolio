@@ -393,9 +393,12 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
+      <footer className="section-content py-8" style={{ borderTop: "1px solid rgba(139,0,0,0.2)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
-          MADE WITH LOVE - @CAL1STAR 2026
+          @2026 CALISTA SUHERMAN.&nbsp;&nbsp;MADE WITH LOVE
+        </p>
+        <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
+          CURRENTLY IN: SAN FRANCISCO
         </p>
       </footer>
     </main>
