@@ -163,16 +163,15 @@ function TrayNav() {
         <TrayItem src="/tray-coffee.png" alt="Video Editing" label="video editing" labelTop="40%" href="video-editing"
           style={{ position: "absolute", left: "59%", top: "34%", transform: "translate(-50%, -50%)", zIndex: 2, width: "40%" }} />
 
-        {/* "click me" hint */}
+        {/* "move or click me" hint — under the title */}
         <p style={{
-          position: "absolute", right: "-4rem", top: "50%",
-          transform: "translateY(-50%) rotate(90deg)",
-          fontFamily: "var(--font-inter)", fontSize: "0.52rem",
-          letterSpacing: "0.22em", textTransform: "uppercase",
+          position: "absolute", left: "3%", top: "38%",
+          fontFamily: "var(--font-inter)", fontSize: "clamp(0.42rem, 0.7vw, 0.58rem)",
+          letterSpacing: "0.18em", textTransform: "uppercase",
           color: "rgba(245,240,240,0.38)", whiteSpace: "nowrap",
           zIndex: 10, pointerEvents: "none",
         }}>
-          click me
+          (move or click me)
         </p>
       </div>
     </div>
