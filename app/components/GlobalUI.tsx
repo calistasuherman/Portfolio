@@ -7,7 +7,7 @@ const SONGS = [
   { title: "The Lady in My Life",          artist: "Michael Jackson", src: "/songs/lady in my life.mp4"              },
   { title: "(I Like) The Way You Love Me", artist: "Michael Jackson", src: "/songs/I like the way you love me.mp4"   },
   { title: "All I Do Is Think Of You",     artist: "Michael Jackson", src: "/songs/all i do is think of you.mp4"     },
-  { title: "The Girl Is Mine",             artist: "Michael Jackson", src: "/songs/the girl is mine.mp4"             },
+  { title: "The Girl Is Mine ft. Paul McCartney", artist: "Michael Jackson", src: "/songs/the girl is mine.mp4" },
   { title: "You Rock My World",            artist: "Michael Jackson", src: "/songs/rock my world.mp4"                },
   { title: "Loving You",                   artist: "Michael Jackson", src: "/songs/loving you.mp4"                   },
 ];
@@ -192,11 +192,13 @@ export default function GlobalUI() {
 
       {/* Fixed header */}
       <header className="section-content fixed top-0 left-0 right-0 z-50 py-5 px-6">
-        <img
-          src="/cs-monogram.png"
-          alt="CS"
-          style={{ position: "absolute", top: "0.5rem", left: "-1rem", width: "clamp(58px, 7vw, 90px)", opacity: 0.9 }}
-        />
+        <a href="/" style={{ position: "absolute", top: "0.5rem", left: "-1rem" }}>
+          <img
+            src="/cs-monogram.png"
+            alt="CS"
+            style={{ width: "clamp(58px, 7vw, 90px)", opacity: 0.9, display: "block" }}
+          />
+        </a>
         <nav className="flex justify-end gap-8 md:gap-12">
           {navLinks.map((link) => (
             <a

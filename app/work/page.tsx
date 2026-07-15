@@ -181,7 +181,7 @@ function TrayNav() {
 /* ── WorkSubsection ── */
 function WorkSubsection({ id, title, children, noBottomMargin }: { id?: string; title: React.ReactNode; children: React.ReactNode; noBottomMargin?: boolean }) {
   return (
-    <div id={id} className={noBottomMargin ? "mb-4" : "mb-20"} style={{ scrollMarginTop: "140px" }}>
+    <div id={id} className={noBottomMargin ? "mb-4" : "mb-20"} style={{ scrollMarginTop: "90px" }}>
       <div className="mb-8 text-center">{title}</div>
       {children}
     </div>
