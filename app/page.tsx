@@ -7,7 +7,7 @@ import { Reveal, useReveal } from "./components/Reveal";
 const LABELS = ["Content Creator", "Gen Z (21 Y/O)", "Coffee Connoisseur", "Fashion Lover", "Frequent Traveler", "SF Based"];
 
 function TypewriterLabels() {
-  const [typed, setTyped] = useState<string[]>(Array(LABELS.length).fill(""));
+  const [revealed, setRevealed] = useState<number[]>(Array(LABELS.length).fill(0));
   const [activeIdx, setActiveIdx] = useState(-1);
   const ref = useRef<HTMLDivElement>(null);
   const started = useRef(false);
@@ -24,9 +24,9 @@ function TypewriterLabels() {
         const label = LABELS[labelIdx];
         charIdx++;
         setActiveIdx(labelIdx);
-        setTyped(prev => {
+        setRevealed(prev => {
           const next = [...prev];
-          next[labelIdx] = label.slice(0, charIdx);
+          next[labelIdx] = charIdx;
           return next;
         });
         if (charIdx < label.length) {
@@ -50,8 +50,11 @@ function TypewriterLabels() {
           {LABELS.filter((_, i) => i % 2 === col).map((label, row) => {
             const i = col + row * 2;
             return (
-              <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, whiteSpace: "nowrap", paddingRight: "0.2em" }}>
-                {typed[i]}{activeIdx === i ? <span style={{ opacity: 0.6 }}>|</span> : null}
+              <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, whiteSpace: "nowrap" }}>
+                {label.split("").map((char, ci) => (
+                  <span key={ci} style={{ color: ci < revealed[i] ? "inherit" : "transparent" }}>{char}</span>
+                ))}
+                {activeIdx === i && <span style={{ opacity: 0.6 }}>|</span>}
               </p>
             );
           })}
