@@ -336,7 +336,7 @@ export default function WorkPage() {
               </div>
             }>
               <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
-                {["/edit1.mp4", "/edit11.mp4", "/sd.mp4", "/icedbananalatte.mp4", "/temple.mp4", "/cine1.mp4", "/cine2.mp4", "/walking.mp4", "/running.mp4", "/colorgrading.mp4"].map((src, i) => (
+                {["/c1.mp4", "/c2.mp4", "/c3.mp4", "/c4.mp4", "/c5.mp4", "/edit1.mp4", "/edit11.mp4", "/sd.mp4", "/icedbananalatte.mp4", "/temple.mp4", "/cine1.mp4", "/cine2.mp4", "/walking.mp4", "/running.mp4", "/colorgrading.mp4"].map((src, i) => (
                   <VideoCard key={src} label="" src={src} staggerDelay={i * 40} autoplay />
                 ))}
               </div>

@@ -7,18 +7,35 @@ import { Reveal, useReveal } from "./components/Reveal";
 const LABELS = ["Content Creator", "Gen Z (21 Y/O)", "Coffee Connoisseur", "Fashion Lover", "Frequent Traveler", "SF Based"];
 
 function TypewriterLabels() {
-  const [visible, setVisible] = useState<string[]>([]);
+  const [typed, setTyped] = useState<string[]>(Array(LABELS.length).fill(""));
   const ref = useRef<HTMLDivElement>(null);
   const started = useRef(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !started.current) {
-        started.current = true;
-        LABELS.forEach((label, i) => {
-          setTimeout(() => setVisible(prev => [...prev, label]), i * 220);
+      if (!entry.isIntersecting || started.current) return;
+      started.current = true;
+      let labelIdx = 0;
+      let charIdx = 0;
+
+      const tick = () => {
+        if (labelIdx >= LABELS.length) return;
+        const label = LABELS[labelIdx];
+        charIdx++;
+        setTyped(prev => {
+          const next = [...prev];
+          next[labelIdx] = label.slice(0, charIdx);
+          return next;
         });
-      }
+        if (charIdx < label.length) {
+          setTimeout(tick, 55);
+        } else {
+          labelIdx++;
+          charIdx = 0;
+          setTimeout(tick, 180);
+        }
+      };
+      setTimeout(tick, 300);
     }, { threshold: 0.3 });
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -26,13 +43,10 @@ function TypewriterLabels() {
 
   return (
     <div ref={ref} className="font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.45rem 2rem" }}>
-      {LABELS.map(label => (
-        <p key={label} style={{
-          letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400,
-          opacity: visible.includes(label) ? 1 : 0,
-          transform: visible.includes(label) ? "translateY(0)" : "translateY(6px)",
-          transition: "opacity 0.4s ease, transform 0.4s ease",
-        }}>{label}</p>
+      {LABELS.map((label, i) => (
+        <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, minHeight: "1.2em" }}>
+          {typed[i]}{typed[i] && typed[i].length < label.length ? <span style={{ opacity: 0.6 }}>|</span> : null}
+        </p>
       ))}
     </div>
   );
@@ -179,6 +193,10 @@ export default function Home() {
                 Hi! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
               </p>
               <TypewriterLabels />
+              <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem", paddingLeft: "1.5rem" }}>
+                <img src="/metrics1.png" alt="Metrics" style={{ width: "48%", borderRadius: "8px", opacity: 0.9 }} />
+                <img src="/metrics2.png" alt="Metrics" style={{ width: "48%", borderRadius: "8px", opacity: 0.9 }} />
+              </div>
             </Reveal>
 
             <div className="order-2 flex justify-center" style={{ marginTop: "2rem" }}>
