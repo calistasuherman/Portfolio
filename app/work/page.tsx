@@ -165,7 +165,7 @@ function TrayNav() {
 
         {/* "move or click me" hint */}
         <p style={{
-          position: "absolute", left: "3%", top: "55%",
+          position: "absolute", left: "3%", top: "42%",
           fontFamily: "var(--font-inter)", fontSize: "clamp(0.42rem, 0.7vw, 0.58rem)",
           letterSpacing: "0.18em", textTransform: "uppercase",
           color: "rgba(245,240,240,0.38)", whiteSpace: "nowrap",

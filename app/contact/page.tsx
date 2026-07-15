@@ -102,7 +102,7 @@ export default function ContactPage() {
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 1vw, 0.9rem)", letterSpacing: "0.08em", color: "#1a1a1a", textDecoration: "none" }}
+                        style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 1vw, 0.9rem)", letterSpacing: "0.08em", color: "#1a1a1a", textDecoration: "none", fontWeight: 700 }}
                       >
                         {label}
                       </a>
