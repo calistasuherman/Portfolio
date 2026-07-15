@@ -88,7 +88,7 @@ export default function ContactPage() {
                   </p>
                   <a
                     href="mailto:cal1starcollab@gmail.com"
-                    style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.8rem, 1.2vw, 1.1rem)", letterSpacing: "0.03em", color: "#1a1a1a", textDecoration: "none", display: "block", marginBottom: "0.5rem", paddingLeft: "1.5rem" }}
+                    style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.8rem, 1.2vw, 1.1rem)", letterSpacing: "0.03em", color: "#1a1a1a", textDecoration: "underline", display: "block", marginBottom: "0.5rem", paddingLeft: "1.5rem" }}
                   >
                     cal1starcollab@gmail.com
                   </a>

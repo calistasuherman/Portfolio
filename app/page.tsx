@@ -8,6 +8,7 @@ const LABELS = ["Content Creator", "Gen Z (21 Y/O)", "Coffee Connoisseur", "Fash
 
 function TypewriterLabels() {
   const [typed, setTyped] = useState<string[]>(Array(LABELS.length).fill(""));
+  const [activeIdx, setActiveIdx] = useState(-1);
   const ref = useRef<HTMLDivElement>(null);
   const started = useRef(false);
 
@@ -19,9 +20,10 @@ function TypewriterLabels() {
       let charIdx = 0;
 
       const tick = () => {
-        if (labelIdx >= LABELS.length) return;
+        if (labelIdx >= LABELS.length) { setActiveIdx(-1); return; }
         const label = LABELS[labelIdx];
         charIdx++;
+        setActiveIdx(labelIdx);
         setTyped(prev => {
           const next = [...prev];
           next[labelIdx] = label.slice(0, charIdx);
@@ -32,7 +34,7 @@ function TypewriterLabels() {
         } else {
           labelIdx++;
           charIdx = 0;
-          setTimeout(tick, 180);
+          setTimeout(tick, 200);
         }
       };
       setTimeout(tick, 300);
@@ -44,8 +46,8 @@ function TypewriterLabels() {
   return (
     <div ref={ref} className="font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.45rem 2rem" }}>
       {LABELS.map((label, i) => (
-        <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, minHeight: "1.2em" }}>
-          {typed[i]}{typed[i] && typed[i].length < label.length ? <span style={{ opacity: 0.6 }}>|</span> : null}
+        <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, minHeight: "1.2em", whiteSpace: "nowrap" }}>
+          {typed[i]}{activeIdx === i ? <span style={{ opacity: 0.6 }}>|</span> : null}
         </p>
       ))}
     </div>
@@ -193,10 +195,7 @@ export default function Home() {
                 Hi! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
               </p>
               <TypewriterLabels />
-              <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem", paddingLeft: "1.5rem" }}>
-                <img src="/metrics1.png" alt="Metrics" style={{ width: "48%", borderRadius: "8px", opacity: 0.9 }} />
-                <img src="/metrics2.png" alt="Metrics" style={{ width: "48%", borderRadius: "8px", opacity: 0.9 }} />
-              </div>
+              <img src="/metrics.png" alt="Metrics" style={{ width: "100%", borderRadius: "8px", opacity: 0.9, marginTop: "1.5rem", paddingLeft: "1.5rem" }} />
             </Reveal>
 
             <div className="order-2 flex justify-center" style={{ marginTop: "2rem" }}>

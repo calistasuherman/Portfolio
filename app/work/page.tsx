@@ -156,7 +156,7 @@ function TrayNav() {
         </div>
 
         {/* Food elements — draggable */}
-        <TrayItem src="/tray-croissant.png" alt="Cinematography" label="cinematography" rotate={-10} href="cinematography"
+        <TrayItem src="/tray-croissant.png" alt="Videography" label="videography" rotate={-10} href="videography"
           style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }} />
         <TrayItem src="/tray-figs.png" alt="YouTube Integrations" label="youtube integrations" href="youtube-integrations"
           style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }} />
@@ -193,8 +193,20 @@ function VideoCard({ label, src, staggerDelay = 0, square = false, fill = false,
   label: string; src: string; staggerDelay?: number; square?: boolean; fill?: boolean; autoplay?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
+  const [visible, setVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const isEmbed = src.includes("youtube.com/embed") || src.includes("drive.google.com");
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setVisible(true); obs.disconnect(); }
+    }, { threshold: 0.1 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -219,8 +231,15 @@ function VideoCard({ label, src, staggerDelay = 0, square = false, fill = false,
 
   return (
     <div
+      ref={cardRef}
       className="work-card group relative overflow-hidden rounded-lg cursor-pointer"
-      style={{ ...(fill ? { width: "100%", height: "100%" } : { aspectRatio: square ? "1/1" : "16/9" }), border: "1px solid rgba(139,0,0,0.2)", transitionDelay: `${staggerDelay}ms` }}
+      style={{
+        ...(fill ? { width: "100%", height: "100%" } : { aspectRatio: square ? "1/1" : "16/9" }),
+        border: "1px solid rgba(139,0,0,0.2)",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(32px)",
+        transition: `opacity 0.65s cubic-bezier(0.16,1,0.3,1) ${staggerDelay}ms, transform 0.65s cubic-bezier(0.16,1,0.3,1) ${staggerDelay}ms`,
+      }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -329,10 +348,10 @@ export default function WorkPage() {
           <div style={{ height: "80px" }} />
 
           <Reveal delay={80}>
-            <WorkSubsection id="cinematography" title={
+            <WorkSubsection id="videography" title={
               <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>C</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>inematography</span>
+                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>V</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ideography</span>
               </div>
             }>
               <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>

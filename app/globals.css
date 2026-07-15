@@ -55,6 +55,12 @@
 html {
   scroll-behavior: smooth;
   cursor: none;
+  scroll-padding-top: 80px;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -65,6 +71,7 @@ body {
   background-attachment: fixed;
   color: #f5f0f0;
   cursor: none;
+  overscroll-behavior: none;
 }
 
 a, button {
