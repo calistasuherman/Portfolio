@@ -53,8 +53,9 @@ export default function ContactPage() {
             minHeight: "100vh",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "flex-start",
             gap: "3rem",
+            paddingLeft: "clamp(2rem, 6vw, 6rem)",
             padding: "5rem clamp(1rem, 4vw, 4rem)",
             paddingTop: "calc(80px + 1rem)",
           }}
@@ -115,12 +116,9 @@ export default function ContactPage() {
 
         </section>
 
-        <footer className="section-content relative py-8" style={{ zIndex: 2, borderTop: "1px solid rgba(139,0,0,0.2)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <footer className="section-content relative py-8 text-center" style={{ zIndex: 2, borderTop: "1px solid rgba(139,0,0,0.2)" }}>
           <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
             @2026 CALISTA SUHERMAN.&nbsp;&nbsp;PSALM 46:5
-          </p>
-          <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
-            <span style={{ fontStyle: "italic" }}>CURRENTLY IN: SAN FRANCISCO</span>
           </p>
         </footer>
       </main>

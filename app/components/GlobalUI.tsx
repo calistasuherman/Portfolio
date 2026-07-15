@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 
 /* ── Playlist ─────────────────────────────────────────────────── */
 const SONGS = [
@@ -26,8 +26,6 @@ function getAudio(): HTMLAudioElement | null {
   return _audio;
 }
 
-type TrailDot = { x: number; y: number; id: number };
-
 export default function GlobalUI() {
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [cursorHover, setCursorHover] = useState(false);
@@ -36,8 +34,6 @@ export default function GlobalUI() {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [trackIndex, setTrackIndex] = useState(0);
-  const [trail, setTrail] = useState<TrailDot[]>([]);
-  const trailId = useRef(0);
   const playerRef = useRef<HTMLDivElement>(null);
 
   /* click outside player → close popup */
@@ -52,13 +48,9 @@ export default function GlobalUI() {
     return () => document.removeEventListener("mousedown", handler);
   }, [playerOpen]);
 
-  /* cursor + trail */
+  /* cursor */
   useEffect(() => {
-    const move = (e: MouseEvent) => {
-      setCursorPos({ x: e.clientX, y: e.clientY });
-      const id = ++trailId.current;
-      setTrail(prev => [...prev.slice(-14), { x: e.clientX, y: e.clientY, id }]);
-    };
+    const move = (e: MouseEvent) => setCursorPos({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
   }, []);
@@ -178,25 +170,6 @@ export default function GlobalUI() {
 
   return (
     <>
-      {/* Star cursor trail */}
-      {trail.map((dot, i) => {
-        const age = trail.length - 1 - i;
-        const opacity = Math.max(0, 0.55 - age * 0.04);
-        const scale = Math.max(0.3, 1 - age * 0.06);
-        return (
-          <div key={dot.id} style={{
-            position: "fixed", pointerEvents: "none", zIndex: 9998,
-            left: dot.x, top: dot.y,
-            transform: `translate(-50%, -50%) scale(${scale})`,
-            opacity,
-            fontSize: "10px",
-            color: "rgba(232,228,224,0.9)",
-            transition: "opacity 0.3s ease",
-            userSelect: "none",
-          }}>✦</div>
-        );
-      })}
-
       {/* Custom cursor */}
       <div
         className="cursor-dot"

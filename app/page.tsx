@@ -179,7 +179,6 @@ export default function Home() {
                 Hi! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
               </p>
               <TypewriterLabels />
-              <AnalyticsGrid />
             </Reveal>
 
             <div className="order-2 flex justify-center" style={{ marginTop: "2rem" }}>
@@ -271,12 +270,9 @@ export default function Home() {
         </section>
 
         {/* ── Footer ── */}
-        <footer className="section-content py-8" style={{ borderTop: "1px solid rgba(139,0,0,0.2)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
           <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
             @2026 CALISTA SUHERMAN.&nbsp;&nbsp;PSALM 46:5
-          </p>
-          <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em", fontStyle: "italic" }}>
-            CURRENTLY IN: SAN FRANCISCO
           </p>
         </footer>
 
