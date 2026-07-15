@@ -1,24 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 
-type Splat = { id: number; x: number; y: number; r: number; rotate: number };
-
 export default function ContactPage() {
-  /* ── ink splatter ── */
-  const [splats, setSplats] = useState<Splat[]>([]);
-  const splatId = useRef(0);
-
-  const addSplat = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    const target = e.target as HTMLElement;
-    if (target.closest("a") || target.closest("[data-note]")) return;
-    const id = ++splatId.current;
-    setSplats(prev => [...prev, {
-      id, x: e.clientX, y: e.clientY,
-      r: 40 + Math.random() * 60,
-      rotate: Math.random() * 360,
-    }]);
-    setTimeout(() => setSplats(prev => prev.filter(s => s.id !== id)), 900);
-  }, []);
 
   /* ── draggable note ── */
   const noteRef = useRef<HTMLDivElement>(null);
@@ -53,10 +36,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <main
-        className="relative min-h-screen overflow-x-clip"
-        onClick={addSplat}
-      >
+      <main className="relative min-h-screen overflow-x-clip">
         {/* Background image */}
         <div style={{
           position: "fixed", inset: 0, zIndex: 0,
@@ -65,26 +45,6 @@ export default function ContactPage() {
         }} />
         <div style={{ position: "fixed", inset: 0, zIndex: 1, background: "rgba(10,0,0,0.42)" }} />
 
-        {/* Ink splats */}
-        {splats.map(s => (
-          <div key={s.id} style={{
-            position: "fixed", left: s.x, top: s.y, zIndex: 15,
-            transform: `translate(-50%, -50%) rotate(${s.rotate}deg)`,
-            pointerEvents: "none",
-            animation: "splatFade 0.9s ease forwards",
-          }}>
-            <svg width={s.r * 2} height={s.r * 2} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="50" cy="50" rx="28" ry="22" fill="#8b0000" opacity="0.85"/>
-              <ellipse cx="72" cy="38" rx="10" ry="7" fill="#8b0000" opacity="0.7" transform="rotate(-30 72 38)"/>
-              <ellipse cx="28" cy="62" rx="9" ry="6" fill="#8b0000" opacity="0.7" transform="rotate(20 28 62)"/>
-              <ellipse cx="65" cy="68" rx="7" ry="5" fill="#8b0000" opacity="0.65" transform="rotate(-15 65 68)"/>
-              <ellipse cx="35" cy="30" rx="6" ry="4" fill="#8b0000" opacity="0.6" transform="rotate(40 35 30)"/>
-              <circle cx="80" cy="55" r="4" fill="#8b0000" opacity="0.55"/>
-              <circle cx="22" cy="42" r="3" fill="#8b0000" opacity="0.5"/>
-              <circle cx="58" cy="80" r="3.5" fill="#8b0000" opacity="0.5"/>
-            </svg>
-          </div>
-        ))}
 
         <section
           className="section-content relative"
