@@ -336,7 +336,7 @@ export default function WorkPage() {
               </div>
             }>
               <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
-                {["/cinema/cinema1.mp4","/cinema/cinema2.mp4","/cinema/cinema3.mp4","/cinema/cinema4.mp4","/cinema/cinema5.mp4","/cinema/cinema6.mp4","/cinema/cinema7.mp4","/cinema/cinema8.mp4","/cinema/cinema9.mov","/cinema/cinema10.MOV","/cinema/cinema11.mp4","/cinema/cinema12.MP4"].map((src, i) => (
+                {["/cinema/cinema1.mp4","/cinema/cinema2.mp4","/cinema/cinema3.mp4","/cinema/cinema4.mp4","/cinema/cinema5.mp4","/cinema/cinema6.mp4","/cinema/cinema7.mp4","/cinema/cinema8.mp4","/cinema/cinema9.mp4","/cinema/cinema10.mp4","/cinema/cinema11.mp4","/cinema/cinema12.MP4"].map((src, i) => (
                   <VideoCard key={src} label="" src={src} staggerDelay={i * 40} autoplay />
                 ))}
               </div>
@@ -354,7 +354,7 @@ export default function WorkPage() {
               </div>
             }>
               <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
-                {["ve1.mp4","ve2.mp4","ve3.mp4","ve4.MOV","ve5.mp4","ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4","ve11.mp4","ve12.mp4","ve13.mp4","ve14.mp4","ve15.mp4"].map((f, i) => (
+                {["ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4","ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4","ve11.mp4","ve12.mp4","ve13.mp4","ve14.mp4","ve15.mp4"].map((f, i) => (
                   <VideoCard key={f} label="" src={`/ve/${f}`} staggerDelay={i * 40} autoplay />
                 ))}
               </div>
