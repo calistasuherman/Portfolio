@@ -44,14 +44,18 @@ function TypewriterLabels() {
   }, []);
 
   return (
-    <div ref={ref} className="font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "grid", gridTemplateColumns: "max-content max-content", gap: "0.45rem 2rem" }}>
-      {LABELS.map((label, i) => (
-        <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, position: "relative", whiteSpace: "nowrap" }}>
-          <span style={{ visibility: "hidden" }}>{label}</span>
-          <span style={{ position: "absolute", left: 0, top: 0, whiteSpace: "nowrap" }}>
-            {typed[i]}{activeIdx === i ? <span style={{ opacity: 0.6 }}>|</span> : null}
-          </span>
-        </p>
+    <div ref={ref} className="font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "flex", gap: "2rem" }}>
+      {[0, 1].map(col => (
+        <div key={col} style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+          {LABELS.filter((_, i) => i % 2 === col).map((label, row) => {
+            const i = col + row * 2;
+            return (
+              <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, whiteSpace: "nowrap", paddingRight: "0.2em" }}>
+                {typed[i]}{activeIdx === i ? <span style={{ opacity: 0.6 }}>|</span> : null}
+              </p>
+            );
+          })}
+        </div>
       ))}
     </div>
   );
