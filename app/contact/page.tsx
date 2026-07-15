@@ -33,7 +33,7 @@ export default function ContactPage() {
                 {/* Text overlaid on note */}
                 <div style={{
                   position: "absolute",
-                  top: "38%", left: "52%",
+                  top: "38%", left: "44%",
                   transform: "translateX(-50%)",
                   width: "80%",
                   textAlign: "center",
@@ -70,7 +70,7 @@ export default function ContactPage() {
           </div>
 
           {/* Right — "and that's a Wrap" */}
-          <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start", paddingTop: "0.5rem", marginLeft: "-2rem" }}>
+          <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start", paddingTop: "0", marginLeft: "-5rem" }}>
             <div style={{ textAlign: "left" }}>
               <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1.2rem, 2vw, 2rem)", color: "#f5f0f0", letterSpacing: "0.02em", marginBottom: "0.4rem" }}>
                 and that&apos;s a
