@@ -69,17 +69,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Right — "and that's a Wrap" */}
-          <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start", paddingTop: "0", marginLeft: "-5rem" }}>
-            <div style={{ textAlign: "left" }}>
-              <div style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1.2rem, 2vw, 2rem)", color: "#f5f0f0", letterSpacing: "0.02em", marginBottom: "0.4rem" }}>
-                and that&apos;s a
-              </div>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(6rem, 10vw, 10rem)", color: "#f5f0f0", lineHeight: 1 }}>
-                Wrap
-              </div>
-            </div>
-          </div>
         </section>
 
         <footer className="section-content relative py-8 text-center" style={{ zIndex: 2, borderTop: "1px solid rgba(139,0,0,0.2)" }}>
