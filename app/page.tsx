@@ -44,9 +44,9 @@ function TypewriterLabels() {
   }, []);
 
   return (
-    <div ref={ref} className="font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.45rem 2rem" }}>
+    <div ref={ref} className="font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "grid", gridTemplateColumns: "max-content max-content", gap: "0.45rem 2rem", overflow: "visible" }}>
       {LABELS.map((label, i) => (
-        <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, minHeight: "1.2em", whiteSpace: "nowrap" }}>
+        <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, minHeight: "1.2em", whiteSpace: "nowrap", overflow: "visible" }}>
           {typed[i]}{activeIdx === i ? <span style={{ opacity: 0.6 }}>|</span> : null}
         </p>
       ))}
@@ -197,7 +197,7 @@ export default function Home() {
               <TypewriterLabels />
             </Reveal>
 
-            <div className="order-2 flex justify-center" style={{ marginTop: "2rem" }}>
+            <div className="order-2 flex justify-center" style={{ marginTop: "5rem" }}>
               <Reveal direction="right" delay={200}>
                 <FlipPhoto />
               </Reveal>
