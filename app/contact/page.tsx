@@ -131,7 +131,7 @@ export default function ContactPage() {
                   >
                     cal1starcollab@gmail.com
                   </a>
-                  <div style={{ display: "flex", justifyContent: "center", gap: "1.2rem" }}>
+                  <div style={{ display: "flex", justifyContent: "center", gap: "1.2rem", paddingLeft: "1.5rem" }}>
                     {[
                       ["Instagram", "https://instagram.com/cal1star"],
                       ["Youtube",   "https://www.youtube.com/@cal1stvr"],
