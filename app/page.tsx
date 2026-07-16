@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Reveal, useReveal } from "./components/Reveal";
 
-const LABELS = ["Content Creator", "Gen Z (21 Y/O)", "Coffee Connoisseur", "Fashion Lover", "Frequent Traveler", "SF Based"];
+const LABELS = ["Content Creator", "Gen Z (21 Y/O)", "Coffee Connoisseur", "Fashion Lover", "Frequent Traveler", "Industrial Engineer", "SF Based"];
 
 function TypewriterLabels() {
   const [revealed, setRevealed] = useState<number[]>(Array(LABELS.length).fill(0));
