@@ -11,7 +11,7 @@ const youtubeIntegrations = [
   { label: "BypassGPT",   src: "/bypassgpt.mp4"   },
 ];
 
-/* ── Draggable TrayItem ─────────────────────────────────────── */
+/* ── TrayItem — hover animation + click to scroll ── */
 function TrayItem({
   src, alt, label, style, rotate = 0, labelTop = "45%", labelLeft = "50%", href,
 }: {
@@ -20,174 +20,48 @@ function TrayItem({
   labelTop?: string; labelLeft?: string; href?: string;
 }) {
   const [hovered, setHovered] = useState(false);
-  const [freed, setFreed]     = useState(false);
-  const [pos, setPos]         = useState({ x: 0, y: 0 });
-  const [freedW, setFreedW]   = useState(0);
-  const [dragging, setDragging] = useState(false);
-  const anchorRef   = useRef<HTMLDivElement>(null);
-  const offsetRef   = useRef({ x: 0, y: 0 });
-  const mouseDownPos = useRef({ x: 0, y: 0 });
-
-  useEffect(() => {
-    if (!dragging) return;
-    const onMove = (e: MouseEvent) => {
-      setPos({ x: e.clientX - offsetRef.current.x, y: e.clientY - offsetRef.current.y });
-    };
-    const onUp = () => setDragging(false);
-    document.addEventListener("mousemove", onMove);
-    document.addEventListener("mouseup",  onUp);
-    return () => {
-      document.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseup",  onUp);
-    };
-  }, [dragging]);
-
-  function onMouseDown(e: React.MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    mouseDownPos.current = { x: e.clientX, y: e.clientY };
-    if (!freed) {
-      const el = anchorRef.current;
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        offsetRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-        setFreedW(rect.width);
-        setPos({ x: rect.left, y: rect.top });
-        setFreed(true);
-      }
-    } else {
-      offsetRef.current = { x: e.clientX - pos.x, y: e.clientY - pos.y };
-    }
-    setDragging(true);
-  }
-
-  function onMouseUp(e: React.MouseEvent) {
-    const dx = Math.abs(e.clientX - mouseDownPos.current.x);
-    const dy = Math.abs(e.clientY - mouseDownPos.current.y);
-    if (dx < 5 && dy < 5 && href) {
-      document.getElementById(href)?.scrollIntoView({ behavior: "smooth" });
-    }
-  }
-
-  const content = (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
-      style={{
-        position: "relative", display: "inline-block",
-        cursor: dragging ? "grabbing" : "grab",
-        userSelect: "none", pointerEvents: "auto",
-        width: "100%",
-      }}
-    >
-      <img
-        src={src} alt={alt} draggable={false}
-        style={{
-          width: "100%", objectFit: "contain", display: "block",
-          transition: dragging ? "none" : "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), filter 0.35s ease",
-          transform: hovered && !dragging
-            ? `rotate(${rotate}deg) translateY(-10px) scale(1.08)`
-            : `rotate(${rotate}deg)`,
-          filter: hovered
-            ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))"
-            : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
-        }}
-      />
-      {label && (
-        <span style={{
-          position: "absolute", top: labelTop, left: labelLeft,
-          transform: "translate(-50%, -50%)",
-          fontFamily: "var(--font-inter)", fontSize: "6px", fontWeight: 400,
-          color: "#ffffff", letterSpacing: "0.2em", textTransform: "uppercase",
-          textAlign: "center", whiteSpace: "nowrap",
-          opacity: hovered ? 1 : 0.85,
-          transition: "opacity 0.3s ease", pointerEvents: "none",
-        }}>
-          {label}
-        </span>
-      )}
-    </div>
-  );
-
-  if (freed) {
-    return (
-      <>
-        {/* invisible ghost keeps tray layout intact */}
-        <div ref={anchorRef} style={{ ...style, opacity: 0, pointerEvents: "none" }} />
-        {/* floating element at viewport coords */}
-        <div style={{
-          position: "fixed", left: pos.x, top: pos.y,
-          width: freedW, zIndex: 500, pointerEvents: "none",
-        }}>
-          <div style={{ pointerEvents: "auto" }}>{content}</div>
-        </div>
-      </>
-    );
-  }
 
   return (
-    <div ref={anchorRef} style={{ ...style, pointerEvents: "none" }}>
-      <div style={{ pointerEvents: "auto" }}>{content}</div>
+    <div
+      style={{ ...style, pointerEvents: "auto", cursor: "pointer" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={() => href && document.getElementById(href)?.scrollIntoView({ behavior: "smooth" })}
+    >
+      <div style={{ position: "relative", display: "inline-block", width: "100%" }}>
+        <img
+          src={src} alt={alt} draggable={false}
+          style={{
+            width: "100%", objectFit: "contain", display: "block",
+            transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), filter 0.35s ease",
+            transform: hovered ? `rotate(${rotate}deg) translateY(-10px) scale(1.08)` : `rotate(${rotate}deg)`,
+            filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
+          }}
+        />
+        {label && (
+          <span style={{
+            position: "absolute", top: labelTop, left: labelLeft,
+            transform: "translate(-50%, -50%)",
+            fontFamily: "var(--font-inter)", fontSize: "6px", fontWeight: 400,
+            color: "#ffffff", letterSpacing: "0.2em", textTransform: "uppercase",
+            textAlign: "center", whiteSpace: "nowrap",
+            opacity: hovered ? 1 : 0.85,
+            transition: "opacity 0.3s ease", pointerEvents: "none",
+          }}>
+            {label}
+          </span>
+        )}
+      </div>
     </div>
   );
 }
 
 /* ── TrayNav ── */
 function TrayNav() {
-  const trayRef = useRef<HTMLDivElement>(null);
-  const dragging = useRef(false);
-  const startX = useRef(0);
-  const startLeft = useRef(0);
-  const [trayX, setTrayX] = useState(0);
-  const [dragCursorPos, setDragCursorPos] = useState({ x: -200, y: -200 });
-  const [showDragCursor, setShowDragCursor] = useState(false);
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      setDragCursorPos({ x: e.clientX, y: e.clientY });
-      if (!dragging.current) return;
-      const dx = e.clientX - startX.current;
-      setTrayX(Math.max(-300, Math.min(300, startLeft.current + dx)));
-    };
-    const onUp = () => { dragging.current = false; };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
-  }, []);
-
-  const onTrayDown = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest("[data-food]")) return;
-    dragging.current = true;
-    startX.current = e.clientX;
-    startLeft.current = trayX;
-  };
-
   return (
     <div style={{ width: "100%", position: "relative", overflow: "visible" }}>
-      {/* "Drag me" custom cursor — only visible on food items */}
-      {showDragCursor && (
-        <div style={{
-          position: "fixed", left: dragCursorPos.x, top: dragCursorPos.y,
-          transform: "translate(-50%, -50%)",
-          pointerEvents: "none", zIndex: 9999,
-          background: "rgba(245,240,240,0.92)", borderRadius: "9999px",
-          padding: "5px 12px",
-          fontFamily: "var(--font-inter)", fontSize: "0.55rem",
-          letterSpacing: "0.12em", textTransform: "uppercase", color: "#1a0000",
-          whiteSpace: "nowrap",
-        }}>
-          drag me
-        </div>
-      )}
-
-      <div
-        ref={trayRef}
-        className="relative"
-        style={{ marginTop: "-1.5rem", transform: `translateX(${trayX}px)`, transition: dragging.current ? "none" : "transform 0.4s cubic-bezier(0.16,1,0.3,1)" }}
-      >
-        <img src="/tray-bg.png" alt="Tray" onMouseDown={onTrayDown} style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))", cursor: "grab" }} />
+      <div className="relative" style={{ marginTop: "-1.5rem" }}>
+        <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))" }} />
 
         {/* Title */}
         <div style={{ position: "absolute", left: "3%", top: "8%", zIndex: 4, pointerEvents: "none" }}>
@@ -203,33 +77,13 @@ function TrayNav() {
           </p>
         </div>
 
-        {/* Food elements — draggable, show "drag me" cursor on hover */}
-        <div data-food="true" onMouseEnter={() => setShowDragCursor(true)} onMouseLeave={() => setShowDragCursor(false)}
-          style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }}>
-          <TrayItem src="/tray-croissant.png" alt="Videography" label="videography" rotate={-10} href="videography"
-            style={{ position: "relative", width: "100%" }} />
-        </div>
-        <div data-food="true" onMouseEnter={() => setShowDragCursor(true)} onMouseLeave={() => setShowDragCursor(false)}
-          style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }}>
-          <TrayItem src="/tray-figs.png" alt="YouTube Integrations" label="youtube integrations" href="youtube-integrations"
-            style={{ position: "relative", width: "100%" }} />
-        </div>
-        <div data-food="true" onMouseEnter={() => setShowDragCursor(true)} onMouseLeave={() => setShowDragCursor(false)}
-          style={{ position: "absolute", left: "59%", top: "34%", transform: "translate(-50%, -50%)", zIndex: 2, width: "40%" }}>
-          <TrayItem src="/tray-coffee.png" alt="Video Editing" label="video editing" labelTop="40%" href="video-editing"
-            style={{ position: "relative", width: "100%" }} />
-        </div>
-
-        {/* hint */}
-        <p style={{
-          position: "absolute", left: "3%", top: "42%",
-          fontFamily: "var(--font-inter)", fontSize: "clamp(0.42rem, 0.7vw, 0.58rem)",
-          letterSpacing: "0.18em", textTransform: "uppercase",
-          color: "rgba(245,240,240,0.38)", whiteSpace: "nowrap",
-          zIndex: 10, pointerEvents: "none",
-        }}>
-          move or click me!
-        </p>
+        {/* Food elements — click to navigate */}
+        <TrayItem src="/tray-croissant.png" alt="Videography" label="videography" rotate={-10} href="videography"
+          style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }} />
+        <TrayItem src="/tray-figs.png" alt="YouTube Integrations" label="youtube integrations" href="youtube-integrations"
+          style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }} />
+        <TrayItem src="/tray-coffee.png" alt="Video Editing" label="video editing" labelTop="40%" href="video-editing"
+          style={{ position: "absolute", left: "59%", top: "34%", transform: "translate(-50%, -50%)", zIndex: 2, width: "40%" }} />
       </div>
     </div>
   );
@@ -272,8 +126,8 @@ function VideographyCarousel() {
     const onMouse = (e: MouseEvent) => {
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
-      mouseRotY.current = ((e.clientX - cx) / cx) * 25;
-      mouseRotX.current = 8 + ((e.clientY - cy) / cy) * 20;
+      mouseRotY.current = ((e.clientX - cx) / cx) * 8;
+      mouseRotX.current = 8 + ((e.clientY - cy) / cy) * 5;
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -300,56 +154,59 @@ function VideographyCarousel() {
   return (
     <div ref={sectionRef} style={{ height: "300vh", position: "relative", scrollMarginTop: "20px" }}>
       <div id="videography" style={{ position: "absolute", top: "120vh" }} />
-      <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", paddingTop: "7vh", overflow: "hidden" }}>
+      <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
 
-        {/* Title — high up so circle doesn't overlap */}
-        <div style={{ marginBottom: "5vh", textAlign: "center", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+        {/* Title — above carousel */}
+        <div style={{ position: "absolute", top: "8vh", left: 0, right: 0, textAlign: "center", zIndex: 20, pointerEvents: "none", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
           <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>V</span>
           <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ideography</span>
         </div>
 
-        <div style={{ perspective: "1600px", perspectiveOrigin: "50% 50%", willChange: "transform" }}>
-          <div
-            ref={innerRef}
-            style={{
-              position: "relative",
-              width: `${CARD_W}px`,
-              height: `${CARD_H}px`,
-              transformStyle: "preserve-3d",
-              transform: "rotateX(8deg) rotateY(0deg)",
-              willChange: "transform",
-            }}
-          >
-            {CINEMA_VIDEOS.map((src, i) => {
-              const angle = (360 / n) * i;
-              return (
-                <div
-                  key={src}
-                  style={{
-                    position: "absolute",
-                    width: `${CARD_W}px`,
-                    height: `${CARD_H}px`,
-                    transform: `rotateY(${angle}deg) translateZ(${RADIUS}px)`,
-                    borderRadius: "8px",
-                    overflow: "hidden",
-                    border: "1px solid rgba(139,0,0,0.3)",
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
-                    backfaceVisibility: "hidden",
-                    willChange: "transform",
-                  }}
-                >
-                  <video
-                    src={src}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transform: "translateZ(0)" }}
-                  />
-                </div>
-              );
-            })}
+        {/* Carousel — centered in viewport */}
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ perspective: "1600px", perspectiveOrigin: "50% 50%", willChange: "transform" }}>
+            <div
+              ref={innerRef}
+              style={{
+                position: "relative",
+                width: `${CARD_W}px`,
+                height: `${CARD_H}px`,
+                transformStyle: "preserve-3d",
+                transform: "rotateX(8deg) rotateY(0deg)",
+                willChange: "transform",
+              }}
+            >
+              {CINEMA_VIDEOS.map((src, i) => {
+                const angle = (360 / n) * i;
+                return (
+                  <div
+                    key={src}
+                    style={{
+                      position: "absolute",
+                      width: `${CARD_W}px`,
+                      height: `${CARD_H}px`,
+                      transform: `rotateY(${angle}deg) translateZ(${RADIUS}px)`,
+                      borderRadius: "8px",
+                      overflow: "hidden",
+                      border: "1px solid rgba(139,0,0,0.3)",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
+                      backfaceVisibility: "hidden",
+                      willChange: "transform",
+                    }}
+                  >
+                    <video
+                      src={src}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transform: "translateZ(0)" }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 
