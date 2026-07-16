@@ -74,20 +74,20 @@ const brands = [
 
 const services = [
   {
-    title: "Video Editing",
-    desc: "Short-form & long-form content editing — YouTube, Reels, TikTok. Transitions, color grading, captions, and sound design.",
+    title: "Cinematic & Motion Editing",
+    desc: "From clean, professional cuts to flashy motion edits with VFX, SFX, dynamic transitions, and frame-perfect pacing — short-form and long-form across YouTube, Reels, and TikTok.",
   },
   {
-    title: "Brand Integration",
-    desc: "Seamless sponsored content that feels native to your audience. Script-to-screen execution with full creative direction.",
+    title: "Videography & Photography",
+    desc: "On-camera filming and photography for brand advertising — from cinematic lifestyle shoots to polished product visuals. Both video and photo covered, start to finish.",
   },
   {
-    title: "Fashion & Fit Checks",
-    desc: "Outfit content creation, styling, and aesthetic curation tailored to your brand's visual identity.",
+    title: "Brand Collaborations & YouTube Integration",
+    desc: "Sponsored content, YouTube integrations, and brand partnerships that feel native — not forced. Script-to-screen execution with full creative direction for fashion and lifestyle brands.",
   },
   {
-    title: "Content Strategy",
-    desc: "Platform growth strategy, content calendars, and trend-driven ideas for fashion and lifestyle brands.",
+    title: "Fashion & Content Strategy",
+    desc: "Outfit content creation, styling, aesthetic curation, and platform growth strategy. Content calendars and trend-driven ideas tailored to your brand's visual identity.",
   },
 ];
 
