@@ -381,11 +381,9 @@ function FlipPhoto() {
     });
   }
 
-  const w = "clamp(220px, 28vw, 360px)";
-  const h = "clamp(280px, 36vw, 480px)";
-
   return (
-    <div style={{ position: "relative", width: "clamp(200px, 22vw, 300px)", height: "clamp(260px, 28vw, 390px)" }}>
+    <div style={{ position: "relative", width: "clamp(260px, 32vw, 420px)", height: "clamp(340px, 42vw, 560px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ position: "relative", width: "clamp(180px, 20vw, 270px)", height: "clamp(230px, 26vw, 360px)" }}>
       {order.map((photoIdx, stackPos) => {
         const off = PHOTO_OFFSETS[stackPos] ?? PHOTO_OFFSETS[PHOTO_OFFSETS.length - 1];
         const isTop = stackPos === 0;
@@ -414,6 +412,7 @@ function FlipPhoto() {
           </div>
         );
       })}
+      </div>
     </div>
   );
 }
