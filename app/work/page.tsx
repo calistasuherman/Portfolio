@@ -345,9 +345,7 @@ export default function WorkPage() {
           <Reveal>
             <TrayNav />
           </Reveal>
-          <div style={{ height: "40px" }} />
-          <hr style={{ border: "none", borderTop: "1px solid rgba(245,240,240,0.12)", margin: "0" }} />
-          <div style={{ height: "40px" }} />
+          <div style={{ height: "80px" }} />
 
           <Reveal delay={80}>
             <WorkSubsection id="videography" title={
