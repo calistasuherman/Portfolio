@@ -136,13 +136,78 @@ function TrayItem({
 
 /* ── TrayNav ── */
 function TrayNav() {
+  const trayRef = useRef<HTMLDivElement>(null);
+  const dragging = useRef(false);
+  const startX = useRef(0);
+  const startLeft = useRef(0);
+  const [trayX, setTrayX] = useState(0);
+  const [dragCursorPos, setDragCursorPos] = useState({ x: -200, y: -200 });
+  const [showDragCursor, setShowDragCursor] = useState(false);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      setDragCursorPos({ x: e.clientX, y: e.clientY });
+      if (!dragging.current) return;
+      const dx = e.clientX - startX.current;
+      setTrayX(Math.max(-300, Math.min(300, startLeft.current + dx)));
+    };
+    const onUp = () => { dragging.current = false; };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
+  }, []);
+
+  const onTrayDown = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest("[data-food]")) return;
+    dragging.current = true;
+    startX.current = e.clientX;
+    startLeft.current = trayX;
+  };
+
   return (
-    <div style={{ width: "100%", position: "relative" }}>
-      <div className="relative" style={{ marginTop: "-1.5rem" }}>
-        <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))" }} />
+    <div style={{ width: "100%", position: "relative", overflow: "visible" }}>
+      {/* Background ghost text */}
+      <div style={{
+        position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
+        pointerEvents: "none", zIndex: 0, overflow: "hidden",
+      }}>
+        <p style={{
+          fontFamily: "PerandoryCondensed, sans-serif",
+          fontSize: "clamp(4rem, 10vw, 11rem)",
+          fontWeight: "normal", color: "rgba(245,240,240,0.04)",
+          letterSpacing: "0.08em", whiteSpace: "nowrap", userSelect: "none",
+          lineHeight: 1,
+        }}>
+          WHAT I BRING TO THE TABLE
+        </p>
+      </div>
+
+      {/* "Drag me" custom cursor — only visible on food items */}
+      {showDragCursor && (
+        <div style={{
+          position: "fixed", left: dragCursorPos.x, top: dragCursorPos.y,
+          transform: "translate(-50%, -50%)",
+          pointerEvents: "none", zIndex: 9999,
+          background: "rgba(245,240,240,0.92)", borderRadius: "9999px",
+          padding: "5px 12px",
+          fontFamily: "var(--font-inter)", fontSize: "0.55rem",
+          letterSpacing: "0.12em", textTransform: "uppercase", color: "#1a0000",
+          whiteSpace: "nowrap",
+        }}>
+          drag me
+        </div>
+      )}
+
+      <div
+        ref={trayRef}
+        className="relative"
+        style={{ marginTop: "-1.5rem", transform: `translateX(${trayX}px)`, transition: dragging.current ? "none" : "transform 0.4s cubic-bezier(0.16,1,0.3,1)", cursor: "grab" }}
+        onMouseDown={onTrayDown}
+      >
+        <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))", pointerEvents: "none" }} />
 
         {/* Title */}
-        <div style={{ position: "absolute", left: "3%", top: "8%", zIndex: 4 }}>
+        <div style={{ position: "absolute", left: "3%", top: "8%", zIndex: 4, pointerEvents: "none" }}>
           <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.2rem, 2.4vw, 2.6rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: "normal", letterSpacing: "0.15em" }}>
             WHAT&nbsp;&nbsp;&nbsp;I
           </p>
@@ -155,15 +220,24 @@ function TrayNav() {
           </p>
         </div>
 
-        {/* Food elements — draggable */}
-        <TrayItem src="/tray-croissant.png" alt="Videography" label="videography" rotate={-10} href="videography"
-          style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }} />
-        <TrayItem src="/tray-figs.png" alt="YouTube Integrations" label="youtube integrations" href="youtube-integrations"
-          style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }} />
-        <TrayItem src="/tray-coffee.png" alt="Video Editing" label="video editing" labelTop="40%" href="video-editing"
-          style={{ position: "absolute", left: "59%", top: "34%", transform: "translate(-50%, -50%)", zIndex: 2, width: "40%" }} />
+        {/* Food elements — draggable, show "drag me" cursor on hover */}
+        <div data-food="true" onMouseEnter={() => setShowDragCursor(true)} onMouseLeave={() => setShowDragCursor(false)}
+          style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }}>
+          <TrayItem src="/tray-croissant.png" alt="Videography" label="videography" rotate={-10} href="videography"
+            style={{ position: "relative", width: "100%" }} />
+        </div>
+        <div data-food="true" onMouseEnter={() => setShowDragCursor(true)} onMouseLeave={() => setShowDragCursor(false)}
+          style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }}>
+          <TrayItem src="/tray-figs.png" alt="YouTube Integrations" label="youtube integrations" href="youtube-integrations"
+            style={{ position: "relative", width: "100%" }} />
+        </div>
+        <div data-food="true" onMouseEnter={() => setShowDragCursor(true)} onMouseLeave={() => setShowDragCursor(false)}
+          style={{ position: "absolute", left: "59%", top: "34%", transform: "translate(-50%, -50%)", zIndex: 2, width: "40%" }}>
+          <TrayItem src="/tray-coffee.png" alt="Video Editing" label="video editing" labelTop="40%" href="video-editing"
+            style={{ position: "relative", width: "100%" }} />
+        </div>
 
-        {/* "move or click me" hint */}
+        {/* hint */}
         <p style={{
           position: "absolute", left: "3%", top: "42%",
           fontFamily: "var(--font-inter)", fontSize: "clamp(0.42rem, 0.7vw, 0.58rem)",
@@ -188,15 +262,18 @@ const CINEMA_VIDEOS = [
 
 function VideographyCarousel() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const rotRef = useRef(0);
-  const displayRotRef = useRef(0);
+  const scrollRotY = useRef(0);
+  const mouseRotY = useRef(0);
+  const mouseRotX = useRef(8);
+  const dispRotY = useRef(0);
+  const dispRotX = useRef(8);
   const rafRef = useRef<number>();
   const innerRef = useRef<HTMLDivElement>(null);
 
   const n = CINEMA_VIDEOS.length;
   const RADIUS = 520;
-  const CARD_W = 200;
-  const CARD_H = 113; // 16:9
+  const CARD_W = 220;
+  const CARD_H = 124;
 
   useEffect(() => {
     const onScroll = () => {
@@ -206,14 +283,25 @@ function VideographyCarousel() {
       const sectionH = section.offsetHeight - window.innerHeight;
       const scrolled = -rect.top;
       const progress = Math.max(0, Math.min(1, scrolled / sectionH));
-      rotRef.current = progress * 360;
+      scrollRotY.current = progress * 360;
     };
+
+    const onMouse = (e: MouseEvent) => {
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 2;
+      mouseRotY.current = ((e.clientX - cx) / cx) * 25;
+      mouseRotX.current = 8 + ((e.clientY - cy) / cy) * 20;
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("mousemove", onMouse, { passive: true });
 
     const animate = () => {
-      displayRotRef.current += (rotRef.current - displayRotRef.current) * 0.06;
+      const targetY = scrollRotY.current + mouseRotY.current;
+      dispRotY.current += (targetY - dispRotY.current) * 0.05;
+      dispRotX.current += (mouseRotX.current - dispRotX.current) * 0.05;
       if (innerRef.current) {
-        innerRef.current.style.transform = `rotateX(8deg) rotateY(${displayRotRef.current}deg)`;
+        innerRef.current.style.transform = `rotateX(${dispRotX.current}deg) rotateY(${dispRotY.current}deg)`;
       }
       rafRef.current = requestAnimationFrame(animate);
     };
@@ -221,20 +309,22 @@ function VideographyCarousel() {
 
     return () => {
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("mousemove", onMouse);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
   return (
     <div ref={sectionRef} id="videography" style={{ height: "500vh", position: "relative", scrollMarginTop: "20px" }}>
-      {/* sticky title + carousel */}
-      <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-        <div style={{ marginBottom: "3rem", textAlign: "center", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+      <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", paddingTop: "7vh", overflow: "hidden" }}>
+
+        {/* Title — high up so circle doesn't overlap */}
+        <div style={{ marginBottom: "5vh", textAlign: "center", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
           <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>V</span>
           <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ideography</span>
         </div>
 
-        <div style={{ perspective: "1400px", perspectiveOrigin: "50% 40%" }}>
+        <div style={{ perspective: "1600px", perspectiveOrigin: "50% 50%", willChange: "transform" }}>
           <div
             ref={innerRef}
             style={{
@@ -243,6 +333,7 @@ function VideographyCarousel() {
               height: `${CARD_H}px`,
               transformStyle: "preserve-3d",
               transform: "rotateX(8deg) rotateY(0deg)",
+              willChange: "transform",
             }}
           >
             {CINEMA_VIDEOS.map((src, i) => {
@@ -258,8 +349,9 @@ function VideographyCarousel() {
                     borderRadius: "8px",
                     overflow: "hidden",
                     border: "1px solid rgba(139,0,0,0.3)",
-                    boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
                     backfaceVisibility: "hidden",
+                    willChange: "transform",
                   }}
                 >
                   <video
@@ -268,7 +360,8 @@ function VideographyCarousel() {
                     muted
                     loop
                     playsInline
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                    preload="auto"
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transform: "translateZ(0)" }}
                   />
                 </div>
               );
@@ -276,8 +369,8 @@ function VideographyCarousel() {
           </div>
         </div>
 
-        <p style={{ marginTop: "3rem", fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)" }}>
-          scroll to explore
+        <p style={{ marginTop: "auto", marginBottom: "3vh", fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(245,240,240,0.3)" }}>
+          scroll or move cursor to explore
         </p>
       </div>
     </div>
