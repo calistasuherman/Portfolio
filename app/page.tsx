@@ -349,15 +349,63 @@ function StatCard({ stat, visible, delay }: { stat: (typeof analytics)[number]; 
   );
 }
 
+const STACK_PHOTOS = ["/c1.png", "/c2.png", "/c3.png", "/c4.png", "/c5.png", "/c6.png", "/c7.png"];
+
+const PHOTO_OFFSETS = [
+  { rotate: 0,   tx: 0,   ty: 0   },
+  { rotate: -3,  tx: -8,  ty: 6   },
+  { rotate: 5,   tx: 10,  ty: 10  },
+  { rotate: -6,  tx: -14, ty: 16  },
+  { rotate: 3,   tx: 6,   ty: 20  },
+  { rotate: -4,  tx: -10, ty: 24  },
+  { rotate: 7,   tx: 12,  ty: 28  },
+];
+
 function FlipPhoto() {
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    const t = setInterval(() => setShow(s => !s), 500);
-    return () => clearInterval(t);
-  }, []);
+  const [order, setOrder] = useState(STACK_PHOTOS.map((_, i) => i));
+
+  function handleClick() {
+    setOrder(prev => {
+      const next = [...prev];
+      const top = next.shift()!;
+      next.push(top);
+      return next;
+    });
+  }
+
+  const w = "clamp(220px, 28vw, 360px)";
+  const h = "clamp(280px, 36vw, 480px)";
+
   return (
-    <div className="relative overflow-hidden rounded-2xl" style={{ width: "clamp(260px, 32vw, 420px)", height: "clamp(340px, 42vw, 560px)", border: "none" }}>
-      <Image src={show ? "/about-photo2.png" : "/about-photo1.png"} alt="Calista Suherman" fill className="object-cover object-top" />
+    <div style={{ position: "relative", width: "clamp(220px, 28vw, 360px)", height: "clamp(280px, 36vw, 480px)" }}>
+      {order.map((photoIdx, stackPos) => {
+        const off = PHOTO_OFFSETS[stackPos] ?? PHOTO_OFFSETS[PHOTO_OFFSETS.length - 1];
+        const isTop = stackPos === 0;
+        return (
+          <div
+            key={photoIdx}
+            onClick={isTop ? handleClick : undefined}
+            style={{
+              position: "absolute",
+              inset: 0,
+              transform: `translate(${off.tx}px, ${off.ty}px) rotate(${off.rotate}deg)`,
+              transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
+              zIndex: order.length - stackPos,
+              cursor: isTop ? "pointer" : "default",
+              borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: isTop ? "0 12px 40px rgba(0,0,0,0.5)" : "0 4px 16px rgba(0,0,0,0.3)",
+            }}
+          >
+            <img
+              src={STACK_PHOTOS[photoIdx]}
+              alt={`Photo ${photoIdx + 1}`}
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block", userSelect: "none", pointerEvents: "none" }}
+              draggable={false}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
