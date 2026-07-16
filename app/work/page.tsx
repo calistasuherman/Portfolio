@@ -11,55 +11,131 @@ const youtubeIntegrations = [
   { label: "BypassGPT",   src: "/bypassgpt.mp4"   },
 ];
 
-/* ── TrayItem — hover animation + click to scroll ── */
+/* ── TrayItem — draggable food item ── */
 function TrayItem({
   src, alt, label, style, rotate = 0, labelTop = "45%", labelLeft = "50%", href,
+  onShowDragCursor,
 }: {
   src: string; alt: string; label?: string;
   style: React.CSSProperties; rotate?: number;
   labelTop?: string; labelLeft?: string; href?: string;
+  onShowDragCursor?: (show: boolean) => void;
 }) {
   const [hovered, setHovered] = useState(false);
+  const [freed, setFreed] = useState(false);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [freedW, setFreedW] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const offsetRef = useRef({ x: 0, y: 0 });
+  const mouseDownPos = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (!dragging) return;
+    const onMove = (e: MouseEvent) => setPos({ x: e.clientX - offsetRef.current.x, y: e.clientY - offsetRef.current.y });
+    const onUp = () => setDragging(false);
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", onUp);
+    return () => { document.removeEventListener("mousemove", onMove); document.removeEventListener("mouseup", onUp); };
+  }, [dragging]);
+
+  function onMouseDown(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    mouseDownPos.current = { x: e.clientX, y: e.clientY };
+    const el = anchorRef.current;
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      if (!freed) {
+        offsetRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+        setFreedW(rect.width);
+        setPos({ x: rect.left, y: rect.top });
+        setFreed(true);
+      } else {
+        offsetRef.current = { x: e.clientX - pos.x, y: e.clientY - pos.y };
+      }
+    }
+    setDragging(true);
+  }
+
+  function onMouseUp(e: React.MouseEvent) {
+    const dx = Math.abs(e.clientX - mouseDownPos.current.x);
+    const dy = Math.abs(e.clientY - mouseDownPos.current.y);
+    if (dx < 5 && dy < 5 && href) {
+      document.getElementById(href)?.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+  const content = (
+    <div
+      onMouseEnter={() => { setHovered(true); onShowDragCursor?.(true); }}
+      onMouseLeave={() => { setHovered(false); onShowDragCursor?.(false); }}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+      style={{ position: "relative", display: "inline-block", cursor: dragging ? "grabbing" : "grab", userSelect: "none", pointerEvents: "auto", width: "100%" }}
+    >
+      <img
+        src={src} alt={alt} draggable={false}
+        style={{
+          width: "100%", objectFit: "contain", display: "block",
+          transition: dragging ? "none" : "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), filter 0.35s ease",
+          transform: hovered && !dragging ? `rotate(${rotate}deg) translateY(-10px) scale(1.08)` : `rotate(${rotate}deg)`,
+          filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
+        }}
+      />
+      {label && (
+        <span style={{
+          position: "absolute", top: labelTop, left: labelLeft, transform: "translate(-50%, -50%)",
+          fontFamily: "var(--font-inter)", fontSize: "6px", fontWeight: 400,
+          color: "#ffffff", letterSpacing: "0.2em", textTransform: "uppercase",
+          textAlign: "center", whiteSpace: "nowrap",
+          opacity: hovered ? 1 : 0.85, transition: "opacity 0.3s ease", pointerEvents: "none",
+        }}>{label}</span>
+      )}
+    </div>
+  );
+
+  if (freed) {
+    return (
+      <>
+        <div ref={anchorRef} style={{ ...style, opacity: 0, pointerEvents: "none" }} />
+        <div style={{ position: "fixed", left: pos.x, top: pos.y, width: freedW, zIndex: 500, pointerEvents: "none" }}>
+          <div style={{ pointerEvents: "auto" }}>{content}</div>
+        </div>
+      </>
+    );
+  }
 
   return (
-    <div
-      style={{ ...style, pointerEvents: "auto", cursor: "pointer" }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={() => href && document.getElementById(href)?.scrollIntoView({ behavior: "smooth" })}
-    >
-      <div style={{ position: "relative", display: "inline-block", width: "100%" }}>
-        <img
-          src={src} alt={alt} draggable={false}
-          style={{
-            width: "100%", objectFit: "contain", display: "block",
-            transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), filter 0.35s ease",
-            transform: hovered ? `rotate(${rotate}deg) translateY(-10px) scale(1.08)` : `rotate(${rotate}deg)`,
-            filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
-          }}
-        />
-        {label && (
-          <span style={{
-            position: "absolute", top: labelTop, left: labelLeft,
-            transform: "translate(-50%, -50%)",
-            fontFamily: "var(--font-inter)", fontSize: "6px", fontWeight: 400,
-            color: "#ffffff", letterSpacing: "0.2em", textTransform: "uppercase",
-            textAlign: "center", whiteSpace: "nowrap",
-            opacity: hovered ? 1 : 0.85,
-            transition: "opacity 0.3s ease", pointerEvents: "none",
-          }}>
-            {label}
-          </span>
-        )}
-      </div>
+    <div ref={anchorRef} style={{ ...style, pointerEvents: "none" }}>
+      <div style={{ pointerEvents: "auto" }}>{content}</div>
     </div>
   );
 }
 
 /* ── TrayNav ── */
 function TrayNav() {
+  const [dragCursorPos, setDragCursorPos] = useState({ x: -200, y: -200 });
+  const [showDragCursor, setShowDragCursor] = useState(false);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => setDragCursorPos({ x: e.clientX, y: e.clientY });
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
+
   return (
     <div style={{ width: "100%", position: "relative", overflow: "visible" }}>
+      {showDragCursor && (
+        <div style={{
+          position: "fixed", left: dragCursorPos.x, top: dragCursorPos.y,
+          transform: "translate(-50%, -50%)", pointerEvents: "none", zIndex: 9999,
+          background: "rgba(245,240,240,0.92)", borderRadius: "9999px", padding: "5px 12px",
+          fontFamily: "var(--font-inter)", fontSize: "0.55rem",
+          letterSpacing: "0.12em", textTransform: "uppercase", color: "#1a0000", whiteSpace: "nowrap",
+        }}>drag me</div>
+      )}
+
       <div className="relative" style={{ marginTop: "-1.5rem" }}>
         <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))" }} />
 
@@ -77,12 +153,15 @@ function TrayNav() {
           </p>
         </div>
 
-        {/* Food elements — click to navigate */}
+        {/* Food elements — draggable + click to navigate */}
         <TrayItem src="/tray-croissant.png" alt="Videography" label="videography" rotate={-10} href="videography"
+          onShowDragCursor={setShowDragCursor}
           style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }} />
         <TrayItem src="/tray-figs.png" alt="YouTube Integrations" label="youtube integrations" href="youtube-integrations"
+          onShowDragCursor={setShowDragCursor}
           style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }} />
-        <TrayItem src="/tray-coffee.png" alt="Video Editing" label="video editing" labelTop="40%" href="video-editing"
+        <TrayItem src="/tray-coffee.png" alt="Motion Editing" label="motion editing" labelTop="40%" href="video-editing"
+          onShowDragCursor={setShowDragCursor}
           style={{ position: "absolute", left: "59%", top: "34%", transform: "translate(-50%, -50%)", zIndex: 2, width: "40%" }} />
       </div>
     </div>
@@ -152,8 +231,7 @@ function VideographyCarousel() {
   }, []);
 
   return (
-    <div ref={sectionRef} style={{ height: "300vh", position: "relative", scrollMarginTop: "20px" }}>
-      <div id="videography" style={{ position: "absolute", top: "120vh" }} />
+    <div ref={sectionRef} id="videography" style={{ height: "300vh", position: "relative", scrollMarginTop: "80px" }}>
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
 
         {/* Title — above carousel */}
