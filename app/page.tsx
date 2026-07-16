@@ -74,16 +74,16 @@ const brands = [
 
 const services = [
   {
-    title: "Cinematic & Motion Editing",
-    desc: "From clean, professional cuts to flashy motion edits with VFX, SFX, dynamic transitions, and frame-perfect pacing — short-form and long-form across YouTube, Reels, and TikTok.",
-  },
-  {
-    title: "Videography",
+    title: "Cinematic & Motion",
     desc: "On-camera filming for brand advertising — cinematic lifestyle shoots and campaign visuals, framed and executed professionally from concept to final cut.",
   },
   {
-    title: "Brand Collaborations, YouTube Integrations & Content Strategy",
-    desc: "Sponsored content and YouTube integrations that feel native — not forced. Outfit content creation, styling, aesthetic curation, platform growth strategy, and trend-driven content calendars for fashion and lifestyle brands.",
+    title: "Youtube Integrations & Collaborations",
+    desc: "Sponsored content and YouTube integrations that feel native — not forced. Brand partnerships, outfit content creation, styling, aesthetic curation, platform growth strategy, and trend-driven content calendars for fashion and lifestyle brands.",
+  },
+  {
+    title: "Motion Editing",
+    desc: "From clean, precise cuts to flashy motion edits — VFX, SFX, dynamic transitions, color grading, and effects that make every frame hit. The kind of edits you see in the Video Editing section: polished, high-energy, and built to stop the scroll.",
   },
 ];
 
