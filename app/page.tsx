@@ -204,10 +204,18 @@ export default function Home() {
               <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "3.5rem", paddingLeft: "1.5rem", lineHeight: 1.85, textShadow: "0 2px 12px rgba(0,0,0,0.55)", fontWeight: 400 }}>
                 Hi! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
               </p>
-              <TypewriterLabels />
+              <div className="font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "flex", gap: "2rem" }}>
+                {[0, 1].map(col => (
+                  <div key={col} style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+                    {LABELS.filter((_, i) => i % 2 === col).map(label => (
+                      <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, whiteSpace: "nowrap" }}>{label}</p>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </Reveal>
 
-            <div className="order-2 flex justify-center" style={{ marginTop: "5rem" }}>
+            <div className="order-2 flex justify-center" style={{ marginTop: "1rem" }}>
               <Reveal direction="right" delay={200}>
                 <FlipPhoto />
               </Reveal>
@@ -352,13 +360,13 @@ function StatCard({ stat, visible, delay }: { stat: (typeof analytics)[number]; 
 const STACK_PHOTOS = ["/c1.png", "/c2.png", "/c3.png", "/c4.png", "/c5.png", "/c6.png", "/c7.png"];
 
 const PHOTO_OFFSETS = [
-  { rotate: 0,   tx: 0,   ty: 0   },
-  { rotate: -3,  tx: -8,  ty: 6   },
-  { rotate: 5,   tx: 10,  ty: 10  },
-  { rotate: -6,  tx: -14, ty: 16  },
-  { rotate: 3,   tx: 6,   ty: 20  },
-  { rotate: -4,  tx: -10, ty: 24  },
-  { rotate: 7,   tx: 12,  ty: 28  },
+  { rotate: 0,   tx: 0,   ty: 0  },
+  { rotate: -3,  tx: -8,  ty: 0  },
+  { rotate: 5,   tx: 10,  ty: 0  },
+  { rotate: -6,  tx: -14, ty: 0  },
+  { rotate: 3,   tx: 6,   ty: 0  },
+  { rotate: -4,  tx: -10, ty: 0  },
+  { rotate: 7,   tx: 12,  ty: 0  },
 ];
 
 function FlipPhoto() {
@@ -394,7 +402,7 @@ function FlipPhoto() {
               cursor: isTop ? "pointer" : "default",
               borderRadius: "12px",
               overflow: "hidden",
-              boxShadow: isTop ? "0 12px 40px rgba(0,0,0,0.5)" : "0 4px 16px rgba(0,0,0,0.3)",
+              boxShadow: "0 4px 14px rgba(0,0,0,0.45)",
             }}
           >
             <img
