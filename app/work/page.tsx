@@ -189,9 +189,9 @@ function VideographyCarousel() {
   const innerRef = useRef<HTMLDivElement>(null);
 
   const n = CINEMA_VIDEOS.length;
-  const RADIUS = 520;
-  const CARD_W = 220;
-  const CARD_H = 124;
+  const RADIUS = 620;
+  const CARD_W = 320;
+  const CARD_H = 180;
 
   useEffect(() => {
     const onScroll = () => {
@@ -237,13 +237,13 @@ function VideographyCarousel() {
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
 
         {/* Title — above carousel */}
-        <div style={{ position: "absolute", top: "8vh", left: 0, right: 0, textAlign: "center", zIndex: 20, pointerEvents: "none", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+        <div style={{ position: "absolute", top: "18vh", left: 0, right: 0, textAlign: "center", zIndex: 20, pointerEvents: "none", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
           <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>V</span>
           <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ideography</span>
         </div>
 
         {/* Carousel — pushed below center to leave room under title */}
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "22vh" }}>
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "30vh" }}>
           <div style={{ perspective: "1600px", perspectiveOrigin: "50% 50%" }}>
             <div
               ref={innerRef}
@@ -268,7 +268,7 @@ function VideographyCarousel() {
                       borderRadius: "8px",
                       overflow: "hidden",
                       border: "1px solid rgba(139,0,0,0.3)",
-                      boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
+                      boxShadow: "0 16px 48px rgba(0,0,0,0.85), 0 4px 12px rgba(0,0,0,0.6)",
                       backfaceVisibility: "hidden",
                     }}
                   >
@@ -294,10 +294,10 @@ function VideographyCarousel() {
 }
 
 /* ── WorkSubsection ── */
-function WorkSubsection({ id, title, children, noBottomMargin }: { id?: string; title: React.ReactNode; children: React.ReactNode; noBottomMargin?: boolean }) {
+function WorkSubsection({ id, title, children, noBottomMargin, titleStyle }: { id?: string; title: React.ReactNode; children: React.ReactNode; noBottomMargin?: boolean; titleStyle?: React.CSSProperties }) {
   return (
     <div id={id} className={noBottomMargin ? "mb-4" : "mb-20"} style={{ scrollMarginTop: "20px" }}>
-      <div className="mb-8 text-center">{title}</div>
+      <div className="mb-8 text-center" style={titleStyle}>{title}</div>
       {children}
     </div>
   );
@@ -468,7 +468,7 @@ export default function WorkPage() {
       <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingBottom: "1rem", paddingTop: "0" }}>
         <div className="max-w-6xl mx-auto">
           <Reveal delay={80}>
-            <WorkSubsection id="video-editing" title={
+            <WorkSubsection id="video-editing" titleStyle={{ marginTop: "-2rem" }} title={
               <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
                 <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>M</span>
                 <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>otion</span>

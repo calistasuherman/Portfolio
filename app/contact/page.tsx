@@ -84,7 +84,7 @@ export default function ContactPage() {
                   textAlign: "center",
                 }}>
                   <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.6rem, 4vw, 4.5rem)", color: "#960018", lineHeight: 1, marginBottom: "3rem" }}>
-                    Contact me
+                    Let&apos;s work together!
                   </p>
                   <a
                     href="mailto:cal1starcollab@gmail.com"
