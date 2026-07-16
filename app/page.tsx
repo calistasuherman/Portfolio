@@ -75,7 +75,7 @@ const brands = [
 const services = [
   {
     title: "Cinematography",
-    desc: "From concept to final cut, I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design across YouTube, Reels, and TikTok.",
+    desc: "From concept to final cut, I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design.",
   },
   {
     title: "Youtube Integrations & Collaborations",
