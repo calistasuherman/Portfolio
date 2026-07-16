@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { Reveal } from "../components/Reveal";
+import { lenisScrollTo } from "../components/GlobalUI";
 
 const youtubeIntegrations = [
   { label: "Aelfric Eden", src: "/aelfriceden.mp4" },
@@ -62,7 +63,8 @@ function TrayItem({
     const dx = Math.abs(e.clientX - mouseDownPos.current.x);
     const dy = Math.abs(e.clientY - mouseDownPos.current.y);
     if (dx < 5 && dy < 5 && href) {
-      document.getElementById(href)?.scrollIntoView({ behavior: "smooth" });
+      const el = document.getElementById(href);
+      if (el) lenisScrollTo(el, { offset: -80, duration: 1.8, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
     }
   }
 
@@ -463,13 +465,13 @@ export default function WorkPage() {
 
       <VideographyCarousel />
 
-      <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingBottom: "1rem" }}>
+      <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingBottom: "1rem", paddingTop: "0" }}>
         <div className="max-w-6xl mx-auto">
           <Reveal delay={80}>
             <WorkSubsection id="video-editing" title={
               <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>V</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ideo</span>
+                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>M</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>otion</span>
                 {" "}
                 <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>E</span>
                 <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>diting</span>

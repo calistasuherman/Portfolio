@@ -17,6 +17,10 @@ const SONGS = [
    Lives outside React — never destroyed on navigation/re-render.
 ─────────────────────────────────────────────────────────────────── */
 let _audio: HTMLAudioElement | null = null;
+let _lenis: any = null;
+export function lenisScrollTo(target: HTMLElement | string | number, options?: any) {
+  if (_lenis) _lenis.scrollTo(target, options);
+}
 let _trackIndex = 0;
 
 function getAudio(): HTMLAudioElement | null {
@@ -61,6 +65,7 @@ export default function GlobalUI() {
   /* Lenis smooth scroll */
   useEffect(() => {
     const lenis = new Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 1.2, touchMultiplier: 1.5 });
+    _lenis = lenis;
     let raf: number;
     const loop = (time: number) => { lenis.raf(time); raf = requestAnimationFrame(loop); };
     raf = requestAnimationFrame(loop);
