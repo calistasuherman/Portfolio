@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
 /* ── Playlist ─────────────────────────────────────────────────── */
@@ -28,6 +29,7 @@ function getAudio(): HTMLAudioElement | null {
 }
 
 export default function GlobalUI() {
+  const pathname = usePathname();
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [cursorHover, setCursorHover] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -205,7 +207,7 @@ export default function GlobalUI() {
               key={link.label}
               href={link.href}
               className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary hover:tracking-[0.28em] transition-all duration-300"
-              style={{ textDecoration: "none" }}
+              style={{ textDecoration: "none", fontWeight: pathname === link.href ? 700 : 400 }}
             >
               {link.label}
             </a>

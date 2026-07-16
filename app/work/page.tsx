@@ -166,22 +166,6 @@ function TrayNav() {
 
   return (
     <div style={{ width: "100%", position: "relative", overflow: "visible" }}>
-      {/* Background ghost text */}
-      <div style={{
-        position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
-        pointerEvents: "none", zIndex: 0, overflow: "hidden",
-      }}>
-        <p style={{
-          fontFamily: "PerandoryCondensed, sans-serif",
-          fontSize: "clamp(4rem, 10vw, 11rem)",
-          fontWeight: "normal", color: "rgba(245,240,240,0.04)",
-          letterSpacing: "0.08em", whiteSpace: "nowrap", userSelect: "none",
-          lineHeight: 1,
-        }}>
-          WHAT I BRING TO THE TABLE
-        </p>
-      </div>
-
       {/* "Drag me" custom cursor — only visible on food items */}
       {showDragCursor && (
         <div style={{
@@ -201,10 +185,9 @@ function TrayNav() {
       <div
         ref={trayRef}
         className="relative"
-        style={{ marginTop: "-1.5rem", transform: `translateX(${trayX}px)`, transition: dragging.current ? "none" : "transform 0.4s cubic-bezier(0.16,1,0.3,1)", cursor: "grab" }}
-        onMouseDown={onTrayDown}
+        style={{ marginTop: "-1.5rem", transform: `translateX(${trayX}px)`, transition: dragging.current ? "none" : "transform 0.4s cubic-bezier(0.16,1,0.3,1)" }}
       >
-        <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))", pointerEvents: "none" }} />
+        <img src="/tray-bg.png" alt="Tray" onMouseDown={onTrayDown} style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))", cursor: "grab" }} />
 
         {/* Title */}
         <div style={{ position: "absolute", left: "3%", top: "8%", zIndex: 4, pointerEvents: "none" }}>
@@ -315,7 +298,8 @@ function VideographyCarousel() {
   }, []);
 
   return (
-    <div ref={sectionRef} id="videography" style={{ height: "500vh", position: "relative", scrollMarginTop: "20px" }}>
+    <div ref={sectionRef} style={{ height: "300vh", position: "relative", scrollMarginTop: "20px" }}>
+      <div id="videography" style={{ position: "absolute", top: "120vh" }} />
       <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", paddingTop: "7vh", overflow: "hidden" }}>
 
         {/* Title — high up so circle doesn't overlap */}
@@ -369,9 +353,6 @@ function VideographyCarousel() {
           </div>
         </div>
 
-        <p style={{ marginTop: "auto", marginBottom: "3vh", fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(245,240,240,0.3)" }}>
-          scroll or move cursor to explore
-        </p>
       </div>
     </div>
   );
