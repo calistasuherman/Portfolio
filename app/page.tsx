@@ -136,7 +136,7 @@ export default function Home() {
       <main className="relative min-h-screen overflow-x-clip">
 
         {/* ── Hero ── */}
-        <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 overflow-hidden" style={{ background: "#000" }}>
+        <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 overflow-hidden" style={{ background: "#0a0000" }}>
           <video
             autoPlay
             muted
