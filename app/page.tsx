@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Reveal, useReveal } from "./components/Reveal";
 
-const LABELS = ["Content Creator", "Industrial Engineer", "Gen Z (21 Y/O)", "Coffee Connoisseur", "Fashion Lover", "Frequent Traveler", "SF Based"];
+const LABELS = ["Content Creator", "Gen Z (21 Y/O)", "Industrial Engineer", "Coffee Connoisseur", "Fashion Lover", "Frequent Traveler", "SF Based"];
 
 function TypewriterLabels() {
   const [revealed, setRevealed] = useState<number[]>(Array(LABELS.length).fill(0));
@@ -74,16 +74,16 @@ const brands = [
 
 const services = [
   {
-    title: "Cinematography",
+    title: "Videography",
     desc: "From concept to final cut, I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design.",
-  },
-  {
-    title: "Youtube Integrations & Collaborations",
-    desc: "Sponsored content and YouTube integrations that feel native, not forced. Brand partnerships, outfit content creation, styling, aesthetic curation, platform growth strategy, and trend-driven content calendars for fashion and lifestyle brands.",
   },
   {
     title: "Motion Editing",
     desc: "From clean, precise cuts to flashy motion edits, VFX, SFX, dynamic transitions, color grading, and effects that make every frame hit. The kind of edits you see in the Video Editing section, polished, high-energy, and built to stop the scroll.",
+  },
+  {
+    title: "Youtube Integrations & Collaborations",
+    desc: "Sponsored content and YouTube integrations that feel native, not forced. Brand partnerships, outfit content creation, styling, aesthetic curation, platform growth strategy, and trend-driven content calendars for fashion and lifestyle brands.",
   },
 ];
 

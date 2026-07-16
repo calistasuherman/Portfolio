@@ -164,7 +164,7 @@ function VideographyCarousel() {
 
         {/* Carousel — centered in viewport */}
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div style={{ perspective: "1600px", perspectiveOrigin: "50% 50%", willChange: "transform" }}>
+          <div style={{ perspective: "1600px", perspectiveOrigin: "50% 50%" }}>
             <div
               ref={innerRef}
               style={{
@@ -173,7 +173,6 @@ function VideographyCarousel() {
                 height: `${CARD_H}px`,
                 transformStyle: "preserve-3d",
                 transform: "rotateX(8deg) rotateY(0deg)",
-                willChange: "transform",
               }}
             >
               {CINEMA_VIDEOS.map((src, i) => {
@@ -191,7 +190,6 @@ function VideographyCarousel() {
                       border: "1px solid rgba(139,0,0,0.3)",
                       boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
                       backfaceVisibility: "hidden",
-                      willChange: "transform",
                     }}
                   >
                     <video
@@ -201,7 +199,7 @@ function VideographyCarousel() {
                       loop
                       playsInline
                       preload="auto"
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transform: "translateZ(0)" }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                     />
                   </div>
                 );
@@ -382,10 +380,13 @@ export default function WorkPage() {
           <Reveal>
             <TrayNav />
           </Reveal>
-          <div style={{ height: "80px" }} />
+        </div>
+      </section>
 
-          <VideographyCarousel />
+      <VideographyCarousel />
 
+      <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingBottom: "1rem" }}>
+        <div className="max-w-6xl mx-auto">
           <Reveal delay={80}>
             <WorkSubsection id="video-editing" title={
               <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
