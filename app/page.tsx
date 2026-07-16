@@ -136,12 +136,13 @@ export default function Home() {
       <main className="relative min-h-screen overflow-x-clip">
 
         {/* ── Hero ── */}
-        <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 overflow-hidden">
+        <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 overflow-hidden" style={{ background: "#000" }}>
           <video
             autoPlay
             muted
             loop
             playsInline
+            preload="auto"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ zIndex: 0 }}
           >
