@@ -375,7 +375,7 @@ function FlipPhoto() {
 
   return (
     <div style={{ position: "relative", width: "clamp(260px, 32vw, 420px)", height: "clamp(340px, 42vw, 560px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div style={{ position: "relative", width: "clamp(180px, 20vw, 270px)", height: "clamp(230px, 26vw, 360px)" }}>
+      <div style={{ position: "relative", width: "clamp(210px, 24vw, 320px)", height: "clamp(270px, 31vw, 420px)" }}>
       {order.map((photoIdx, stackPos) => {
         const off = PHOTO_OFFSETS[stackPos] ?? PHOTO_OFFSETS[PHOTO_OFFSETS.length - 1];
         const isTop = stackPos === 0;
