@@ -64,7 +64,7 @@ function TrayItem({
     const dy = Math.abs(e.clientY - mouseDownPos.current.y);
     if (dx < 5 && dy < 5 && href) {
       const el = document.getElementById(href);
-      if (el) lenisScrollTo(el, { offset: -20, duration: 1.8, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+      if (el) lenisScrollTo(el, { offset: 160, duration: 1.8, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
     }
   }
 
@@ -243,7 +243,7 @@ function VideographyCarousel() {
         </div>
 
         {/* Carousel — pushed below center to leave room under title */}
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "14vh" }}>
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "22vh" }}>
           <div style={{ perspective: "1600px", perspectiveOrigin: "50% 50%" }}>
             <div
               ref={innerRef}

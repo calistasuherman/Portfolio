@@ -201,7 +201,7 @@ export default function Home() {
               <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "3.5rem", paddingLeft: "1.5rem", lineHeight: 1.85, textShadow: "0 2px 12px rgba(0,0,0,0.55)", fontWeight: 400 }}>
                 Hi! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
               </p>
-              <div className="font-inter" style={{ fontSize: "clamp(0.55rem, 0.9vw, 0.72rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "flex", gap: "2rem", color: "rgba(245,240,240,0.6)" }}>
+              <div className="font-inter" style={{ fontSize: "clamp(0.55rem, 0.9vw, 0.72rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "flex", gap: "2rem", color: "#e8e4e0" }}>
                 {[0, 1].map(col => (
                   <div key={col} style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
                     {LABELS.filter((_, i) => i % 2 === col).map(label => (
