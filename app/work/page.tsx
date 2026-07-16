@@ -178,6 +178,112 @@ function TrayNav() {
   );
 }
 
+/* ── VideographyCarousel — scroll-driven 3D circle ── */
+const CINEMA_VIDEOS = [
+  "/cinema/cinema1.mp4","/cinema/cinema2.mp4","/cinema/cinema3.mp4",
+  "/cinema/cinema4.mp4","/cinema/cinema5.mp4","/cinema/cinema6.mp4",
+  "/cinema/cinema7.mp4","/cinema/cinema8.mp4","/cinema/cinema9.mp4",
+  "/cinema/cinema10.mp4","/cinema/cinema11.mp4","/cinema/cinema12.MP4",
+];
+
+function VideographyCarousel() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const rotRef = useRef(0);
+  const displayRotRef = useRef(0);
+  const rafRef = useRef<number>();
+  const innerRef = useRef<HTMLDivElement>(null);
+
+  const n = CINEMA_VIDEOS.length;
+  const RADIUS = 520;
+  const CARD_W = 200;
+  const CARD_H = 113; // 16:9
+
+  useEffect(() => {
+    const onScroll = () => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const sectionH = section.offsetHeight - window.innerHeight;
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / sectionH));
+      rotRef.current = progress * 360;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const animate = () => {
+      displayRotRef.current += (rotRef.current - displayRotRef.current) * 0.06;
+      if (innerRef.current) {
+        innerRef.current.style.transform = `rotateX(8deg) rotateY(${displayRotRef.current}deg)`;
+      }
+      rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  return (
+    <div ref={sectionRef} id="videography" style={{ height: "500vh", position: "relative", scrollMarginTop: "20px" }}>
+      {/* sticky title + carousel */}
+      <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+        <div style={{ marginBottom: "3rem", textAlign: "center", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+          <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>V</span>
+          <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ideography</span>
+        </div>
+
+        <div style={{ perspective: "1400px", perspectiveOrigin: "50% 40%" }}>
+          <div
+            ref={innerRef}
+            style={{
+              position: "relative",
+              width: `${CARD_W}px`,
+              height: `${CARD_H}px`,
+              transformStyle: "preserve-3d",
+              transform: "rotateX(8deg) rotateY(0deg)",
+            }}
+          >
+            {CINEMA_VIDEOS.map((src, i) => {
+              const angle = (360 / n) * i;
+              return (
+                <div
+                  key={src}
+                  style={{
+                    position: "absolute",
+                    width: `${CARD_W}px`,
+                    height: `${CARD_H}px`,
+                    transform: `rotateY(${angle}deg) translateZ(${RADIUS}px)`,
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                    border: "1px solid rgba(139,0,0,0.3)",
+                    boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
+                    backfaceVisibility: "hidden",
+                  }}
+                >
+                  <video
+                    src={src}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <p style={{ marginTop: "3rem", fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)" }}>
+          scroll to explore
+        </p>
+      </div>
+    </div>
+  );
+}
+
 /* ── WorkSubsection ── */
 function WorkSubsection({ id, title, children, noBottomMargin }: { id?: string; title: React.ReactNode; children: React.ReactNode; noBottomMargin?: boolean }) {
   return (
@@ -347,20 +453,7 @@ export default function WorkPage() {
           </Reveal>
           <div style={{ height: "80px" }} />
 
-          <Reveal delay={80}>
-            <WorkSubsection id="videography" title={
-              <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>V</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ideography</span>
-              </div>
-            }>
-              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
-                {["/cinema/cinema1.mp4","/cinema/cinema2.mp4","/cinema/cinema3.mp4","/cinema/cinema4.mp4","/cinema/cinema5.mp4","/cinema/cinema6.mp4","/cinema/cinema7.mp4","/cinema/cinema8.mp4","/cinema/cinema9.mp4","/cinema/cinema10.mp4","/cinema/cinema11.mp4","/cinema/cinema12.MP4"].map((src, i) => (
-                  <VideoCard key={src} label="" src={src} staggerDelay={i * 40} autoplay />
-                ))}
-              </div>
-            </WorkSubsection>
-          </Reveal>
+          <VideographyCarousel />
 
           <Reveal delay={80}>
             <WorkSubsection id="video-editing" title={
