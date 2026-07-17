@@ -1,414 +1,387 @@
 "use client";
-
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { Reveal, useReveal } from "./components/Reveal";
+import { Reveal } from "./components/Reveal";
 
-const LABELS = ["Content Creator", "World Traveler", "Industrial Engineer", "Coffee Connoisseur", "Gen Z (21 Y/O)", "Fashion Lover"];
-
-function TypewriterLabels() {
-  const [revealed, setRevealed] = useState<number[]>(Array(LABELS.length).fill(0));
-  const [activeIdx, setActiveIdx] = useState(-1);
-  const ref = useRef<HTMLDivElement>(null);
-  const started = useRef(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting || started.current) return;
-      started.current = true;
-      let labelIdx = 0;
-      let charIdx = 0;
-
-      const tick = () => {
-        if (labelIdx >= LABELS.length) { setActiveIdx(-1); return; }
-        const label = LABELS[labelIdx];
-        charIdx++;
-        setActiveIdx(labelIdx);
-        setRevealed(prev => {
-          const next = [...prev];
-          next[labelIdx] = charIdx;
-          return next;
-        });
-        if (charIdx < label.length) {
-          setTimeout(tick, 55);
-        } else {
-          labelIdx++;
-          charIdx = 0;
-          setTimeout(tick, 200);
-        }
-      };
-      setTimeout(tick, 300);
-    }, { threshold: 0.3 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div ref={ref} className="font-inter text-text-muted" style={{ fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "flex", gap: "2rem" }}>
-      {[0, 1].map(col => (
-        <div key={col} style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
-          {LABELS.filter((_, i) => i % 2 === col).map((label, row) => {
-            const i = col + row * 2;
-            return (
-              <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, whiteSpace: "nowrap" }}>
-                {label.split("").map((char, ci) => (
-                  <span key={ci} style={{ color: ci < revealed[i] ? "inherit" : "transparent" }}>{char}</span>
-                ))}
-                {activeIdx === i && <span style={{ opacity: 0.6 }}>|</span>}
-              </p>
-            );
-          })}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/* ── Data ──────────────────────────────────────────────────── */
-
-const brands = [
-  "Lewkin", "Vacunery", "VT Cosmetics", "Bolde", "Just4Kira",
-  "Embol", "Hapa Kristin", "FlexiSpot", "YesStyle", "Toco Brand",
-  "BetterHelp", "DropChats", "Alpine View",
+/* ── Data ── */
+const FEATURED = [
+  { src: "/cinema/cinema2.mp4", tag: "Cinematography" },
+  { src: "/cinema/cinema6.mp4", tag: "Visual Storytelling" },
+  { src: "/cinema/cinema9.mp4", tag: "Brand Content" },
 ];
 
-const services = [
+const SERVICES = [
   {
+    index: "01",
     title: "Videography",
-    desc: "From concept to final cut, I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design.",
+    desc: "From concept to final cut — cinematic storytelling, color grading, and direction tailored to your brand.",
   },
   {
+    index: "02",
     title: "Motion Editing",
-    desc: "From clean, precise cuts to flashy motion edits, VFX, SFX, dynamic transitions, color grading, and effects that make every frame hit. The kind of edits you see in the Video Editing section, polished, high-energy, and built to stop the scroll.",
+    desc: "Dynamic short-form edits, VFX, SFX, transitions, and motion graphics built to stop the scroll.",
   },
   {
-    title: "Youtube Integrations & Collaborations",
-    desc: "Sponsored content and YouTube integrations that feel native, not forced. Brand partnerships, outfit content creation, styling, aesthetic curation, platform growth strategy, and trend-driven content calendars for fashion and lifestyle brands.",
+    index: "03",
+    title: "Collaborations",
+    desc: "Brand integrations and sponsored content that feel native. Platform growth, trend strategy, and aesthetic curation.",
   },
 ];
 
-const analytics = [
-  { label: "Avg. Views", value: "1.5M+", num: 1.5, suffix: "M+" },
-  { label: "Followers", value: "700K+", num: 700, suffix: "K+" },
-  { label: "Engagements", value: "200K+", num: 200, suffix: "K+" },
-  { label: "Collaborations", value: "13+", num: 13, suffix: "+" },
+const LOGOS = Array.from({ length: 14 }, (_, i) => `/logos/portfolio${i + 1}.png`);
+
+const TOOLS = [
+  { src: "/apps/dr.png",     label: "DaVinci Resolve" },
+  { src: "/apps/fcp.png",    label: "Final Cut Pro"   },
+  { src: "/apps/vs.png",     label: "Video Star"      },
+  { src: "/apps/cc.png",     label: "CapCut"          },
+  { src: "/apps/c.png",      label: "Canva"           },
+  { src: "/apps/claude.png", label: "Claude"          },
 ];
 
+const LABELS = [
+  "Content Creator", "World Traveler",
+  "Industrial Engineer", "Coffee Connoisseur",
+  "Gen Z (21 Y/O)", "Fashion Lover",
+];
 
-/* ── Hooks ─────────────────────────────────────────────────── */
-
-function useCountUp(num: number, suffix: string, visible: boolean, duration = 1600) {
-  const [display, setDisplay] = useState(`0${suffix}`);
-  useEffect(() => {
-    if (!visible) return;
-    let frame = 0;
-    const totalFrames = Math.round(duration / 16);
-    const id = setInterval(() => {
-      frame++;
-      const progress = frame / totalFrames;
-      const eased = 1 - Math.pow(1 - progress, 3);
-      if (frame >= totalFrames) {
-        setDisplay(`${num}${suffix}`);
-        clearInterval(id);
-      } else {
-        const current = Math.round(eased * num * 10) / 10;
-        setDisplay(`${current}${suffix}`);
-      }
-    }, 16);
-    return () => clearInterval(id);
-  }, [visible, num, suffix, duration]);
-  return display;
-}
-
-
-/* ── Page ──────────────────────────────────────────────────── */
-
-export default function Home() {
-  const [heroVisible, setHeroVisible] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setHeroVisible(true), 120);
-    return () => clearTimeout(t);
-  }, []);
-
-  return (
-    <>
-      <main className="relative min-h-screen overflow-x-clip">
-
-        {/* ── Hero ── */}
-        <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 overflow-hidden" style={{ background: "#0a0000" }}>
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ zIndex: 0 }}
-          >
-            <source src="/hero.mp4" type="video/mp4" />
-          </video>
-
-          <div className="absolute inset-0 flex flex-col items-center justify-center pt-16" style={{ zIndex: 3 }}>
-
-            {/* est.2026 + Name block */}
-            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative", textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "1rem", marginTop: "-4rem" }}>est. 2026</p>
-              <div style={{ position: "relative" }} suppressHydrationWarning>
-                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(3px, 3px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
-                <div aria-hidden="true" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.12, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
-                <div style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
-              </div>
-            </div>
-
-            {/* Tagline */}
-            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.75rem", textAlign: "center" }}>
-              <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.6)", fontSize: "clamp(0.55rem, 0.85vw, 0.72rem)", letterSpacing: "0.18em", whiteSpace: "pre" }}>{"Video editing & videography is my love language."}</p>
-            </div>
-          </div>
-
-          {/* Buttons */}
-          <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.8s", position: "absolute", bottom: "clamp(2.5rem, 6vh, 5rem)", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "1rem", zIndex: 3 }}>
-            <a href="/work" className="inline-block px-8 py-3 rounded-none text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "var(--font-inter)" }}>
-              explore my work
-            </a>
-            <a href="/contact" className="inline-block px-8 py-3 rounded-none border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "var(--font-inter)" }}>
-              work with me
-            </a>
-          </div>
-
-        </section>
-
-        {/* ── About ── */}
-        <section id="about" className="section-content relative pt-2 md:pt-4 pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ backgroundImage: "url('/about-bg.jpg')", backgroundSize: "cover", backgroundPosition: "center top" }}>
-          <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
-
-            <Reveal className="order-1" direction="left">
-              <div className="leading-none mb-10 whitespace-nowrap" style={{ position: "relative", marginTop: "2rem" }} suppressHydrationWarning>
-                <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(3px, 3px)", pointerEvents: "none", letterSpacing: "0.05em", color: "#000000" }}>
-                  <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal" }}>A</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)", fontWeight: "normal" }}>bout me</span>
-                </div>
-                <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, opacity: 0.12, transform: "translate(6px, 6px)", pointerEvents: "none", letterSpacing: "0.05em", color: "#000000" }}>
-                  <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal" }}>A</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)", fontWeight: "normal" }}>bout me</span>
-                </div>
-                <h2 style={{ fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em", position: "relative" }}>
-                  <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)" }}>A</span>
-                  <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)" }}>bout me</span>
-                </h2>
-              </div>
-              <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginTop: "0.8rem", paddingLeft: "1.5rem", color: "rgba(245,240,240,0.5)", letterSpacing: "0.05em" }}>
-                @cal1star &nbsp;|&nbsp; 4K+ Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
-              </p>
-              <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "1rem", paddingLeft: "1.5rem", lineHeight: 1.85, textShadow: "0 2px 12px rgba(0,0,0,0.55)", fontWeight: 400 }}>
-                Hi! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
-              </p>
-              <div className="font-inter" style={{ fontSize: "clamp(0.55rem, 0.9vw, 0.72rem)", marginTop: "1rem", paddingLeft: "1.5rem", display: "flex", gap: "2rem", color: "#e8e4e0" }}>
-                {[0, 1].map(col => (
-                  <div key={col} style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
-                    {LABELS.filter((_, i) => i % 2 === col).map(label => (
-                      <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, whiteSpace: "nowrap" }}>{label}</p>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-
-            <div className="order-2 flex justify-center" style={{ marginTop: "1rem" }}>
-              <Reveal direction="right" delay={200}>
-                <FlipPhoto />
-              </Reveal>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Trusted By ── */}
-        <section className="section-content relative py-6 overflow-hidden">
-          <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
-        </section>
-
-        {/* ── Portfolio Strip ── */}
-        <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
-          <div className="relative">
-            <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
-              {[...Array.from({length: 14}, (_, i) => i + 1), ...Array.from({length: 14}, (_, i) => i + 1)].map((n, i) => (
-                <div key={i} style={{ display: "inline-block", margin: "0 18px", flexShrink: 0 }}>
-                  <img
-                    src={`/portfolio${n}.png`}
-                    alt={`Portfolio ${n}`}
-                    style={{ height: "36px", width: "auto", borderRadius: "4px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block" }}
-                    onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-                    onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Signature Services ── */}
-        <section id="trusted" className="relative px-6 md:px-16 lg:px-32" style={{ display: "flex", alignItems: "center", paddingTop: "6rem", paddingBottom: "4rem", scrollMarginTop: "0" }}>
-          <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
-            <Reveal>
-              <h2 style={{ lineHeight: 1.1, marginBottom: "2rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ignature</span>
-                {" "}
-                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ervices</span>
-              </h2>
-              <div style={{ borderBottom: "1px solid rgba(245,240,240,0.2)", marginBottom: "0" }} />
-            </Reveal>
-            {services.map((row, i) => (
-              <Reveal key={i} delay={i * 120} direction="right">
-                <div style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: "2rem", padding: "1.75rem 0", borderBottom: "1px solid rgba(245,240,240,0.15)" }}>
-                  <p style={{ fontFamily: "var(--font-inter)", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#f5f0f0" }}>{row.title}</p>
-                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.75rem", color: "rgba(245,240,240,0.65)", lineHeight: 1.8 }}>{row.desc}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        {/* ── Editing Toolkit ── */}
-        <section className="relative" style={{ paddingTop: "1.5rem", paddingBottom: "4rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <div style={{ maxWidth: "900px", width: "100%", padding: "0 2rem", textAlign: "center" }}>
-            <Reveal>
-              <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 3.8vw, 3.8rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "4.5rem" }}>
-                My Toolkit
-              </div>
-            </Reveal>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: "clamp(1.2rem, 4vw, 3.5rem)" }}>
-              {[
-                { key: "dr",     src: "/dr.png",     alt: "DaVinci Resolve", label: "DaVinci Resolve" },
-                { key: "fcp",    src: "/fcp.png",    alt: "Final Cut Pro",   label: "Final Cut Pro"   },
-                { key: "vs",     src: "/vs.png",     alt: "Video Star",      label: "Video Star"      },
-                { key: "cc",     src: "/cc.png",     alt: "CapCut",          label: "CapCut"          },
-                { key: "c",      src: "/c.png",      alt: "Canva",           label: "Canva"           },
-                { key: "claude", src: "/claude.png", alt: "Claude",          label: "Claude"          },
-              ].map(({ key, src, alt, label }, i) => (
-                <Reveal key={key} direction="left" delay={i * 90}>
-                  <div style={{ textAlign: "center", width: "clamp(64px, 9vw, 100px)" }}>
-                    <img src={src} alt={alt} style={{ width: "100%", display: "block", borderRadius: "22%" }} />
-                    <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.52rem, 0.75vw, 0.68rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.05em", marginTop: "0.4rem" }}>{label}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Footer ── */}
-        <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
-          <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
-            @2026 CALISTA SUHERMAN.&nbsp;&nbsp;PSALM 46:5
-          </p>
-        </footer>
-
-      </main>
-    </>
-  );
-}
-
-/* ── Page-specific Components ──────────────────────────────── */
-
-function TypingText({ lines, style }: { lines: string[]; style: React.CSSProperties }) {
-  const full = lines.join("\n");
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (count >= full.length) return;
-    const t = setTimeout(() => setCount(c => c + 1), 150);
-    return () => clearTimeout(t);
-  }, [count, full.length]);
-  const typed = full.slice(0, count);
-  const parts = typed.split("\n");
-  return (
-    <>
-      {lines.map((_, i) => (
-        <div key={i} style={style} suppressHydrationWarning>{parts[i] ?? ""}</div>
-      ))}
-    </>
-  );
-}
-
-function AnalyticsGrid() {
-  const { ref, visible } = useReveal();
-  return (
-    <div ref={ref} className="grid grid-cols-2 gap-4 mt-10">
-      {analytics.map((stat, i) => (
-        <StatCard key={stat.label} stat={stat} visible={visible} delay={i * 130} />
-      ))}
-    </div>
-  );
-}
-
-function StatCard({ stat, visible, delay }: { stat: (typeof analytics)[number]; visible: boolean; delay: number }) {
-  const display = useCountUp(stat.num, stat.suffix, visible);
-  return (
-    <div className="p-4 rounded-lg stat-card" style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: `opacity 0.7s ease ${delay}ms, transform 0.7s ease ${delay}ms` }}>
-      <p className="text-2xl md:text-3xl text-text-primary" style={{ fontFamily: "var(--font-melodrama)", fontWeight: 400 }}>{display}</p>
-      <p className="font-inter text-[10px] uppercase tracking-widest text-text-muted mt-1">{stat.label}</p>
-    </div>
-  );
-}
-
-const STACK_PHOTOS = ["/c1.png", "/c2.png", "/c3.png", "/c4.png", "/c5.png", "/c6.png", "/c7.png"];
-
+const STACK_PHOTOS = ["/c1.png","/c2.png","/c3.png","/c4.png","/c5.png","/c6.png","/c7.png"];
 const PHOTO_OFFSETS = [
-  { rotate: 0,   tx: 0,   ty: 0  },
-  { rotate: -3,  tx: -8,  ty: 0  },
-  { rotate: 5,   tx: 10,  ty: 0  },
-  { rotate: -6,  tx: -14, ty: 0  },
-  { rotate: 3,   tx: 6,   ty: 0  },
-  { rotate: -4,  tx: -10, ty: 0  },
-  { rotate: 7,   tx: 12,  ty: 0  },
+  { rotate: 0, tx: 0, ty: 0 }, { rotate: -3, tx: -8, ty: 0 },
+  { rotate: 5, tx: 10, ty: 0 }, { rotate: -6, tx: -14, ty: 0 },
+  { rotate: 3, tx: 6, ty: 0 }, { rotate: -4, tx: -10, ty: 0 },
+  { rotate: 7, tx: 12, ty: 0 },
 ];
+
+/* ── Components ── */
+
+function FeaturedCard({ src, tag }: { src: string; tag: string }) {
+  const [hovered, setHovered] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (hovered) v.play().catch(() => {});
+    else { v.pause(); v.currentTime = 0; }
+  }, [hovered]);
+
+  return (
+    <a
+      href="/work"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{ display: "block", position: "relative", aspectRatio: "16/9", overflow: "hidden", borderRadius: "4px", textDecoration: "none" }}
+    >
+      <video
+        ref={videoRef} src={src} muted loop playsInline preload="metadata"
+        style={{
+          width: "100%", height: "100%", objectFit: "cover", display: "block",
+          transition: "transform 0.8s cubic-bezier(0.16,1,0.3,1)",
+          transform: hovered ? "scale(1.04)" : "scale(1)",
+        }}
+      />
+      <div style={{
+        position: "absolute", inset: 0,
+        background: hovered ? "rgba(5,0,0,0.15)" : "rgba(5,0,0,0.42)",
+        transition: "background 0.5s ease",
+      }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.2rem 1rem" }}>
+        <p style={{
+          fontFamily: "var(--font-inter)", fontSize: "0.58rem",
+          letterSpacing: "0.22em", textTransform: "uppercase",
+          color: "rgba(245,240,240,0.7)",
+        }}>{tag}</p>
+      </div>
+    </a>
+  );
+}
 
 function FlipPhoto() {
   const [order, setOrder] = useState(STACK_PHOTOS.map((_, i) => i));
 
-  function handleClick() {
-    setOrder(prev => {
-      const next = [...prev];
-      const top = next.shift()!;
-      next.push(top);
-      return next;
-    });
-  }
-
   return (
-    <div style={{ position: "relative", width: "clamp(260px, 32vw, 420px)", height: "clamp(340px, 42vw, 560px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div style={{ position: "relative", width: "clamp(210px, 24vw, 320px)", height: "clamp(270px, 31vw, 420px)" }}>
+    <div style={{ position: "relative", width: "clamp(210px, 24vw, 320px)", height: "clamp(270px, 31vw, 420px)" }}>
       {order.map((photoIdx, stackPos) => {
         const off = PHOTO_OFFSETS[stackPos] ?? PHOTO_OFFSETS[PHOTO_OFFSETS.length - 1];
         const isTop = stackPos === 0;
         return (
           <div
             key={photoIdx}
-            onClick={isTop ? handleClick : undefined}
+            onClick={isTop ? () => setOrder(prev => { const n = [...prev]; n.push(n.shift()!); return n; }) : undefined}
             style={{
-              position: "absolute",
-              inset: 0,
-              transform: `translate(${off.tx}px, ${off.ty}px) rotate(${off.rotate}deg)`,
+              position: "absolute", inset: 0,
+              transform: `translate(${off.tx}px,${off.ty}px) rotate(${off.rotate}deg)`,
               transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
               zIndex: order.length - stackPos,
               cursor: isTop ? "pointer" : "default",
-              borderRadius: "12px",
-              overflow: "hidden",
-              boxShadow: "0 4px 14px rgba(0,0,0,0.45)",
+              borderRadius: "10px", overflow: "hidden",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.55)",
             }}
           >
             <img
               src={STACK_PHOTOS[photoIdx]}
-              alt={`Photo ${photoIdx + 1}`}
+              alt="" draggable={false}
               style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block", userSelect: "none", pointerEvents: "none" }}
-              draggable={false}
             />
           </div>
         );
       })}
+    </div>
+  );
+}
+
+function LogoMarquee() {
+  const row = [...LOGOS, ...LOGOS];
+  return (
+    <div style={{ overflow: "hidden", maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
+      <div style={{ display: "flex", animation: "marquee 30s linear infinite", width: "max-content", gap: "2rem", alignItems: "center" }}>
+        {row.map((src, i) => (
+          <img
+            key={i} src={src} alt="" draggable={false}
+            style={{ height: "28px", width: "auto", opacity: 0.55, filter: "brightness(0) invert(1)", transition: "opacity 0.3s", userSelect: "none" }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+            onMouseLeave={e => (e.currentTarget.style.opacity = "0.55")}
+          />
+        ))}
       </div>
     </div>
+  );
+}
+
+/* ── Page ── */
+export default function Home() {
+  const [heroReady, setHeroReady] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setHeroReady(true), 80);
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <main className="relative overflow-x-clip">
+
+      {/* ── Hero ── */}
+      <section style={{ height: "100vh", position: "relative", overflow: "hidden", background: "#050003" }}>
+        <video
+          src="/cinema/cinema1.mp4"
+          autoPlay muted loop playsInline preload="auto"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.55 }}
+        />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(5,0,3,0.4) 0%, rgba(5,0,3,0.55) 60%, rgba(5,0,3,0.92) 100%)" }} />
+
+        {/* Center text */}
+        <div style={{
+          position: "absolute", inset: 0, zIndex: 2,
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+          textAlign: "center", padding: "0 1.5rem",
+        }}>
+          <p style={{
+            fontFamily: "var(--font-inter)", fontSize: "0.58rem",
+            letterSpacing: "0.35em", textTransform: "uppercase",
+            color: "rgba(245,240,240,0.4)", marginBottom: "1.8rem",
+            opacity: heroReady ? 1 : 0, transform: heroReady ? "none" : "translateY(8px)",
+            transition: "opacity 1s ease 0.2s, transform 1s ease 0.2s",
+          }}>
+            Cinematographer &nbsp;&middot;&nbsp; Content Creator &nbsp;&middot;&nbsp; San Francisco
+          </p>
+
+          <h1 style={{
+            fontFamily: "BillaMount, cursive",
+            fontSize: "clamp(4.5rem, 11vw, 9.5rem)",
+            color: "#f5f0f0", lineHeight: 0.88, letterSpacing: "0.02em",
+            opacity: heroReady ? 1 : 0, transform: heroReady ? "none" : "translateY(16px)",
+            transition: "opacity 1.2s ease 0.35s, transform 1.2s ease 0.35s",
+          }}>
+            Calista<br />Suherman
+          </h1>
+
+          {/* Thin vertical line */}
+          <div style={{
+            width: "1px", height: "52px", marginTop: "3rem",
+            background: "linear-gradient(to bottom, rgba(245,240,240,0.55), transparent)",
+            opacity: heroReady ? 1 : 0,
+            transition: "opacity 1s ease 0.9s",
+          }} />
+        </div>
+
+        {/* Scroll hint */}
+        <p style={{
+          position: "absolute", bottom: "2rem", left: "50%", transform: "translateX(-50%)",
+          fontFamily: "var(--font-inter)", fontSize: "0.5rem", letterSpacing: "0.3em",
+          textTransform: "uppercase", color: "rgba(245,240,240,0.28)", zIndex: 2,
+          opacity: heroReady ? 1 : 0, transition: "opacity 1s ease 1.2s",
+        }}>scroll</p>
+      </section>
+
+      {/* ── Selected Work ── */}
+      <section style={{ padding: "7rem clamp(1.5rem, 6vw, 5rem)" }}>
+        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+          <Reveal>
+            <div style={{
+              display: "flex", alignItems: "baseline", justifyContent: "space-between",
+              borderBottom: "1px solid rgba(245,240,240,0.1)", paddingBottom: "1.2rem", marginBottom: "2.5rem",
+            }}>
+              <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.8rem, 3.5vw, 3rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.04em" }}>
+                Selected Work
+              </span>
+              <a href="/work" style={{
+                fontFamily: "var(--font-inter)", fontSize: "0.58rem",
+                letterSpacing: "0.22em", textTransform: "uppercase",
+                color: "rgba(245,240,240,0.4)", textDecoration: "none",
+                transition: "color 0.3s ease",
+              }}
+                onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.85)")}
+                onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.4)")}
+              >View all →</a>
+            </div>
+          </Reveal>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem" }}>
+            {FEATURED.map((item, i) => (
+              <Reveal key={item.src} delay={i * 110}>
+                <FeaturedCard {...item} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Services ── */}
+      <section style={{ padding: "4rem clamp(1.5rem, 6vw, 5rem) 6rem" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+          <Reveal>
+            <h2 style={{ marginBottom: "2.5rem" }}>
+              <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 3.5rem)", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
+              <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.4rem, 2.8vw, 2.5rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.06em" }}>ignature Services</span>
+            </h2>
+            <div style={{ borderBottom: "1px solid rgba(245,240,240,0.12)" }} />
+          </Reveal>
+
+          {SERVICES.map((s, i) => (
+            <Reveal key={s.index} delay={i * 100}>
+              <div style={{
+                display: "grid", gridTemplateColumns: "48px 1fr 3fr", gap: "2rem",
+                padding: "1.8rem 0", borderBottom: "1px solid rgba(245,240,240,0.08)",
+                alignItems: "start",
+              }}>
+                <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", color: "rgba(245,240,240,0.3)", letterSpacing: "0.1em", paddingTop: "3px" }}>{s.index}</span>
+                <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1rem, 1.8vw, 1.4rem)", color: "#f5f0f0", letterSpacing: "0.06em", fontWeight: "normal", lineHeight: 1.1 }}>{s.title}</p>
+                <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.75rem", color: "rgba(245,240,240,0.55)", lineHeight: 1.85 }}>{s.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ── About ── */}
+      <section style={{ padding: "5rem clamp(1.5rem, 6vw, 5rem) 7rem" }}>
+        <div style={{
+          maxWidth: "1100px", margin: "0 auto",
+          display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6rem", alignItems: "center",
+        }}>
+          <Reveal direction="left">
+            <div>
+              <h2 style={{ marginBottom: "1.5rem", lineHeight: 1 }}>
+                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.5rem, 5.5vw, 5rem)", fontWeight: "normal", color: "#f5f0f0" }}>A</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.8rem, 3.8vw, 3.5rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em" }}>bout me</span>
+              </h2>
+
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.08em", color: "rgba(245,240,240,0.38)", marginBottom: "1.2rem", textTransform: "uppercase" }}>
+                @cal1star &nbsp;·&nbsp; 4K+ Instagram &nbsp;·&nbsp; 4K+ YouTube &nbsp;·&nbsp; San Francisco, CA
+              </p>
+
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.82rem", color: "rgba(245,240,240,0.65)", lineHeight: 1.9, marginBottom: "2rem" }}>
+                Hi! I'm Calista, your friendly neighborhood videographer and video editor. USC Industrial Engineering grad with a lens pointed at life — documenting the moments, the transitions, the everyday that becomes extraordinary on screen.
+              </p>
+
+              <div style={{ display: "flex", gap: "2.5rem" }}>
+                {[0, 1].map(col => (
+                  <div key={col} style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                    {LABELS.filter((_, i) => i % 2 === col).map(label => (
+                      <p key={label} style={{
+                        fontFamily: "var(--font-inter)", fontSize: "0.62rem",
+                        letterSpacing: "0.06em", textTransform: "uppercase",
+                        color: "rgba(245,240,240,0.55)", fontWeight: 400,
+                      }}>{label}</p>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal direction="right" delay={150}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <FlipPhoto />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Brands ── */}
+      <section style={{ padding: "3rem 0 4rem", borderTop: "1px solid rgba(245,240,240,0.06)" }}>
+        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.55rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.25)", textAlign: "center", marginBottom: "2rem" }}>
+          Trusted by
+        </p>
+        <LogoMarquee />
+      </section>
+
+      {/* ── Toolkit ── */}
+      <section style={{ padding: "5rem clamp(1.5rem, 6vw, 5rem) 6rem", borderTop: "1px solid rgba(245,240,240,0.06)" }}>
+        <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
+          <Reveal>
+            <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(245,240,240,0.3)", marginBottom: "0.8rem" }}>
+              Tools & Software
+            </p>
+            <h2 style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.6rem, 3vw, 2.8rem)", fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.06em", marginBottom: "3.5rem" }}>
+              My Toolkit
+            </h2>
+          </Reveal>
+          <div style={{ display: "flex", justifyContent: "center", gap: "clamp(1.5rem, 4vw, 4rem)", flexWrap: "wrap" }}>
+            {TOOLS.map(({ src, label }, i) => (
+              <Reveal key={label} delay={i * 80}>
+                <div style={{ textAlign: "center", width: "clamp(58px, 8vw, 88px)" }}>
+                  <img src={src} alt={label} style={{ width: "100%", display: "block", borderRadius: "22%" }} />
+                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.55rem", color: "rgba(245,240,240,0.4)", marginTop: "0.5rem", letterSpacing: "0.04em" }}>{label}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section style={{ padding: "6rem clamp(1.5rem, 6vw, 5rem) 7rem", textAlign: "center", borderTop: "1px solid rgba(245,240,240,0.06)" }}>
+        <Reveal>
+          <h2 style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(3rem, 8vw, 7rem)", fontWeight: "normal", color: "#f5f0f0", lineHeight: 0.9, marginBottom: "2.5rem", letterSpacing: "0.02em" }}>
+            Let&apos;s create<br />something.
+          </h2>
+          <a
+            href="/contact"
+            style={{
+              display: "inline-block",
+              fontFamily: "var(--font-inter)", fontSize: "0.62rem",
+              letterSpacing: "0.25em", textTransform: "uppercase",
+              color: "#f5f0f0", textDecoration: "none",
+              padding: "0.9rem 2.5rem",
+              border: "1px solid rgba(245,240,240,0.3)",
+              transition: "border-color 0.3s ease, background 0.3s ease",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(245,240,240,0.8)"; e.currentTarget.style.background = "rgba(245,240,240,0.05)"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(245,240,240,0.3)"; e.currentTarget.style.background = "transparent"; }}
+          >
+            Get in touch
+          </a>
+        </Reveal>
+      </section>
+
+      {/* ── Footer ── */}
+      <footer style={{ padding: "2rem", borderTop: "1px solid rgba(139,0,0,0.15)", textAlign: "center" }}>
+        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.2em", color: "rgba(245,240,240,0.25)" }}>
+          @2026 CALISTA SUHERMAN &nbsp;&nbsp;·&nbsp;&nbsp; PSALM 46:5
+        </p>
+      </footer>
+
+    </main>
   );
 }
