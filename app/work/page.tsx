@@ -189,9 +189,9 @@ function VideographyCarousel() {
   const innerRef = useRef<HTMLDivElement>(null);
 
   const n = CINEMA_VIDEOS.length;
-  const RADIUS = 620;
-  const CARD_W = 320;
-  const CARD_H = 180;
+  const RADIUS = 700;
+  const CARD_W = 380;
+  const CARD_H = 214;
 
   useEffect(() => {
     const onScroll = () => {
@@ -237,14 +237,14 @@ function VideographyCarousel() {
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
 
         {/* Title — above carousel */}
-        <div style={{ position: "absolute", top: "18vh", left: 0, right: 0, textAlign: "center", zIndex: 20, pointerEvents: "none", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+        <div style={{ position: "absolute", top: "22vh", left: 0, right: 0, textAlign: "center", zIndex: 20, pointerEvents: "none", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
           <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>V</span>
           <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ideography</span>
         </div>
 
         {/* Carousel — pushed below center to leave room under title */}
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "30vh" }}>
-          <div style={{ perspective: "1600px", perspectiveOrigin: "50% 50%" }}>
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "48vh" }}>
+          <div style={{ perspective: "3200px", perspectiveOrigin: "50% 50%" }}>
             <div
               ref={innerRef}
               style={{
@@ -269,7 +269,6 @@ function VideographyCarousel() {
                       overflow: "hidden",
                       border: "1px solid rgba(139,0,0,0.3)",
                       boxShadow: "0 16px 48px rgba(0,0,0,0.85), 0 4px 12px rgba(0,0,0,0.6)",
-                      backfaceVisibility: "hidden",
                     }}
                   >
                     <video
