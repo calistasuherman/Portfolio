@@ -221,8 +221,8 @@ function VideographyCarousel() {
 
   const n = CINEMA_VIDEOS.length;
   const RADIUS = 560;
-  const CARD_W = 210;
-  const CARD_H = 118;
+  const CARD_W = 248;
+  const CARD_H = 140;
 
   useEffect(() => {
     const onScroll = () => {
@@ -274,7 +274,7 @@ function VideographyCarousel() {
         </div>
 
         {/* Carousel — pushed below center to leave room under title */}
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "56vh" }}>
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "48vh" }}>
           <div style={{ perspective: "3200px", perspectiveOrigin: "50% 50%" }}>
             <div
               ref={innerRef}
@@ -399,7 +399,7 @@ function MotionEditingSlider() {
       <button style={arrowBtn} onClick={() => goTo(idx - 1)}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <div style={{ position: "relative", flex: 1, maxWidth: "820px", aspectRatio: "16/9", borderRadius: "12px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.6)", border: "1px solid rgba(139,0,0,0.2)", opacity: fading ? 0 : 1, transition: "opacity 0.22s ease" }}>
+      <div style={{ position: "relative", flex: 1, maxWidth: idx >= 5 ? "520px" : "820px", aspectRatio: idx >= 5 ? "1/1" : "16/9", borderRadius: "12px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.6)", border: "1px solid rgba(139,0,0,0.2)", opacity: fading ? 0 : 1, transition: "opacity 0.22s ease, max-width 0.3s ease, aspect-ratio 0.3s ease" }}>
         <video
           key={VE_VIDEOS[idx]}
           ref={videoRef}
@@ -409,6 +409,7 @@ function MotionEditingSlider() {
           playsInline
           preload="auto"
           muted={muted}
+          disablePictureInPicture
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
         />
         {/* Mute/unmute toggle */}
