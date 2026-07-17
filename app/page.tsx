@@ -184,6 +184,9 @@ export default function Home() {
           <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
             <Reveal className="order-1" direction="left">
+              <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginBottom: "0.6rem", paddingLeft: "0.1rem", color: "rgba(245,240,240,0.5)", letterSpacing: "0.05em" }}>
+                @cal1star &nbsp;|&nbsp; 4K+ Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
+              </p>
               <div className="leading-none mb-10 whitespace-nowrap" style={{ position: "relative", marginTop: "2rem" }} suppressHydrationWarning>
                 <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(3px, 3px)", pointerEvents: "none", letterSpacing: "0.05em", color: "#000000" }}>
                   <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal" }}>A</span>
@@ -200,9 +203,6 @@ export default function Home() {
               </div>
               <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "3.5rem", paddingLeft: "1.5rem", lineHeight: 1.85, textShadow: "0 2px 12px rgba(0,0,0,0.55)", fontWeight: 400 }}>
                 Hi! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
-              </p>
-              <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginTop: "1rem", paddingLeft: "1.5rem", color: "rgba(245,240,240,0.5)", letterSpacing: "0.05em" }}>
-                @cal1star &nbsp;|&nbsp; 4K+ Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
               </p>
               <div className="font-inter" style={{ fontSize: "clamp(0.55rem, 0.9vw, 0.72rem)", marginTop: "1.5rem", paddingLeft: "1.5rem", display: "flex", gap: "2rem", color: "#e8e4e0" }}>
                 {[0, 1].map(col => (

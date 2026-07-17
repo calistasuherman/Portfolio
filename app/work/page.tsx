@@ -189,9 +189,9 @@ function VideographyCarousel() {
   const innerRef = useRef<HTMLDivElement>(null);
 
   const n = CINEMA_VIDEOS.length;
-  const RADIUS = 660;
-  const CARD_W = 300;
-  const CARD_H = 169;
+  const RADIUS = 560;
+  const CARD_W = 210;
+  const CARD_H = 118;
 
   useEffect(() => {
     const onScroll = () => {
@@ -243,7 +243,7 @@ function VideographyCarousel() {
         </div>
 
         {/* Carousel — pushed below center to leave room under title */}
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "48vh" }}>
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "56vh" }}>
           <div style={{ perspective: "3200px", perspectiveOrigin: "50% 50%" }}>
             <div
               ref={innerRef}
@@ -464,7 +464,7 @@ export default function WorkPage() {
 
       <VideographyCarousel />
 
-      <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingBottom: "1rem", paddingTop: "0" }}>
+      <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingBottom: "1rem", paddingTop: "6rem" }}>
         <div className="max-w-6xl mx-auto">
           <Reveal delay={80}>
             <WorkSubsection id="video-editing" titleStyle={{ marginTop: "-2rem" }} title={
@@ -491,9 +491,6 @@ export default function WorkPage() {
                 <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ollaborations</span>
               </div>
             }>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 1vw, 0.8rem)", color: "rgba(245,240,240,0.45)", letterSpacing: "0.08em", marginBottom: "1.5rem", textAlign: "center" }}>
-                4K+ Instagram &nbsp;·&nbsp; 4K+ YouTube
-              </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {youtubeIntegrations.map((item, i) => (
                   <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} autoplay />
