@@ -18,12 +18,12 @@ const VE_VIDEOS = [
 ].map(f => ({ src: `/ve/${f}` }));
 
 const COLLAB_VIDEOS = [
-  { src: "/aelfriceden.mp4", label: "Aelfric Eden" },
-  { src: "/betterhelp.mp4",  label: "BetterHelp"   },
-  { src: "/just4kira.mp4",   label: "Just4Kira"    },
-  { src: "/lewkin.mp4",      label: "Lewkin"        },
-  { src: "/teddyblake.mp4",  label: "Teddy Blake"  },
-  { src: "/bypassgpt.mp4",   label: "BypassGPT"    },
+  { src: "/cinema/cinema3.mp4",  label: "Aelfric Eden" },
+  { src: "/cinema/cinema5.mp4",  label: "BetterHelp"   },
+  { src: "/cinema/cinema7.mp4",  label: "Just4Kira"    },
+  { src: "/cinema/cinema9.mp4",  label: "Lewkin"        },
+  { src: "/cinema/cinema11.mp4", label: "Teddy Blake"  },
+  { src: "/cinema/cinema2.mp4",  label: "BypassGPT"    },
 ];
 
 /* ── TrayItem — draggable food item ── */
