@@ -159,7 +159,7 @@ function TrayNav() {
         <TrayItem src="/tray-croissant.png" alt="Videography" label="videography" rotate={-10} href="videography"
           onShowDragCursor={setShowDragCursor}
           style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }} />
-        <TrayItem src="/tray-figs.png" alt="YouTube Integrations" label="youtube integrations" href="youtube-integrations"
+        <TrayItem src="/tray-figs.png" alt="Collaborations" label="collaborations" href="youtube-integrations"
           onShowDragCursor={setShowDragCursor}
           style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }} />
         <TrayItem src="/tray-coffee.png" alt="Motion Editing" label="motion editing" labelTop="40%" href="video-editing"
@@ -189,9 +189,9 @@ function VideographyCarousel() {
   const innerRef = useRef<HTMLDivElement>(null);
 
   const n = CINEMA_VIDEOS.length;
-  const RADIUS = 700;
-  const CARD_W = 380;
-  const CARD_H = 214;
+  const RADIUS = 660;
+  const CARD_W = 300;
+  const CARD_H = 169;
 
   useEffect(() => {
     const onScroll = () => {
@@ -487,21 +487,18 @@ export default function WorkPage() {
           <Reveal delay={80}>
             <WorkSubsection id="youtube-integrations" noBottomMargin title={
               <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>Y</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ouTube</span>
-                {" "}
-                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>I</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ntegrations</span>
+                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>C</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ollaborations</span>
               </div>
             }>
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 1vw, 0.8rem)", color: "rgba(245,240,240,0.45)", letterSpacing: "0.08em", marginBottom: "1.5rem", textAlign: "center" }}>
+                4K+ Instagram &nbsp;·&nbsp; 4K+ YouTube
+              </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {youtubeIntegrations.map((item, i) => (
                   <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} autoplay />
                 ))}
               </div>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 1vw, 0.8rem)", color: "rgba(245,240,240,0.45)", letterSpacing: "0.08em", marginTop: "1.5rem", textAlign: "center" }}>
-                4K+ Instagram &nbsp;·&nbsp; 4K+ YouTube
-              </p>
             </WorkSubsection>
           </Reveal>
         </div>
