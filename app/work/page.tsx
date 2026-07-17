@@ -239,7 +239,8 @@ function VideographyCarousel() {
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
       mouseRotY.current = ((e.clientX - cx) / cx) * 8;
-      mouseRotX.current = 8 + ((e.clientY - cy) / cy) * 2;
+      const rawDelta = (e.clientY - cy) / cy;
+      mouseRotX.current = 8 + (rawDelta > 0 ? rawDelta * 0.8 : rawDelta * 2);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
