@@ -187,6 +187,7 @@ function VideographyCarousel() {
   const dispRotX = useRef(8);
   const rafRef = useRef<number>();
   const innerRef = useRef<HTMLDivElement>(null);
+  const [expandedSrc, setExpandedSrc] = useState<string | null>(null);
 
   const n = CINEMA_VIDEOS.length;
   const RADIUS = 560;
@@ -260,6 +261,7 @@ function VideographyCarousel() {
                 return (
                   <div
                     key={src}
+                    onClick={() => setExpandedSrc(src)}
                     style={{
                       position: "absolute",
                       width: `${CARD_W}px`,
@@ -269,6 +271,7 @@ function VideographyCarousel() {
                       overflow: "hidden",
                       border: "1px solid rgba(139,0,0,0.3)",
                       boxShadow: "0 16px 48px rgba(0,0,0,0.85), 0 4px 12px rgba(0,0,0,0.6)",
+                      cursor: "pointer",
                     }}
                   >
                     <video
@@ -278,7 +281,7 @@ function VideographyCarousel() {
                       loop
                       playsInline
                       preload="auto"
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }}
                     />
                   </div>
                 );
@@ -288,6 +291,99 @@ function VideographyCarousel() {
         </div>
 
       </div>
+
+      {/* Lightbox */}
+      {expandedSrc !== null && (
+        <div
+          onClick={() => setExpandedSrc(null)}
+          style={{
+            position: "fixed", inset: 0, zIndex: 1000,
+            background: "rgba(0,0,0,0.88)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            opacity: expandedSrc ? 1 : 0,
+            transition: "opacity 0.35s ease",
+          }}
+        >
+          <video
+            key={expandedSrc}
+            src={expandedSrc}
+            autoPlay
+            controls
+            playsInline
+            onClick={e => e.stopPropagation()}
+            style={{
+              maxWidth: "85vw", maxHeight: "80vh",
+              borderRadius: "12px",
+              boxShadow: "0 24px 80px rgba(0,0,0,0.9)",
+              transform: "scale(1)",
+              transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1)",
+            }}
+          />
+          <button
+            onClick={() => setExpandedSrc(null)}
+            style={{
+              position: "absolute", top: "2rem", right: "2rem",
+              background: "rgba(245,240,240,0.12)", border: "none", cursor: "none",
+              borderRadius: "50%", width: "40px", height: "40px",
+              color: "#f5f0f0", fontSize: "1.2rem", display: "flex", alignItems: "center", justifyContent: "center",
+            }}
+          >✕</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── MotionEditingSlider ── */
+const VE_VIDEOS = ["ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4","ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4","ve11.mp4","ve12.mp4","ve13.mp4","ve14.mp4","ve15.mp4"];
+
+function MotionEditingSlider() {
+  const [idx, setIdx] = useState(0);
+  const [fading, setFading] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  function goTo(next: number) {
+    setFading(true);
+    setTimeout(() => {
+      setIdx(((next % VE_VIDEOS.length) + VE_VIDEOS.length) % VE_VIDEOS.length);
+      setFading(false);
+    }, 220);
+  }
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.play().catch(() => {});
+  }, [idx]);
+
+  const arrowBtn: React.CSSProperties = {
+    background: "rgba(245,240,240,0.08)", border: "1px solid rgba(245,240,240,0.15)",
+    borderRadius: "50%", width: "48px", height: "48px", cursor: "none",
+    display: "flex", alignItems: "center", justifyContent: "center",
+    color: "#f5f0f0", flexShrink: 0, transition: "background 0.2s ease",
+  };
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", justifyContent: "center" }}>
+      <button style={arrowBtn} onClick={() => goTo(idx - 1)}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div style={{ flex: 1, maxWidth: "820px", aspectRatio: "16/9", borderRadius: "12px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.6)", border: "1px solid rgba(139,0,0,0.2)", opacity: fading ? 0 : 1, transition: "opacity 0.22s ease" }}>
+        <video
+          key={VE_VIDEOS[idx]}
+          ref={videoRef}
+          src={`/ve/${VE_VIDEOS[idx]}`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        />
+      </div>
+      <button style={arrowBtn} onClick={() => goTo(idx + 1)}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
     </div>
   );
 }
@@ -476,11 +572,7 @@ export default function WorkPage() {
                 <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>diting</span>
               </div>
             }>
-              <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
-                {["ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4","ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4","ve11.mp4","ve12.mp4","ve13.mp4","ve14.mp4","ve15.mp4"].map((f, i) => (
-                  <VideoCard key={f} label="" src={`/ve/${f}`} staggerDelay={i * 40} square={i >= 5} autoplay />
-                ))}
-              </div>
+              <MotionEditingSlider />
             </WorkSubsection>
           </Reveal>
 
