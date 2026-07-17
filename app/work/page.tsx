@@ -3,13 +3,27 @@ import { useState, useEffect, useRef } from "react";
 import { Reveal } from "../components/Reveal";
 import { lenisScrollTo } from "../components/GlobalUI";
 
-const youtubeIntegrations = [
-  { label: "Aelfric Eden", src: "/aelfriceden.mp4" },
-  { label: "BetterHelp",   src: "/betterhelp.mp4"  },
-  { label: "Just4Kira",   src: "/just4kira.mp4"   },
-  { label: "Lewkin",       src: "/lewkin.mp4"       },
-  { label: "Teddy Blake",  src: "/teddyblake.mp4"  },
-  { label: "BypassGPT",   src: "/bypassgpt.mp4"   },
+/* ── Data ── */
+const CINEMA_VIDEOS = [
+  "/cinema/cinema1.mp4", "/cinema/cinema2.mp4", "/cinema/cinema3.mp4",
+  "/cinema/cinema4.mp4", "/cinema/cinema5.mp4", "/cinema/cinema6.mp4",
+  "/cinema/cinema7.mp4", "/cinema/cinema8.mp4", "/cinema/cinema9.mp4",
+  "/cinema/cinema10.mp4", "/cinema/cinema11.mp4", "/cinema/cinema12.MP4",
+].map(src => ({ src }));
+
+const VE_VIDEOS = [
+  "ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4",
+  "ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4",
+  "ve11.mp4","ve12.mp4","ve13.mp4","ve14.mp4","ve15.mp4",
+].map(f => ({ src: `/ve/${f}` }));
+
+const COLLAB_VIDEOS = [
+  { src: "/aelfriceden.mp4", label: "Aelfric Eden" },
+  { src: "/betterhelp.mp4",  label: "BetterHelp"   },
+  { src: "/just4kira.mp4",   label: "Just4Kira"    },
+  { src: "/lewkin.mp4",      label: "Lewkin"        },
+  { src: "/teddyblake.mp4",  label: "Teddy Blake"  },
+  { src: "/bypassgpt.mp4",   label: "BypassGPT"    },
 ];
 
 /* ── TrayItem — draggable food item ── */
@@ -141,7 +155,6 @@ function TrayNav() {
       <div className="relative" style={{ marginTop: "-1.5rem" }}>
         <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))" }} />
 
-        {/* Title */}
         <div style={{ position: "absolute", left: "3%", top: "8%", zIndex: 4, pointerEvents: "none" }}>
           <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.2rem, 2.4vw, 2.6rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: "normal", letterSpacing: "0.15em" }}>
             WHAT&nbsp;&nbsp;&nbsp;I
@@ -155,7 +168,6 @@ function TrayNav() {
           </p>
         </div>
 
-        {/* Food elements — draggable + click to navigate */}
         <TrayItem src="/tray-croissant.png" alt="Videography" label="videography" rotate={-10} href="videography"
           onShowDragCursor={setShowDragCursor}
           style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }} />
@@ -170,15 +182,31 @@ function TrayNav() {
   );
 }
 
-/* ── VideographyCarousel — scroll-driven 3D circle ── */
-const CINEMA_VIDEOS = [
-  "/cinema/cinema1.mp4","/cinema/cinema2.mp4","/cinema/cinema3.mp4",
-  "/cinema/cinema4.mp4","/cinema/cinema5.mp4","/cinema/cinema6.mp4",
-  "/cinema/cinema7.mp4","/cinema/cinema8.mp4","/cinema/cinema9.mp4",
-  "/cinema/cinema10.mp4","/cinema/cinema11.mp4","/cinema/cinema12.MP4",
-];
+/* ── OrbitTitle ── */
+function OrbitTitle({ parts }: { parts: { text: string; script?: boolean }[] }) {
+  return (
+    <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
+      {parts.map(({ text, script }, i) => (
+        <span key={i} style={{
+          fontFamily: script ? "BillaMount, cursive" : "PerandoryCondensed, sans-serif",
+          fontWeight: "normal", color: "#f5f0f0",
+        }}>{text}</span>
+      ))}
+    </div>
+  );
+}
 
-function VideographyCarousel() {
+/* ── OrbitCarousel — shared scroll-driven 3D circle ── */
+function OrbitCarousel({
+  id, videos, cardW, cardH, radius,
+  scrollHeight = "300vh", title,
+}: {
+  id: string;
+  videos: { src: string; label?: string }[];
+  cardW: number; cardH: number; radius: number;
+  scrollHeight?: string;
+  title: React.ReactNode;
+}) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const scrollRotY = useRef(0);
   const mouseRotY = useRef(0);
@@ -200,11 +228,10 @@ function VideographyCarousel() {
     setExpanded({ src, dx, dy, scale });
   }
 
-  // open after expanded mounts (16ms = one frame, reliable)
   useEffect(() => {
     if (!expanded) return;
-    const id = setTimeout(() => setOpen(true), 16);
-    return () => clearTimeout(id);
+    const t = setTimeout(() => setOpen(true), 16);
+    return () => clearTimeout(t);
   }, [expanded?.src]);
 
   function closeCard() {
@@ -219,10 +246,7 @@ function VideographyCarousel() {
     return () => window.removeEventListener("keydown", onKey);
   }, [expanded]);
 
-  const n = CINEMA_VIDEOS.length;
-  const RADIUS = 560;
-  const CARD_W = 248;
-  const CARD_H = 140;
+  const n = videos.length;
 
   useEffect(() => {
     const onScroll = () => {
@@ -231,11 +255,14 @@ function VideographyCarousel() {
       const rect = section.getBoundingClientRect();
       const sectionH = section.offsetHeight - window.innerHeight;
       const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / sectionH));
-      scrollRotY.current = progress * 360;
+      scrollRotY.current = Math.max(0, Math.min(1, scrolled / sectionH)) * 360;
     };
 
     const onMouse = (e: MouseEvent) => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      if (rect.top > window.innerHeight || rect.bottom < 0) return;
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
       mouseRotY.current = ((e.clientX - cx) / cx) * 8;
@@ -247,8 +274,7 @@ function VideographyCarousel() {
     window.addEventListener("mousemove", onMouse, { passive: true });
 
     const animate = () => {
-      const targetY = scrollRotY.current + mouseRotY.current;
-      dispRotY.current += (targetY - dispRotY.current) * 0.05;
+      dispRotY.current += (scrollRotY.current + mouseRotY.current - dispRotY.current) * 0.05;
       dispRotX.current += (mouseRotX.current - dispRotX.current) * 0.05;
       if (innerRef.current) {
         innerRef.current.style.transform = `rotateX(${dispRotX.current}deg) rotateY(${dispRotY.current}deg)`;
@@ -265,29 +291,28 @@ function VideographyCarousel() {
   }, []);
 
   return (
-    <div ref={sectionRef} id="videography" style={{ height: "300vh", position: "relative", scrollMarginTop: "80px" }}>
+    <div ref={sectionRef} id={id} style={{ height: scrollHeight, position: "relative", scrollMarginTop: "80px" }}>
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
 
-        {/* Title — above carousel */}
-        <div style={{ position: "absolute", top: "22vh", left: 0, right: 0, textAlign: "center", zIndex: 20, pointerEvents: "none", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
-          <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>V</span>
-          <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ideography</span>
+        {/* Section title */}
+        <div style={{ position: "absolute", top: "22vh", left: 0, right: 0, textAlign: "center", zIndex: 20, pointerEvents: "none" }}>
+          {title}
         </div>
 
-        {/* Carousel — pushed below center to leave room under title */}
+        {/* 3D orbit */}
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "48vh" }}>
           <div style={{ perspective: "3200px", perspectiveOrigin: "50% 50%" }}>
             <div
               ref={innerRef}
               style={{
                 position: "relative",
-                width: `${CARD_W}px`,
-                height: `${CARD_H}px`,
+                width: `${cardW}px`,
+                height: `${cardH}px`,
                 transformStyle: "preserve-3d",
                 transform: "rotateX(8deg) rotateY(0deg)",
               }}
             >
-              {CINEMA_VIDEOS.map((src, i) => {
+              {videos.map(({ src, label }, i) => {
                 const angle = (360 / n) * i;
                 return (
                   <div
@@ -295,9 +320,9 @@ function VideographyCarousel() {
                     onClick={(e) => openCard(src, e)}
                     style={{
                       position: "absolute",
-                      width: `${CARD_W}px`,
-                      height: `${CARD_H}px`,
-                      transform: `rotateY(${angle}deg) translateZ(${RADIUS}px)`,
+                      width: `${cardW}px`,
+                      height: `${cardH}px`,
+                      transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
                       borderRadius: "8px",
                       overflow: "hidden",
                       border: "1px solid rgba(139,0,0,0.3)",
@@ -307,301 +332,58 @@ function VideographyCarousel() {
                   >
                     <video
                       src={src}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="auto"
+                      autoPlay muted loop playsInline preload="auto" disablePictureInPicture
                       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }}
                     />
+                    {label && (
+                      <div style={{
+                        position: "absolute", bottom: 0, left: 0, right: 0,
+                        padding: "6px 8px",
+                        background: "linear-gradient(to top, rgba(13,0,0,0.9), transparent)",
+                        fontFamily: "var(--font-inter)", fontSize: "8px",
+                        letterSpacing: "0.18em", textTransform: "uppercase", color: "#f5f0f0",
+                        pointerEvents: "none",
+                      }}>{label}</div>
+                    )}
                   </div>
                 );
               })}
             </div>
           </div>
         </div>
-
       </div>
 
-      {/* Expand-from-card lightbox */}
+      {/* Lightbox */}
       {expanded && (
         <>
-          <div
-            onClick={closeCard}
-            style={{
-              position: "fixed", inset: 0, zIndex: 998,
-              background: "rgba(0,0,0,0.82)",
-              opacity: open ? 1 : 0,
-              transition: "opacity 0.45s ease",
-            }}
-          />
-          <div
-            style={{
-              position: "fixed", zIndex: 999,
-              left: "50%", top: "50%",
-              width: "min(85vw, 900px)",
-              transform: open
-                ? "translate(-50%, -50%) scale(1)"
-                : `translate(calc(-50% + ${expanded.dx}px), calc(-50% + ${expanded.dy}px)) scale(${expanded.scale})`,
-              transformOrigin: "center center",
-              transition: "transform 0.48s cubic-bezier(0.16,1,0.3,1)",
-              borderRadius: "12px",
-              overflow: "hidden",
-              boxShadow: "0 32px 80px rgba(0,0,0,0.9)",
-            }}
-          >
+          <div onClick={closeCard} style={{
+            position: "fixed", inset: 0, zIndex: 998,
+            background: "rgba(0,0,0,0.82)",
+            opacity: open ? 1 : 0,
+            transition: "opacity 0.45s ease",
+          }} />
+          <div style={{
+            position: "fixed", zIndex: 999,
+            left: "50%", top: "50%",
+            width: "min(85vw, 900px)",
+            transform: open
+              ? "translate(-50%, -50%) scale(1)"
+              : `translate(calc(-50% + ${expanded.dx}px), calc(-50% + ${expanded.dy}px)) scale(${expanded.scale})`,
+            transformOrigin: "center center",
+            transition: "transform 0.48s cubic-bezier(0.16,1,0.3,1)",
+            borderRadius: "12px",
+            overflow: "hidden",
+            boxShadow: "0 32px 80px rgba(0,0,0,0.9)",
+          }}>
             <video
               key={expanded.src}
               src={expanded.src}
-              autoPlay
-              controls
-              playsInline
+              autoPlay controls playsInline
               style={{ width: "100%", display: "block" }}
             />
           </div>
         </>
       )}
-    </div>
-  );
-}
-
-/* ── MotionEditingSlider ── */
-const VE_VIDEOS = ["ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4","ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4","ve11.mp4","ve12.mp4","ve13.mp4","ve14.mp4","ve15.mp4"];
-
-function MotionEditingSlider() {
-  const [idx, setIdx] = useState(0);
-  const [fading, setFading] = useState(false);
-  const [muted, setMuted] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  function goTo(next: number) {
-    setFading(true);
-    setTimeout(() => {
-      setIdx(((next % VE_VIDEOS.length) + VE_VIDEOS.length) % VE_VIDEOS.length);
-      setFading(false);
-    }, 220);
-  }
-
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.play().catch(() => {});
-  }, [idx]);
-
-  const arrowBtn: React.CSSProperties = {
-    background: "rgba(245,240,240,0.08)", border: "1px solid rgba(245,240,240,0.15)",
-    borderRadius: "50%", width: "48px", height: "48px", cursor: "none",
-    display: "flex", alignItems: "center", justifyContent: "center",
-    color: "#f5f0f0", flexShrink: 0, transition: "background 0.2s ease",
-  };
-
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", justifyContent: "center" }}>
-      <button style={arrowBtn} onClick={() => goTo(idx - 1)}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <div style={{ position: "relative", flex: 1, maxWidth: idx >= 5 ? "520px" : "820px", aspectRatio: idx >= 5 ? "1/1" : "16/9", borderRadius: "12px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.6)", border: "1px solid rgba(139,0,0,0.2)", opacity: fading ? 0 : 1, transition: "opacity 0.22s ease, max-width 0.3s ease, aspect-ratio 0.3s ease" }}>
-        <video
-          key={VE_VIDEOS[idx]}
-          ref={videoRef}
-          src={`/ve/${VE_VIDEOS[idx]}`}
-          autoPlay
-          loop
-          playsInline
-          preload="auto"
-          muted={muted}
-          disablePictureInPicture
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-        />
-        {/* Mute/unmute toggle */}
-        <button
-          onClick={() => setMuted(m => !m)}
-          style={{
-            position: "absolute", bottom: "12px", right: "12px",
-            background: "rgba(0,0,0,0.55)", backdropFilter: "blur(6px)",
-            border: "1px solid rgba(255,255,255,0.15)", borderRadius: "50%",
-            width: "36px", height: "36px", cursor: "none",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            color: "#f5f0f0", transition: "background 0.2s ease",
-          }}
-          aria-label={muted ? "Unmute" : "Mute"}
-        >
-          {muted ? (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M11 5L6 9H2v6h4l5 4V5z" opacity="0.5"/>
-              <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" strokeWidth="2"/>
-              <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" strokeWidth="2"/>
-            </svg>
-          ) : (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-          )}
-        </button>
-      </div>
-      <button style={arrowBtn} onClick={() => goTo(idx + 1)}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-    </div>
-  );
-}
-
-/* ── WorkSubsection ── */
-function WorkSubsection({ id, title, children, noBottomMargin, titleStyle }: { id?: string; title: React.ReactNode; children: React.ReactNode; noBottomMargin?: boolean; titleStyle?: React.CSSProperties }) {
-  return (
-    <div id={id} className={noBottomMargin ? "mb-4" : "mb-20"} style={{ scrollMarginTop: "20px" }}>
-      <div className="mb-8 text-center" style={titleStyle}>{title}</div>
-      {children}
-    </div>
-  );
-}
-
-/* ── VideoCard ── */
-function VideoCard({ label, src, staggerDelay = 0, square = false, fill = false, autoplay = false }: {
-  label: string; src: string; staggerDelay?: number; square?: boolean; fill?: boolean; autoplay?: boolean;
-}) {
-  const [hovered, setHovered] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const isEmbed = src.includes("youtube.com/embed") || src.includes("drive.google.com");
-
-  useEffect(() => {
-    const el = cardRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setVisible(true); obs.disconnect(); }
-    }, { threshold: 0.1 });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.muted = true;
-    if (autoplay) {
-      v.play().catch(() => {});
-      return;
-    }
-    const onMeta = () => { v.currentTime = 0.001; };
-    v.addEventListener("loadedmetadata", onMeta);
-    return () => v.removeEventListener("loadedmetadata", onMeta);
-  }, [autoplay]);
-
-  useEffect(() => {
-    if (autoplay) return;
-    const v = videoRef.current;
-    if (!v) return;
-    if (hovered) { v.play().catch(() => {}); }
-    else { v.pause(); v.currentTime = 0.001; }
-  }, [hovered, autoplay]);
-
-  return (
-    <div
-      ref={cardRef}
-      className="work-card group relative overflow-hidden rounded-lg cursor-pointer"
-      style={{
-        ...(fill ? { width: "100%", height: "100%" } : { aspectRatio: square ? "1/1" : "16/9" }),
-        border: "1px solid rgba(139,0,0,0.2)",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(32px)",
-        transition: `opacity 0.65s cubic-bezier(0.16,1,0.3,1) ${staggerDelay}ms, transform 0.65s cubic-bezier(0.16,1,0.3,1) ${staggerDelay}ms`,
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {isEmbed ? (
-        <iframe src={src} title={label} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen className="absolute inset-0 w-full h-full" style={{ border: "none" }} />
-      ) : (
-        <video ref={videoRef} src={src} loop playsInline muted preload="metadata" className="absolute inset-0 w-full h-full object-cover" />
-      )}
-      <div className="absolute bottom-0 left-0 right-0 px-3 py-2 flex items-center justify-between"
-        style={{ background: "linear-gradient(to top, rgba(13,0,0,0.85), transparent)" }}>
-        {label && <span className="font-inter text-[10px] uppercase tracking-widest text-text-primary">{label}</span>}
-      </div>
-      <div className="absolute inset-0 transition-opacity duration-300" style={{ opacity: hovered ? 1 : 0, background: "rgba(139,0,0,0.12)" }} />
-    </div>
-  );
-}
-
-/* ── CinemaVideoCard — plays only when visible ── */
-function CinemaVideoCard({ src }: { src: string }) {
-  const ref = useRef<HTMLVideoElement>(null);
-  useEffect(() => {
-    const v = ref.current;
-    if (!v) return;
-    const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { v.play().catch(() => {}); }
-      else { v.pause(); }
-    }, { threshold: 0.1 });
-    obs.observe(v);
-    return () => obs.disconnect();
-  }, []);
-  return (
-    <div style={{ width: "100%", height: "100%", position: "relative" }}>
-      <video
-        ref={ref} src={src} loop muted playsInline preload="metadata"
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-      />
-    </div>
-  );
-}
-
-/* ── CinemaRow — seamless rightward drift via RAF ── */
-function CinemaRow() {
-  const clips = ["/edit1.mp4", "/edit11.mp4", "/sd.mp4", "/icedbananalatte.mp4", "/temple.mp4", "/cine1.mp4", "/cine2.mp4", "/walking.mp4", "/running.mp4", "/colorgrading.mp4"];
-  const GAP = 14;
-  const rowRef = useRef<HTMLDivElement>(null);
-  const txRef  = useRef(0);
-  const rafRef = useRef<number>();
-
-  useEffect(() => {
-    const row = rowRef.current;
-    if (!row) return;
-
-    // wait one frame so scrollWidth is measured after layout
-    rafRef.current = requestAnimationFrame(() => {
-      const half = row.scrollWidth / 2;
-      txRef.current = -half; // start showing second set (identical to first)
-
-      const tick = () => {
-        txRef.current += 0.5; // rightward: strip moves right
-        if (txRef.current >= 0) txRef.current -= half; // seamless reset
-        row.style.transform = `translateX(${txRef.current}px)`;
-        rafRef.current = requestAnimationFrame(tick);
-      };
-
-      rafRef.current = requestAnimationFrame(tick);
-    });
-
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-  }, []);
-
-  return (
-    <div style={{ overflow: "hidden", marginLeft: "-2rem", marginRight: "-2rem" }}>
-      <div ref={rowRef} style={{ display: "flex", flexWrap: "nowrap", willChange: "transform" }}>
-        {[...clips, ...clips].map((src, i) => (
-          <div
-            key={i}
-            style={{
-              flexShrink: 0,
-              width: "clamp(280px, 30vw, 480px)",
-              aspectRatio: "16/9",
-              borderRadius: "8px",
-              overflow: "hidden",
-              border: "1px solid rgba(139,0,0,0.2)",
-              marginRight: GAP,
-              boxShadow: "0 6px 8px -2px rgba(0,0,0,0.75)",
-            }}
-          >
-            <CinemaVideoCard src={src} />
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
@@ -618,40 +400,29 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <VideographyCarousel />
+      <OrbitCarousel
+        id="videography"
+        videos={CINEMA_VIDEOS}
+        cardW={248} cardH={140} radius={560}
+        scrollHeight="300vh"
+        title={<OrbitTitle parts={[{ text: "V", script: true }, { text: "ideography" }]} />}
+      />
 
-      <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingBottom: "1rem", paddingTop: "6rem" }}>
-        <div className="max-w-6xl mx-auto">
-          <Reveal delay={80}>
-            <WorkSubsection id="video-editing" titleStyle={{ marginTop: "-2rem" }} title={
-              <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>M</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>otion</span>
-                {" "}
-                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>E</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>diting</span>
-              </div>
-            }>
-              <MotionEditingSlider />
-            </WorkSubsection>
-          </Reveal>
+      <OrbitCarousel
+        id="video-editing"
+        videos={VE_VIDEOS}
+        cardW={180} cardH={180} radius={420}
+        scrollHeight="260vh"
+        title={<OrbitTitle parts={[{ text: "M", script: true }, { text: "otion " }, { text: "E", script: true }, { text: "diting" }]} />}
+      />
 
-          <Reveal delay={80}>
-            <WorkSubsection id="youtube-integrations" noBottomMargin title={
-              <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>C</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ollaborations</span>
-              </div>
-            }>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                {youtubeIntegrations.map((item, i) => (
-                  <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} autoplay />
-                ))}
-              </div>
-            </WorkSubsection>
-          </Reveal>
-        </div>
-      </section>
+      <OrbitCarousel
+        id="youtube-integrations"
+        videos={COLLAB_VIDEOS}
+        cardW={240} cardH={135} radius={360}
+        scrollHeight="220vh"
+        title={<OrbitTitle parts={[{ text: "C", script: true }, { text: "ollaborations" }]} />}
+      />
 
       <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
         <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
