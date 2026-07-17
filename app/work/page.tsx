@@ -500,6 +500,9 @@ export default function WorkPage() {
                   <VideoCard key={item.label} label={item.label} src={item.src} staggerDelay={i * 60} autoplay />
                 ))}
               </div>
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 1vw, 0.8rem)", color: "rgba(245,240,240,0.45)", letterSpacing: "0.08em", marginTop: "1.5rem", textAlign: "center" }}>
+                4K+ Instagram &nbsp;·&nbsp; 4K+ YouTube
+              </p>
             </WorkSubsection>
           </Reveal>
         </div>
