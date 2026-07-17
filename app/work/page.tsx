@@ -187,7 +187,31 @@ function VideographyCarousel() {
   const dispRotX = useRef(8);
   const rafRef = useRef<number>();
   const innerRef = useRef<HTMLDivElement>(null);
-  const [expandedSrc, setExpandedSrc] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState<{ src: string; dx: number; dy: number; scale: number } | null>(null);
+  const [open, setOpen] = useState(false);
+
+  function openCard(src: string, e: React.MouseEvent<HTMLDivElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const targetW = Math.min(window.innerWidth * 0.85, 900);
+    const scale = rect.width / targetW;
+    const dx = (rect.left + rect.width / 2) - window.innerWidth / 2;
+    const dy = (rect.top + rect.height / 2) - window.innerHeight / 2;
+    setExpanded({ src, dx, dy, scale });
+    setOpen(false);
+    requestAnimationFrame(() => requestAnimationFrame(() => setOpen(true)));
+  }
+
+  function closeCard() {
+    setOpen(false);
+    setTimeout(() => setExpanded(null), 480);
+  }
+
+  useEffect(() => {
+    if (!expanded) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeCard(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [expanded]);
 
   const n = CINEMA_VIDEOS.length;
   const RADIUS = 560;
@@ -261,7 +285,7 @@ function VideographyCarousel() {
                 return (
                   <div
                     key={src}
-                    onClick={() => setExpandedSrc(src)}
+                    onClick={(e) => openCard(src, e)}
                     style={{
                       position: "absolute",
                       width: `${CARD_W}px`,
@@ -292,43 +316,43 @@ function VideographyCarousel() {
 
       </div>
 
-      {/* Lightbox */}
-      {expandedSrc !== null && (
-        <div
-          onClick={() => setExpandedSrc(null)}
-          style={{
-            position: "fixed", inset: 0, zIndex: 1000,
-            background: "rgba(0,0,0,0.88)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            opacity: expandedSrc ? 1 : 0,
-            transition: "opacity 0.35s ease",
-          }}
-        >
-          <video
-            key={expandedSrc}
-            src={expandedSrc}
-            autoPlay
-            controls
-            playsInline
-            onClick={e => e.stopPropagation()}
+      {/* Expand-from-card lightbox */}
+      {expanded && (
+        <>
+          <div
+            onClick={closeCard}
             style={{
-              maxWidth: "85vw", maxHeight: "80vh",
-              borderRadius: "12px",
-              boxShadow: "0 24px 80px rgba(0,0,0,0.9)",
-              transform: "scale(1)",
-              transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1)",
+              position: "fixed", inset: 0, zIndex: 998,
+              background: "rgba(0,0,0,0.82)",
+              opacity: open ? 1 : 0,
+              transition: "opacity 0.45s ease",
             }}
           />
-          <button
-            onClick={() => setExpandedSrc(null)}
+          <div
             style={{
-              position: "absolute", top: "2rem", right: "2rem",
-              background: "rgba(245,240,240,0.12)", border: "none", cursor: "none",
-              borderRadius: "50%", width: "40px", height: "40px",
-              color: "#f5f0f0", fontSize: "1.2rem", display: "flex", alignItems: "center", justifyContent: "center",
+              position: "fixed", zIndex: 999,
+              left: "50%", top: "50%",
+              width: "min(85vw, 900px)",
+              transform: open
+                ? "translate(-50%, -50%) scale(1)"
+                : `translate(calc(-50% + ${expanded.dx}px), calc(-50% + ${expanded.dy}px)) scale(${expanded.scale})`,
+              transformOrigin: "center center",
+              transition: "transform 0.48s cubic-bezier(0.16,1,0.3,1)",
+              borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: "0 32px 80px rgba(0,0,0,0.9)",
             }}
-          >✕</button>
-        </div>
+          >
+            <video
+              key={expanded.src}
+              src={expanded.src}
+              autoPlay
+              controls
+              playsInline
+              style={{ width: "100%", display: "block" }}
+            />
+          </div>
+        </>
       )}
     </div>
   );
@@ -374,7 +398,6 @@ function MotionEditingSlider() {
           ref={videoRef}
           src={`/ve/${VE_VIDEOS[idx]}`}
           autoPlay
-          muted
           loop
           playsInline
           preload="auto"
