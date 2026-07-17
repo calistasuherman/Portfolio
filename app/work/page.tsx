@@ -196,14 +196,20 @@ function VideographyCarousel() {
     const scale = rect.width / targetW;
     const dx = (rect.left + rect.width / 2) - window.innerWidth / 2;
     const dy = (rect.top + rect.height / 2) - window.innerHeight / 2;
-    setExpanded({ src, dx, dy, scale });
     setOpen(false);
-    requestAnimationFrame(() => requestAnimationFrame(() => setOpen(true)));
+    setExpanded({ src, dx, dy, scale });
   }
+
+  // open after expanded mounts (16ms = one frame, reliable)
+  useEffect(() => {
+    if (!expanded) return;
+    const id = setTimeout(() => setOpen(true), 16);
+    return () => clearTimeout(id);
+  }, [expanded?.src]);
 
   function closeCard() {
     setOpen(false);
-    setTimeout(() => setExpanded(null), 480);
+    setTimeout(() => { setExpanded(null); setOpen(false); }, 520);
   }
 
   useEffect(() => {
@@ -233,7 +239,7 @@ function VideographyCarousel() {
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
       mouseRotY.current = ((e.clientX - cx) / cx) * 8;
-      mouseRotX.current = 8 + ((e.clientY - cy) / cy) * 5;
+      mouseRotX.current = 8 + ((e.clientY - cy) / cy) * 2;
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -364,6 +370,7 @@ const VE_VIDEOS = ["ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4","ve6.mp4","
 function MotionEditingSlider() {
   const [idx, setIdx] = useState(0);
   const [fading, setFading] = useState(false);
+  const [muted, setMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   function goTo(next: number) {
@@ -392,7 +399,7 @@ function MotionEditingSlider() {
       <button style={arrowBtn} onClick={() => goTo(idx - 1)}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <div style={{ flex: 1, maxWidth: "820px", aspectRatio: "16/9", borderRadius: "12px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.6)", border: "1px solid rgba(139,0,0,0.2)", opacity: fading ? 0 : 1, transition: "opacity 0.22s ease" }}>
+      <div style={{ position: "relative", flex: 1, maxWidth: "820px", aspectRatio: "16/9", borderRadius: "12px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.6)", border: "1px solid rgba(139,0,0,0.2)", opacity: fading ? 0 : 1, transition: "opacity 0.22s ease" }}>
         <video
           key={VE_VIDEOS[idx]}
           ref={videoRef}
@@ -401,8 +408,36 @@ function MotionEditingSlider() {
           loop
           playsInline
           preload="auto"
+          muted={muted}
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
         />
+        {/* Mute/unmute toggle */}
+        <button
+          onClick={() => setMuted(m => !m)}
+          style={{
+            position: "absolute", bottom: "12px", right: "12px",
+            background: "rgba(0,0,0,0.55)", backdropFilter: "blur(6px)",
+            border: "1px solid rgba(255,255,255,0.15)", borderRadius: "50%",
+            width: "36px", height: "36px", cursor: "none",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: "#f5f0f0", transition: "background 0.2s ease",
+          }}
+          aria-label={muted ? "Unmute" : "Mute"}
+        >
+          {muted ? (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11 5L6 9H2v6h4l5 4V5z" opacity="0.5"/>
+              <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" strokeWidth="2"/>
+              <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          )}
+        </button>
       </div>
       <button style={arrowBtn} onClick={() => goTo(idx + 1)}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
