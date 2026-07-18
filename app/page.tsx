@@ -6,9 +6,9 @@ import { Reveal } from "./components/Reveal";
 const LABELS = ["Content Creator", "World Traveler", "Industrial Engineer", "Coffee Connoisseur", "Gen Z (21 Y/O)", "Fashion Lover"];
 
 const FEATURED = [
-  { src: "/cinema/cinema2.mp4", tag: "Cinematography" },
-  { src: "/cinema/cinema6.mp4", tag: "Visual Storytelling" },
-  { src: "/cinema/cinema9.mp4", tag: "Brand Content" },
+  { src: "/cinema/cinema3.mp4", tag: "Cinematography" },
+  { src: "/ve/ve1.mp4",         tag: "Motion Editing" },
+  { src: "/betterhelp.mp4",     tag: "Partnerships" },
 ];
 
 const SERVICES = [
@@ -172,8 +172,10 @@ export default function Home() {
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
             <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: "1px solid rgba(245,240,240,0.1)", paddingBottom: "1.2rem", marginBottom: "2.5rem" }}>
-              <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", fontWeight: "normal" }}>S</span>
-              <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.4rem, 2.8vw, 2.5rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.04em" }}>elected Work</span>
+              <span>
+                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", fontWeight: "normal" }}>S</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.4rem, 2.8vw, 2.5rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.04em" }}>elected Work</span>
+              </span>
               <a href="/work" style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.4)", textDecoration: "none", transition: "color 0.3s ease" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.85)")}
                 onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.4)")}
@@ -191,7 +193,7 @@ export default function Home() {
       </section>
 
       {/* ── About ── */}
-      <section id="about" className="section-content relative pt-2 md:pt-4 pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "cover", backgroundPosition: "center top" }}>
+      <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "8rem", backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "120%", backgroundPosition: "center center" }}>
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
           <Reveal className="order-1" direction="left">
@@ -298,23 +300,6 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
-
-      {/* ── Let's Create Something ── */}
-      <section style={{ padding: "6rem clamp(1.5rem, 6vw, 5rem) 7rem", textAlign: "center", borderTop: "1px solid rgba(245,240,240,0.06)" }}>
-        <Reveal>
-          <h2 style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(3rem, 8vw, 7rem)", fontWeight: "normal", color: "#f5f0f0", lineHeight: 0.9, marginBottom: "2.5rem", letterSpacing: "0.02em" }}>
-            Let&apos;s create<br />something.
-          </h2>
-          <a
-            href="/contact"
-            style={{ display: "inline-block", fontFamily: "var(--font-inter)", fontSize: "0.62rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "#0a0000", textDecoration: "none", padding: "0.9rem 2.5rem", background: "rgba(232,228,224,0.92)", transition: "background 0.3s ease, transform 0.2s ease" }}
-            onMouseEnter={e => { e.currentTarget.style.background = "#f5f0f0"; e.currentTarget.style.transform = "scale(1.03)"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = "rgba(232,228,224,0.92)"; e.currentTarget.style.transform = "scale(1)"; }}
-          >
-            Get in touch
-          </a>
-        </Reveal>
       </section>
 
       {/* ── Footer ── */}

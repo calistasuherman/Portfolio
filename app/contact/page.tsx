@@ -78,21 +78,21 @@ export default function ContactPage() {
                 {/* Text overlaid on note */}
                 <div style={{
                   position: "absolute",
-                  top: "36%", left: "47%",
+                  top: "32%", left: "50%",
                   transform: "translateX(-50%)",
                   width: "80%",
                   textAlign: "center",
                 }}>
-                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.6rem, 4vw, 4.5rem)", color: "#960018", lineHeight: 1.1, marginBottom: "3.5rem" }}>
-                    Let&apos;s work<br/>together!
+                  <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.6rem, 4vw, 4.5rem)", color: "#960018", lineHeight: 1.1, marginBottom: "2rem" }}>
+                    Let&apos;s create<br/>something!
                   </p>
                   <a
                     href="mailto:cal1starcollab@gmail.com"
-                    style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.8rem, 1.2vw, 1.1rem)", letterSpacing: "0.03em", color: "#1a1a1a", textDecoration: "underline", display: "block", marginBottom: "1rem", paddingLeft: "1.5rem" }}
+                    style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.8rem, 1.2vw, 1.1rem)", letterSpacing: "0.03em", color: "#1a1a1a", textDecoration: "underline", display: "block", marginBottom: "1rem", paddingLeft: "0" }}
                   >
                     cal1starcollab@gmail.com
                   </a>
-                  <div style={{ display: "flex", justifyContent: "center", gap: "1.2rem", paddingLeft: "1.5rem" }}>
+                  <div style={{ display: "flex", justifyContent: "center", gap: "1.2rem" }}>
                     {[
                       ["Instagram", "https://instagram.com/cal1star"],
                       ["Youtube",   "https://www.youtube.com/@cal1stvr"],
