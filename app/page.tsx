@@ -14,7 +14,7 @@ const FEATURED = [
 const SERVICES = [
   {
     index: "01",
-    title: "Videography",
+    title: "Cinematography",
     desc: "From concept to final cut, I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design.",
   },
   {
@@ -24,7 +24,7 @@ const SERVICES = [
   },
   {
     index: "03",
-    title: "Youtube Integrations & Collaborations",
+    title: "Partnerships",
     desc: "Sponsored content and YouTube integrations that feel native, not forced. Brand partnerships, outfit content creation, styling, aesthetic curation, platform growth strategy, and trend-driven content calendars for fashion and lifestyle brands.",
   },
 ];
@@ -136,7 +136,7 @@ export default function Home() {
       <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 overflow-hidden" style={{ background: "#0a0000" }}>
         <video autoPlay muted loop playsInline preload="auto"
           className="absolute inset-0 w-full h-full object-cover" style={{ zIndex: 0 }}>
-          <source src="/cinema/cinema1.mp4" type="video/mp4" />
+          <source src="/background/pg1.mp4" type="video/mp4" />
         </video>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center pt-16" style={{ zIndex: 3 }}>
@@ -172,9 +172,8 @@ export default function Home() {
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
             <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: "1px solid rgba(245,240,240,0.1)", paddingBottom: "1.2rem", marginBottom: "2.5rem" }}>
-              <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.8rem, 3.5vw, 3rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.04em" }}>
-                Selected Work
-              </span>
+              <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", fontWeight: "normal" }}>S</span>
+              <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.4rem, 2.8vw, 2.5rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.04em" }}>elected Work</span>
               <a href="/work" style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.4)", textDecoration: "none", transition: "color 0.3s ease" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.85)")}
                 onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.4)")}
@@ -192,7 +191,7 @@ export default function Home() {
       </section>
 
       {/* ── About ── */}
-      <section id="about" className="section-content relative pt-2 md:pt-4 pb-10 md:pb-14 px-6 md:px-16 lg:px-32">
+      <section id="about" className="section-content relative pt-2 md:pt-4 pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "cover", backgroundPosition: "center top" }}>
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
           <Reveal className="order-1" direction="left">
@@ -309,9 +308,9 @@ export default function Home() {
           </h2>
           <a
             href="/contact"
-            style={{ display: "inline-block", fontFamily: "var(--font-inter)", fontSize: "0.62rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "#f5f0f0", textDecoration: "none", padding: "0.9rem 2.5rem", border: "1px solid rgba(245,240,240,0.3)", transition: "border-color 0.3s ease, background 0.3s ease" }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(245,240,240,0.8)"; e.currentTarget.style.background = "rgba(245,240,240,0.05)"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(245,240,240,0.3)"; e.currentTarget.style.background = "transparent"; }}
+            style={{ display: "inline-block", fontFamily: "var(--font-inter)", fontSize: "0.62rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "#0a0000", textDecoration: "none", padding: "0.9rem 2.5rem", background: "rgba(232,228,224,0.92)", transition: "background 0.3s ease, transform 0.2s ease" }}
+            onMouseEnter={e => { e.currentTarget.style.background = "#f5f0f0"; e.currentTarget.style.transform = "scale(1.03)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "rgba(232,228,224,0.92)"; e.currentTarget.style.transform = "scale(1)"; }}
           >
             Get in touch
           </a>

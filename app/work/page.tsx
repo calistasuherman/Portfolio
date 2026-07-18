@@ -168,10 +168,10 @@ function TrayNav() {
           </p>
         </div>
 
-        <TrayItem src="/tray-croissant.png" alt="Videography" label="videography" rotate={-10} href="videography"
+        <TrayItem src="/tray-croissant.png" alt="Cinematography" label="cinematography" rotate={-10} href="videography"
           onShowDragCursor={setShowDragCursor}
           style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }} />
-        <TrayItem src="/tray-figs.png" alt="Collaborations" label="collaborations" href="youtube-integrations"
+        <TrayItem src="/tray-figs.png" alt="Partnerships" label="partnerships" href="youtube-integrations"
           onShowDragCursor={setShowDragCursor}
           style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }} />
         <TrayItem src="/tray-coffee.png" alt="Motion Editing" label="motion editing" labelTop="40%" href="video-editing"
@@ -405,7 +405,7 @@ export default function WorkPage() {
         videos={CINEMA_VIDEOS}
         cardW={248} cardH={140} radius={560}
         scrollHeight="300vh"
-        title={<OrbitTitle parts={[{ text: "V", script: true }, { text: "ideography" }]} />}
+        title={<OrbitTitle parts={[{ text: "C", script: true }, { text: "inematography" }]} />}
       />
 
       <OrbitCarousel
@@ -421,7 +421,7 @@ export default function WorkPage() {
         videos={COLLAB_VIDEOS}
         cardW={240} cardH={135} radius={360}
         scrollHeight="220vh"
-        title={<OrbitTitle parts={[{ text: "C", script: true }, { text: "ollaborations" }]} />}
+        title={<OrbitTitle parts={[{ text: "P", script: true }, { text: "artnerships" }]} />}
       />
 
       <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
