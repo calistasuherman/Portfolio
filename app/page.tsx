@@ -193,7 +193,7 @@ export default function Home() {
       </section>
 
       {/* ── About ── */}
-      <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "8rem", backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "120%", backgroundPosition: "center center" }}>
+      <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "8rem", backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "contain", backgroundRepeat: "no-repeat", backgroundPosition: "center center" }}>
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
           <Reveal className="order-1" direction="left">
