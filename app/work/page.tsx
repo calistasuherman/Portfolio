@@ -218,7 +218,7 @@ function FilmReel() {
     const moved = Math.abs(cx - startClientX.current);
     if (moved < 5) {
       // click — scroll to section
-      const frame = ALL_FRAMES[activeIdx];
+      const frame = ALL_FRAMES[activeIdxRef.current];
       if (frame) {
         const el = document.getElementById(frame.groupHref);
         if (el) lenisScrollTo(el, { offset: -80, duration: 1.6, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
