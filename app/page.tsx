@@ -6,7 +6,7 @@ import { Reveal } from "./components/Reveal";
 const LABELS = ["Content Creator", "World Traveler", "Industrial Engineer", "Coffee Connoisseur", "Gen Z (21 Y/O)", "Fashion Lover"];
 
 const FEATURED = [
-  { src: "/cinema/cinema3.mp4", tag: "Cinematography" },
+  { src: "/cinema/cinema3.mp4", tag: "Videography" },
   { src: "/ve/ve1.mp4",         tag: "Motion Editing" },
   { src: "/betterhelp.mp4",     tag: "Partnerships" },
 ];
@@ -14,7 +14,7 @@ const FEATURED = [
 const SERVICES = [
   {
     index: "01",
-    title: "Cinematography",
+    title: "Videography",
     desc: "From concept to final cut, I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design.",
   },
   {

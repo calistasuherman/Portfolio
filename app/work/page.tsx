@@ -127,7 +127,7 @@ function TrayNav() {
           </p>
           <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 4.4rem)", color: "#f5f0f0", lineHeight: 1, fontWeight: "normal", marginTop: "0.3em" }}>Table</p>
         </div>
-        <TrayItem src="/tray-croissant.png" alt="Cinematography" label="cinematography" rotate={-10} href="cinematography" onShowDragCursor={setShowDragCursor}
+        <TrayItem src="/tray-croissant.png" alt="Videography" label="videography" rotate={-10} href="videography" onShowDragCursor={setShowDragCursor}
           style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }} />
         <TrayItem src="/tray-figs.png" alt="Partnerships" label="partnerships" href="partnerships" onShowDragCursor={setShowDragCursor}
           style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }} />
@@ -149,7 +149,7 @@ function OrbitTitle({ parts }: { parts: { text: string; script?: boolean }[] }) 
   );
 }
 
-/* ── OrbitCarousel ── (Cinematography only) */
+/* ── OrbitCarousel ── (Videography only) */
 function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh", title }: {
   id: string; videos: { src: string }[]; cardW: number; cardH: number; radius: number; scrollHeight?: string; title: React.ReactNode;
 }) {
@@ -345,13 +345,13 @@ export default function WorkPage() {
         </div>
       </section>
 
-      {/* ── 01 Cinematography ── scroll-driven 3D carousel */}
+      {/* ── 01 Videography ── scroll-driven 3D carousel */}
       <OrbitCarousel
-        id="cinematography"
+        id="videography"
         videos={CINEMA_VIDEOS}
         cardW={248} cardH={140} radius={560}
         scrollHeight="300vh"
-        title={<OrbitTitle parts={[{ text: "C", script: true }, { text: "inematography" }]} />}
+        title={<OrbitTitle parts={[{ text: "V", script: true }, { text: "ideography" }]} />}
       />
 
       {/* ── 02 Motion Editing ── hover grid */}
