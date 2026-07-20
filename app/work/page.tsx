@@ -19,75 +19,290 @@ const VE_VIDEOS = [
 ].map(f => ({ src: `/ve/${f}` }));
 
 const COLLAB_VIDEOS = [
-  { src: "/yt/aelfriceden.mp4",  label: "Aelfric Eden", category: "Fashion" },
+  { src: "/yt/aelfriceden.mp4",  label: "Aelfric Eden", category: "Fashion"  },
   { src: "/yt/betterhelp.mp4",   label: "BetterHelp",   category: "Wellness" },
-  { src: "/yt/just4kira.mp4",    label: "Just4Kira",    category: "Beauty" },
-  { src: "/yt/lewkin.mp4",       label: "Lewkin",        category: "Fashion" },
-  { src: "/yt/teddyblake.mp4",   label: "Teddy Blake",  category: "Luxury" },
-  { src: "/yt/bypassgpt.mp4",    label: "BypassGPT",    category: "Tech" },
+  { src: "/yt/just4kira.mp4",    label: "Just4Kira",    category: "Beauty"   },
+  { src: "/yt/lewkin.mp4",       label: "Lewkin",        category: "Fashion"  },
+  { src: "/yt/teddyblake.mp4",   label: "Teddy Blake",  category: "Luxury"   },
+  { src: "/yt/bypassgpt.mp4",    label: "BypassGPT",    category: "Tech"     },
 ];
 
-/* ── ServiceNav — cursor-following hover video list ── */
-const NAV_ITEMS = [
-  { num: "01", label: "Videography",   href: "videography",   src: "/cinema/cinema3.mp4"    },
-  { num: "02", label: "Motion Editing", href: "motion-editing", src: "/ve/ve1.mp4"            },
-  { num: "03", label: "Partnerships",  href: "partnerships",  src: "/yt/aelfriceden.mp4"    },
+/* ── Reel data ── */
+const REEL_GROUPS = [
+  { label: "Videography",   href: "videography",   color: "#960018",               frames: CINEMA_VIDEOS.map(v => ({ src: v.src })) },
+  { label: "Motion Editing", href: "motion-editing", color: "rgba(245,240,240,0.5)", frames: VE_VIDEOS.map(v => ({ src: v.src })) },
+  { label: "Partnerships",  href: "partnerships",  color: "rgba(245,240,240,0.5)", frames: COLLAB_VIDEOS.map(v => ({ src: v.src, label: v.label })) },
 ];
 
-function ServiceNavItem({ num, label, href, src }: { num: string; label: string; href: string; src: string }) {
-  const [hovered, setHovered] = useState(false);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const videoRef = useRef<HTMLVideoElement>(null);
+interface ReelFrame { src: string; label?: string; group: string; groupHref: string; groupColor: string; isFirst: boolean; }
 
-  useEffect(() => {
-    const v = videoRef.current; if (!v) return;
-    if (hovered) v.play().catch(() => {});
-    else { v.pause(); v.currentTime = 0; }
-  }, [hovered]);
+const ALL_FRAMES: ReelFrame[] = REEL_GROUPS.flatMap(g =>
+  g.frames.map((f, fi) => ({ ...f, group: g.label, groupHref: g.href, groupColor: g.color, isFirst: fi === 0 }))
+);
 
-  useEffect(() => {
-    if (!hovered) return;
-    const onMove = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [hovered]);
+const FW = 172;
+const FH = 116;
+const FGAP = 7;
+const FSTEP = FW + FGAP;
 
-  function handleClick() {
-    const el = document.getElementById(href);
-    if (el) lenisScrollTo(el, { offset: -80, duration: 1.6, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
-  }
-
+/* ── Sprockets ── */
+function Sprockets({ count }: { count: number }) {
   return (
-    <>
-      <div
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onClick={handleClick}
-        style={{ borderTop: "1px solid rgba(245,240,240,0.1)", padding: "1.6rem 0", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", userSelect: "none" }}
-      >
-        <div style={{ display: "flex", alignItems: "baseline", gap: "1.6rem" }}>
-          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.56rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{num}</span>
-          <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 5.5vw, 4.5rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.04em", lineHeight: 1, display: "inline-block", transition: "color 0.25s ease, transform 0.38s cubic-bezier(0.34,1.56,0.64,1)", transform: hovered ? "translateX(14px)" : "translateX(0)" }}>{label}</span>
-        </div>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" strokeWidth="1.5" style={{ flexShrink: 0, transition: "stroke 0.25s ease, transform 0.35s ease", stroke: hovered ? "#960018" : "rgba(245,240,240,0.25)", transform: hovered ? "translate(-4px, 4px)" : "none" }}>
-          <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
-        </svg>
-      </div>
-      {hovered && (
-        <div style={{ position: "fixed", left: pos.x + 28, top: pos.y - 56, width: "210px", aspectRatio: "16/9", zIndex: 9999, pointerEvents: "none", borderRadius: "5px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.7)", transition: "opacity 0.2s ease" }}>
-          <video ref={videoRef} src={src} muted loop playsInline preload="auto" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-        </div>
-      )}
-    </>
+    <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "2px 14px", background: "#040000", height: "20px", overflow: "hidden" }}>
+      {Array.from({ length: count }).map((_, i) => (
+        <div key={i} style={{ width: "10px", height: "13px", borderRadius: "2px", background: "#080000", border: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }} />
+      ))}
+    </div>
   );
 }
 
-function ServiceNav() {
+/* ── FilmFrame — fully imperative, driven by custom 'reelActive' event ── */
+function FilmFrame({ frame, frameIdx }: { frame: ReelFrame; frameIdx: number }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let loaded = false;
+    const handler = (e: Event) => {
+      const idx = (e as CustomEvent<number>).detail;
+      const v = videoRef.current;
+      const el = wrapRef.current;
+      if (!el) return;
+      const isActive = idx === frameIdx;
+      const isNear = Math.abs(idx - frameIdx) <= 3;
+      el.style.transform = isActive ? "scaleY(1.08)" : "scaleY(1)";
+      el.style.border = isActive ? "2px solid rgba(150,0,24,0.75)" : "1px solid rgba(255,255,255,0.07)";
+      el.style.boxShadow = isActive ? "0 0 28px rgba(150,0,24,0.25),0 8px 24px rgba(0,0,0,0.6)" : "0 4px 12px rgba(0,0,0,0.5)";
+      if (!v) return;
+      if (isNear && !loaded) { v.src = frame.src; v.load(); loaded = true; }
+      if (isActive) v.play().catch(() => {});
+      else { v.pause(); if (!isNear) { v.currentTime = 0; } }
+      v.style.opacity = isActive ? "1" : isNear ? "0.45" : "0.25";
+    };
+    window.addEventListener("reelActive", handler);
+    return () => window.removeEventListener("reelActive", handler);
+  }, [frameIdx, frame.src]);
+
   return (
-    <div style={{ paddingTop: "2rem" }}>
-      <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 0.9vw, 0.72rem)", letterSpacing: "0.22em", color: "rgba(245,240,240,0.28)", textTransform: "uppercase", marginBottom: "2.5rem" }}>What I Bring to the Table</p>
-      {NAV_ITEMS.map(item => <ServiceNavItem key={item.href} {...item} />)}
-      <div style={{ borderTop: "1px solid rgba(245,240,240,0.1)" }} />
+    <div ref={wrapRef} style={{
+      width: FW, height: FH, flexShrink: 0, borderRadius: "3px", overflow: "hidden", position: "relative",
+      border: "1px solid rgba(255,255,255,0.07)",
+      transform: "scaleY(1)", transformOrigin: "center",
+      transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s ease",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+    }}>
+      <video ref={videoRef} muted loop playsInline preload="none" disablePictureInPicture
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", opacity: 0.25, transition: "opacity 0.35s ease" }} />
+      {frame.label && (
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "18px 6px 4px", background: "linear-gradient(to top,rgba(0,0,0,0.85),transparent)", fontFamily: "var(--font-inter)", fontSize: "5.5px", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.65)", pointerEvents: "none" }}>
+          {frame.label}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── FilmReel ── */
+function FilmReel() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const stripRef = useRef<HTMLDivElement>(null);
+  const posX = useRef(0);
+  const velX = useRef(0);
+  const dragging = useRef(false);
+  const startClientX = useRef(0);
+  const lastClientX = useRef(0);
+  const lastT = useRef(0);
+  const rafRef = useRef<number>();
+  const activeIdxRef = useRef(0);
+  const counterRef = useRef<HTMLSpanElement>(null);
+  const groupLabelRef = useRef<HTMLSpanElement>(null);
+  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  useEffect(() => {
+    const update = () => {
+      const cw = containerRef.current?.offsetWidth ?? 900;
+      posX.current = cw / 2 - FW / 2 - 14;
+      if (stripRef.current) stripRef.current.style.transform = `translateX(${posX.current}px)`;
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  function maxNeg() {
+    const cw = containerRef.current?.offsetWidth ?? 900;
+    return -(ALL_FRAMES.length * FSTEP - cw / 2 - FW / 2);
+  }
+
+  function applyTransform(cw?: number) {
+    const w = cw ?? (containerRef.current?.offsetWidth ?? 900);
+    posX.current = Math.max(maxNeg(), Math.min(w / 2 - FW / 2, posX.current));
+    if (stripRef.current) stripRef.current.style.transform = `translateX(${posX.current}px)`;
+    const centerOffset = w / 2 - posX.current;
+    const idx = Math.max(0, Math.min(ALL_FRAMES.length - 1, Math.round((centerOffset - FW / 2) / FSTEP)));
+    if (idx !== activeIdxRef.current) {
+      activeIdxRef.current = idx;
+      window.dispatchEvent(new CustomEvent("reelActive", { detail: idx }));
+      const frame = ALL_FRAMES[idx];
+      if (counterRef.current) counterRef.current.textContent = `${idx + 1} / ${ALL_FRAMES.length}`;
+      if (groupLabelRef.current) groupLabelRef.current.textContent = frame.group;
+      Object.entries(tabRefs.current).forEach(([href, el]) => {
+        if (el) el.style.color = href === frame.groupHref ? "#f5f0f0" : "rgba(245,240,240,0.28)";
+      });
+    }
+  }
+
+  function snapToIdx(idx: number) {
+    const cw = containerRef.current?.offsetWidth ?? 900;
+    const target = Math.max(maxNeg(), Math.min(cw / 2 - FW / 2, cw / 2 - idx * FSTEP - FW / 2));
+    const animate = () => {
+      posX.current += (target - posX.current) * 0.14;
+      applyTransform();
+      if (Math.abs(target - posX.current) > 0.4) rafRef.current = requestAnimationFrame(animate);
+      else { posX.current = target; applyTransform(); }
+    };
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(animate);
+  }
+
+  function startInertia() {
+    const go = () => {
+      velX.current *= 0.91;
+      posX.current += velX.current;
+      applyTransform();
+      if (Math.abs(velX.current) > 0.4) {
+        rafRef.current = requestAnimationFrame(go);
+      } else {
+        // snap to nearest
+        const cw = containerRef.current?.offsetWidth ?? 900;
+        const centerOffset = cw / 2 - posX.current;
+        const idx = Math.max(0, Math.min(ALL_FRAMES.length - 1, Math.round((centerOffset - FW / 2) / FSTEP)));
+        snapToIdx(idx);
+      }
+    };
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(go);
+  }
+
+  function getClientX(e: React.MouseEvent | React.TouchEvent) {
+    return "touches" in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
+  }
+  function getChangedX(e: React.MouseEvent | React.TouchEvent) {
+    return "changedTouches" in e ? e.changedTouches[0].clientX : (e as React.MouseEvent).clientX;
+  }
+
+  function onDown(e: React.MouseEvent | React.TouchEvent) {
+    dragging.current = true;
+    startClientX.current = getClientX(e);
+    lastClientX.current = startClientX.current;
+    lastT.current = Date.now();
+    velX.current = 0;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+  }
+
+  function onMove(e: React.MouseEvent | React.TouchEvent) {
+    if (!dragging.current) return;
+    const cx = getClientX(e);
+    const dx = cx - lastClientX.current;
+    const dt = Math.max(Date.now() - lastT.current, 1);
+    velX.current = (dx / dt) * 14;
+    lastClientX.current = cx;
+    lastT.current = Date.now();
+    posX.current += dx;
+    applyTransform();
+  }
+
+  function onUp(e: React.MouseEvent | React.TouchEvent) {
+    if (!dragging.current) return;
+    dragging.current = false;
+    const cx = getChangedX(e);
+    const moved = Math.abs(cx - startClientX.current);
+    if (moved < 5) {
+      // click — scroll to section
+      const frame = ALL_FRAMES[activeIdx];
+      if (frame) {
+        const el = document.getElementById(frame.groupHref);
+        if (el) lenisScrollTo(el, { offset: -80, duration: 1.6, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+      }
+    } else {
+      startInertia();
+    }
+  }
+
+  function jumpToGroup(href: string) {
+    const fi = ALL_FRAMES.findIndex(f => f.groupHref === href);
+    if (fi >= 0) snapToIdx(fi);
+  }
+
+  return (
+    <div style={{ paddingTop: "calc(80px + 2.5rem)" }}>
+      {/* Group tabs */}
+      <div style={{ display: "flex", gap: "2.5rem", paddingLeft: "clamp(1.5rem, 5vw, 4rem)", marginBottom: "1.8rem", alignItems: "center" }}>
+        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.22em", color: "rgba(245,240,240,0.2)", textTransform: "uppercase", marginRight: "0.5rem" }}>
+          What I Bring to the Table
+        </p>
+        {REEL_GROUPS.map(g => (
+          <button key={g.href} ref={el => { tabRefs.current[g.href] = el; }} onClick={() => jumpToGroup(g.href)} style={{
+            background: "none", border: "none", cursor: "pointer", padding: 0,
+            fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.16em", textTransform: "uppercase",
+            color: g.href === REEL_GROUPS[0].href ? "#f5f0f0" : "rgba(245,240,240,0.28)",
+            transition: "color 0.25s ease",
+          }}>
+            {g.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Strip */}
+      <div
+        ref={containerRef}
+        onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp}
+        onMouseLeave={() => { if (dragging.current) { dragging.current = false; startInertia(); } }}
+        onTouchStart={onDown} onTouchMove={onMove} onTouchEnd={onUp}
+        style={{ width: "100%", overflow: "hidden", cursor: "grab", userSelect: "none", position: "relative" }}
+      >
+        <Sprockets count={80} />
+
+        <div style={{ background: "#020000", padding: "10px 0", position: "relative" }}>
+          {/* Center projector window */}
+          <div style={{ position: "absolute", top: 0, bottom: 0, left: "50%", transform: "translateX(-50%)", width: FW + 20, pointerEvents: "none", borderLeft: "1.5px solid rgba(150,0,24,0.35)", borderRight: "1.5px solid rgba(150,0,24,0.35)", zIndex: 10 }} />
+
+          <div ref={stripRef} style={{ display: "flex", gap: `${FGAP}px`, width: "max-content", willChange: "transform" }}>
+            {/* left padding spacer */}
+            <div style={{ width: "clamp(1.5rem, 5vw, 4rem)", flexShrink: 0 }} />
+
+            {ALL_FRAMES.map((frame, i) => (
+              <div key={i} style={{ position: "relative", flexShrink: 0 }}>
+                {frame.isFirst && i > 0 && (
+                  <div style={{ position: "absolute", top: "50%", left: -FGAP - 8, transform: "translateY(-50%)", width: "1px", height: "60%", background: "rgba(255,255,255,0.1)" }} />
+                )}
+                {frame.isFirst && (
+                  <div style={{ position: "absolute", top: -16, left: 0, fontFamily: "var(--font-inter)", fontSize: "6.5px", letterSpacing: "0.14em", textTransform: "uppercase", color: frame.groupColor, whiteSpace: "nowrap", pointerEvents: "none" }}>
+                    {frame.group}
+                  </div>
+                )}
+                <FilmFrame frame={frame} frameIdx={i} />
+              </div>
+            ))}
+
+            <div style={{ width: "clamp(1.5rem, 5vw, 4rem)", flexShrink: 0 }} />
+          </div>
+        </div>
+
+        <Sprockets count={80} />
+      </div>
+
+      {/* Status bar — updated imperatively via refs */}
+      <div style={{ paddingLeft: "clamp(1.5rem, 5vw, 4rem)", marginTop: "1rem", display: "flex", alignItems: "center", gap: "1.4rem" }}>
+        <span ref={groupLabelRef} style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.28)" }}>
+          {REEL_GROUPS[0].label}
+        </span>
+        <span ref={counterRef} style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", color: "rgba(245,240,240,0.15)", letterSpacing: "0.1em" }}>
+          1 / {ALL_FRAMES.length}
+        </span>
+        <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", color: "rgba(245,240,240,0.15)", letterSpacing: "0.1em", marginLeft: "auto", paddingRight: "clamp(1.5rem, 5vw, 4rem)" }}>
+          drag · click to jump
+        </span>
+      </div>
     </div>
   );
 }
@@ -191,7 +406,7 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
   );
 }
 
-/* ── Lightbox ── shared */
+/* ── Lightbox ── */
 function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
   const [open, setOpen] = useState(false);
   useEffect(() => { const t = setTimeout(() => setOpen(true), 16); return () => clearTimeout(t); }, []);
@@ -223,7 +438,7 @@ function SectionLabel({ index, title, desc }: { index: string; title: React.Reac
   );
 }
 
-/* ── MotionGrid ── */
+/* ── MotionCard ── */
 function MotionCard({ src, onClick }: { src: string; onClick: () => void }) {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -300,14 +515,12 @@ export default function WorkPage() {
   return (
     <main className="relative min-h-screen overflow-x-clip">
 
-      {/* ServiceNav */}
-      <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "calc(80px + 3rem)", paddingBottom: "1rem" }}>
-        <div className="max-w-6xl mx-auto">
-          <Reveal><ServiceNav /></Reveal>
-        </div>
+      {/* ── Film Reel entry ── */}
+      <section className="relative" style={{ paddingBottom: "4rem" }}>
+        <FilmReel />
       </section>
 
-      {/* ── 01 Videography ── scroll-driven 3D carousel */}
+      {/* ── 01 Videography ── */}
       <OrbitCarousel
         id="videography"
         videos={CINEMA_VIDEOS}
@@ -318,7 +531,7 @@ export default function WorkPage() {
         title={<OrbitTitle parts={[{ text: "V", script: true }, { text: "ideography" }]} />}
       />
 
-      {/* ── 02 Motion Editing ── hover grid */}
+      {/* ── 02 Motion Editing ── */}
       <section id="motion-editing" style={{ padding: "8rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
@@ -328,13 +541,11 @@ export default function WorkPage() {
               desc="Short-form edits, motion graphics, VFX, and dynamic transitions — built to stop the scroll."
             />
           </Reveal>
-          <Reveal delay={80}>
-            <MotionGrid />
-          </Reveal>
+          <Reveal delay={80}><MotionGrid /></Reveal>
         </div>
       </section>
 
-      {/* ── 03 Partnerships ── branded cards */}
+      {/* ── 03 Partnerships ── */}
       <section id="partnerships" style={{ padding: "8rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
