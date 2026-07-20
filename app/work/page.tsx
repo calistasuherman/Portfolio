@@ -35,8 +35,8 @@ const VINYL_DATA = [
 ];
 
 /* ── VinylUnit ── */
-const SLEEVE = 192;
-const DISC = 174;
+const SLEEVE = 260;
+const DISC = 236;
 
 function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; defaultX: number; defaultY: number }) {
   const [pos, setPos] = useState({ x: defaultX, y: defaultY });
@@ -143,14 +143,14 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
       }}>
         {/* Inner content */}
         <div style={{ padding: "1.1rem", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", boxSizing: "border-box" }}>
-          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", letterSpacing: "0.18em", color: "rgba(255,255,255,0.25)" }}>
+          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", letterSpacing: "0.18em", color: "rgba(255,255,255,0.35)" }}>
             {v.idx}
           </span>
           <div>
-            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.5rem", color: v.accent, lineHeight: 1.05, marginBottom: "0.45rem", letterSpacing: "0.01em" }}>
+            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.9rem", color: "#f5f0f0", lineHeight: 1.05, marginBottom: "0.45rem", letterSpacing: "0.01em" }}>
               {v.label}
             </p>
-            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.18)" }}>
+            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>
               click to explore ↓
             </span>
           </div>
@@ -166,28 +166,23 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
 
 /* ── VinylSection ── */
 function VinylSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [positions, setPositions] = useState<{ x: number; y: number }[] | null>(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
 
-  useEffect(() => {
-    const w = containerRef.current?.offsetWidth ?? window.innerWidth;
-    setPositions([
-      { x: Math.round(w * 0.07), y: 48 },
-      { x: Math.round(w * 0.37), y: 90 },
-      { x: Math.round(w * 0.65), y: 36 },
-    ]);
-  }, []);
+  const defaultPositions = [
+    { x: 40,  y: 40 },
+    { x: 320, y: 80 },
+    { x: 600, y: 28 },
+  ];
 
   return (
     <div style={{ paddingTop: "calc(80px + 2.5rem)", paddingBottom: "1rem" }}>
-      <div style={{ paddingLeft: "clamp(1.5rem, 5vw, 4rem)", marginBottom: "2.5rem" }}>
-        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.22em", color: "rgba(245,240,240,0.18)", textTransform: "uppercase" }}>
-          What I Bring to the Table
-        </p>
-      </div>
-      <div ref={containerRef} style={{ position: "relative", height: 340, overflow: "visible" }}>
-        {positions && VINYL_DATA.map((v, i) => (
-          <VinylUnit key={v.href} v={v} defaultX={positions[i].x} defaultY={positions[i].y} />
+      <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.22em", color: "rgba(245,240,240,0.18)", textTransform: "uppercase", textAlign: "center", marginBottom: "2.5rem" }}>
+        What I Bring to the Table
+      </p>
+      <div style={{ position: "relative", height: 400, overflow: "visible" }}>
+        {mounted && VINYL_DATA.map((v, i) => (
+          <VinylUnit key={v.href} v={v} defaultX={defaultPositions[i].x} defaultY={defaultPositions[i].y} />
         ))}
       </div>
     </div>
