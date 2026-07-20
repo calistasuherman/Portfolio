@@ -9,7 +9,7 @@ const CINEMA_VIDEOS = [
   "/cinema/cinema4.mp4", "/cinema/cinema5.mp4", "/cinema/cinema6.mp4",
   "/cinema/cinema7.mp4", "/cinema/cinema8.mp4", "/cinema/cinema9.mp4",
   "/cinema/cinema10.mp4", "/cinema/cinema11.mp4", "/cinema/cinema12.MP4",
-  "/cinema/cinema13.mp4", "/cinema/cinema14.mp4",
+  "/cinema/cinema13.MOV", "/cinema/cinema14.mp4",
 ].map(src => ({ src }));
 
 const VE_VIDEOS = [
@@ -21,120 +21,73 @@ const VE_VIDEOS = [
 const COLLAB_VIDEOS = [
   { src: "/yt/aelfriceden.mp4",  label: "Aelfric Eden", category: "Fashion" },
   { src: "/yt/betterhelp.mp4",   label: "BetterHelp",   category: "Wellness" },
-  { src: "/yt/just4kira.mp4",    label: "Just4Kira",    category: "Lifestyle" },
+  { src: "/yt/just4kira.mp4",    label: "Just4Kira",    category: "Beauty" },
   { src: "/yt/lewkin.mp4",       label: "Lewkin",        category: "Fashion" },
   { src: "/yt/teddyblake.mp4",   label: "Teddy Blake",  category: "Luxury" },
   { src: "/yt/bypassgpt.mp4",    label: "BypassGPT",    category: "Tech" },
 ];
 
-/* ── TrayItem ── */
-function TrayItem({
-  src, alt, label, style, rotate = 0, labelTop = "45%", labelLeft = "50%", href, onShowDragCursor,
-}: {
-  src: string; alt: string; label?: string; style: React.CSSProperties;
-  rotate?: number; labelTop?: string; labelLeft?: string; href?: string;
-  onShowDragCursor?: (show: boolean) => void;
-}) {
+/* ── ServiceNav — cursor-following hover video list ── */
+const NAV_ITEMS = [
+  { num: "01", label: "Videography",   href: "videography",   src: "/cinema/cinema3.mp4"    },
+  { num: "02", label: "Motion Editing", href: "motion-editing", src: "/ve/ve1.mp4"            },
+  { num: "03", label: "Partnerships",  href: "partnerships",  src: "/yt/aelfriceden.mp4"    },
+];
+
+function ServiceNavItem({ num, label, href, src }: { num: string; label: string; href: string; src: string }) {
   const [hovered, setHovered] = useState(false);
-  const [freed, setFreed] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [freedW, setFreedW] = useState(0);
-  const [dragging, setDragging] = useState(false);
-  const anchorRef = useRef<HTMLDivElement>(null);
-  const offsetRef = useRef({ x: 0, y: 0 });
-  const mouseDownPos = useRef({ x: 0, y: 0 });
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (!dragging) return;
-    const onMove = (e: MouseEvent) => setPos({ x: e.clientX - offsetRef.current.x, y: e.clientY - offsetRef.current.y });
-    const onUp = () => setDragging(false);
-    document.addEventListener("mousemove", onMove);
-    document.addEventListener("mouseup", onUp);
-    return () => { document.removeEventListener("mousemove", onMove); document.removeEventListener("mouseup", onUp); };
-  }, [dragging]);
+    const v = videoRef.current; if (!v) return;
+    if (hovered) v.play().catch(() => {});
+    else { v.pause(); v.currentTime = 0; }
+  }, [hovered]);
 
-  function onMouseDown(e: React.MouseEvent) {
-    e.preventDefault(); e.stopPropagation();
-    mouseDownPos.current = { x: e.clientX, y: e.clientY };
-    const el = anchorRef.current;
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      if (!freed) { offsetRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }; setFreedW(rect.width); setPos({ x: rect.left, y: rect.top }); setFreed(true); }
-      else { offsetRef.current = { x: e.clientX - pos.x, y: e.clientY - pos.y }; }
-    }
-    setDragging(true);
-  }
-
-  function onMouseUp(e: React.MouseEvent) {
-    const dx = Math.abs(e.clientX - mouseDownPos.current.x);
-    const dy = Math.abs(e.clientY - mouseDownPos.current.y);
-    if (dx < 5 && dy < 5 && href) {
-      const el = document.getElementById(href);
-      if (el) lenisScrollTo(el, { offset: 160, duration: 1.8, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
-    }
-  }
-
-  const content = (
-    <div
-      onMouseEnter={() => { setHovered(true); onShowDragCursor?.(true); }}
-      onMouseLeave={() => { setHovered(false); onShowDragCursor?.(false); }}
-      onMouseDown={onMouseDown} onMouseUp={onMouseUp}
-      style={{ position: "relative", display: "inline-block", cursor: dragging ? "grabbing" : "grab", userSelect: "none", pointerEvents: "auto", width: "100%" }}
-    >
-      <img src={src} alt={alt} draggable={false} style={{
-        width: "100%", objectFit: "contain", display: "block",
-        transition: dragging ? "none" : "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), filter 0.35s ease",
-        transform: hovered && !dragging ? `rotate(${rotate}deg) translateY(-10px) scale(1.08)` : `rotate(${rotate}deg)`,
-        filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.35))" : "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
-      }} />
-      {label && (
-        <span style={{ position: "absolute", top: labelTop, left: labelLeft, transform: "translate(-50%, -50%)", fontFamily: "var(--font-inter)", fontSize: "6px", fontWeight: 400, color: "#ffffff", letterSpacing: "0.2em", textTransform: "uppercase", textAlign: "center", whiteSpace: "nowrap", opacity: hovered ? 1 : 0.85, transition: "opacity 0.3s ease", pointerEvents: "none" }}>{label}</span>
-      )}
-    </div>
-  );
-
-  if (freed) return (
-    <>
-      <div ref={anchorRef} style={{ ...style, opacity: 0, pointerEvents: "none" }} />
-      <div style={{ position: "fixed", left: pos.x, top: pos.y, width: freedW, zIndex: 500, pointerEvents: "none" }}>
-        <div style={{ pointerEvents: "auto" }}>{content}</div>
-      </div>
-    </>
-  );
-  return <div ref={anchorRef} style={{ ...style, pointerEvents: "none" }}><div style={{ pointerEvents: "auto" }}>{content}</div></div>;
-}
-
-/* ── TrayNav ── */
-function TrayNav() {
-  const [dragCursorPos, setDragCursorPos] = useState({ x: -200, y: -200 });
-  const [showDragCursor, setShowDragCursor] = useState(false);
   useEffect(() => {
-    const onMove = (e: MouseEvent) => setDragCursorPos({ x: e.clientX, y: e.clientY });
+    if (!hovered) return;
+    const onMove = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
-  }, []);
+  }, [hovered]);
+
+  function handleClick() {
+    const el = document.getElementById(href);
+    if (el) lenisScrollTo(el, { offset: -80, duration: 1.6, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+  }
+
   return (
-    <div style={{ width: "100%", position: "relative", overflow: "visible" }}>
-      {showDragCursor && (
-        <div style={{ position: "fixed", left: dragCursorPos.x, top: dragCursorPos.y, transform: "translate(-50%, -50%)", pointerEvents: "none", zIndex: 9999, background: "rgba(245,240,240,0.92)", borderRadius: "9999px", padding: "5px 12px", fontFamily: "var(--font-inter)", fontSize: "0.55rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#1a0000", whiteSpace: "nowrap" }}>drag me</div>
-      )}
-      <div className="relative" style={{ marginTop: "-1.5rem" }}>
-        <img src="/tray-bg.png" alt="Tray" style={{ width: "100%", display: "block", filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.35))" }} />
-        <div style={{ position: "absolute", left: "3%", top: "8%", zIndex: 4, pointerEvents: "none" }}>
-          <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.2rem, 2.4vw, 2.6rem)", color: "#f5f0f0", lineHeight: 1.15, fontWeight: "normal", letterSpacing: "0.15em" }}>WHAT&nbsp;&nbsp;&nbsp;I</p>
-          <p style={{ lineHeight: 1.05, marginTop: "0.05em" }}>
-            <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(1.8rem, 3.6vw, 4rem)", color: "#f5f0f0", fontWeight: "normal" }}>Bring </span>
-            <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.2rem, 2.4vw, 2.6rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.1em" }}>to the</span>
-          </p>
-          <p style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 4.4rem)", color: "#f5f0f0", lineHeight: 1, fontWeight: "normal", marginTop: "0.3em" }}>Table</p>
+    <>
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onClick={handleClick}
+        style={{ borderTop: "1px solid rgba(245,240,240,0.1)", padding: "1.6rem 0", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", userSelect: "none" }}
+      >
+        <div style={{ display: "flex", alignItems: "baseline", gap: "1.6rem" }}>
+          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.56rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{num}</span>
+          <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 5.5vw, 4.5rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.04em", lineHeight: 1, display: "inline-block", transition: "color 0.25s ease, transform 0.38s cubic-bezier(0.34,1.56,0.64,1)", transform: hovered ? "translateX(14px)" : "translateX(0)" }}>{label}</span>
         </div>
-        <TrayItem src="/tray-croissant.png" alt="Videography" label="videography" rotate={-10} href="videography" onShowDragCursor={setShowDragCursor}
-          style={{ position: "absolute", left: "40%", top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, width: "50%" }} />
-        <TrayItem src="/tray-figs.png" alt="Partnerships" label="partnerships" href="partnerships" onShowDragCursor={setShowDragCursor}
-          style={{ position: "absolute", left: "55%", top: "62%", transform: "translate(-50%, -50%)", zIndex: 3, width: "40%" }} />
-        <TrayItem src="/tray-coffee.png" alt="Motion Editing" label="motion editing" labelTop="40%" href="motion-editing" onShowDragCursor={setShowDragCursor}
-          style={{ position: "absolute", left: "59%", top: "34%", transform: "translate(-50%, -50%)", zIndex: 2, width: "40%" }} />
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" strokeWidth="1.5" style={{ flexShrink: 0, transition: "stroke 0.25s ease, transform 0.35s ease", stroke: hovered ? "#960018" : "rgba(245,240,240,0.25)", transform: hovered ? "translate(-4px, 4px)" : "none" }}>
+          <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
+        </svg>
       </div>
+      {hovered && (
+        <div style={{ position: "fixed", left: pos.x + 28, top: pos.y - 56, width: "210px", aspectRatio: "16/9", zIndex: 9999, pointerEvents: "none", borderRadius: "5px", overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.7)", transition: "opacity 0.2s ease" }}>
+          <video ref={videoRef} src={src} muted loop playsInline preload="auto" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        </div>
+      )}
+    </>
+  );
+}
+
+function ServiceNav() {
+  return (
+    <div style={{ paddingTop: "2rem" }}>
+      <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 0.9vw, 0.72rem)", letterSpacing: "0.22em", color: "rgba(245,240,240,0.28)", textTransform: "uppercase", marginBottom: "2.5rem" }}>What I Bring to the Table</p>
+      {NAV_ITEMS.map(item => <ServiceNavItem key={item.href} {...item} />)}
+      <div style={{ borderTop: "1px solid rgba(245,240,240,0.1)" }} />
     </div>
   );
 }
@@ -347,10 +300,10 @@ export default function WorkPage() {
   return (
     <main className="relative min-h-screen overflow-x-clip">
 
-      {/* TrayNav */}
-      <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "60px", paddingBottom: "1rem" }}>
+      {/* ServiceNav */}
+      <section className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "calc(80px + 3rem)", paddingBottom: "1rem" }}>
         <div className="max-w-6xl mx-auto">
-          <Reveal><TrayNav /></Reveal>
+          <Reveal><ServiceNav /></Reveal>
         </div>
       </section>
 
