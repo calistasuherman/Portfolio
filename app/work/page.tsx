@@ -27,300 +27,168 @@ const COLLAB_VIDEOS = [
   { src: "/yt/bypassgpt.mp4",    label: "BypassGPT",    category: "Tech"     },
 ];
 
-/* ── Reel data ── */
-const REEL_GROUPS = [
-  { label: "Videography",   href: "videography",   color: "#960018",               frames: CINEMA_VIDEOS.map(v => ({ src: v.src })) },
-  { label: "Motion Editing", href: "motion-editing", color: "rgba(245,240,240,0.5)", frames: VE_VIDEOS.map(v => ({ src: v.src })) },
-  { label: "Partnerships",  href: "partnerships",  color: "rgba(245,240,240,0.5)", frames: COLLAB_VIDEOS.map(v => ({ src: v.src, label: v.label })) },
+/* ── Vinyl data ── */
+const VINYL_DATA = [
+  { label: "Videography",    href: "videography",   idx: "01", sleeve: "#0e0000", accent: "#960018", labelBg: "#5c0010" },
+  { label: "Motion Editing", href: "motion-editing", idx: "02", sleeve: "#0a0a0a", accent: "#d4cfc8", labelBg: "#4a4540" },
+  { label: "Partnerships",   href: "partnerships",  idx: "03", sleeve: "#0b0800", accent: "#c8a84b", labelBg: "#6b5a18" },
 ];
 
-interface ReelFrame { src: string; label?: string; group: string; groupHref: string; groupColor: string; isFirst: boolean; }
+/* ── VinylUnit ── */
+const SLEEVE = 192;
+const DISC = 174;
 
-const ALL_FRAMES: ReelFrame[] = REEL_GROUPS.flatMap(g =>
-  g.frames.map((f, fi) => ({ ...f, group: g.label, groupHref: g.href, groupColor: g.color, isFirst: fi === 0 }))
-);
-
-const FW = 172;
-const FH = 116;
-const FGAP = 7;
-const FSTEP = FW + FGAP;
-
-/* ── Sprockets ── */
-function Sprockets({ count }: { count: number }) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "2px 14px", background: "#040000", height: "20px", overflow: "hidden" }}>
-      {Array.from({ length: count }).map((_, i) => (
-        <div key={i} style={{ width: "10px", height: "13px", borderRadius: "2px", background: "#080000", border: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }} />
-      ))}
-    </div>
-  );
-}
-
-/* ── FilmFrame — fully imperative, driven by custom 'reelActive' event ── */
-function FilmFrame({ frame, frameIdx }: { frame: ReelFrame; frameIdx: number }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const wrapRef = useRef<HTMLDivElement>(null);
+function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; defaultX: number; defaultY: number }) {
+  const [pos, setPos] = useState({ x: defaultX, y: defaultY });
+  const [hovered, setHovered] = useState(false);
+  const discRef = useRef<SVGSVGElement>(null);
+  const drag = useRef({ on: false, mx: 0, my: 0, px: 0, py: 0, moved: false });
 
   useEffect(() => {
-    let loaded = false;
-    const handler = (e: Event) => {
-      const idx = (e as CustomEvent<number>).detail;
-      const v = videoRef.current;
-      const el = wrapRef.current;
-      if (!el) return;
-      const isActive = idx === frameIdx;
-      const isNear = Math.abs(idx - frameIdx) <= 3;
-      el.style.transform = isActive ? "scaleY(1.1) translateZ(32px)" : "scaleY(1) translateZ(0px)";
-      el.style.border = isActive ? "2px solid rgba(150,0,24,0.75)" : "1px solid rgba(255,255,255,0.07)";
-      el.style.boxShadow = isActive ? "0 0 40px rgba(150,0,24,0.3), 0 16px 48px rgba(0,0,0,0.8)" : "0 2px 8px rgba(0,0,0,0.6)";
-      if (!v) return;
-      if (isNear && !loaded) { v.src = frame.src; v.load(); loaded = true; }
-      if (isActive) v.play().catch(() => {});
-      else { v.pause(); if (!isNear) { v.currentTime = 0; } }
-      v.style.opacity = isActive ? "1" : isNear ? "0.45" : "0.25";
+    const onMove = (e: MouseEvent) => {
+      if (!drag.current.on) return;
+      const dx = e.clientX - drag.current.mx;
+      const dy = e.clientY - drag.current.my;
+      if (Math.abs(dx) + Math.abs(dy) > 4) drag.current.moved = true;
+      setPos({ x: drag.current.px + dx, y: drag.current.py + dy });
     };
-    window.addEventListener("reelActive", handler);
-    return () => window.removeEventListener("reelActive", handler);
-  }, [frameIdx, frame.src]);
-
-  return (
-    <div ref={wrapRef} style={{
-      width: FW, height: FH, flexShrink: 0, borderRadius: "3px", overflow: "hidden", position: "relative",
-      border: "1px solid rgba(255,255,255,0.07)",
-      transform: "scaleY(1) translateZ(0px)", transformOrigin: "center",
-      transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s ease, box-shadow 0.4s ease",
-      boxShadow: "0 2px 8px rgba(0,0,0,0.6)",
-    }}>
-      <video ref={videoRef} muted loop playsInline preload="none" disablePictureInPicture
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", opacity: 0.25, transition: "opacity 0.35s ease" }} />
-      {frame.label && (
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "18px 6px 4px", background: "linear-gradient(to top,rgba(0,0,0,0.85),transparent)", fontFamily: "var(--font-inter)", fontSize: "5.5px", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.65)", pointerEvents: "none" }}>
-          {frame.label}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ── FilmReel ── */
-function FilmReel() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const stripRef = useRef<HTMLDivElement>(null);
-  const spoolRef = useRef<SVGSVGElement>(null);
-  const posX = useRef(0);
-  const targetX = useRef(0);
-  const rafRef = useRef<number>();
-  const activeIdxRef = useRef(0);
-  const counterRef = useRef<HTMLSpanElement>(null);
-  const groupLabelRef = useRef<HTMLSpanElement>(null);
-  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  // touch fallback
-  const touchStartX = useRef(0);
-  const touchPosX = useRef(0);
-  const isTouching = useRef(false);
-
-  function maxNeg() {
-    const cw = containerRef.current?.offsetWidth ?? 900;
-    return -(ALL_FRAMES.length * FSTEP - cw / 2 - FW / 2);
-  }
-
-  function applyTransform() {
-    const cw = containerRef.current?.offsetWidth ?? 900;
-    posX.current = Math.max(maxNeg(), Math.min(cw / 2 - FW / 2, posX.current));
-    if (stripRef.current) stripRef.current.style.transform = `translateX(${posX.current}px)`;
-    // Spool rotates: each pixel of strip travel = arc length on 26px-radius hub
-    const rotDeg = -posX.current * (180 / (Math.PI * 26));
-    if (spoolRef.current) spoolRef.current.style.transform = `rotate(${rotDeg}deg)`;
-    const centerOffset = cw / 2 - posX.current;
-    const idx = Math.max(0, Math.min(ALL_FRAMES.length - 1, Math.round((centerOffset - FW / 2) / FSTEP)));
-    if (idx !== activeIdxRef.current) {
-      activeIdxRef.current = idx;
-      window.dispatchEvent(new CustomEvent("reelActive", { detail: idx }));
-      const frame = ALL_FRAMES[idx];
-      if (counterRef.current) counterRef.current.textContent = `${idx + 1} / ${ALL_FRAMES.length}`;
-      if (groupLabelRef.current) groupLabelRef.current.textContent = frame.group;
-      Object.entries(tabRefs.current).forEach(([href, el]) => {
-        if (el) el.style.color = href === frame.groupHref ? "#f5f0f0" : "rgba(245,240,240,0.28)";
-      });
-    }
-  }
-
-  function snapTarget(idx: number) {
-    const cw = containerRef.current?.offsetWidth ?? 900;
-    targetX.current = Math.max(maxNeg(), Math.min(cw / 2 - FW / 2, cw / 2 - idx * FSTEP - FW / 2));
-  }
-
-  function jumpToGroup(href: string) {
-    const fi = ALL_FRAMES.findIndex(f => f.groupHref === href);
-    if (fi >= 0) snapTarget(fi);
-  }
-
-  useEffect(() => {
-    const cw = containerRef.current?.offsetWidth ?? 900;
-    posX.current = cw / 2 - FW / 2 - 14;
-    targetX.current = posX.current;
-    applyTransform();
-
-    const onMouse = (e: MouseEvent) => {
-      if (isTouching.current) return;
-      const pct = Math.max(0, Math.min(1, e.clientX / window.innerWidth));
-      const cw = containerRef.current?.offsetWidth ?? 900;
-      const hi = cw / 2 - FW / 2;
-      const lo = maxNeg();
-      // cursor left → frame 0 (hi), cursor right → last frame (lo)
-      targetX.current = hi - pct * (hi - lo);
+    const onUp = () => {
+      if (!drag.current.on) return;
+      drag.current.on = false;
+      document.body.style.cursor = "";
     };
-    window.addEventListener("mousemove", onMouse, { passive: true });
-
-    const onResize = () => {
-      const cw = containerRef.current?.offsetWidth ?? 900;
-      posX.current = cw / 2 - FW / 2 - 14;
-      targetX.current = posX.current;
-      applyTransform();
-    };
-    window.addEventListener("resize", onResize);
-
-    const tick = () => {
-      posX.current += (targetX.current - posX.current) * 0.08;
-      applyTransform();
-      rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-
-    return () => {
-      window.removeEventListener("mousemove", onMouse);
-      window.removeEventListener("resize", onResize);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
   }, []);
 
-  function onTouchStart(e: React.TouchEvent) {
-    isTouching.current = true;
-    touchStartX.current = e.touches[0].clientX;
-    touchPosX.current = posX.current;
-  }
-  function onTouchMove(e: React.TouchEvent) {
-    const dx = e.touches[0].clientX - touchStartX.current;
-    const cw = containerRef.current?.offsetWidth ?? 900;
-    targetX.current = Math.max(maxNeg(), Math.min(cw / 2 - FW / 2, touchPosX.current + dx));
-  }
-  function onTouchEnd() {
-    isTouching.current = false;
-    const cw = containerRef.current?.offsetWidth ?? 900;
-    const centerOffset = cw / 2 - targetX.current;
-    const idx = Math.max(0, Math.min(ALL_FRAMES.length - 1, Math.round((centerOffset - FW / 2) / FSTEP)));
-    snapTarget(idx);
-  }
+  const discX_idle = SLEEVE - DISC * 0.72;   // ~28% peeking right
+  const discX_hover = SLEEVE - DISC * 0.35;  // ~65% peeking right
 
-  function onClickStrip() {
-    const frame = ALL_FRAMES[activeIdxRef.current];
-    if (frame) {
-      const el = document.getElementById(frame.groupHref);
-      if (el) lenisScrollTo(el, { offset: -80, duration: 1.6, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
-    }
-  }
-
-  // Spool geometry
-  const SR = 36; // spool SVG radius (viewBox 80x80, center 40,40)
-  const HUB = 13;
-  const spokes = [0, 1, 2].map(i => {
-    const a = (i / 3) * Math.PI * 2;
-    return { x2: 40 + Math.cos(a) * (SR - 4), y2: 40 + Math.sin(a) * (SR - 4) };
-  });
-  const holes = Array.from({ length: 10 }, (_, i) => {
-    const a = (i / 10) * Math.PI * 2;
-    return { cx: 40 + Math.cos(a) * (SR - 7), cy: 40 + Math.sin(a) * (SR - 7) };
-  });
+  const r = DISC / 2;
+  const grooves = Array.from({ length: 24 }, (_, i) => r * 0.3 + (r * 0.62) * (i / 24));
 
   return (
-    <div style={{ paddingTop: "calc(80px + 2.5rem)" }}>
-      {/* Group tabs */}
-      <div style={{ display: "flex", gap: "2.5rem", paddingLeft: "clamp(1.5rem, 5vw, 4rem)", marginBottom: "1.8rem", alignItems: "center" }}>
-        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.22em", color: "rgba(245,240,240,0.2)", textTransform: "uppercase", marginRight: "0.5rem" }}>
-          What I Bring to the Table
-        </p>
-        {REEL_GROUPS.map(g => (
-          <button key={g.href} ref={el => { tabRefs.current[g.href] = el; }} onClick={() => jumpToGroup(g.href)} style={{
-            background: "none", border: "none", cursor: "pointer", padding: 0,
-            fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.16em", textTransform: "uppercase",
-            color: g.href === REEL_GROUPS[0].href ? "#f5f0f0" : "rgba(245,240,240,0.28)",
-            transition: "color 0.25s ease",
-          }}>
-            {g.label}
-          </button>
-        ))}
+    <div
+      style={{ position: "absolute", left: pos.x, top: pos.y, width: SLEEVE + DISC * 0.7, height: SLEEVE, zIndex: hovered ? 10 : 1 }}
+      onMouseEnter={() => { setHovered(true); if (discRef.current) discRef.current.style.animationDuration = "1.4s"; }}
+      onMouseLeave={() => { setHovered(false); if (discRef.current) discRef.current.style.animationDuration = "6s"; }}
+      onMouseDown={e => {
+        drag.current = { on: true, mx: e.clientX, my: e.clientY, px: pos.x, py: pos.y, moved: false };
+        document.body.style.cursor = "grabbing";
+        e.preventDefault();
+      }}
+      onClick={() => {
+        if (drag.current.moved) return;
+        const el = document.getElementById(v.href);
+        if (el) lenisScrollTo(el, { offset: -80, duration: 1.6, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+      }}
+      title={`Go to ${v.label}`}
+    >
+      {/* Vinyl disc — behind sleeve */}
+      <div style={{
+        position: "absolute",
+        left: 0,
+        top: (SLEEVE - DISC) / 2,
+        transform: `translateX(${hovered ? discX_hover : discX_idle}px)`,
+        transition: "transform 0.55s cubic-bezier(0.34,1.08,0.64,1)",
+        zIndex: 1,
+        cursor: "grab",
+      }}>
+        <svg ref={discRef} width={DISC} height={DISC} viewBox={`0 0 ${DISC} ${DISC}`}
+          style={{ display: "block", animation: "vinylSpin 6s linear infinite" }}>
+          <defs>
+            <radialGradient id={`rg-${v.href}`} cx="33%" cy="28%">
+              <stop offset="0%" stopColor="rgba(255,255,255,0.18)"/>
+              <stop offset="55%" stopColor="rgba(255,255,255,0.02)"/>
+              <stop offset="100%" stopColor="transparent"/>
+            </radialGradient>
+            <clipPath id={`rc-${v.href}`}><circle cx={r} cy={r} r={r - 0.5}/></clipPath>
+          </defs>
+          {/* Base */}
+          <circle cx={r} cy={r} r={r} fill="#090909"/>
+          {/* Grooves */}
+          {grooves.map((gr, i) => (
+            <circle key={i} cx={r} cy={r} r={gr} fill="none"
+              stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"}
+              strokeWidth="0.55"/>
+          ))}
+          {/* Label */}
+          <circle cx={r} cy={r} r={r * 0.29} fill={v.labelBg}/>
+          <circle cx={r} cy={r} r={r * 0.25} fill={v.labelBg} opacity="0.55"/>
+          {[-r*0.09, r*0.02, r*0.12].map((dy, i) => (
+            <line key={i} x1={r - r * 0.18} y1={r + dy} x2={r + r * 0.18} y2={r + dy}
+              stroke="rgba(255,255,255,0.28)" strokeWidth={i === 0 ? 0.9 : 0.6}/>
+          ))}
+          {/* Spindle hole */}
+          <circle cx={r} cy={r} r={r * 0.045} fill="#000"/>
+          {/* Shine */}
+          <ellipse cx={r * 0.68} cy={r * 0.58} rx={r * 0.3} ry={r * 0.18}
+            fill="url(#rg-${v.href})" clipPath={`url(#rc-${v.href})`} opacity="0.9"/>
+        </svg>
       </div>
 
-      {/* Strip + spool */}
-      <div
-        ref={containerRef}
-        onClick={onClickStrip}
-        onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
-        style={{ width: "100%", overflow: "hidden", position: "relative", cursor: "pointer" }}
-      >
-        {/* Film spool — fixed to left, rotates with posX */}
-        <div style={{ position: "absolute", left: "clamp(0.5rem, 2vw, 1.5rem)", top: "50%", transform: "translateY(-50%)", zIndex: 20, pointerEvents: "none" }}>
-          {/* Outer ring (static) */}
-          <svg width="80" height="80" viewBox="0 0 80 80" style={{ position: "absolute", top: 0, left: 0 }}>
-            <circle cx="40" cy="40" r={SR} fill="#050000" stroke="rgba(255,255,255,0.1)" strokeWidth="1.5"/>
-            {holes.map((h, i) => (
-              <circle key={i} cx={h.cx} cy={h.cy} r="2.8" fill="#020000" stroke="rgba(255,255,255,0.07)" strokeWidth="0.5"/>
-            ))}
-          </svg>
-          {/* Inner reel (rotates) */}
-          <svg ref={spoolRef} width="80" height="80" viewBox="0 0 80 80" style={{ display: "block", transformOrigin: "40px 40px" }}>
-            {spokes.map((s, i) => (
-              <line key={i} x1="40" y1="40" x2={s.x2} y2={s.y2} stroke="rgba(255,255,255,0.16)" strokeWidth="2.5" strokeLinecap="round"/>
-            ))}
-            <circle cx="40" cy="40" r={HUB} fill="#100000" stroke="rgba(150,0,24,0.5)" strokeWidth="1.5"/>
-            <circle cx="40" cy="40" r="4.5" fill="#000"/>
-          </svg>
-        </div>
-
-        {/* 3D perspective stage */}
-        <div style={{ perspective: "900px", perspectiveOrigin: "50% 60%" }}>
-          <div style={{ transform: "rotateX(-18deg)", transformStyle: "preserve-3d" }}>
-            <Sprockets count={80} />
-
-            <div style={{ background: "#020000", padding: "10px 0", position: "relative" }}>
-              {/* Center projector window */}
-              <div style={{ position: "absolute", top: 0, bottom: 0, left: "50%", transform: "translateX(-50%)", width: FW + 20, pointerEvents: "none", borderLeft: "1.5px solid rgba(150,0,24,0.35)", borderRight: "1.5px solid rgba(150,0,24,0.35)", zIndex: 10 }} />
-
-              <div ref={stripRef} style={{ display: "flex", gap: `${FGAP}px`, width: "max-content", willChange: "transform", transformStyle: "preserve-3d" }}>
-                <div style={{ width: "clamp(1.5rem, 5vw, 4rem)", flexShrink: 0 }} />
-                {ALL_FRAMES.map((frame, i) => (
-                  <div key={i} style={{ position: "relative", flexShrink: 0, transformStyle: "preserve-3d" }}>
-                    {frame.isFirst && i > 0 && (
-                      <div style={{ position: "absolute", top: "50%", left: -FGAP - 8, transform: "translateY(-50%)", width: "1px", height: "60%", background: "rgba(255,255,255,0.1)" }} />
-                    )}
-                    {frame.isFirst && (
-                      <div style={{ position: "absolute", top: -16, left: 0, fontFamily: "var(--font-inter)", fontSize: "6.5px", letterSpacing: "0.14em", textTransform: "uppercase", color: frame.groupColor, whiteSpace: "nowrap", pointerEvents: "none" }}>
-                        {frame.group}
-                      </div>
-                    )}
-                    <FilmFrame frame={frame} frameIdx={i} />
-                  </div>
-                ))}
-                <div style={{ width: "clamp(1.5rem, 5vw, 4rem)", flexShrink: 0 }} />
-              </div>
-            </div>
-
-            <Sprockets count={80} />
+      {/* Sleeve — in front */}
+      <div style={{
+        position: "absolute", left: 0, top: 0, width: SLEEVE, height: SLEEVE, zIndex: 2,
+        background: `linear-gradient(145deg, ${v.sleeve} 0%, color-mix(in srgb, ${v.sleeve} 70%, #1a1a1a) 100%)`,
+        borderRadius: 6,
+        border: "1px solid rgba(255,255,255,0.07)",
+        boxShadow: hovered
+          ? `0 24px 64px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06)`
+          : `0 10px 36px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04)`,
+        transition: "box-shadow 0.4s ease",
+        cursor: hovered ? "pointer" : "grab",
+        overflow: "hidden",
+      }}>
+        {/* Inner content */}
+        <div style={{ padding: "1.1rem", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", boxSizing: "border-box" }}>
+          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", letterSpacing: "0.18em", color: "rgba(255,255,255,0.25)" }}>
+            {v.idx}
+          </span>
+          <div>
+            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.5rem", color: v.accent, lineHeight: 1.05, marginBottom: "0.45rem", letterSpacing: "0.01em" }}>
+              {v.label}
+            </p>
+            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.18)" }}>
+              click to explore ↓
+            </span>
           </div>
         </div>
+        {/* Right-edge slot hint */}
+        <div style={{ position: "absolute", right: 0, top: "12%", bottom: "12%", width: 2, background: "rgba(0,0,0,0.5)" }}/>
+        {/* Corner grain texture overlay */}
+        <div style={{ position: "absolute", inset: 0, background: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E\")", opacity: 0.6, pointerEvents: "none" }}/>
       </div>
+    </div>
+  );
+}
 
-      {/* Status bar */}
-      <div style={{ paddingLeft: "clamp(1.5rem, 5vw, 4rem)", marginTop: "1rem", display: "flex", alignItems: "center", gap: "1.4rem" }}>
-        <span ref={groupLabelRef} style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.28)" }}>
-          {REEL_GROUPS[0].label}
-        </span>
-        <span ref={counterRef} style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", color: "rgba(245,240,240,0.15)", letterSpacing: "0.1em" }}>
-          1 / {ALL_FRAMES.length}
-        </span>
-        <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", color: "rgba(245,240,240,0.15)", letterSpacing: "0.1em", marginLeft: "auto", paddingRight: "clamp(1.5rem, 5vw, 4rem)" }}>
-          move cursor · click to jump
-        </span>
+/* ── VinylSection ── */
+function VinylSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [positions, setPositions] = useState<{ x: number; y: number }[] | null>(null);
+
+  useEffect(() => {
+    const w = containerRef.current?.offsetWidth ?? window.innerWidth;
+    setPositions([
+      { x: Math.round(w * 0.07), y: 48 },
+      { x: Math.round(w * 0.37), y: 90 },
+      { x: Math.round(w * 0.65), y: 36 },
+    ]);
+  }, []);
+
+  return (
+    <div style={{ paddingTop: "calc(80px + 2.5rem)", paddingBottom: "1rem" }}>
+      <div style={{ paddingLeft: "clamp(1.5rem, 5vw, 4rem)", marginBottom: "2.5rem" }}>
+        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.22em", color: "rgba(245,240,240,0.18)", textTransform: "uppercase" }}>
+          What I Bring to the Table
+        </p>
+      </div>
+      <div ref={containerRef} style={{ position: "relative", height: 340, overflow: "visible" }}>
+        {positions && VINYL_DATA.map((v, i) => (
+          <VinylUnit key={v.href} v={v} defaultX={positions[i].x} defaultY={positions[i].y} />
+        ))}
       </div>
     </div>
   );
@@ -536,7 +404,7 @@ export default function WorkPage() {
 
       {/* ── Film Reel entry ── */}
       <section className="relative" style={{ paddingBottom: "4rem" }}>
-        <FilmReel />
+        <VinylSection />
       </section>
 
       {/* ── 01 Videography ── */}
