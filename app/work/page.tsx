@@ -106,38 +106,32 @@ function FilmFrame({ frame, frameIdx }: { frame: ReelFrame; frameIdx: number }) 
 function FilmReel() {
   const containerRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
+  const spoolRef = useRef<SVGSVGElement>(null);
   const posX = useRef(0);
-  const velX = useRef(0);
-  const dragging = useRef(false);
-  const startClientX = useRef(0);
-  const lastClientX = useRef(0);
-  const lastT = useRef(0);
+  const targetX = useRef(0);
   const rafRef = useRef<number>();
   const activeIdxRef = useRef(0);
   const counterRef = useRef<HTMLSpanElement>(null);
   const groupLabelRef = useRef<HTMLSpanElement>(null);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  useEffect(() => {
-    const update = () => {
-      const cw = containerRef.current?.offsetWidth ?? 900;
-      posX.current = cw / 2 - FW / 2 - 14;
-      if (stripRef.current) stripRef.current.style.transform = `translateX(${posX.current}px)`;
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
+  // touch fallback
+  const touchStartX = useRef(0);
+  const touchPosX = useRef(0);
+  const isTouching = useRef(false);
 
   function maxNeg() {
     const cw = containerRef.current?.offsetWidth ?? 900;
     return -(ALL_FRAMES.length * FSTEP - cw / 2 - FW / 2);
   }
 
-  function applyTransform(cw?: number) {
-    const w = cw ?? (containerRef.current?.offsetWidth ?? 900);
-    posX.current = Math.max(maxNeg(), Math.min(w / 2 - FW / 2, posX.current));
+  function applyTransform() {
+    const cw = containerRef.current?.offsetWidth ?? 900;
+    posX.current = Math.max(maxNeg(), Math.min(cw / 2 - FW / 2, posX.current));
     if (stripRef.current) stripRef.current.style.transform = `translateX(${posX.current}px)`;
-    const centerOffset = w / 2 - posX.current;
+    // Spool rotates: each pixel of strip travel = arc length on 26px-radius hub
+    const rotDeg = -posX.current * (180 / (Math.PI * 26));
+    if (spoolRef.current) spoolRef.current.style.transform = `rotate(${rotDeg}deg)`;
+    const centerOffset = cw / 2 - posX.current;
     const idx = Math.max(0, Math.min(ALL_FRAMES.length - 1, Math.round((centerOffset - FW / 2) / FSTEP)));
     if (idx !== activeIdxRef.current) {
       activeIdxRef.current = idx;
@@ -151,87 +145,92 @@ function FilmReel() {
     }
   }
 
-  function snapToIdx(idx: number) {
+  function snapTarget(idx: number) {
     const cw = containerRef.current?.offsetWidth ?? 900;
-    const target = Math.max(maxNeg(), Math.min(cw / 2 - FW / 2, cw / 2 - idx * FSTEP - FW / 2));
-    const animate = () => {
-      posX.current += (target - posX.current) * 0.14;
-      applyTransform();
-      if (Math.abs(target - posX.current) > 0.4) rafRef.current = requestAnimationFrame(animate);
-      else { posX.current = target; applyTransform(); }
-    };
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(animate);
-  }
-
-  function startInertia() {
-    const go = () => {
-      velX.current *= 0.91;
-      posX.current += velX.current;
-      applyTransform();
-      if (Math.abs(velX.current) > 0.4) {
-        rafRef.current = requestAnimationFrame(go);
-      } else {
-        // snap to nearest
-        const cw = containerRef.current?.offsetWidth ?? 900;
-        const centerOffset = cw / 2 - posX.current;
-        const idx = Math.max(0, Math.min(ALL_FRAMES.length - 1, Math.round((centerOffset - FW / 2) / FSTEP)));
-        snapToIdx(idx);
-      }
-    };
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(go);
-  }
-
-  function getClientX(e: React.MouseEvent | React.TouchEvent) {
-    return "touches" in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
-  }
-  function getChangedX(e: React.MouseEvent | React.TouchEvent) {
-    return "changedTouches" in e ? e.changedTouches[0].clientX : (e as React.MouseEvent).clientX;
-  }
-
-  function onDown(e: React.MouseEvent | React.TouchEvent) {
-    dragging.current = true;
-    startClientX.current = getClientX(e);
-    lastClientX.current = startClientX.current;
-    lastT.current = Date.now();
-    velX.current = 0;
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-  }
-
-  function onMove(e: React.MouseEvent | React.TouchEvent) {
-    if (!dragging.current) return;
-    const cx = getClientX(e);
-    const dx = cx - lastClientX.current;
-    const dt = Math.max(Date.now() - lastT.current, 1);
-    velX.current = (dx / dt) * 14;
-    lastClientX.current = cx;
-    lastT.current = Date.now();
-    posX.current += dx;
-    applyTransform();
-  }
-
-  function onUp(e: React.MouseEvent | React.TouchEvent) {
-    if (!dragging.current) return;
-    dragging.current = false;
-    const cx = getChangedX(e);
-    const moved = Math.abs(cx - startClientX.current);
-    if (moved < 5) {
-      // click — scroll to section
-      const frame = ALL_FRAMES[activeIdxRef.current];
-      if (frame) {
-        const el = document.getElementById(frame.groupHref);
-        if (el) lenisScrollTo(el, { offset: -80, duration: 1.6, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
-      }
-    } else {
-      startInertia();
-    }
+    targetX.current = Math.max(maxNeg(), Math.min(cw / 2 - FW / 2, cw / 2 - idx * FSTEP - FW / 2));
   }
 
   function jumpToGroup(href: string) {
     const fi = ALL_FRAMES.findIndex(f => f.groupHref === href);
-    if (fi >= 0) snapToIdx(fi);
+    if (fi >= 0) snapTarget(fi);
   }
+
+  useEffect(() => {
+    const cw = containerRef.current?.offsetWidth ?? 900;
+    posX.current = cw / 2 - FW / 2 - 14;
+    targetX.current = posX.current;
+    applyTransform();
+
+    const onMouse = (e: MouseEvent) => {
+      if (isTouching.current) return;
+      const pct = Math.max(0, Math.min(1, e.clientX / window.innerWidth));
+      const cw = containerRef.current?.offsetWidth ?? 900;
+      const hi = cw / 2 - FW / 2;
+      const lo = maxNeg();
+      // cursor left → frame 0 (hi), cursor right → last frame (lo)
+      targetX.current = hi - pct * (hi - lo);
+    };
+    window.addEventListener("mousemove", onMouse, { passive: true });
+
+    const onResize = () => {
+      const cw = containerRef.current?.offsetWidth ?? 900;
+      posX.current = cw / 2 - FW / 2 - 14;
+      targetX.current = posX.current;
+      applyTransform();
+    };
+    window.addEventListener("resize", onResize);
+
+    const tick = () => {
+      posX.current += (targetX.current - posX.current) * 0.08;
+      applyTransform();
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      window.removeEventListener("mousemove", onMouse);
+      window.removeEventListener("resize", onResize);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  function onTouchStart(e: React.TouchEvent) {
+    isTouching.current = true;
+    touchStartX.current = e.touches[0].clientX;
+    touchPosX.current = posX.current;
+  }
+  function onTouchMove(e: React.TouchEvent) {
+    const dx = e.touches[0].clientX - touchStartX.current;
+    const cw = containerRef.current?.offsetWidth ?? 900;
+    targetX.current = Math.max(maxNeg(), Math.min(cw / 2 - FW / 2, touchPosX.current + dx));
+  }
+  function onTouchEnd() {
+    isTouching.current = false;
+    const cw = containerRef.current?.offsetWidth ?? 900;
+    const centerOffset = cw / 2 - targetX.current;
+    const idx = Math.max(0, Math.min(ALL_FRAMES.length - 1, Math.round((centerOffset - FW / 2) / FSTEP)));
+    snapTarget(idx);
+  }
+
+  function onClickStrip() {
+    const frame = ALL_FRAMES[activeIdxRef.current];
+    if (frame) {
+      const el = document.getElementById(frame.groupHref);
+      if (el) lenisScrollTo(el, { offset: -80, duration: 1.6, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+    }
+  }
+
+  // Spool geometry
+  const SR = 36; // spool SVG radius (viewBox 80x80, center 40,40)
+  const HUB = 13;
+  const spokes = [0, 1, 2].map(i => {
+    const a = (i / 3) * Math.PI * 2;
+    return { x2: 40 + Math.cos(a) * (SR - 4), y2: 40 + Math.sin(a) * (SR - 4) };
+  });
+  const holes = Array.from({ length: 10 }, (_, i) => {
+    const a = (i / 10) * Math.PI * 2;
+    return { cx: 40 + Math.cos(a) * (SR - 7), cy: 40 + Math.sin(a) * (SR - 7) };
+  });
 
   return (
     <div style={{ paddingTop: "calc(80px + 2.5rem)" }}>
@@ -252,14 +251,32 @@ function FilmReel() {
         ))}
       </div>
 
-      {/* Strip */}
+      {/* Strip + spool */}
       <div
         ref={containerRef}
-        onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp}
-        onMouseLeave={() => { if (dragging.current) { dragging.current = false; startInertia(); } }}
-        onTouchStart={onDown} onTouchMove={onMove} onTouchEnd={onUp}
-        style={{ width: "100%", overflow: "hidden", cursor: "grab", userSelect: "none", position: "relative" }}
+        onClick={onClickStrip}
+        onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
+        style={{ width: "100%", overflow: "hidden", position: "relative", cursor: "pointer" }}
       >
+        {/* Film spool — fixed to left, rotates with posX */}
+        <div style={{ position: "absolute", left: "clamp(0.5rem, 2vw, 1.5rem)", top: "50%", transform: "translateY(-50%)", zIndex: 20, pointerEvents: "none" }}>
+          {/* Outer ring (static) */}
+          <svg width="80" height="80" viewBox="0 0 80 80" style={{ position: "absolute", top: 0, left: 0 }}>
+            <circle cx="40" cy="40" r={SR} fill="#050000" stroke="rgba(255,255,255,0.1)" strokeWidth="1.5"/>
+            {holes.map((h, i) => (
+              <circle key={i} cx={h.cx} cy={h.cy} r="2.8" fill="#020000" stroke="rgba(255,255,255,0.07)" strokeWidth="0.5"/>
+            ))}
+          </svg>
+          {/* Inner reel (rotates) */}
+          <svg ref={spoolRef} width="80" height="80" viewBox="0 0 80 80" style={{ display: "block", transformOrigin: "40px 40px" }}>
+            {spokes.map((s, i) => (
+              <line key={i} x1="40" y1="40" x2={s.x2} y2={s.y2} stroke="rgba(255,255,255,0.16)" strokeWidth="2.5" strokeLinecap="round"/>
+            ))}
+            <circle cx="40" cy="40" r={HUB} fill="#100000" stroke="rgba(150,0,24,0.5)" strokeWidth="1.5"/>
+            <circle cx="40" cy="40" r="4.5" fill="#000"/>
+          </svg>
+        </div>
+
         <Sprockets count={80} />
 
         <div style={{ background: "#020000", padding: "10px 0", position: "relative" }}>
@@ -267,9 +284,7 @@ function FilmReel() {
           <div style={{ position: "absolute", top: 0, bottom: 0, left: "50%", transform: "translateX(-50%)", width: FW + 20, pointerEvents: "none", borderLeft: "1.5px solid rgba(150,0,24,0.35)", borderRight: "1.5px solid rgba(150,0,24,0.35)", zIndex: 10 }} />
 
           <div ref={stripRef} style={{ display: "flex", gap: `${FGAP}px`, width: "max-content", willChange: "transform" }}>
-            {/* left padding spacer */}
             <div style={{ width: "clamp(1.5rem, 5vw, 4rem)", flexShrink: 0 }} />
-
             {ALL_FRAMES.map((frame, i) => (
               <div key={i} style={{ position: "relative", flexShrink: 0 }}>
                 {frame.isFirst && i > 0 && (
@@ -283,7 +298,6 @@ function FilmReel() {
                 <FilmFrame frame={frame} frameIdx={i} />
               </div>
             ))}
-
             <div style={{ width: "clamp(1.5rem, 5vw, 4rem)", flexShrink: 0 }} />
           </div>
         </div>
@@ -291,7 +305,7 @@ function FilmReel() {
         <Sprockets count={80} />
       </div>
 
-      {/* Status bar — updated imperatively via refs */}
+      {/* Status bar */}
       <div style={{ paddingLeft: "clamp(1.5rem, 5vw, 4rem)", marginTop: "1rem", display: "flex", alignItems: "center", gap: "1.4rem" }}>
         <span ref={groupLabelRef} style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.28)" }}>
           {REEL_GROUPS[0].label}
@@ -300,7 +314,7 @@ function FilmReel() {
           1 / {ALL_FRAMES.length}
         </span>
         <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", color: "rgba(245,240,240,0.15)", letterSpacing: "0.1em", marginLeft: "auto", paddingRight: "clamp(1.5rem, 5vw, 4rem)" }}>
-          drag · click to jump
+          move cursor · click to jump
         </span>
       </div>
     </div>
