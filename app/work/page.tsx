@@ -70,9 +70,9 @@ function FilmFrame({ frame, frameIdx }: { frame: ReelFrame; frameIdx: number }) 
       if (!el) return;
       const isActive = idx === frameIdx;
       const isNear = Math.abs(idx - frameIdx) <= 3;
-      el.style.transform = isActive ? "scaleY(1.08)" : "scaleY(1)";
+      el.style.transform = isActive ? "scaleY(1.1) translateZ(32px)" : "scaleY(1) translateZ(0px)";
       el.style.border = isActive ? "2px solid rgba(150,0,24,0.75)" : "1px solid rgba(255,255,255,0.07)";
-      el.style.boxShadow = isActive ? "0 0 28px rgba(150,0,24,0.25),0 8px 24px rgba(0,0,0,0.6)" : "0 4px 12px rgba(0,0,0,0.5)";
+      el.style.boxShadow = isActive ? "0 0 40px rgba(150,0,24,0.3), 0 16px 48px rgba(0,0,0,0.8)" : "0 2px 8px rgba(0,0,0,0.6)";
       if (!v) return;
       if (isNear && !loaded) { v.src = frame.src; v.load(); loaded = true; }
       if (isActive) v.play().catch(() => {});
@@ -87,9 +87,9 @@ function FilmFrame({ frame, frameIdx }: { frame: ReelFrame; frameIdx: number }) 
     <div ref={wrapRef} style={{
       width: FW, height: FH, flexShrink: 0, borderRadius: "3px", overflow: "hidden", position: "relative",
       border: "1px solid rgba(255,255,255,0.07)",
-      transform: "scaleY(1)", transformOrigin: "center",
-      transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s ease",
-      boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+      transform: "scaleY(1) translateZ(0px)", transformOrigin: "center",
+      transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s ease, box-shadow 0.4s ease",
+      boxShadow: "0 2px 8px rgba(0,0,0,0.6)",
     }}>
       <video ref={videoRef} muted loop playsInline preload="none" disablePictureInPicture
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", opacity: 0.25, transition: "opacity 0.35s ease" }} />
@@ -277,32 +277,37 @@ function FilmReel() {
           </svg>
         </div>
 
-        <Sprockets count={80} />
+        {/* 3D perspective stage */}
+        <div style={{ perspective: "900px", perspectiveOrigin: "50% 60%" }}>
+          <div style={{ transform: "rotateX(-18deg)", transformStyle: "preserve-3d" }}>
+            <Sprockets count={80} />
 
-        <div style={{ background: "#020000", padding: "10px 0", position: "relative" }}>
-          {/* Center projector window */}
-          <div style={{ position: "absolute", top: 0, bottom: 0, left: "50%", transform: "translateX(-50%)", width: FW + 20, pointerEvents: "none", borderLeft: "1.5px solid rgba(150,0,24,0.35)", borderRight: "1.5px solid rgba(150,0,24,0.35)", zIndex: 10 }} />
+            <div style={{ background: "#020000", padding: "10px 0", position: "relative" }}>
+              {/* Center projector window */}
+              <div style={{ position: "absolute", top: 0, bottom: 0, left: "50%", transform: "translateX(-50%)", width: FW + 20, pointerEvents: "none", borderLeft: "1.5px solid rgba(150,0,24,0.35)", borderRight: "1.5px solid rgba(150,0,24,0.35)", zIndex: 10 }} />
 
-          <div ref={stripRef} style={{ display: "flex", gap: `${FGAP}px`, width: "max-content", willChange: "transform" }}>
-            <div style={{ width: "clamp(1.5rem, 5vw, 4rem)", flexShrink: 0 }} />
-            {ALL_FRAMES.map((frame, i) => (
-              <div key={i} style={{ position: "relative", flexShrink: 0 }}>
-                {frame.isFirst && i > 0 && (
-                  <div style={{ position: "absolute", top: "50%", left: -FGAP - 8, transform: "translateY(-50%)", width: "1px", height: "60%", background: "rgba(255,255,255,0.1)" }} />
-                )}
-                {frame.isFirst && (
-                  <div style={{ position: "absolute", top: -16, left: 0, fontFamily: "var(--font-inter)", fontSize: "6.5px", letterSpacing: "0.14em", textTransform: "uppercase", color: frame.groupColor, whiteSpace: "nowrap", pointerEvents: "none" }}>
-                    {frame.group}
+              <div ref={stripRef} style={{ display: "flex", gap: `${FGAP}px`, width: "max-content", willChange: "transform", transformStyle: "preserve-3d" }}>
+                <div style={{ width: "clamp(1.5rem, 5vw, 4rem)", flexShrink: 0 }} />
+                {ALL_FRAMES.map((frame, i) => (
+                  <div key={i} style={{ position: "relative", flexShrink: 0, transformStyle: "preserve-3d" }}>
+                    {frame.isFirst && i > 0 && (
+                      <div style={{ position: "absolute", top: "50%", left: -FGAP - 8, transform: "translateY(-50%)", width: "1px", height: "60%", background: "rgba(255,255,255,0.1)" }} />
+                    )}
+                    {frame.isFirst && (
+                      <div style={{ position: "absolute", top: -16, left: 0, fontFamily: "var(--font-inter)", fontSize: "6.5px", letterSpacing: "0.14em", textTransform: "uppercase", color: frame.groupColor, whiteSpace: "nowrap", pointerEvents: "none" }}>
+                        {frame.group}
+                      </div>
+                    )}
+                    <FilmFrame frame={frame} frameIdx={i} />
                   </div>
-                )}
-                <FilmFrame frame={frame} frameIdx={i} />
+                ))}
+                <div style={{ width: "clamp(1.5rem, 5vw, 4rem)", flexShrink: 0 }} />
               </div>
-            ))}
-            <div style={{ width: "clamp(1.5rem, 5vw, 4rem)", flexShrink: 0 }} />
+            </div>
+
+            <Sprockets count={80} />
           </div>
         </div>
-
-        <Sprockets count={80} />
       </div>
 
       {/* Status bar */}
