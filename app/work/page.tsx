@@ -9,21 +9,22 @@ const CINEMA_VIDEOS = [
   "/cinema/cinema4.mp4", "/cinema/cinema5.mp4", "/cinema/cinema6.mp4",
   "/cinema/cinema7.mp4", "/cinema/cinema8.mp4", "/cinema/cinema9.mp4",
   "/cinema/cinema10.mp4", "/cinema/cinema11.mp4", "/cinema/cinema12.MP4",
+  "/cinema/cinema13.mp4", "/cinema/cinema14.mp4",
 ].map(src => ({ src }));
 
 const VE_VIDEOS = [
   "ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4",
   "ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4",
-  "ve11.mp4","ve12.mp4","ve13.mp4","ve14.mp4","ve15.mp4",
+  "ve11.mp4",
 ].map(f => ({ src: `/ve/${f}` }));
 
 const COLLAB_VIDEOS = [
-  { src: "/cinema/cinema3.mp4",  label: "Aelfric Eden", category: "Fashion" },
-  { src: "/cinema/cinema5.mp4",  label: "BetterHelp",   category: "Wellness" },
-  { src: "/cinema/cinema7.mp4",  label: "Just4Kira",    category: "Lifestyle" },
-  { src: "/cinema/cinema9.mp4",  label: "Lewkin",        category: "Fashion" },
-  { src: "/cinema/cinema11.mp4", label: "Teddy Blake",  category: "Luxury" },
-  { src: "/cinema/cinema2.mp4",  label: "BypassGPT",    category: "Tech" },
+  { src: "/yt/aelfriceden.mp4",  label: "Aelfric Eden", category: "Fashion" },
+  { src: "/yt/betterhelp.mp4",   label: "BetterHelp",   category: "Wellness" },
+  { src: "/yt/just4kira.mp4",    label: "Just4Kira",    category: "Lifestyle" },
+  { src: "/yt/lewkin.mp4",       label: "Lewkin",        category: "Fashion" },
+  { src: "/yt/teddyblake.mp4",   label: "Teddy Blake",  category: "Luxury" },
+  { src: "/yt/bypassgpt.mp4",    label: "BypassGPT",    category: "Tech" },
 ];
 
 /* ── TrayItem ── */
@@ -150,8 +151,8 @@ function OrbitTitle({ parts }: { parts: { text: string; script?: boolean }[] }) 
 }
 
 /* ── OrbitCarousel ── (Videography only) */
-function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh", title }: {
-  id: string; videos: { src: string }[]; cardW: number; cardH: number; radius: number; scrollHeight?: string; title: React.ReactNode;
+function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh", title, desc, index: sectionIndex }: {
+  id: string; videos: { src: string }[]; cardW: number; cardH: number; radius: number; scrollHeight?: string; title: React.ReactNode; desc?: string; index?: string;
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const scrollRotY = useRef(0);
@@ -204,7 +205,15 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
   return (
     <div ref={sectionRef} id={id} style={{ height: scrollHeight, position: "relative", scrollMarginTop: "80px" }}>
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "22vh", left: 0, right: 0, textAlign: "center", zIndex: 20, pointerEvents: "none" }}>{title}</div>
+        <div style={{ position: "absolute", top: "14vh", left: "clamp(1.5rem, 5vw, 4rem)", right: "clamp(1.5rem, 5vw, 4rem)", zIndex: 20, pointerEvents: "none" }}>
+          <div style={{ borderTop: "1px solid rgba(245,240,240,0.1)", paddingTop: "1.8rem" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "1.2rem", marginBottom: "0.75rem" }}>
+              {sectionIndex && <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{sectionIndex}</span>}
+              {title}
+            </div>
+            {desc && <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.72rem", color: "rgba(245,240,240,0.42)", lineHeight: 1.75, paddingLeft: sectionIndex ? "calc(0.58rem + 1.2rem + 4px)" : 0, maxWidth: "480px" }}>{desc}</p>}
+          </div>
+        </div>
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "48vh" }}>
           <div style={{ perspective: "3200px" }}>
             <div ref={innerRef} style={{ position: "relative", width: `${cardW}px`, height: `${cardH}px`, transformStyle: "preserve-3d", transform: "rotateX(8deg) rotateY(0deg)" }}>
@@ -351,11 +360,13 @@ export default function WorkPage() {
         videos={CINEMA_VIDEOS}
         cardW={248} cardH={140} radius={560}
         scrollHeight="300vh"
+        index="01"
+        desc="Cinematic short-form and long-form content — filmed, directed, and edited from concept to final cut."
         title={<OrbitTitle parts={[{ text: "V", script: true }, { text: "ideography" }]} />}
       />
 
       {/* ── 02 Motion Editing ── hover grid */}
-      <section id="motion-editing" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+      <section id="motion-editing" style={{ padding: "8rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
             <SectionLabel
@@ -371,7 +382,7 @@ export default function WorkPage() {
       </section>
 
       {/* ── 03 Partnerships ── branded cards */}
-      <section id="partnerships" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+      <section id="partnerships" style={{ padding: "8rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
             <SectionLabel
@@ -380,7 +391,7 @@ export default function WorkPage() {
               desc="Brand integrations and sponsored content that feel native — from fashion to wellness to tech."
             />
           </Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
             {COLLAB_VIDEOS.map((item, i) => (
               <Reveal key={item.src} delay={i * 80}>
                 <PartnerCard {...item} />
