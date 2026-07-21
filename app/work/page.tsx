@@ -244,8 +244,8 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
           <div style={{ perspective: "3200px", willChange: "transform" }}>
             <div ref={innerRef} style={{ position: "relative", width: `${cardW}px`, height: `${cardH}px`, transformStyle: "preserve-3d", transform: "rotateX(8deg) rotateY(0deg)", willChange: "transform" }}>
               {videos.map(({ src }, i) => (
-                <div key={src} onClick={(e) => openCard(src, e)} style={{ position: "absolute", width: `${cardW}px`, height: `${cardH}px`, transform: `rotateY(${(360 / n) * i}deg) translateZ(${radius}px)`, borderRadius: "6px", overflow: "hidden", border: "1px solid rgba(139,0,0,0.3)", boxShadow: "0 16px 48px rgba(0,0,0,0.85), 0 4px 12px rgba(0,0,0,0.6)", cursor: "pointer", backfaceVisibility: "hidden" }}>
-                  <video src={src} autoPlay muted loop playsInline preload="none" disablePictureInPicture style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none", backfaceVisibility: "hidden" }} />
+                <div key={src} onClick={(e) => openCard(src, e)} style={{ position: "absolute", width: `${cardW}px`, height: `${cardH}px`, transform: `rotateY(${(360 / n) * i}deg) translateZ(${radius}px)`, borderRadius: "6px", overflow: "hidden", border: "1px solid rgba(139,0,0,0.3)", boxShadow: "0 16px 48px rgba(0,0,0,0.85), 0 4px 12px rgba(0,0,0,0.6)", cursor: "pointer" }}>
+                  <video src={src} autoPlay muted loop playsInline preload="none" disablePictureInPicture style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
                 </div>
               ))}
             </div>
@@ -325,20 +325,20 @@ function MotionGrid() {
   const close = useCallback(() => setLightbox(null), []);
   return (
     <>
-      <Reveal direction="left">
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "6px", marginBottom: "6px" }}>
-          {VE_VIDEOS.slice(0, 5).map(({ src }) => (
-            <MotionCard key={src} src={src} onClick={() => setLightbox({ src, compact: false })} aspect="16/9" />
-          ))}
-        </div>
-      </Reveal>
-      <Reveal direction="right">
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "6px" }}>
-          {VE_VIDEOS.slice(5).map(({ src }) => (
-            <MotionCard key={src} src={src} onClick={() => setLightbox({ src, compact: true })} aspect="1/1" />
-          ))}
-        </div>
-      </Reveal>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "6px", marginBottom: "6px" }}>
+        {VE_VIDEOS.slice(0, 5).map(({ src }, i) => (
+          <Reveal key={src} direction="up" delay={i * 70}>
+            <MotionCard src={src} onClick={() => setLightbox({ src, compact: false })} aspect="16/9" />
+          </Reveal>
+        ))}
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "6px" }}>
+        {VE_VIDEOS.slice(5).map(({ src }, i) => (
+          <Reveal key={src} direction="up" delay={i * 70}>
+            <MotionCard src={src} onClick={() => setLightbox({ src, compact: true })} aspect="1/1" />
+          </Reveal>
+        ))}
+      </div>
       {lightbox && <Lightbox src={lightbox.src} compact={lightbox.compact} onClose={close} />}
     </>
   );
