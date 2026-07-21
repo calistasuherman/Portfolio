@@ -41,7 +41,7 @@ const DISC = 236;
 function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; defaultX: number; defaultY: number }) {
   const [pos, setPos] = useState({ x: defaultX, y: defaultY });
   const [hovered, setHovered] = useState(false);
-  const discRef = useRef<HTMLImageElement>(null);
+  const discRef = useRef<SVGSVGElement>(null);
   const drag = useRef({ on: false, mx: 0, my: 0, px: 0, py: 0, moved: false });
 
   useEffect(() => {
@@ -89,45 +89,48 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
         transition: "transform 0.55s cubic-bezier(0.34,1.08,0.64,1)",
         zIndex: 1, cursor: "grab",
       }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          ref={discRef}
-          src="/vinyl r.png"
-          alt={v.label}
-          width={DISC} height={DISC}
-          draggable={false}
-          style={{ display: "block", width: DISC, height: DISC, userSelect: "none", pointerEvents: "none",
-            animation: "vinylSpin 6s linear infinite" }}
-        />
+        <svg ref={discRef} width={DISC} height={DISC} viewBox={`0 0 ${DISC} ${DISC}`}
+          style={{ display: "block", animation: "vinylSpin 6s linear infinite" }}>
+          {(() => { const r = DISC / 2; const grooves = Array.from({ length: 24 }, (_, i) => r * 0.3 + (r * 0.62) * (i / 24)); return (<>
+            <circle cx={r} cy={r} r={r} fill="#090909"/>
+            {grooves.map((gr, i) => <circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"} strokeWidth="0.55"/>)}
+            <circle cx={r} cy={r} r={r * 0.29} fill={v.labelBg}/>
+            <circle cx={r} cy={r} r={r * 0.25} fill={v.labelBg} opacity="0.55"/>
+            {([-r*0.09, r*0.02, r*0.12] as number[]).map((dy, i) => <line key={i} x1={r - r*0.18} y1={r+dy} x2={r + r*0.18} y2={r+dy} stroke="rgba(255,255,255,0.28)" strokeWidth={i===0?0.9:0.6}/>)}
+            <circle cx={r} cy={r} r={r * 0.045} fill="#000"/>
+          </>); })()}
+        </svg>
       </div>
 
-      {/* Sleeve — in front */}
+      {/* Sleeve — vinyl r.png as cover image */}
       <div style={{
         position: "absolute", left: 0, top: 0, width: SLEEVE, height: SLEEVE, zIndex: 2,
-        background: `linear-gradient(145deg, ${v.sleeve} 0%, ${v.sleeve}bb 100%)`,
         borderRadius: 6,
-        border: "1px solid rgba(255,255,255,0.07)",
+        overflow: "hidden",
         boxShadow: hovered
-          ? `0 24px 64px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06)`
-          : `0 10px 36px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04)`,
+          ? `0 24px 64px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.6)`
+          : `0 10px 36px rgba(0,0,0,0.7)`,
         transition: "box-shadow 0.4s ease",
         cursor: hovered ? "pointer" : "grab",
-        overflow: "hidden",
       }}>
-        <div style={{ padding: "1.1rem", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", boxSizing: "border-box" }}>
-          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", letterSpacing: "0.18em", color: "rgba(255,255,255,0.35)" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/vinyl r.png" alt="" draggable={false}
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }}
+        />
+        {/* Text overlay */}
+        <div style={{ position: "absolute", inset: 0, padding: "1.1rem", display: "flex", flexDirection: "column", justifyContent: "space-between", boxSizing: "border-box" }}>
+          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", letterSpacing: "0.18em", color: "rgba(255,255,255,0.7)" }}>
             {v.idx}
           </span>
           <div>
-            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.9rem", color: "#f5f0f0", lineHeight: 1.05, marginBottom: "0.45rem", letterSpacing: "0.01em" }}>
+            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.9rem", color: "#fff", lineHeight: 1.05, marginBottom: "0.45rem", letterSpacing: "0.01em" }}>
               {v.label}
             </p>
-            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>
+            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}>
               click to explore ↓
             </span>
           </div>
         </div>
-        <div style={{ position: "absolute", right: 0, top: "12%", bottom: "12%", width: 2, background: "rgba(0,0,0,0.5)" }}/>
       </div>
     </div>
   );
