@@ -13,21 +13,13 @@ const CINEMA_VIDEOS = [
 ].map(src => ({ src }));
 
 const VE_VIDEOS = [
-  { src: "/ve/ve1.mp4" },
-  { src: "/yt/betterhelp.mp4" },
-  { src: "/ve/ve3.mp4" },
-  { src: "/ve/ve4.mp4" },
-  { src: "/ve/ve5.mp4" },
-  { src: "/ve/ve6.mp4" },
-  { src: "/ve/ve7.mp4" },
-  { src: "/ve/ve8.mp4" },
-  { src: "/ve/ve9.mp4" },
-  { src: "/ve/ve10.mp4" },
-];
+  "ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4",
+  "ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4",
+].map(f => ({ src: `/ve/${f}` }));
 
 const COLLAB_VIDEOS = [
   { src: "/yt/aelfriceden.mp4",  label: "Aelfric Eden", category: "Fashion"  },
-  { src: "/yt/betterhelp.mp4",   label: "BetterHelp",   category: "Wellness" },
+  { src: "/yt/betterhelpp.mp4",  label: "BetterHelp",   category: "Wellness" },
   { src: "/yt/just4kira.mp4",    label: "Just4Kira",    category: "Beauty"   },
   { src: "/yt/lewkin.mp4",       label: "Lewkin",        category: "Fashion"  },
   { src: "/yt/teddyblake.mp4",   label: "Teddy Blake",  category: "Luxury"   },
@@ -248,12 +240,12 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
             {desc && <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.72rem", color: "rgba(245,240,240,0.42)", lineHeight: 1.75, paddingLeft: sectionIndex ? "calc(0.58rem + 1.2rem + 4px)" : 0, maxWidth: "480px" }}>{desc}</p>}
           </div>
         </div>
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "48vh", willChange: "transform" }}>
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "30vh", willChange: "transform" }}>
           <div style={{ perspective: "3200px", willChange: "transform" }}>
             <div ref={innerRef} style={{ position: "relative", width: `${cardW}px`, height: `${cardH}px`, transformStyle: "preserve-3d", transform: "rotateX(8deg) rotateY(0deg)", willChange: "transform" }}>
               {videos.map(({ src }, i) => (
-                <div key={src} onClick={(e) => openCard(src, e)} style={{ position: "absolute", width: `${cardW}px`, height: `${cardH}px`, transform: `rotateY(${(360 / n) * i}deg) translateZ(${radius}px)`, borderRadius: "6px", overflow: "hidden", border: "1px solid rgba(139,0,0,0.3)", boxShadow: "0 16px 48px rgba(0,0,0,0.85), 0 4px 12px rgba(0,0,0,0.6)", cursor: "pointer" }}>
-                  <video src={src} autoPlay muted loop playsInline preload="none" disablePictureInPicture style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
+                <div key={src} onClick={(e) => openCard(src, e)} style={{ position: "absolute", width: `${cardW}px`, height: `${cardH}px`, transform: `rotateY(${(360 / n) * i}deg) translateZ(${radius}px)`, borderRadius: "6px", overflow: "hidden", border: "1px solid rgba(139,0,0,0.3)", boxShadow: "0 16px 48px rgba(0,0,0,0.85), 0 4px 12px rgba(0,0,0,0.6)", cursor: "pointer", backfaceVisibility: "hidden" }}>
+                  <video src={src} autoPlay muted loop playsInline preload="none" disablePictureInPicture style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none", backfaceVisibility: "hidden" }} />
                 </div>
               ))}
             </div>
@@ -353,34 +345,46 @@ function MotionGrid() {
 }
 
 /* ── PartnerCard ── */
-function PartnerCard({ src, label, category }: { src: string; label: string; category: string }) {
+function PartnerCard({ src, label, category, onClick }: { src: string; label: string; category: string; onClick: () => void }) {
   const [hovered, setHovered] = useState(false);
-  const [lightbox, setLightbox] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const close = useCallback(() => setLightbox(false), []);
   useEffect(() => {
     const v = videoRef.current; if (!v) return;
     if (hovered) v.play().catch(() => {});
     else { v.pause(); v.currentTime = 0; }
   }, [hovered]);
   return (
-    <>
-      <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onClick={() => setLightbox(true)}
-        style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden", borderRadius: "6px", cursor: "pointer", border: "1px solid rgba(245,240,240,0.08)" }}>
-        <video ref={videoRef} src={src} muted loop playsInline preload="metadata" disablePictureInPicture
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.6s ease", transform: hovered ? "scale(1.04)" : "scale(1)" }} />
-        <div style={{ position: "absolute", inset: 0, background: hovered ? "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%)" : "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 60%)", transition: "background 0.4s ease" }} />
-        <div style={{ position: "absolute", bottom: 0, left: 0, padding: "1.4rem 1.6rem" }}>
-          <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.3rem" }}>{category}</p>
-          <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.2rem, 2vw, 1.8rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.05em", lineHeight: 1 }}>{label}</p>
-        </div>
-        {hovered && (
-          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)", borderRadius: "50%", width: "44px", height: "44px", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgba(245,240,240,0.2)" }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
-          </div>
-        )}
+    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onClick={onClick}
+      style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden", borderRadius: "6px", cursor: "pointer", border: "1px solid rgba(245,240,240,0.08)" }}>
+      <video ref={videoRef} src={src} muted loop playsInline preload="metadata" disablePictureInPicture
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.6s ease", transform: hovered ? "scale(1.04)" : "scale(1)" }} />
+      <div style={{ position: "absolute", inset: 0, background: hovered ? "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%)" : "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 60%)", transition: "background 0.4s ease" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, padding: "1.4rem 1.6rem" }}>
+        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.3rem" }}>{category}</p>
+        <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.2rem, 2vw, 1.8rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.05em", lineHeight: 1 }}>{label}</p>
       </div>
-      {lightbox && <div onClick={e => e.stopPropagation()}><Lightbox src={src} onClose={close} /></div>}
+      {hovered && (
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)", borderRadius: "50%", width: "44px", height: "44px", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgba(245,240,240,0.2)" }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PartnerGrid() {
+  const [lightbox, setLightbox] = useState<string | null>(null);
+  const close = useCallback(() => setLightbox(null), []);
+  return (
+    <>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
+        {COLLAB_VIDEOS.map((item, i) => (
+          <Reveal key={item.src} delay={i * 80}>
+            <PartnerCard {...item} onClick={() => setLightbox(item.src)} />
+          </Reveal>
+        ))}
+      </div>
+      {lightbox && <Lightbox src={lightbox} onClose={close} />}
     </>
   );
 }
@@ -430,13 +434,7 @@ export default function WorkPage() {
               desc="Brand integrations and sponsored content that feel native — from fashion to wellness to tech."
             />
           </Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
-            {COLLAB_VIDEOS.map((item, i) => (
-              <Reveal key={item.src} delay={i * 80}>
-                <PartnerCard {...item} />
-              </Reveal>
-            ))}
-          </div>
+          <PartnerGrid />
         </div>
       </section>
 

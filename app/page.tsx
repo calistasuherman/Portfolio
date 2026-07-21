@@ -8,7 +8,7 @@ const LABELS = ["Content Creator", "World Traveler", "Industrial Engineer", "Cof
 const FEATURED = [
   { src: "/cinema/cinema3.mp4", tag: "Videography" },
   { src: "/ve/ve1.mp4",         tag: "Motion Editing" },
-  { src: "/yt/betterhelp.mp4",  tag: "Partnerships" },
+  { src: "/yt/betterhelpp.mp4", tag: "Partnerships" },
 ];
 
 const SERVICES = [
