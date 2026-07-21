@@ -13,9 +13,17 @@ const CINEMA_VIDEOS = [
 ].map(src => ({ src }));
 
 const VE_VIDEOS = [
-  "ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4",
-  "ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4",
-].map(f => ({ src: `/ve/${f}` }));
+  { src: "/ve/ve1.mp4" },
+  { src: "/yt/betterhelp.mp4" },
+  { src: "/ve/ve3.mp4" },
+  { src: "/ve/ve4.mp4" },
+  { src: "/ve/ve5.mp4" },
+  { src: "/ve/ve6.mp4" },
+  { src: "/ve/ve7.mp4" },
+  { src: "/ve/ve8.mp4" },
+  { src: "/ve/ve9.mp4" },
+  { src: "/ve/ve10.mp4" },
+];
 
 const COLLAB_VIDEOS = [
   { src: "/yt/aelfriceden.mp4",  label: "Aelfric Eden", category: "Fashion"  },
@@ -240,12 +248,12 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
             {desc && <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.72rem", color: "rgba(245,240,240,0.42)", lineHeight: 1.75, paddingLeft: sectionIndex ? "calc(0.58rem + 1.2rem + 4px)" : 0, maxWidth: "480px" }}>{desc}</p>}
           </div>
         </div>
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "48vh" }}>
-          <div style={{ perspective: "3200px" }}>
-            <div ref={innerRef} style={{ position: "relative", width: `${cardW}px`, height: `${cardH}px`, transformStyle: "preserve-3d", transform: "rotateX(8deg) rotateY(0deg)" }}>
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "48vh", willChange: "transform" }}>
+          <div style={{ perspective: "3200px", willChange: "transform" }}>
+            <div ref={innerRef} style={{ position: "relative", width: `${cardW}px`, height: `${cardH}px`, transformStyle: "preserve-3d", transform: "rotateX(8deg) rotateY(0deg)", willChange: "transform" }}>
               {videos.map(({ src }, i) => (
                 <div key={src} onClick={(e) => openCard(src, e)} style={{ position: "absolute", width: `${cardW}px`, height: `${cardH}px`, transform: `rotateY(${(360 / n) * i}deg) translateZ(${radius}px)`, borderRadius: "6px", overflow: "hidden", border: "1px solid rgba(139,0,0,0.3)", boxShadow: "0 16px 48px rgba(0,0,0,0.85), 0 4px 12px rgba(0,0,0,0.6)", cursor: "pointer" }}>
-                  <video src={src} autoPlay muted loop playsInline preload="auto" disablePictureInPicture style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
+                  <video src={src} autoPlay muted loop playsInline preload="none" disablePictureInPicture style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
                 </div>
               ))}
             </div>
@@ -265,7 +273,7 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
 }
 
 /* ── Lightbox ── */
-function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
+function Lightbox({ src, onClose, compact = false }: { src: string; onClose: () => void; compact?: boolean }) {
   const [open, setOpen] = useState(false);
   useEffect(() => { const t = setTimeout(() => setOpen(true), 16); return () => clearTimeout(t); }, []);
   useEffect(() => {
@@ -276,7 +284,7 @@ function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
   return (
     <>
       <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 998, background: "rgba(0,0,0,0.88)", opacity: open ? 1 : 0, transition: "opacity 0.35s ease" }} />
-      <div style={{ position: "fixed", zIndex: 999, left: "50%", top: "50%", width: "min(90vw, 820px)", transform: open ? "translate(-50%,-50%) scale(1)" : "translate(-50%,-50%) scale(0.92)", opacity: open ? 1 : 0, transition: "transform 0.38s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease", borderRadius: "10px", overflow: "hidden", boxShadow: "0 32px 80px rgba(0,0,0,0.9)" }}>
+      <div style={{ position: "fixed", zIndex: 999, left: "50%", top: "50%", width: compact ? "min(70vw, 540px)" : "min(90vw, 820px)", transform: open ? "translate(-50%,-50%) scale(1)" : "translate(-50%,-50%) scale(0.92)", opacity: open ? 1 : 0, transition: "transform 0.38s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease", borderRadius: "10px", overflow: "hidden", boxShadow: "0 32px 80px rgba(0,0,0,0.9)" }}>
         <video key={src} src={src} autoPlay controls playsInline style={{ width: "100%", display: "block" }} />
       </div>
     </>
@@ -321,25 +329,25 @@ function MotionCard({ src, onClick, aspect = "1/1" }: { src: string; onClick: ()
 }
 
 function MotionGrid() {
-  const [lightbox, setLightbox] = useState<string | null>(null);
+  const [lightbox, setLightbox] = useState<{ src: string; compact: boolean } | null>(null);
   const close = useCallback(() => setLightbox(null), []);
   return (
     <>
       <Reveal direction="left">
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "6px", marginBottom: "6px" }}>
           {VE_VIDEOS.slice(0, 5).map(({ src }) => (
-            <MotionCard key={src} src={src} onClick={() => setLightbox(src)} aspect="16/9" />
+            <MotionCard key={src} src={src} onClick={() => setLightbox({ src, compact: false })} aspect="16/9" />
           ))}
         </div>
       </Reveal>
       <Reveal direction="right">
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "6px" }}>
           {VE_VIDEOS.slice(5).map(({ src }) => (
-            <MotionCard key={src} src={src} onClick={() => setLightbox(src)} aspect="1/1" />
+            <MotionCard key={src} src={src} onClick={() => setLightbox({ src, compact: true })} aspect="1/1" />
           ))}
         </div>
       </Reveal>
-      {lightbox && <Lightbox src={lightbox} onClose={close} />}
+      {lightbox && <Lightbox src={lightbox.src} compact={lightbox.compact} onClose={close} />}
     </>
   );
 }
@@ -372,7 +380,7 @@ function PartnerCard({ src, label, category }: { src: string; label: string; cat
           </div>
         )}
       </div>
-      {lightbox && <Lightbox src={src} onClose={close} />}
+      {lightbox && <div onClick={e => e.stopPropagation()}><Lightbox src={src} onClose={close} /></div>}
     </>
   );
 }
