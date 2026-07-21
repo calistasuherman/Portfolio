@@ -426,13 +426,61 @@ function PartnerGrid() {
   );
 }
 
+/* ── Background ── */
+function WorkBackground() {
+  const meshRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const onScroll = () => {
+      const p = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      if (!meshRef.current) return;
+      // Radial 1: deep burgundy — drifts up-left as you scroll
+      const r1x = 20 - p * 18;
+      const r1y = 10 - p * 25;
+      // Radial 2: near-black crimson — drifts right
+      const r2x = 75 + p * 15;
+      const r2y = 40 + p * 30;
+      // Radial 3: dark amber accent — appears mid-page
+      const r3x = 50 + Math.sin(p * Math.PI) * 20;
+      const r3y = 60 + p * 20;
+      meshRef.current.style.background = [
+        `radial-gradient(ellipse 70% 55% at ${r1x}% ${r1y}%, rgba(110,0,18,0.55) 0%, transparent 70%)`,
+        `radial-gradient(ellipse 60% 50% at ${r2x}% ${r2y}%, rgba(60,0,8,0.6) 0%, transparent 65%)`,
+        `radial-gradient(ellipse 40% 35% at ${r3x}% ${r3y}%, rgba(80,18,0,0.28) 0%, transparent 60%)`,
+        `radial-gradient(ellipse 100% 80% at 50% 50%, rgba(4,0,6,0.92) 30%, transparent 100%)`,
+      ].join(", ");
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <>
+      {/* Base dark ground */}
+      <div style={{ position: "fixed", inset: 0, zIndex: 0, background: "#060006" }} />
+      {/* Gradient mesh — shifts on scroll */}
+      <div ref={meshRef} style={{ position: "fixed", inset: 0, zIndex: 1, willChange: "background" }} />
+      {/* Grain pulse */}
+      <div style={{
+        position: "fixed", inset: 0, zIndex: 2,
+        pointerEvents: "none",
+        opacity: 0.055,
+        animation: "grainPulse 6s ease-in-out infinite",
+        backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+        backgroundSize: "200px 200px",
+      }} />
+    </>
+  );
+}
+
 /* ── Page ── */
 export default function WorkPage() {
   return (
     <main className="relative min-h-screen overflow-x-clip">
+      <WorkBackground />
 
       {/* ── Film Reel entry ── */}
-      <section className="relative" style={{ paddingBottom: "4rem" }}>
+      <section className="relative" style={{ paddingBottom: "4rem", zIndex: 3 }}>
         <VinylSection />
       </section>
 
@@ -448,7 +496,7 @@ export default function WorkPage() {
       />
 
       {/* ── 02 Motion Editing ── */}
-      <section id="motion-editing" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+      <section id="motion-editing" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px", position: "relative", zIndex: 3 }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
             <SectionLabel
@@ -462,7 +510,7 @@ export default function WorkPage() {
       </section>
 
       {/* ── 03 Partnerships ── */}
-      <section id="partnerships" style={{ padding: "3rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+      <section id="partnerships" style={{ padding: "3rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px", position: "relative", zIndex: 3 }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
             <SectionLabel
