@@ -232,7 +232,7 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
     <div ref={sectionRef} id={id} style={{ height: scrollHeight, position: "relative", scrollMarginTop: "80px" }}>
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "1vh", left: "clamp(1.5rem, 5vw, 4rem)", right: "clamp(1.5rem, 5vw, 4rem)", zIndex: 20, pointerEvents: "none" }}>
-          <div style={{ borderTop: "1px solid rgba(245,240,240,0.1)", paddingTop: "1.8rem" }}>
+          <div style={{ paddingTop: "1.8rem" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "1.2rem", marginBottom: "0.75rem" }}>
               {sectionIndex && <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{sectionIndex}</span>}
               {title}
@@ -286,7 +286,7 @@ function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
 /* ── SectionLabel ── */
 function SectionLabel({ index, title, desc }: { index: string; title: React.ReactNode; desc: string }) {
   return (
-    <div style={{ borderTop: "1px solid rgba(245,240,240,0.1)", paddingTop: "1.8rem", marginBottom: "3rem" }}>
+    <div style={{ paddingTop: "1.8rem", marginBottom: "3rem" }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: "1.2rem", marginBottom: "0.75rem" }}>
         <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{index}</span>
         {title}
@@ -325,11 +325,20 @@ function MotionGrid() {
   const close = useCallback(() => setLightbox(null), []);
   return (
     <>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "6px" }}>
-        {VE_VIDEOS.map(({ src }, i) => (
-          <MotionCard key={src} src={src} onClick={() => setLightbox(src)} aspect={i < 5 ? "16/9" : "1/1"} />
-        ))}
-      </div>
+      <Reveal direction="left">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "6px", marginBottom: "6px" }}>
+          {VE_VIDEOS.slice(0, 5).map(({ src }) => (
+            <MotionCard key={src} src={src} onClick={() => setLightbox(src)} aspect="16/9" />
+          ))}
+        </div>
+      </Reveal>
+      <Reveal direction="right">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "6px" }}>
+          {VE_VIDEOS.slice(5).map(({ src }) => (
+            <MotionCard key={src} src={src} onClick={() => setLightbox(src)} aspect="1/1" />
+          ))}
+        </div>
+      </Reveal>
       {lightbox && <Lightbox src={lightbox} onClose={close} />}
     </>
   );
@@ -390,7 +399,7 @@ export default function WorkPage() {
       />
 
       {/* ── 02 Motion Editing ── */}
-      <section id="motion-editing" style={{ padding: "2rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+      <section id="motion-editing" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
             <SectionLabel
