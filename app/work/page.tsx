@@ -94,8 +94,8 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
           {(() => { const r = DISC / 2; const grooves = Array.from({ length: 24 }, (_, i) => r * 0.3 + (r * 0.62) * (i / 24)); return (<>
             <circle cx={r} cy={r} r={r} fill="#090909"/>
             {grooves.map((gr, i) => <circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"} strokeWidth="0.55"/>)}
-            <circle cx={r} cy={r} r={r * 0.29} fill={v.labelBg}/>
-            <circle cx={r} cy={r} r={r * 0.25} fill={v.labelBg} opacity="0.55"/>
+            <circle cx={r} cy={r} r={r * 0.29} fill="#960018"/>
+            <circle cx={r} cy={r} r={r * 0.25} fill="#960018" opacity="0.85"/>
             {([-r*0.09, r*0.02, r*0.12] as number[]).map((dy, i) => <line key={i} x1={r - r*0.18} y1={r+dy} x2={r + r*0.18} y2={r+dy} stroke="rgba(255,255,255,0.28)" strokeWidth={i===0?0.9:0.6}/>)}
             <circle cx={r} cy={r} r={r * 0.045} fill="#000"/>
           </>); })()}
@@ -114,7 +114,7 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
         cursor: hovered ? "pointer" : "grab",
       }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/vinyl r.png" alt="" draggable={false}
+        <img src="/vinyl%20r.png" alt="" draggable={false}
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }}
         />
         {/* Text overlay */}
@@ -123,7 +123,7 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
             {v.idx}
           </span>
           <div>
-            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.9rem", color: "#fff", lineHeight: 1.05, marginBottom: "0.45rem", letterSpacing: "0.01em" }}>
+            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.9rem", color: "#960018", lineHeight: 1.05, marginBottom: "0.45rem", letterSpacing: "0.01em" }}>
               {v.label}
             </p>
             <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}>
@@ -144,10 +144,11 @@ function VinylSection() {
   const getPositions = () => {
     const w = typeof window !== "undefined" ? window.innerWidth : 1200;
     const unit = SLEEVE + DISC * 0.7;
+    const row2Y = SLEEVE + 60;
     return [
-      { x: Math.round(w * (1 / 6) - unit / 2), y: 40 },
-      { x: Math.round(w * (1 / 2) - unit / 2), y: 90 },
-      { x: Math.round(w * (5 / 6) - unit / 2), y: 40 },
+      { x: Math.round(w * 0.25 - unit / 2), y: 20 },
+      { x: Math.round(w * 0.75 - unit / 2), y: 20 },
+      { x: Math.round(w * 0.50 - unit / 2), y: row2Y },
     ];
   };
   const positions = mounted ? getPositions() : [];
@@ -157,7 +158,7 @@ function VinylSection() {
       <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.22em", color: "rgba(245,240,240,0.18)", textTransform: "uppercase", textAlign: "center", marginBottom: "2.5rem" }}>
         What I Bring to the Table
       </p>
-      <div style={{ position: "relative", height: 400, overflow: "visible" }}>
+      <div style={{ position: "relative", height: SLEEVE * 2 + 80, overflow: "visible" }}>
         {mounted && VINYL_DATA.map((v, i) => (
           <VinylUnit key={v.href} v={v} defaultX={positions[i].x} defaultY={positions[i].y} />
         ))}
