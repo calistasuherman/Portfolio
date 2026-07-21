@@ -169,6 +169,11 @@ body.page-fade-out {
   to   { transform: rotate(360deg); }
 }
 
+@keyframes vinylFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-10px); }
+}
+
 @keyframes noteSwing {
   0%   { transform: rotate(-2.5deg); }
   50%  { transform: rotate(2.5deg); }

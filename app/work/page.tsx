@@ -34,10 +34,10 @@ const VINYL_DATA = [
 ];
 
 /* ── VinylUnit ── */
-const SLEEVE = 190;
+const SLEEVE = 215;
 const DISC = 170;
 
-function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; defaultX: number; defaultY: number }) {
+function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA[0]; defaultX: number; defaultY: number; floatDelay: number }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const posRef = useRef({ x: defaultX, y: defaultY });
   const [hovered, setHovered] = useState(false);
@@ -70,7 +70,7 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
   return (
     <div
       ref={wrapRef}
-      style={{ position: "absolute", left: defaultX, top: defaultY, width: SLEEVE, height: SLEEVE, zIndex: hovered ? 10 : 1, willChange: "transform" }}
+      style={{ position: "absolute", left: defaultX, top: defaultY, width: SLEEVE, height: SLEEVE, zIndex: hovered ? 10 : 1 }}
       onMouseEnter={() => { setHovered(true);  if (discRef.current) discRef.current.style.animationDuration = "1.4s"; }}
       onMouseLeave={() => { setHovered(false); if (discRef.current) discRef.current.style.animationDuration = "6s";  }}
       onMouseDown={e => {
@@ -85,46 +85,54 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
       }}
       title={`Go to ${v.label}`}
     >
-      {/* Vinyl disc — centered behind sleeve, revealed as sleeve slides away */}
-      <div style={{ position: "absolute", left: (SLEEVE - DISC) / 2, top: (SLEEVE - DISC) / 2, zIndex: 1 }}>
-        <svg ref={discRef} width={DISC} height={DISC} viewBox={`0 0 ${DISC} ${DISC}`}
-          style={{ display: "block", animation: "vinylSpin 6s linear infinite", willChange: "transform" }}>
-          {(() => { const r = DISC / 2; const grooves = Array.from({ length: 24 }, (_, i) => r * 0.3 + (r * 0.62) * (i / 24)); return (<>
-            <circle cx={r} cy={r} r={r} fill="#090909"/>
-            {grooves.map((gr, i) => <circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"} strokeWidth="0.55"/>)}
-            <circle cx={r} cy={r} r={r * 0.29} fill="#960018"/>
-            <circle cx={r} cy={r} r={r * 0.25} fill="#960018" opacity="0.85"/>
-            {([-r*0.09, r*0.02, r*0.12] as number[]).map((dy, i) => <line key={i} x1={r - r*0.18} y1={r+dy} x2={r + r*0.18} y2={r+dy} stroke="rgba(255,255,255,0.28)" strokeWidth={i===0?0.9:0.6}/>)}
-            <circle cx={r} cy={r} r={r * 0.045} fill="#000"/>
-          </>); })()}
-        </svg>
-      </div>
+      {/* Float animation wrapper */}
+      <div style={{ position: "absolute", inset: 0, animation: `vinylFloat 3.5s ease-in-out ${floatDelay}s infinite` }}>
+        {/* Vinyl disc — slides right on hover */}
+        <div style={{
+          position: "absolute", left: (SLEEVE - DISC) / 2, top: (SLEEVE - DISC) / 2,
+          transform: hovered ? "translateX(38px)" : "translateX(0)",
+          transition: "transform 0.55s cubic-bezier(0.34,1.08,0.64,1)",
+          zIndex: 1,
+        }}>
+          <svg ref={discRef} width={DISC} height={DISC} viewBox={`0 0 ${DISC} ${DISC}`}
+            style={{ display: "block", animation: "vinylSpin 6s linear infinite", willChange: "transform" }}>
+            {(() => { const r = DISC / 2; const grooves = Array.from({ length: 24 }, (_, i) => r * 0.3 + (r * 0.62) * (i / 24)); return (<>
+              <circle cx={r} cy={r} r={r} fill="#090909"/>
+              {grooves.map((gr, i) => <circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"} strokeWidth="0.55"/>)}
+              <circle cx={r} cy={r} r={r * 0.29} fill="#960018"/>
+              <circle cx={r} cy={r} r={r * 0.25} fill="#960018" opacity="0.85"/>
+              {([-r*0.09, r*0.02, r*0.12] as number[]).map((dy, i) => <line key={i} x1={r - r*0.18} y1={r+dy} x2={r + r*0.18} y2={r+dy} stroke="rgba(255,255,255,0.28)" strokeWidth={i===0?0.9:0.6}/>)}
+              <circle cx={r} cy={r} r={r * 0.045} fill="#000"/>
+            </>); })()}
+          </svg>
+        </div>
 
-      {/* Sleeve — slides left at an angle on hover */}
-      <div style={{
-        position: "absolute", left: 0, top: 0, width: SLEEVE, height: SLEEVE, zIndex: 2,
-        borderRadius: 6, overflow: "hidden",
-        boxShadow: hovered ? `0 24px 64px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.6)` : `0 10px 36px rgba(0,0,0,0.7)`,
-        transform: hovered ? "translateX(-52px) rotate(-10deg)" : "translateX(0) rotate(0deg)",
-        transition: "transform 0.5s cubic-bezier(0.34,1.08,0.64,1), box-shadow 0.4s ease",
-        cursor: hovered ? "pointer" : "grab",
-        willChange: "transform",
-      }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/vinyl-sleeve.png" alt="" draggable={false}
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }}
-        />
-        {/* Text overlay — centered */}
-        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.35rem", textAlign: "center", padding: "1rem" }}>
-          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.18em", color: "#960018", fontWeight: 700 }}>
-            {v.idx}
-          </span>
-          <p style={{ fontFamily: "BillaMount, cursive", fontSize: "2rem", color: "#960018", lineHeight: 1.0, fontWeight: 700, whiteSpace: "nowrap" }}>
-            {v.label}
-          </p>
-          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#960018", fontWeight: 600 }}>
-            click to explore ↓
-          </span>
+        {/* Sleeve — slides left at an angle on hover */}
+        <div style={{
+          position: "absolute", left: 0, top: 0, width: SLEEVE, height: SLEEVE, zIndex: 2,
+          borderRadius: 6, overflow: "hidden",
+          boxShadow: hovered ? `0 24px 64px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.6)` : `0 10px 36px rgba(0,0,0,0.7)`,
+          transform: hovered ? "translateX(-52px) rotate(-10deg)" : "translateX(0) rotate(0deg)",
+          transition: "transform 0.5s cubic-bezier(0.34,1.08,0.64,1), box-shadow 0.4s ease",
+          cursor: hovered ? "pointer" : "grab",
+          willChange: "transform",
+        }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/vinyl-sleeve.png" alt="" draggable={false}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }}
+          />
+          {/* Text: idx top, label center, explore bottom */}
+          <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", textAlign: "center", padding: "1rem" }}>
+            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.18em", color: "#960018", fontWeight: 700 }}>
+              {v.idx}
+            </span>
+            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "2rem", color: "#960018", lineHeight: 1.0, fontWeight: 700, whiteSpace: "nowrap" }}>
+              {v.label}
+            </p>
+            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#960018", fontWeight: 600 }}>
+              click to explore ↓
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -148,15 +156,9 @@ function VinylSection() {
 
   return (
     <div style={{ paddingTop: "calc(80px + 2.5rem)", paddingBottom: "2rem" }}>
-      <p style={{ textAlign: "center", marginBottom: "2.5rem", fontSize: "clamp(2.8rem, 5vw, 4.5rem)", lineHeight: 1.1, letterSpacing: "0.01em" }}>
-        <span style={{ fontFamily: "PerandoryCondensed, sans-serif", color: "#f5f0f0", fontWeight: "normal" }}>What I </span>
-        <span style={{ fontFamily: "BillaMount, cursive", color: "#f5f0f0" }}>Bring </span>
-        <span style={{ fontFamily: "PerandoryCondensed, sans-serif", color: "#f5f0f0", fontWeight: "normal" }}>to the </span>
-        <span style={{ fontFamily: "BillaMount, cursive", color: "#f5f0f0" }}>Table</span>
-      </p>
       <div style={{ position: "relative", height: SLEEVE + 60, overflow: "visible" }}>
         {mounted && VINYL_DATA.map((v, i) => (
-          <VinylUnit key={v.href} v={v} defaultX={positions[i].x} defaultY={positions[i].y} />
+          <VinylUnit key={v.href} v={v} defaultX={positions[i].x} defaultY={positions[i].y} floatDelay={i * 0.8} />
         ))}
       </div>
     </div>
@@ -229,7 +231,7 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
   return (
     <div ref={sectionRef} id={id} style={{ height: scrollHeight, position: "relative", scrollMarginTop: "80px" }}>
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "14vh", left: "clamp(1.5rem, 5vw, 4rem)", right: "clamp(1.5rem, 5vw, 4rem)", zIndex: 20, pointerEvents: "none" }}>
+        <div style={{ position: "absolute", top: "6vh", left: "clamp(1.5rem, 5vw, 4rem)", right: "clamp(1.5rem, 5vw, 4rem)", zIndex: 20, pointerEvents: "none" }}>
           <div style={{ borderTop: "1px solid rgba(245,240,240,0.1)", paddingTop: "1.8rem" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "1.2rem", marginBottom: "0.75rem" }}>
               {sectionIndex && <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{sectionIndex}</span>}
@@ -284,7 +286,7 @@ function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
 /* ── SectionLabel ── */
 function SectionLabel({ index, title, desc }: { index: string; title: React.ReactNode; desc: string }) {
   return (
-    <div style={{ borderTop: "1px solid rgba(245,240,240,0.1)", paddingTop: "1.8rem", marginBottom: "3rem", marginTop: "2rem" }}>
+    <div style={{ borderTop: "1px solid rgba(245,240,240,0.1)", paddingTop: "1.8rem", marginBottom: "3rem" }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: "1.2rem", marginBottom: "0.75rem" }}>
         <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{index}</span>
         {title}
