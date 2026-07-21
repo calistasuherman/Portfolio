@@ -114,7 +114,7 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
         cursor: hovered ? "pointer" : "grab",
       }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/vinyl%20r.png" alt="" draggable={false}
+        <img src="/vinyl-sleeve.png" alt="" draggable={false}
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }}
         />
         {/* Text overlay */}
