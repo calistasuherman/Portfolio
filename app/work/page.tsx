@@ -34,7 +34,7 @@ const VINYL_DATA = [
 ];
 
 /* ── VinylUnit ── */
-const SLEEVE = 215;
+const SLEEVE = 322;
 const DISC = 170;
 
 function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA[0]; defaultX: number; defaultY: number; floatDelay: number }) {
@@ -70,7 +70,7 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA
   return (
     <div
       ref={wrapRef}
-      style={{ position: "absolute", left: defaultX, top: defaultY, width: SLEEVE, height: SLEEVE, zIndex: hovered ? 10 : 1 }}
+      style={{ position: "absolute", left: defaultX, top: defaultY, width: SLEEVE + 60, height: SLEEVE, zIndex: hovered ? 10 : 1 }}
       onMouseEnter={() => { setHovered(true);  if (discRef.current) discRef.current.style.animationDuration = "1.4s"; }}
       onMouseLeave={() => { setHovered(false); if (discRef.current) discRef.current.style.animationDuration = "6s";  }}
       onMouseDown={e => {
@@ -90,7 +90,7 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA
         {/* Vinyl disc — slides right on hover */}
         <div style={{
           position: "absolute", left: (SLEEVE - DISC) / 2, top: (SLEEVE - DISC) / 2,
-          transform: hovered ? "translateX(38px)" : "translateX(0)",
+          transform: hovered ? "translateX(55px)" : "translateX(28px)",
           transition: "transform 0.55s cubic-bezier(0.34,1.08,0.64,1)",
           zIndex: 1,
         }}>
