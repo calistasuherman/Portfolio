@@ -30,19 +30,6 @@ export default function ContactPage() {
           padding: "calc(80px + 3rem) clamp(1.8rem, 5vw, 5rem) 6rem",
         }}
       >
-        {/* Eyebrow */}
-        <p style={{
-          fontFamily: "PerandoryCondensed, sans-serif",
-          fontSize: "clamp(0.58rem, 0.9vw, 0.75rem)",
-          letterSpacing: "0.28em",
-          textTransform: "uppercase",
-          color: "#960018",
-          marginBottom: "1.6rem",
-          fontWeight: "normal",
-        }}>
-          Available for collaboration
-        </p>
-
         {/* Headline */}
         <h1 style={{
           fontFamily: "BillaMount, cursive",
@@ -55,7 +42,7 @@ export default function ContactPage() {
           maxWidth: "14ch",
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}>
-          Let&apos;s create something really big
+          Let&apos;s create something!
         </h1>
 
         {/* Contact tray */}
@@ -81,7 +68,7 @@ export default function ContactPage() {
               Email
             </p>
             <a
-              href="mailto:calistarsuherman@gmail.com"
+              href="mailto:cal1starcollab@gmail.com"
               style={{
                 fontFamily: "PerandoryCondensed, sans-serif",
                 fontSize: "clamp(1rem, 2.2vw, 1.65rem)",
@@ -102,7 +89,7 @@ export default function ContactPage() {
                 (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(245,240,240,0.28)";
               }}
             >
-              calistarsuherman@gmail.com
+              cal1starcollab@gmail.com
             </a>
           </div>
 
