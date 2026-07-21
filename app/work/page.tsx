@@ -296,8 +296,8 @@ function SectionLabel({ index, title, desc }: { index: string; title: React.Reac
   );
 }
 
-/* ── MotionCard ── */
-function MotionCard({ src, onClick, aspect = "1/1" }: { src: string; onClick: () => void; aspect?: string }) {
+/* ── AccordionCard ── */
+function AccordionCard({ src, idx, onClick, compact }: { src: string; idx: number; onClick: () => void; compact: boolean }) {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {
@@ -306,16 +306,56 @@ function MotionCard({ src, onClick, aspect = "1/1" }: { src: string; onClick: ()
     else { v.pause(); v.currentTime = 0; }
   }, [hovered]);
   return (
-    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onClick={onClick}
-      style={{ position: "relative", aspectRatio: aspect, overflow: "hidden", borderRadius: "4px", cursor: "pointer", border: "1px solid rgba(245,240,240,0.06)" }}>
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={onClick}
+      style={{
+        flexGrow: hovered ? 5 : 1,
+        flexShrink: 1,
+        flexBasis: 0,
+        transition: "flex-grow 0.55s cubic-bezier(0.16,1,0.3,1)",
+        position: "relative",
+        overflow: "hidden",
+        borderRadius: "5px",
+        cursor: "pointer",
+        minWidth: 0,
+      }}
+    >
       <video ref={videoRef} src={src} muted loop playsInline preload="metadata" disablePictureInPicture
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s ease", transform: hovered ? "scale(1.05)" : "scale(1)" }} />
-      <div style={{ position: "absolute", inset: 0, background: hovered ? "rgba(0,0,0,0.05)" : "rgba(0,0,0,0.28)", transition: "background 0.35s ease" }} />
-      {hovered && (
-        <div style={{ position: "absolute", bottom: "8px", right: "8px", background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)", borderRadius: "50%", width: "28px", height: "28px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
-      )}
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+
+      {/* Dark overlay — lighter when expanded */}
+      <div style={{
+        position: "absolute", inset: 0,
+        background: hovered ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.38)",
+        transition: "background 0.4s ease",
+      }} />
+
+      {/* Index number — visible when collapsed, fades on expand */}
+      <span style={{
+        position: "absolute", bottom: "10px", left: "50%", transform: "translateX(-50%)",
+        fontFamily: "var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.16em",
+        color: "rgba(245,240,240,0.5)",
+        opacity: hovered ? 0 : 1,
+        transition: "opacity 0.25s ease",
+        whiteSpace: "nowrap",
+      }}>
+        {String(idx + 1).padStart(2, "0")}
+      </span>
+
+      {/* Play button — appears when expanded */}
+      <div style={{
+        position: "absolute", bottom: "14px", right: "14px",
+        background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)",
+        borderRadius: "50%", width: "34px", height: "34px",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        opacity: hovered ? 1 : 0,
+        transform: hovered ? "scale(1)" : "scale(0.7)",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+      }}>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
     </div>
   );
 }
@@ -323,24 +363,21 @@ function MotionCard({ src, onClick, aspect = "1/1" }: { src: string; onClick: ()
 function MotionGrid() {
   const [lightbox, setLightbox] = useState<{ src: string; compact: boolean } | null>(null);
   const close = useCallback(() => setLightbox(null), []);
+  const rowStyle: React.CSSProperties = { display: "flex", gap: "5px", width: "100%" };
   return (
-    <>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "6px", marginBottom: "6px" }}>
+    <Reveal direction="up">
+      <div style={{ ...rowStyle, height: "260px", marginBottom: "5px" }}>
         {VE_VIDEOS.slice(0, 5).map(({ src }, i) => (
-          <Reveal key={src} direction="up" delay={i * 70}>
-            <MotionCard src={src} onClick={() => setLightbox({ src, compact: false })} aspect="16/9" />
-          </Reveal>
+          <AccordionCard key={src} src={src} idx={i} compact={false} onClick={() => setLightbox({ src, compact: false })} />
         ))}
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "6px" }}>
+      <div style={{ ...rowStyle, height: "220px" }}>
         {VE_VIDEOS.slice(5).map(({ src }, i) => (
-          <Reveal key={src} direction="up" delay={i * 70}>
-            <MotionCard src={src} onClick={() => setLightbox({ src, compact: true })} aspect="1/1" />
-          </Reveal>
+          <AccordionCard key={src} src={src} idx={i + 5} compact={true} onClick={() => setLightbox({ src, compact: true })} />
         ))}
       </div>
       {lightbox && <Lightbox src={lightbox.src} compact={lightbox.compact} onClose={close} />}
-    </>
+    </Reveal>
   );
 }
 
