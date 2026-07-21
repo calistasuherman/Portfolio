@@ -169,6 +169,11 @@ body.page-fade-out {
   to   { transform: rotate(360deg); }
 }
 
+@keyframes scanDrift {
+  0%   { transform: translateY(-100vh); }
+  100% { transform: translateY(200vh); }
+}
+
 @keyframes vinylFloat {
   0%, 100% { transform: translateY(0px); }
   50%      { transform: translateY(-10px); }

@@ -431,6 +431,19 @@ export default function WorkPage() {
   return (
     <main className="relative min-h-screen overflow-x-clip">
 
+      {/* ── Scan line ── */}
+      <div aria-hidden="true" style={{
+        position: "fixed", inset: 0, zIndex: 1, pointerEvents: "none", overflow: "hidden",
+      }}>
+        <div style={{
+          position: "absolute", left: 0, right: 0,
+          height: "40vh",
+          background: "linear-gradient(to bottom, transparent 0%, rgba(255,252,248,0.028) 40%, rgba(255,252,248,0.042) 50%, rgba(255,252,248,0.028) 60%, transparent 100%)",
+          animation: "scanDrift 14s linear infinite",
+          willChange: "transform",
+        }} />
+      </div>
+
       {/* ── Film Reel entry ── */}
       <section className="relative" style={{ paddingBottom: "4rem" }}>
         <VinylSection />
