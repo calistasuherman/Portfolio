@@ -118,15 +118,15 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }}
         />
         {/* Text overlay */}
-        <div style={{ position: "absolute", inset: 0, padding: "1.1rem", display: "flex", flexDirection: "column", justifyContent: "space-between", boxSizing: "border-box" }}>
-          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", letterSpacing: "0.18em", color: "rgba(255,255,255,0.7)" }}>
+        <div style={{ position: "absolute", inset: 0, padding: "1.1rem", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", boxSizing: "border-box", textAlign: "center" }}>
+          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", letterSpacing: "0.18em", color: "#960018" }}>
             {v.idx}
           </span>
           <div>
             <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.9rem", color: "#960018", lineHeight: 1.05, marginBottom: "0.45rem", letterSpacing: "0.01em" }}>
               {v.label}
             </p>
-            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}>
+            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#960018" }}>
               click to explore ↓
             </span>
           </div>
@@ -146,8 +146,8 @@ function VinylSection() {
     const unit = SLEEVE + DISC * 0.7;
     const row2Y = SLEEVE + 60;
     return [
-      { x: Math.round(w * 0.25 - unit / 2), y: 20 },
-      { x: Math.round(w * 0.75 - unit / 2), y: 20 },
+      { x: Math.round(w * 0.28 - unit / 2), y: 20 },
+      { x: Math.round(w * 0.72 - unit / 2), y: 20 },
       { x: Math.round(w * 0.50 - unit / 2), y: row2Y },
     ];
   };
@@ -155,8 +155,11 @@ function VinylSection() {
 
   return (
     <div style={{ paddingTop: "calc(80px + 2.5rem)", paddingBottom: "2rem" }}>
-      <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.22em", color: "rgba(245,240,240,0.18)", textTransform: "uppercase", textAlign: "center", marginBottom: "2.5rem" }}>
-        What I Bring to the Table
+      <p style={{ textAlign: "center", marginBottom: "2.5rem", fontSize: "clamp(2.8rem, 5vw, 4.5rem)", lineHeight: 1.1, letterSpacing: "0.01em" }}>
+        <span style={{ fontFamily: "PerandoryCondensed, sans-serif", color: "#f5f0f0", fontWeight: "normal" }}>What I </span>
+        <span style={{ fontFamily: "BillaMount, cursive", color: "#f5f0f0" }}>Bring </span>
+        <span style={{ fontFamily: "PerandoryCondensed, sans-serif", color: "#f5f0f0", fontWeight: "normal" }}>to the </span>
+        <span style={{ fontFamily: "BillaMount, cursive", color: "#f5f0f0" }}>Table</span>
       </p>
       <div style={{ position: "relative", height: SLEEVE * 2 + 80, overflow: "visible" }}>
         {mounted && VINYL_DATA.map((v, i) => (
@@ -288,7 +291,7 @@ function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
 /* ── SectionLabel ── */
 function SectionLabel({ index, title, desc }: { index: string; title: React.ReactNode; desc: string }) {
   return (
-    <div style={{ borderTop: "1px solid rgba(245,240,240,0.1)", paddingTop: "1.8rem", marginBottom: "3rem" }}>
+    <div style={{ borderTop: "1px solid rgba(245,240,240,0.1)", paddingTop: "1.8rem", marginBottom: "3rem", marginTop: "2rem" }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: "1.2rem", marginBottom: "0.75rem" }}>
         <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{index}</span>
         {title}
@@ -299,7 +302,7 @@ function SectionLabel({ index, title, desc }: { index: string; title: React.Reac
 }
 
 /* ── MotionCard ── */
-function MotionCard({ src, onClick }: { src: string; onClick: () => void }) {
+function MotionCard({ src, onClick, aspect = "1/1" }: { src: string; onClick: () => void; aspect?: string }) {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {
@@ -309,7 +312,7 @@ function MotionCard({ src, onClick }: { src: string; onClick: () => void }) {
   }, [hovered]);
   return (
     <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onClick={onClick}
-      style={{ position: "relative", aspectRatio: "1/1", overflow: "hidden", borderRadius: "4px", cursor: "pointer", border: "1px solid rgba(245,240,240,0.06)" }}>
+      style={{ position: "relative", aspectRatio: aspect, overflow: "hidden", borderRadius: "4px", cursor: "pointer", border: "1px solid rgba(245,240,240,0.06)" }}>
       <video ref={videoRef} src={src} muted loop playsInline preload="metadata" disablePictureInPicture
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s ease", transform: hovered ? "scale(1.05)" : "scale(1)" }} />
       <div style={{ position: "absolute", inset: 0, background: hovered ? "rgba(0,0,0,0.05)" : "rgba(0,0,0,0.28)", transition: "background 0.35s ease" }} />
@@ -328,8 +331,8 @@ function MotionGrid() {
   return (
     <>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "6px" }}>
-        {VE_VIDEOS.map(({ src }) => (
-          <MotionCard key={src} src={src} onClick={() => setLightbox(src)} />
+        {VE_VIDEOS.map(({ src }, i) => (
+          <MotionCard key={src} src={src} onClick={() => setLightbox(src)} aspect={i < 5 ? "16/9" : "1/1"} />
         ))}
       </div>
       {lightbox && <Lightbox src={lightbox} onClose={close} />}
@@ -406,7 +409,7 @@ export default function WorkPage() {
       </section>
 
       {/* ── 03 Partnerships ── */}
-      <section id="partnerships" style={{ padding: "8rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+      <section id="partnerships" style={{ padding: "3rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
             <SectionLabel
