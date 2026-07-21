@@ -426,24 +426,10 @@ function PartnerGrid() {
   );
 }
 
-/* ── ClapperFlash ── */
-function ClapperFlash() {
-  const [done, setDone] = useState(false);
-  useEffect(() => { const t = setTimeout(() => setDone(true), 650); return () => clearTimeout(t); }, []);
-  if (done) return null;
-  return (
-    <div aria-hidden="true" style={{
-      position: "fixed", inset: 0, zIndex: 9999, pointerEvents: "none",
-      animation: "clapperFlash 0.6s ease-out forwards",
-    }} />
-  );
-}
-
 /* ── Page ── */
 export default function WorkPage() {
   return (
     <main className="relative min-h-screen overflow-x-clip">
-      <ClapperFlash />
 
       {/* ── Scan line ── */}
       <div aria-hidden="true" style={{

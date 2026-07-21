@@ -185,14 +185,6 @@ body.page-fade-out {
   100% { transform: rotate(-2.5deg); }
 }
 
-@keyframes clapperFlash {
-  0%   { background: #000; opacity: 1; }
-  14%  { background: #fff; opacity: 1; }
-  22%  { background: #000; opacity: 1; }
-  55%  { opacity: 1; }
-  100% { opacity: 0; }
-}
-
 @keyframes cinemaSlideRight {
   from { transform: translateX(-50%); }
   to   { transform: translateX(0%); }
