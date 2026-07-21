@@ -81,7 +81,7 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA
       onClick={() => {
         if (drag.current.moved) return;
         const el = document.getElementById(v.href);
-        if (el) lenisScrollTo(el, { offset: -80, duration: 1.6, easing: (t: number) => 1 - Math.pow(1 - t, 4) });
+        if (el) lenisScrollTo(el, { offset: -80, immediate: true });
       }}
       title={`Go to ${v.label}`}
     >
