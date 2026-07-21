@@ -188,6 +188,8 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
   const dispRotX = useRef(8);
   const rafRef = useRef<number>();
   const innerRef = useRef<HTMLDivElement>(null);
+  const videosRef = useRef<HTMLDivElement>(null);
+  const visibleRef = useRef(false);
   const [expanded, setExpanded] = useState<{ src: string; dx: number; dy: number; scale: number } | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -202,29 +204,49 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
   useEffect(() => { if (!expanded) return; const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeCard(); }; window.addEventListener("keydown", onKey); return () => window.removeEventListener("keydown", onKey); }, [expanded]);
 
   useEffect(() => {
+    const io = new IntersectionObserver(([entry]) => {
+      visibleRef.current = entry.isIntersecting;
+      const vids = videosRef.current?.querySelectorAll("video") ?? [];
+      if (entry.isIntersecting) {
+        vids.forEach(v => { v.play().catch(() => {}); });
+        if (!rafRef.current) tick();
+      } else {
+        vids.forEach(v => { v.pause(); });
+        if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = undefined; }
+      }
+    }, { threshold: 0 });
+
+    if (sectionRef.current) io.observe(sectionRef.current);
+
     const onScroll = () => {
-      const s = sectionRef.current; if (!s) return;
+      const s = sectionRef.current; if (!s || !visibleRef.current) return;
       const rect = s.getBoundingClientRect();
       scrollRotY.current = Math.max(0, Math.min(1, -rect.top / (s.offsetHeight - window.innerHeight))) * 360;
     };
     const onMouse = (e: MouseEvent) => {
+      if (!visibleRef.current) return;
       const s = sectionRef.current; if (!s) return;
-      const rect = s.getBoundingClientRect(); if (rect.top > window.innerHeight || rect.bottom < 0) return;
       const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
       mouseRotY.current = ((e.clientX - cx) / cx) * 8;
       const d = (e.clientY - cy) / cy;
       mouseRotX.current = 8 + (d > 0 ? d * 0.8 : d * 2);
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("mousemove", onMouse, { passive: true });
-    const animate = () => {
+
+    function tick() {
       dispRotY.current += (scrollRotY.current + mouseRotY.current - dispRotY.current) * 0.05;
       dispRotX.current += (mouseRotX.current - dispRotX.current) * 0.05;
       if (innerRef.current) innerRef.current.style.transform = `rotateX(${dispRotX.current}deg) rotateY(${dispRotY.current}deg)`;
-      rafRef.current = requestAnimationFrame(animate);
+      rafRef.current = requestAnimationFrame(tick);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("mousemove", onMouse, { passive: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("mousemove", onMouse);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-    rafRef.current = requestAnimationFrame(animate);
-    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("mousemove", onMouse); if (rafRef.current) cancelAnimationFrame(rafRef.current); };
   }, []);
 
   const n = videos.length;
@@ -240,7 +262,7 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
             {desc && <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.72rem", color: "rgba(245,240,240,0.42)", lineHeight: 1.75, paddingLeft: sectionIndex ? "calc(0.58rem + 1.2rem + 4px)" : 0, maxWidth: "480px" }}>{desc}</p>}
           </div>
         </div>
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "30vh", willChange: "transform" }}>
+        <div ref={videosRef} style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "30vh", willChange: "transform" }}>
           <div style={{ perspective: "3200px", willChange: "transform" }}>
             <div ref={innerRef} style={{ position: "relative", width: `${cardW}px`, height: `${cardH}px`, transformStyle: "preserve-3d", transform: "rotateX(8deg) rotateY(0deg)", willChange: "transform" }}>
               {videos.map(({ src }, i) => (
