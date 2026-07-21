@@ -15,7 +15,6 @@ const CINEMA_VIDEOS = [
 const VE_VIDEOS = [
   "ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4",
   "ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4",
-  "ve11.mp4",
 ].map(f => ({ src: `/ve/${f}` }));
 
 const COLLAB_VIDEOS = [
@@ -35,14 +34,15 @@ const VINYL_DATA = [
 ];
 
 /* ── VinylUnit ── */
-const SLEEVE = 260;
-const DISC = 236;
+const SLEEVE = 190;
+const DISC = 170;
 
 function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; defaultX: number; defaultY: number }) {
-  const [pos, setPos] = useState({ x: defaultX, y: defaultY });
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const posRef = useRef({ x: defaultX, y: defaultY });
   const [hovered, setHovered] = useState(false);
   const discRef = useRef<SVGSVGElement>(null);
-  const drag = useRef({ on: false, mx: 0, my: 0, px: 0, py: 0, moved: false });
+  const drag = useRef({ on: false, mx: 0, my: 0, px: defaultX, py: defaultY, moved: false });
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
@@ -50,10 +50,15 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
       const dx = e.clientX - drag.current.mx;
       const dy = e.clientY - drag.current.my;
       if (Math.abs(dx) + Math.abs(dy) > 4) drag.current.moved = true;
-      setPos({ x: drag.current.px + dx, y: drag.current.py + dy });
+      const nx = drag.current.px + dx;
+      const ny = drag.current.py + dy;
+      posRef.current = { x: nx, y: ny };
+      if (wrapRef.current) { wrapRef.current.style.left = nx + "px"; wrapRef.current.style.top = ny + "px"; }
     };
     const onUp = () => {
       if (!drag.current.on) return;
+      drag.current.px = posRef.current.x;
+      drag.current.py = posRef.current.y;
       drag.current.on = false;
       document.body.style.cursor = "";
     };
@@ -62,16 +67,14 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
     return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
   }, []);
 
-  const discX_idle  = SLEEVE - DISC * 0.72;
-  const discX_hover = SLEEVE - DISC * 0.35;
-
   return (
     <div
-      style={{ position: "absolute", left: pos.x, top: pos.y, width: SLEEVE + DISC * 0.7, height: SLEEVE, zIndex: hovered ? 10 : 1 }}
+      ref={wrapRef}
+      style={{ position: "absolute", left: defaultX, top: defaultY, width: SLEEVE, height: SLEEVE, zIndex: hovered ? 10 : 1, willChange: "transform" }}
       onMouseEnter={() => { setHovered(true);  if (discRef.current) discRef.current.style.animationDuration = "1.4s"; }}
       onMouseLeave={() => { setHovered(false); if (discRef.current) discRef.current.style.animationDuration = "6s";  }}
       onMouseDown={e => {
-        drag.current = { on: true, mx: e.clientX, my: e.clientY, px: pos.x, py: pos.y, moved: false };
+        drag.current = { on: true, mx: e.clientX, my: e.clientY, px: posRef.current.x, py: posRef.current.y, moved: false };
         document.body.style.cursor = "grabbing";
         e.preventDefault();
       }}
@@ -82,15 +85,10 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
       }}
       title={`Go to ${v.label}`}
     >
-      {/* Vinyl disc — slides out from sleeve on hover */}
-      <div style={{
-        position: "absolute", left: 0, top: (SLEEVE - DISC) / 2,
-        transform: `translateX(${hovered ? discX_hover : discX_idle}px)`,
-        transition: "transform 0.55s cubic-bezier(0.34,1.08,0.64,1)",
-        zIndex: 1, cursor: "grab",
-      }}>
+      {/* Vinyl disc — centered behind sleeve, revealed as sleeve slides away */}
+      <div style={{ position: "absolute", left: (SLEEVE - DISC) / 2, top: (SLEEVE - DISC) / 2, zIndex: 1 }}>
         <svg ref={discRef} width={DISC} height={DISC} viewBox={`0 0 ${DISC} ${DISC}`}
-          style={{ display: "block", animation: "vinylSpin 6s linear infinite" }}>
+          style={{ display: "block", animation: "vinylSpin 6s linear infinite", willChange: "transform" }}>
           {(() => { const r = DISC / 2; const grooves = Array.from({ length: 24 }, (_, i) => r * 0.3 + (r * 0.62) * (i / 24)); return (<>
             <circle cx={r} cy={r} r={r} fill="#090909"/>
             {grooves.map((gr, i) => <circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"} strokeWidth="0.55"/>)}
@@ -102,34 +100,31 @@ function VinylUnit({ v, defaultX, defaultY }: { v: typeof VINYL_DATA[0]; default
         </svg>
       </div>
 
-      {/* Sleeve — vinyl r.png as cover image */}
+      {/* Sleeve — slides left at an angle on hover */}
       <div style={{
         position: "absolute", left: 0, top: 0, width: SLEEVE, height: SLEEVE, zIndex: 2,
-        borderRadius: 6,
-        overflow: "hidden",
-        boxShadow: hovered
-          ? `0 24px 64px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.6)`
-          : `0 10px 36px rgba(0,0,0,0.7)`,
-        transition: "box-shadow 0.4s ease",
+        borderRadius: 6, overflow: "hidden",
+        boxShadow: hovered ? `0 24px 64px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.6)` : `0 10px 36px rgba(0,0,0,0.7)`,
+        transform: hovered ? "translateX(-52px) rotate(-10deg)" : "translateX(0) rotate(0deg)",
+        transition: "transform 0.5s cubic-bezier(0.34,1.08,0.64,1), box-shadow 0.4s ease",
         cursor: hovered ? "pointer" : "grab",
+        willChange: "transform",
       }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/vinyl-sleeve.png" alt="" draggable={false}
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }}
         />
-        {/* Text overlay */}
-        <div style={{ position: "absolute", inset: 0, padding: "1.1rem", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", boxSizing: "border-box", textAlign: "center" }}>
-          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", letterSpacing: "0.18em", color: "#960018" }}>
+        {/* Text overlay — centered */}
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.35rem", textAlign: "center", padding: "1rem" }}>
+          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.18em", color: "#960018", fontWeight: 700 }}>
             {v.idx}
           </span>
-          <div>
-            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.9rem", color: "#960018", lineHeight: 1.05, marginBottom: "0.45rem", letterSpacing: "0.01em" }}>
-              {v.label}
-            </p>
-            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#960018" }}>
-              click to explore ↓
-            </span>
-          </div>
+          <p style={{ fontFamily: "BillaMount, cursive", fontSize: "2rem", color: "#960018", lineHeight: 1.0, fontWeight: 700, whiteSpace: "nowrap" }}>
+            {v.label}
+          </p>
+          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#960018", fontWeight: 600 }}>
+            click to explore ↓
+          </span>
         </div>
       </div>
     </div>
@@ -143,12 +138,10 @@ function VinylSection() {
 
   const getPositions = () => {
     const w = typeof window !== "undefined" ? window.innerWidth : 1200;
-    const unit = SLEEVE + DISC * 0.7;
-    const row2Y = SLEEVE + 60;
     return [
-      { x: Math.round(w * 0.28 - unit / 2), y: 20 },
-      { x: Math.round(w * 0.72 - unit / 2), y: 20 },
-      { x: Math.round(w * 0.50 - unit / 2), y: row2Y },
+      { x: Math.round(w * 0.18 - SLEEVE / 2), y: 20 },
+      { x: Math.round(w * 0.50 - SLEEVE / 2), y: 20 },
+      { x: Math.round(w * 0.82 - SLEEVE / 2), y: 20 },
     ];
   };
   const positions = mounted ? getPositions() : [];
@@ -161,7 +154,7 @@ function VinylSection() {
         <span style={{ fontFamily: "PerandoryCondensed, sans-serif", color: "#f5f0f0", fontWeight: "normal" }}>to the </span>
         <span style={{ fontFamily: "BillaMount, cursive", color: "#f5f0f0" }}>Table</span>
       </p>
-      <div style={{ position: "relative", height: SLEEVE * 2 + 80, overflow: "visible" }}>
+      <div style={{ position: "relative", height: SLEEVE + 60, overflow: "visible" }}>
         {mounted && VINYL_DATA.map((v, i) => (
           <VinylUnit key={v.href} v={v} defaultX={positions[i].x} defaultY={positions[i].y} />
         ))}
