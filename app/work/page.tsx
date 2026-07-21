@@ -14,7 +14,7 @@ const CINEMA_VIDEOS = [
 
 const VE_VIDEOS = [
   "ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4",
-  "ve6.mp4","ve7.mp4","ve8.mp4","ve9.mp4","ve10.mp4",
+  "VideoStar1.mp4","VideoStar2.mp4","VideoStar3.mp4","VideoStar4.mp4","VideoStar5.mp4",
 ].map(f => ({ src: `/ve/${f}` }));
 
 const COLLAB_VIDEOS = [
