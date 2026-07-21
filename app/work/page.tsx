@@ -35,7 +35,7 @@ const VINYL_DATA = [
 
 /* ── VinylUnit ── */
 const SLEEVE = 322;
-const DISC = 170;
+const DISC = 292;
 
 function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA[0]; defaultX: number; defaultY: number; floatDelay: number }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -231,7 +231,7 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
   return (
     <div ref={sectionRef} id={id} style={{ height: scrollHeight, position: "relative", scrollMarginTop: "80px" }}>
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "6vh", left: "clamp(1.5rem, 5vw, 4rem)", right: "clamp(1.5rem, 5vw, 4rem)", zIndex: 20, pointerEvents: "none" }}>
+        <div style={{ position: "absolute", top: "1vh", left: "clamp(1.5rem, 5vw, 4rem)", right: "clamp(1.5rem, 5vw, 4rem)", zIndex: 20, pointerEvents: "none" }}>
           <div style={{ borderTop: "1px solid rgba(245,240,240,0.1)", paddingTop: "1.8rem" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "1.2rem", marginBottom: "0.75rem" }}>
               {sectionIndex && <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{sectionIndex}</span>}
@@ -390,7 +390,7 @@ export default function WorkPage() {
       />
 
       {/* ── 02 Motion Editing ── */}
-      <section id="motion-editing" style={{ padding: "8rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+      <section id="motion-editing" style={{ padding: "2rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
             <SectionLabel
