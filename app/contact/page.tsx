@@ -25,9 +25,9 @@ export default function ContactPage() {
           zIndex: 2,
           minHeight: "100vh",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
+          alignItems: "center",
           padding: "calc(80px + 3rem) clamp(1.8rem, 5vw, 5rem) 6rem",
+          gap: "clamp(3rem, 8vw, 8rem)",
         }}
       >
         {/* Headline */}
@@ -38,45 +38,43 @@ export default function ContactPage() {
           lineHeight: 0.95,
           fontWeight: "normal",
           letterSpacing: "-0.01em",
-          marginBottom: "clamp(3rem, 6vw, 5.5rem)",
-          maxWidth: "14ch",
+          flexShrink: 0,
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}>
-          Let&apos;s create something!
+          Let&apos;s create<br />something!
         </h1>
 
-        {/* Contact tray */}
+        {/* Right column — contact details */}
         <div style={{
           display: "flex",
-          flexWrap: "wrap",
-          alignItems: "flex-end",
-          justifyContent: "space-between",
-          gap: "2rem",
-          borderTop: "1px solid rgba(245,240,240,0.12)",
-          paddingTop: "1.8rem",
+          flexDirection: "column",
+          gap: "2.2rem",
+          borderLeft: "1px solid rgba(245,240,240,0.12)",
+          paddingLeft: "clamp(2rem, 5vw, 5rem)",
+          alignSelf: "center",
         }}>
           {/* Email */}
           <div>
             <p style={{
               fontFamily: "var(--font-inter)",
-              fontSize: "clamp(0.52rem, 0.78vw, 0.65rem)",
+              fontSize: "0.6rem",
               letterSpacing: "0.2em",
               textTransform: "uppercase",
               color: "rgba(245,240,240,0.36)",
-              marginBottom: "0.55rem",
+              marginBottom: "0.5rem",
             }}>
               Email
             </p>
             <a
               href="mailto:cal1starcollab@gmail.com"
               style={{
-                fontFamily: "PerandoryCondensed, sans-serif",
-                fontSize: "clamp(1rem, 2.2vw, 1.65rem)",
+                fontFamily: "var(--font-inter)",
+                fontSize: "clamp(0.8rem, 1.4vw, 1.05rem)",
                 color: "#f5f0f0",
                 textDecoration: "none",
-                letterSpacing: "0.02em",
-                fontWeight: "normal",
-                borderBottom: "1px solid rgba(245,240,240,0.28)",
+                letterSpacing: "0.01em",
+                fontWeight: 300,
+                borderBottom: "1px solid rgba(245,240,240,0.22)",
                 paddingBottom: "2px",
                 transition: "color 0.25s, border-color 0.25s",
               }}
@@ -86,7 +84,7 @@ export default function ContactPage() {
               }}
               onMouseLeave={e => {
                 (e.currentTarget as HTMLAnchorElement).style.color = "#f5f0f0";
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(245,240,240,0.28)";
+                (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(245,240,240,0.22)";
               }}
             >
               cal1starcollab@gmail.com
@@ -97,15 +95,15 @@ export default function ContactPage() {
           <div>
             <p style={{
               fontFamily: "var(--font-inter)",
-              fontSize: "clamp(0.52rem, 0.78vw, 0.65rem)",
+              fontSize: "0.6rem",
               letterSpacing: "0.2em",
               textTransform: "uppercase",
               color: "rgba(245,240,240,0.36)",
-              marginBottom: "0.55rem",
+              marginBottom: "0.5rem",
             }}>
               Find me
             </p>
-            <div style={{ display: "flex", gap: "clamp(1.2rem, 2.5vw, 2.4rem)", alignItems: "center" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
               {([
                 ["Instagram", "https://instagram.com/cal1star"],
                 ["YouTube",   "https://www.youtube.com/@cal1stvr"],
@@ -117,16 +115,16 @@ export default function ContactPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
-                    fontFamily: "PerandoryCondensed, sans-serif",
-                    fontSize: "clamp(0.9rem, 1.8vw, 1.35rem)",
-                    color: "rgba(245,240,240,0.55)",
+                    fontFamily: "var(--font-inter)",
+                    fontSize: "clamp(0.8rem, 1.2vw, 0.95rem)",
+                    color: "rgba(245,240,240,0.5)",
                     textDecoration: "none",
                     letterSpacing: "0.04em",
-                    fontWeight: "normal",
+                    fontWeight: 300,
                     transition: "color 0.25s",
                   }}
                   onMouseEnter={e => (e.currentTarget.style.color = "#f5f0f0")}
-                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.55)")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.5)")}
                 >
                   {label}
                 </a>

@@ -18,12 +18,12 @@ const VE_VIDEOS = [
 ].map(f => ({ src: `/ve/${f}` }));
 
 const COLLAB_VIDEOS = [
-  { src: "/yt/aelfriceden.mp4",  label: "Aelfric Eden", category: "Fashion"  },
+  { src: "/yt/aelfricedenn.mp4", label: "Aelfric Eden", category: "Fashion"  },
   { src: "/yt/betterhelpp.mp4",  label: "BetterHelp",   category: "Wellness" },
-  { src: "/yt/just4kira.mp4",    label: "Just4Kira",    category: "Beauty"   },
-  { src: "/yt/lewkin.mp4",       label: "Lewkin",        category: "Fashion"  },
-  { src: "/yt/teddyblake.mp4",   label: "Teddy Blake",  category: "Luxury"   },
-  { src: "/yt/bypassgpt.mp4",    label: "BypassGPT",    category: "Tech"     },
+  { src: "/yt/just4kiraa.mp4",   label: "Just4Kira",    category: "Beauty"   },
+  { src: "/yt/lewkinn.mp4",      label: "Lewkin",        category: "Fashion"  },
+  { src: "/yt/teddyblakee.mp4",  label: "Teddy Blake",  category: "Luxury"   },
+  { src: "/yt/bypassgptt.mp4",   label: "BypassGPT",    category: "Tech"     },
 ];
 
 /* ── Vinyl data ── */
