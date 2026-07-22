@@ -319,14 +319,14 @@ function SectionLabel({ index, title, desc }: { index: string; title: React.Reac
 }
 
 /* ── AccordionCard ── */
-function AccordionCard({ src, idx, onClick, compact }: { src: string; idx: number; onClick: () => void; compact: boolean }) {
+function AccordionCard({ src, idx, onClick, compact, seekTo = 1 }: { src: string; idx: number; onClick: () => void; compact: boolean; seekTo?: number }) {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {
     const v = videoRef.current; if (!v) return;
     if (hovered) v.play().catch(() => {});
-    else { v.pause(); v.currentTime = 1; }
-  }, [hovered]);
+    else { v.pause(); v.currentTime = seekTo; }
+  }, [hovered, seekTo]);
   return (
     <div
       onMouseEnter={() => setHovered(true)}
@@ -345,7 +345,7 @@ function AccordionCard({ src, idx, onClick, compact }: { src: string; idx: numbe
       }}
     >
       <video ref={videoRef} src={src} muted loop playsInline preload="metadata" disablePictureInPicture
-        onLoadedMetadata={() => { if (videoRef.current && !hovered) videoRef.current.currentTime = 1; }}
+        onLoadedMetadata={() => { if (videoRef.current && !hovered) videoRef.current.currentTime = seekTo; }}
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
 
       {/* Dark overlay — lighter when expanded */}
@@ -396,7 +396,8 @@ function MotionGrid() {
       </div>
       <div style={{ ...rowStyle, height: "220px" }}>
         {VE_VIDEOS.slice(5).map(({ src }, i) => (
-          <AccordionCard key={src} src={src} idx={i + 5} compact={true} onClick={() => setLightbox({ src, compact: true })} />
+          <AccordionCard key={src} src={src} idx={i + 5} compact={true} onClick={() => setLightbox({ src, compact: true })}
+            seekTo={i === 1 ? 2 : i === 4 ? 0 : 1} />
         ))}
       </div>
       {lightbox && <Lightbox src={lightbox.src} compact={lightbox.compact} onClose={close} />}
