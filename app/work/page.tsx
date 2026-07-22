@@ -397,7 +397,7 @@ function MotionGrid() {
       <div style={{ ...rowStyle, height: "220px" }}>
         {VE_VIDEOS.slice(5).map(({ src }, i) => (
           <AccordionCard key={src} src={src} idx={i + 5} compact={true} onClick={() => setLightbox({ src, compact: true })}
-            seekTo={i === 1 ? 2 : i === 4 ? 0 : 1} />
+            seekTo={i === 1 ? 2 : i === 4 ? 0.5 : 1} />
         ))}
       </div>
       {lightbox && <Lightbox src={lightbox.src} compact={lightbox.compact} onClose={close} />}
