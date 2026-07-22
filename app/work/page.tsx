@@ -325,7 +325,7 @@ function AccordionCard({ src, idx, onClick, compact }: { src: string; idx: numbe
   useEffect(() => {
     const v = videoRef.current; if (!v) return;
     if (hovered) v.play().catch(() => {});
-    else { v.pause(); v.currentTime = 0; }
+    else { v.pause(); v.currentTime = 1; }
   }, [hovered]);
   return (
     <div
@@ -345,6 +345,7 @@ function AccordionCard({ src, idx, onClick, compact }: { src: string; idx: numbe
       }}
     >
       <video ref={videoRef} src={src} muted loop playsInline preload="metadata" disablePictureInPicture
+        onLoadedMetadata={() => { if (videoRef.current && !hovered) videoRef.current.currentTime = 1; }}
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
 
       {/* Dark overlay — lighter when expanded */}
