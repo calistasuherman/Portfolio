@@ -248,3 +248,34 @@ body.page-fade-out {
 
 .service-card:
 
+hover {
+  border-color: rgba(139, 0, 0, 0.6);
+  background: rgba(26, 0, 0, 0.65);
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  html { cursor: auto; }
+  body { cursor: auto; }
+  a, button { cursor: auto; }
+  .cursor-dot { display: none; }
+
+  #about { background-attachment: scroll !important; }
+
+  .mobile-2col { grid-template-columns: repeat(2,1fr) !important; }
+  .mobile-1col { grid-template-columns: 1fr !important; }
+
+  .contact-row {
+    flex-direction: column !important;
+    gap: 2.5rem !important;
+  }
+  .contact-col-right {
+    border-left: none !important;
+    border-top: 1px solid rgba(245,240,240,0.12) !important;
+    padding-left: 0 !important;
+    padding-top: 1.8rem !important;
+  }
+}
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

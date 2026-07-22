@@ -182,7 +182,7 @@ export default function Home() {
               >View all →</a>
             </div>
           </Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem" }}>
+          <div className="mobile-1col" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem" }}>
             {FEATURED.map((item, i) => (
               <Reveal key={item.src} delay={i * 110}>
                 <FeaturedCard {...item} />

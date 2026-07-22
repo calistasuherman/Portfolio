@@ -142,7 +142,14 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA
 /* ── VinylSection ── */
 function VinylSection() {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const getPositions = () => {
     const w = typeof window !== "undefined" ? window.innerWidth : 1200;
@@ -153,6 +160,35 @@ function VinylSection() {
     ];
   };
   const positions = mounted ? getPositions() : [];
+
+  if (mounted && isMobile) {
+    return (
+      <div style={{ paddingTop: "calc(80px + 2rem)", paddingBottom: "1rem" }}>
+        <div style={{ display: "flex", overflowX: "auto", gap: "1rem", padding: "0 1.5rem 1rem", scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" as any }}
+          className="hide-scrollbar">
+          {VINYL_DATA.map((v) => (
+            <a key={v.href} href={`#${v.href}`}
+              onClick={e => { e.preventDefault(); const el = document.getElementById(v.href); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+              style={{
+                flexShrink: 0, scrollSnapAlign: "center",
+                width: "72vw", maxWidth: "260px",
+                background: v.sleeve,
+                border: `1px solid ${v.accent}33`,
+                borderRadius: "6px",
+                padding: "1.5rem 1rem 1.25rem",
+                textAlign: "center",
+                textDecoration: "none",
+                display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem",
+              }}>
+              <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.5rem", letterSpacing: "0.2em", color: v.accent, textTransform: "uppercase" }}>{v.idx}</span>
+              <span style={{ fontFamily: "BillaMount, cursive", fontSize: "1.6rem", color: "#f5f0f0", fontWeight: "normal" }}>{v.label}</span>
+              <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", letterSpacing: "0.18em", color: "rgba(245,240,240,0.4)", textTransform: "uppercase" }}>tap to explore</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ paddingTop: "calc(80px + 2.5rem)", paddingBottom: "2rem" }}>
@@ -321,19 +357,22 @@ function SectionLabel({ index, title, desc }: { index: string; title: React.Reac
 /* ── AccordionCard ── */
 function AccordionCard({ src, idx, onClick, compact, seekTo = 1 }: { src: string; idx: number; onClick: () => void; compact: boolean; seekTo?: number }) {
   const [hovered, setHovered] = useState(false);
+  const [tapped, setTapped] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const active = hovered || tapped;
   useEffect(() => {
     const v = videoRef.current; if (!v) return;
-    if (hovered) v.play().catch(() => {});
+    if (active) v.play().catch(() => {});
     else { v.pause(); v.currentTime = seekTo; }
-  }, [hovered, seekTo]);
+  }, [active, seekTo]);
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={onClick}
+      onTouchStart={e => { e.preventDefault(); if (tapped) { onClick(); setTapped(false); } else setTapped(true); }}
+      onClick={e => { if (!(e as any).changedTouches) onClick(); }}
       style={{
-        flexGrow: hovered ? 5 : 1,
+        flexGrow: active ? 5 : 1,
         flexShrink: 1,
         flexBasis: 0,
         transition: "flex-grow 0.55s cubic-bezier(0.16,1,0.3,1)",
@@ -351,7 +390,7 @@ function AccordionCard({ src, idx, onClick, compact, seekTo = 1 }: { src: string
       {/* Dark overlay — lighter when expanded */}
       <div style={{
         position: "absolute", inset: 0,
-        background: hovered ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.38)",
+        background: active ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.38)",
         transition: "background 0.4s ease",
       }} />
 
@@ -360,7 +399,7 @@ function AccordionCard({ src, idx, onClick, compact, seekTo = 1 }: { src: string
         position: "absolute", bottom: "10px", left: "50%", transform: "translateX(-50%)",
         fontFamily: "var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.16em",
         color: "rgba(245,240,240,0.5)",
-        opacity: hovered ? 0 : 1,
+        opacity: active ? 0 : 1,
         transition: "opacity 0.25s ease",
         whiteSpace: "nowrap",
       }}>
@@ -373,8 +412,8 @@ function AccordionCard({ src, idx, onClick, compact, seekTo = 1 }: { src: string
         background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)",
         borderRadius: "50%", width: "34px", height: "34px",
         display: "flex", alignItems: "center", justifyContent: "center",
-        opacity: hovered ? 1 : 0,
-        transform: hovered ? "scale(1)" : "scale(0.7)",
+        opacity: active ? 1 : 0,
+        transform: active ? "scale(1)" : "scale(0.7)",
         transition: "opacity 0.3s ease, transform 0.3s ease",
       }}>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
@@ -438,7 +477,7 @@ function PartnerGrid() {
   const close = useCallback(() => setLightbox(null), []);
   return (
     <>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
+      <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
         {COLLAB_VIDEOS.map((item, i) => (
           <Reveal key={item.src} delay={i * 80}>
             <PartnerCard {...item} onClick={() => setLightbox(item.src)} />

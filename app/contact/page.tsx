@@ -19,7 +19,7 @@ export default function ContactPage() {
 
       {/* Main content */}
       <section
-        className="section-content"
+        className="section-content contact-row"
         style={{
           position: "relative",
           zIndex: 2,
@@ -45,7 +45,7 @@ export default function ContactPage() {
         </h1>
 
         {/* Right column — contact details */}
-        <div style={{
+        <div className="contact-col-right" style={{
           display: "flex",
           flexDirection: "column",
           gap: "2rem",
