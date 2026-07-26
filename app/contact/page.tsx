@@ -31,7 +31,7 @@ export default function ContactPage() {
         }}
       >
         {/* Headline */}
-        <h1 style={{
+        <h1 className="contact-headline" style={{
           fontFamily: "BillaMount, cursive",
           fontSize: "clamp(3.8rem, 11vw, 10.5rem)",
           color: "#f5f0f0",
@@ -96,7 +96,7 @@ export default function ContactPage() {
               }}
             >
               cal1starcollab@gmail.com
-              <span style={{ fontSize: "0.75rem", opacity: 0.6 }}>↗</span>
+              <span style={{ fontSize: "0.85rem" }}>↗</span>
             </a>
           </div>
 
@@ -114,9 +114,9 @@ export default function ContactPage() {
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
               {([
-                ["↗ Instagram", "https://instagram.com/cal1star"],
-                ["↗ YouTube",   "https://www.youtube.com/@cal1stvr"],
-                ["↗ TikTok",    "https://www.tiktok.com/@cal1star"],
+                ["Instagram", "https://instagram.com/cal1star"],
+                ["YouTube",   "https://www.youtube.com/@cal1stvr"],
+                ["TikTok",    "https://www.tiktok.com/@cal1star"],
               ] as [string, string][]).map(([label, href]) => (
                 <a
                   key={label}
@@ -131,6 +131,9 @@ export default function ContactPage() {
                     letterSpacing: "0.06em",
                     fontWeight: 300,
                     transition: "color 0.2s, letter-spacing 0.2s",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.35rem",
                   }}
                   onMouseEnter={e => {
                     e.currentTarget.style.color = "#f5f0f0";
@@ -141,7 +144,7 @@ export default function ContactPage() {
                     e.currentTarget.style.letterSpacing = "0.06em";
                   }}
                 >
-                  {label}
+                  {label}<span style={{ fontSize: "0.85rem" }}>↗</span>
                 </a>
               ))}
             </div>

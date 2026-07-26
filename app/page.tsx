@@ -289,7 +289,7 @@ export default function Home() {
               My Toolkit
             </div>
           </Reveal>
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: "clamp(1.2rem, 4vw, 3.5rem)" }}>
+          <div className="toolkit-row" style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: "clamp(1.2rem, 4vw, 3.5rem)" }}>
             {TOOLS.map(({ src, label }, i) => (
               <Reveal key={label} direction="left" delay={i * 90}>
                 <div style={{ textAlign: "center", width: "clamp(64px, 9vw, 100px)" }}>

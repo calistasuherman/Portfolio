@@ -303,8 +303,28 @@ body.page-fade-out {
     width: 100% !important;
   }
 
-  /* Work page — orbit carousel: contain overflow */
-  .orbit-sticky { overflow: hidden; }
+  /* Toolkit — wrap into 2 rows of 3 */
+  .toolkit-row {
+    flex-wrap: wrap !important;
+    gap: 1.4rem 2rem !important;
+    justify-content: center !important;
+  }
+  .toolkit-row > * {
+    width: calc(33% - 1rem) !important;
+    max-width: 80px !important;
+  }
+
+  /* Orbit carousel — scale down + pull closer to description */
+  .orbit-videos-wrap {
+    padding-top: 16vh !important;
+    transform: scale(0.52) !important;
+    transform-origin: center top !important;
+  }
+
+  /* Contact headline — bigger on mobile */
+  .contact-headline {
+    font-size: clamp(3.2rem, 17vw, 5rem) !important;
+  }
 }
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }

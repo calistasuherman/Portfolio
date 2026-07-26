@@ -162,27 +162,36 @@ function VinylSection() {
   const positions = mounted ? getPositions() : [];
 
   if (mounted && isMobile) {
+    const D = 110; // disc diameter
     return (
       <div style={{ paddingTop: "calc(80px + 2rem)", paddingBottom: "1rem" }}>
-        <div style={{ display: "flex", overflowX: "auto", gap: "1rem", padding: "0 1.5rem 1rem", scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" as any }}
-          className="hide-scrollbar">
+        <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", padding: "0 1rem 1rem" }}>
           {VINYL_DATA.map((v) => (
             <a key={v.href} href={`#${v.href}`}
               onClick={e => { e.preventDefault(); const el = document.getElementById(v.href); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }}
               style={{
-                flexShrink: 0, scrollSnapAlign: "center",
-                width: "72vw", maxWidth: "260px",
-                background: v.sleeve,
-                border: `1px solid ${v.accent}33`,
-                borderRadius: "6px",
-                padding: "1.5rem 1rem 1.25rem",
-                textAlign: "center",
+                flex: 1, maxWidth: "115px",
                 textDecoration: "none",
-                display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem",
+                display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem",
               }}>
-              <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.5rem", letterSpacing: "0.2em", color: v.accent, textTransform: "uppercase" }}>{v.idx}</span>
-              <span style={{ fontFamily: "BillaMount, cursive", fontSize: "1.6rem", color: "#f5f0f0", fontWeight: "normal" }}>{v.label}</span>
-              <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", letterSpacing: "0.18em", color: "rgba(245,240,240,0.4)", textTransform: "uppercase" }}>tap to explore</span>
+              {/* Mini vinyl sleeve + disc */}
+              <div style={{ position: "relative", width: D + 22, height: D, flexShrink: 0 }}>
+                {/* disc */}
+                <svg width={D} height={D} viewBox={`0 0 ${D} ${D}`} style={{ position: "absolute", left: 22, top: 0, animation: "vinylSpin 6s linear infinite" }}>
+                  {(() => { const r = D/2; const grooves = Array.from({length:16},(_,i)=>r*0.3+(r*0.62)*(i/16)); return (<>
+                    <circle cx={r} cy={r} r={r} fill="#090909"/>
+                    {grooves.map((gr,i)=><circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i%4===0?"rgba(255,255,255,0.07)":"rgba(255,255,255,0.025)"} strokeWidth="0.5"/>)}
+                    <circle cx={r} cy={r} r={r*0.29} fill={v.labelBg}/>
+                    <circle cx={r} cy={r} r={r*0.045} fill="#000"/>
+                  </>); })()}
+                </svg>
+                {/* sleeve */}
+                <div style={{ position: "absolute", left: 0, top: 0, width: D, height: D, background: v.sleeve, border: `1px solid ${v.accent}44`, borderRadius: 4, zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.3rem" }}>
+                  <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.18em", color: v.accent, textTransform: "uppercase" }}>{v.idx}</span>
+                  <span style={{ fontFamily: "BillaMount, cursive", fontSize: "0.95rem", color: "#f5f0f0", fontWeight: "normal", textAlign: "center", lineHeight: 1.1 }}>{v.label}</span>
+                </div>
+              </div>
+              <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.16em", color: "rgba(245,240,240,0.35)", textTransform: "uppercase" }}>tap to explore</span>
             </a>
           ))}
         </div>
@@ -298,7 +307,7 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
             {desc && <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.72rem", color: "rgba(245,240,240,0.42)", lineHeight: 1.75, paddingLeft: sectionIndex ? "calc(0.58rem + 1.2rem + 4px)" : 0, maxWidth: "480px" }}>{desc}</p>}
           </div>
         </div>
-        <div ref={videosRef} style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "30vh", willChange: "transform" }}>
+        <div ref={videosRef} className="orbit-videos-wrap" style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "30vh", willChange: "transform" }}>
           <div style={{ perspective: "3200px", willChange: "transform" }}>
             <div ref={innerRef} style={{ position: "relative", width: `${cardW}px`, height: `${cardH}px`, transformStyle: "preserve-3d", transform: "rotateX(8deg) rotateY(0deg)", willChange: "transform" }}>
               {videos.map(({ src }, i) => (
