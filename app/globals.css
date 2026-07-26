@@ -246,9 +246,7 @@ body.page-fade-out {
   transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.service-card:
-
-hover {
+.service-card:hover {
   border-color: rgba(139, 0, 0, 0.6);
   background: rgba(26, 0, 0, 0.65);
 }
@@ -260,21 +258,53 @@ hover {
   a, button { cursor: auto; }
   .cursor-dot { display: none; }
 
+  /* Disable fixed bg on iOS (causes white flash) */
   #about { background-attachment: scroll !important; }
 
+  /* Grids */
   .mobile-2col { grid-template-columns: repeat(2,1fr) !important; }
   .mobile-1col { grid-template-columns: 1fr !important; }
 
+  /* Hero name — smaller + allow wrap */
+  .hero-name {
+    font-size: clamp(2.6rem, 13vw, 3.8rem) !important;
+    white-space: normal !important;
+  }
+
+  /* Services rows — collapse to 2 cols, hide index number */
+  .services-row {
+    grid-template-columns: 1fr !important;
+    gap: 0.4rem !important;
+  }
+  .services-index { display: none; }
+
+  /* Contact — stack vertically */
   .contact-row {
     flex-direction: column !important;
     gap: 2.5rem !important;
+    align-items: flex-start !important;
   }
   .contact-col-right {
     border-left: none !important;
     border-top: 1px solid rgba(245,240,240,0.12) !important;
     padding-left: 0 !important;
     padding-top: 1.8rem !important;
+    align-self: stretch !important;
   }
+
+  /* Work page — accordion rows stack vertically on mobile */
+  .accordion-row {
+    flex-direction: column !important;
+    height: auto !important;
+  }
+  .accordion-row > * {
+    flex-grow: 1 !important;
+    min-height: 160px;
+    width: 100% !important;
+  }
+
+  /* Work page — orbit carousel: contain overflow */
+  .orbit-sticky { overflow: hidden; }
 }
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }
