@@ -86,7 +86,7 @@ export default function ISFForm() {
 
   async function handleGeneratePDF() {
     const jspdf = await import("jspdf");
-    const jsPDF = jspdf.jsPDF ?? jspdf.default;
+    const jsPDF = (jspdf as any).jsPDF ?? jspdf.default;
     const doc = new jsPDF({ unit: "pt", format: "letter" });
 
     const margin = 50;
