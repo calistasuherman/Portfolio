@@ -96,7 +96,7 @@ export default function ContactPage() {
               }}
             >
               cal1starcollab@gmail.com
-              <span style={{ fontSize: "0.85rem" }}>↗</span>
+              <span style={{ fontSize: "0.85rem" }}>→</span>
             </a>
           </div>
 
@@ -144,7 +144,7 @@ export default function ContactPage() {
                     e.currentTarget.style.letterSpacing = "0.06em";
                   }}
                 >
-                  {label}<span style={{ fontSize: "0.85rem" }}>↗</span>
+                  {label}<span style={{ fontSize: "0.85rem" }}>→</span>
                 </a>
               ))}
             </div>

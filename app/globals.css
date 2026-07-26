@@ -325,6 +325,16 @@ body.page-fade-out {
   .contact-headline {
     font-size: clamp(3.2rem, 17vw, 5rem) !important;
   }
+
+  /* Reduce orbit carousel scroll height so gap to next section is smaller */
+  .orbit-section {
+    height: 160vh !important;
+  }
+
+  /* Reduce motion editing top padding on mobile */
+  .motion-editing-section {
+    padding-top: 2rem !important;
+  }
 }
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }

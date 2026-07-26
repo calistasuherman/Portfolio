@@ -162,38 +162,31 @@ function VinylSection() {
   const positions = mounted ? getPositions() : [];
 
   if (mounted && isMobile) {
-    const D = 110; // disc diameter
+    const VinylCard = ({ v }: { v: typeof VINYL_DATA[0] }) => (
+      <a href={`#${v.href}`}
+        onClick={e => { e.preventDefault(); const el = document.getElementById(v.href); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }}
+        style={{ textDecoration: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.55rem" }}>
+        <div style={{ position: "relative", width: 148, height: 148 }}>
+          {/* vinyl disc peeking right */}
+          <img src="/vinyl.png" alt="" style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)", width: 128, height: 128, borderRadius: "50%", animation: "vinylSpin 6s linear infinite", zIndex: 1 }} />
+          {/* sleeve */}
+          <div style={{ position: "absolute", left: 0, top: 0, width: 118, height: 118, top: "50%", transform: "translateY(-50%)", background: v.sleeve, border: `1px solid ${v.accent}55`, borderRadius: 5, zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.3rem", boxShadow: "0 6px 20px rgba(0,0,0,0.7)" }}>
+            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.2em", color: v.accent, textTransform: "uppercase" }}>{v.idx}</span>
+            <span style={{ fontFamily: "BillaMount, cursive", fontSize: "1rem", color: "#f5f0f0", fontWeight: "normal", textAlign: "center", lineHeight: 1.1 }}>{v.label}</span>
+          </div>
+        </div>
+        <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.16em", color: "rgba(245,240,240,0.35)", textTransform: "uppercase" }}>tap to explore</span>
+      </a>
+    );
     return (
       <div style={{ paddingTop: "calc(80px + 2rem)", paddingBottom: "1rem" }}>
-        <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", padding: "0 1rem 1rem" }}>
-          {VINYL_DATA.map((v) => (
-            <a key={v.href} href={`#${v.href}`}
-              onClick={e => { e.preventDefault(); const el = document.getElementById(v.href); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }}
-              style={{
-                flex: 1, maxWidth: "115px",
-                textDecoration: "none",
-                display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem",
-              }}>
-              {/* Mini vinyl sleeve + disc */}
-              <div style={{ position: "relative", width: D + 22, height: D, flexShrink: 0 }}>
-                {/* disc */}
-                <svg width={D} height={D} viewBox={`0 0 ${D} ${D}`} style={{ position: "absolute", left: 22, top: 0, animation: "vinylSpin 6s linear infinite" }}>
-                  {(() => { const r = D/2; const grooves = Array.from({length:16},(_,i)=>r*0.3+(r*0.62)*(i/16)); return (<>
-                    <circle cx={r} cy={r} r={r} fill="#090909"/>
-                    {grooves.map((gr,i)=><circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i%4===0?"rgba(255,255,255,0.07)":"rgba(255,255,255,0.025)"} strokeWidth="0.5"/>)}
-                    <circle cx={r} cy={r} r={r*0.29} fill={v.labelBg}/>
-                    <circle cx={r} cy={r} r={r*0.045} fill="#000"/>
-                  </>); })()}
-                </svg>
-                {/* sleeve */}
-                <div style={{ position: "absolute", left: 0, top: 0, width: D, height: D, background: v.sleeve, border: `1px solid ${v.accent}44`, borderRadius: 4, zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.3rem" }}>
-                  <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.18em", color: v.accent, textTransform: "uppercase" }}>{v.idx}</span>
-                  <span style={{ fontFamily: "BillaMount, cursive", fontSize: "0.95rem", color: "#f5f0f0", fontWeight: "normal", textAlign: "center", lineHeight: 1.1 }}>{v.label}</span>
-                </div>
-              </div>
-              <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.16em", color: "rgba(245,240,240,0.35)", textTransform: "uppercase" }}>tap to explore</span>
-            </a>
-          ))}
+        {/* Row 1: first 2 vinyls */}
+        <div style={{ display: "flex", justifyContent: "center", gap: "1rem", padding: "0 1.5rem 1rem" }}>
+          {VINYL_DATA.slice(0, 2).map(v => <VinylCard key={v.href} v={v} />)}
+        </div>
+        {/* Row 2: third vinyl centered */}
+        <div style={{ display: "flex", justifyContent: "center", padding: "0 1.5rem 0.5rem" }}>
+          <VinylCard v={VINYL_DATA[2]} />
         </div>
       </div>
     );
@@ -296,7 +289,7 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
 
   const n = videos.length;
   return (
-    <div ref={sectionRef} id={id} style={{ height: scrollHeight, position: "relative", scrollMarginTop: "80px" }}>
+    <div ref={sectionRef} id={id} className="orbit-section" style={{ height: scrollHeight, position: "relative", scrollMarginTop: "80px" }}>
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "1vh", left: "clamp(1.5rem, 5vw, 4rem)", right: "clamp(1.5rem, 5vw, 4rem)", zIndex: 20, pointerEvents: "none" }}>
           <div style={{ paddingTop: "1.8rem" }}>
@@ -533,7 +526,7 @@ export default function WorkPage() {
       />
 
       {/* ── 02 Motion Editing ── */}
-      <section id="motion-editing" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+      <section id="motion-editing" className="motion-editing-section" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
             <SectionLabel
