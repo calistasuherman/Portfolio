@@ -170,7 +170,7 @@ function VinylSection() {
           {/* vinyl disc peeking right */}
           <img src="/vinyl.png" alt="" style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)", width: 128, height: 128, borderRadius: "50%", animation: "vinylSpin 6s linear infinite", zIndex: 1 }} />
           {/* sleeve */}
-          <div style={{ position: "absolute", left: 0, top: 0, width: 118, height: 118, top: "50%", transform: "translateY(-50%)", background: v.sleeve, border: `1px solid ${v.accent}55`, borderRadius: 5, zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.3rem", boxShadow: "0 6px 20px rgba(0,0,0,0.7)" }}>
+          <div style={{ position: "absolute", left: 0, top: "50%", width: 118, height: 118, transform: "translateY(-50%)", background: v.sleeve, border: `1px solid ${v.accent}55`, borderRadius: 5, zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.3rem", boxShadow: "0 6px 20px rgba(0,0,0,0.7)" }}>
             <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.2em", color: v.accent, textTransform: "uppercase" }}>{v.idx}</span>
             <span style={{ fontFamily: "BillaMount, cursive", fontSize: "1rem", color: "#f5f0f0", fontWeight: "normal", textAlign: "center", lineHeight: 1.1 }}>{v.label}</span>
           </div>
