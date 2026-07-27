@@ -141,15 +141,16 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA
 
 /* ── VinylSection ── */
 function MobileVinylCard({ v, delay }: { v: typeof VINYL_DATA[0]; delay: number }) {
-  const S = 150; const D = 136; const r = D / 2;
+  const S = 158; const D = 142; const r = D / 2;
   const [h, setH] = useState(false);
   const scroll = () => { const el = document.getElementById(v.href); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); };
   const grooves = Array.from({ length: 24 }, (_, i) => r * 0.3 + (r * 0.62) * (i / 24));
   return (
+    /* width = S so flex centers by sleeve; disc overflows right naturally */
     <div onClick={scroll} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-      style={{ position: "relative", width: S + 60, height: S, cursor: "pointer", flexShrink: 0, animation: `vinylFloat 3.5s ease-in-out ${delay}s infinite` }}>
-      {/* disc — same SVG as desktop, slides right */}
-      <div style={{ position: "absolute", left: (S - D) / 2, top: (S - D) / 2, transform: `translateX(${h ? 52 : 26}px)`, transition: "transform 0.55s cubic-bezier(0.34,1.08,0.64,1)", zIndex: 1 }}>
+      style={{ position: "relative", width: S, height: S, cursor: "pointer", flexShrink: 0, overflow: "visible", animation: `vinylFloat 3.5s ease-in-out ${delay}s infinite` }}>
+      {/* disc — same SVG as desktop, slides right, overflows card div */}
+      <div style={{ position: "absolute", left: (S - D) / 2, top: (S - D) / 2, transform: `translateX(${h ? 54 : 27}px)`, transition: "transform 0.55s cubic-bezier(0.34,1.08,0.64,1)", zIndex: 1 }}>
         <svg width={D} height={D} viewBox={`0 0 ${D} ${D}`} style={{ display: "block", animation: "vinylSpin 6s linear infinite" }}>
           <circle cx={r} cy={r} r={r} fill="#090909"/>
           {grooves.map((gr, i) => <circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"} strokeWidth="0.55"/>)}
@@ -163,9 +164,9 @@ function MobileVinylCard({ v, delay }: { v: typeof VINYL_DATA[0]; delay: number 
       <div style={{ position: "absolute", left: 0, top: 0, width: S, height: S, zIndex: 2, borderRadius: 5, overflow: "hidden", boxShadow: h ? "0 20px 56px rgba(0,0,0,0.85), 0 4px 14px rgba(0,0,0,0.6)" : "0 8px 32px rgba(0,0,0,0.7)", transform: h ? "translateX(-50px) rotate(-10deg)" : "translateX(0) rotate(0deg)", transition: "transform 0.5s cubic-bezier(0.34,1.08,0.64,1), box-shadow 0.4s ease" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/vinyl-sleeve.png" alt="" draggable={false} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", textAlign: "center", padding: "0.65rem" }}>
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", textAlign: "center", padding: "0.6rem" }}>
           <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.18em", color: "#960018", fontWeight: 700 }}>{v.idx}</span>
-          <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.35rem", color: "#960018", lineHeight: 1.0, fontWeight: 700, whiteSpace: "nowrap" }}>{v.label}</p>
+          <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.05rem", color: "#960018", lineHeight: 1.05, fontWeight: 700 }}>{v.label}</p>
           <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.38rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#960018", fontWeight: 600 }}>tap to explore</span>
         </div>
       </div>
