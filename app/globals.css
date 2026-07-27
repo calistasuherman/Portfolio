@@ -314,11 +314,9 @@ body.page-fade-out {
     max-width: 80px !important;
   }
 
-  /* Orbit carousel — scale down + pull closer to description */
+  /* Orbit carousel — pull videos up closer to description text */
   .orbit-videos-wrap {
-    padding-top: 16vh !important;
-    transform: scale(0.52) !important;
-    transform-origin: center top !important;
+    padding-top: 18vh !important;
   }
 
   /* Contact headline — bigger on mobile */
@@ -326,14 +324,12 @@ body.page-fade-out {
     font-size: clamp(3.2rem, 17vw, 5rem) !important;
   }
 
-  /* Reduce orbit carousel scroll height so gap to next section is smaller */
+  /* Reduce orbit carousel scroll height + motion editing top padding */
   .orbit-section {
-    height: 110vh !important;
+    height: 150vh !important;
   }
-
-  /* Reduce motion editing top padding on mobile */
   .motion-editing-section {
-    padding-top: 2rem !important;
+    padding-top: 1.5rem !important;
   }
 }
 
