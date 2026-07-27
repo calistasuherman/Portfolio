@@ -142,14 +142,7 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA
 /* ── VinylSection ── */
 function VinylSection() {
   const [mounted, setMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
+  useEffect(() => { setMounted(true); }, []);
 
   const getPositions = () => {
     const w = typeof window !== "undefined" ? window.innerWidth : 1200;
@@ -161,43 +154,14 @@ function VinylSection() {
   };
   const positions = mounted ? getPositions() : [];
 
-  if (mounted && isMobile) {
-    const VinylCard = ({ v }: { v: typeof VINYL_DATA[0] }) => (
-      <a href={`#${v.href}`}
-        onClick={e => { e.preventDefault(); const el = document.getElementById(v.href); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }}
-        style={{ textDecoration: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.55rem" }}>
-        <div style={{ position: "relative", width: 148, height: 148 }}>
-          {/* vinyl disc peeking right */}
-          <img src="/vinyl.png" alt="" style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)", width: 128, height: 128, borderRadius: "50%", animation: "vinylSpin 6s linear infinite", zIndex: 1 }} />
-          {/* sleeve */}
-          <div style={{ position: "absolute", left: 0, top: "50%", width: 118, height: 118, transform: "translateY(-50%)", background: v.sleeve, border: `1px solid ${v.accent}55`, borderRadius: 5, zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.3rem", boxShadow: "0 6px 20px rgba(0,0,0,0.7)" }}>
-            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.2em", color: v.accent, textTransform: "uppercase" }}>{v.idx}</span>
-            <span style={{ fontFamily: "BillaMount, cursive", fontSize: "1rem", color: "#f5f0f0", fontWeight: "normal", textAlign: "center", lineHeight: 1.1 }}>{v.label}</span>
-          </div>
-        </div>
-        <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.16em", color: "rgba(245,240,240,0.35)", textTransform: "uppercase" }}>tap to explore</span>
-      </a>
-    );
-    return (
-      <div style={{ paddingTop: "calc(80px + 2rem)", paddingBottom: "1rem" }}>
-        {/* Row 1: first 2 vinyls */}
-        <div style={{ display: "flex", justifyContent: "center", gap: "1rem", padding: "0 1.5rem 1rem" }}>
-          {VINYL_DATA.slice(0, 2).map(v => <VinylCard key={v.href} v={v} />)}
-        </div>
-        {/* Row 2: third vinyl centered */}
-        <div style={{ display: "flex", justifyContent: "center", padding: "0 1.5rem 0.5rem" }}>
-          <VinylCard v={VINYL_DATA[2]} />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div style={{ paddingTop: "calc(80px + 2.5rem)", paddingBottom: "2rem" }}>
-      <div style={{ position: "relative", height: SLEEVE + 60, overflow: "visible" }}>
-        {mounted && VINYL_DATA.map((v, i) => (
-          <VinylUnit key={v.href} v={v} defaultX={positions[i].x} defaultY={positions[i].y} floatDelay={i * 0.8} />
-        ))}
+      <div className="vinyl-section-outer" style={{ position: "relative", height: SLEEVE + 60, overflow: "visible" }}>
+        <div className="vinyl-mobile-scale">
+          {mounted && VINYL_DATA.map((v, i) => (
+            <VinylUnit key={v.href} v={v} defaultX={positions[i].x} defaultY={positions[i].y} floatDelay={i * 0.8} />
+          ))}
+        </div>
       </div>
     </div>
   );
