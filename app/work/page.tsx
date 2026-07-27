@@ -140,9 +140,36 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA
 }
 
 /* ── VinylSection ── */
+function MobileVinylCard({ v, delay }: { v: typeof VINYL_DATA[0]; delay: number }) {
+  const S = 144; const D = 128;
+  const [h, setH] = useState(false);
+  const scroll = () => { const el = document.getElementById(v.href); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); };
+  return (
+    <div onClick={scroll} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
+      style={{ position: "relative", width: S + 32, height: S, cursor: "pointer", flexShrink: 0, animation: `vinylFloat 3.5s ease-in-out ${delay}s infinite` }}>
+      {/* disc peeks right */}
+      <div style={{ position: "absolute", left: (S - D) / 2, top: (S - D) / 2, transform: `translateX(${h ? 24 : 12}px)`, transition: "transform 0.55s cubic-bezier(0.34,1.08,0.64,1)", zIndex: 1 }}>
+        <img src="/vinyl.png" alt="" style={{ width: D, height: D, borderRadius: "50%", animation: "vinylSpin 6s linear infinite", display: "block" }} />
+      </div>
+      {/* sleeve slides left on hover */}
+      <div style={{ position: "absolute", left: 0, top: 0, width: S, height: S, zIndex: 2, background: v.sleeve, border: `1px solid ${v.accent}44`, borderRadius: 5, boxShadow: h ? "0 16px 40px rgba(0,0,0,0.85)" : "0 6px 24px rgba(0,0,0,0.7)", transform: h ? "translateX(-22px) rotate(-10deg)" : "translateX(0) rotate(0deg)", transition: "transform 0.5s cubic-bezier(0.34,1.08,0.64,1), box-shadow 0.4s ease", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.35rem" }}>
+        <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.2em", color: v.accent, textTransform: "uppercase" }}>{v.idx}</span>
+        <span style={{ fontFamily: "BillaMount, cursive", fontSize: "1.05rem", color: "#f5f0f0", fontWeight: "normal", textAlign: "center", lineHeight: 1.1 }}>{v.label}</span>
+      </div>
+    </div>
+  );
+}
+
 function VinylSection() {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const getPositions = () => {
     const w = typeof window !== "undefined" ? window.innerWidth : 1200;
@@ -154,14 +181,25 @@ function VinylSection() {
   };
   const positions = mounted ? getPositions() : [];
 
+  if (mounted && isMobile) {
+    return (
+      <div style={{ paddingTop: "calc(80px + 2rem)", paddingBottom: "1rem" }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: "1rem", padding: "0 1rem 1.5rem" }}>
+          {VINYL_DATA.slice(0, 2).map((v, i) => <MobileVinylCard key={v.href} v={v} delay={i * 0.8} />)}
+        </div>
+        <div style={{ display: "flex", justifyContent: "center", padding: "0 1rem 0.5rem" }}>
+          <MobileVinylCard v={VINYL_DATA[2]} delay={1.6} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ paddingTop: "calc(80px + 2.5rem)", paddingBottom: "2rem" }}>
-      <div className="vinyl-section-outer" style={{ position: "relative", height: SLEEVE + 60, overflow: "visible" }}>
-        <div className="vinyl-mobile-scale">
-          {mounted && VINYL_DATA.map((v, i) => (
-            <VinylUnit key={v.href} v={v} defaultX={positions[i].x} defaultY={positions[i].y} floatDelay={i * 0.8} />
-          ))}
-        </div>
+      <div style={{ position: "relative", height: SLEEVE + 60, overflow: "visible" }}>
+        {mounted && VINYL_DATA.map((v, i) => (
+          <VinylUnit key={v.href} v={v} defaultX={positions[i].x} defaultY={positions[i].y} floatDelay={i * 0.8} />
+        ))}
       </div>
     </div>
   );

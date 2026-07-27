@@ -326,21 +326,9 @@ body.page-fade-out {
     font-size: clamp(3.2rem, 17vw, 5rem) !important;
   }
 
-  /* Vinyl section — scale down to fit mobile, clip overflow */
-  .vinyl-section-outer {
-    height: 240px !important;
-    overflow: hidden !important;
-  }
-  .vinyl-mobile-scale {
-    transform: scale(0.6);
-    transform-origin: top center;
-    position: relative;
-    height: 100%;
-  }
-
   /* Reduce orbit carousel scroll height so gap to next section is smaller */
   .orbit-section {
-    height: 160vh !important;
+    height: 110vh !important;
   }
 
   /* Reduce motion editing top padding on mobile */
