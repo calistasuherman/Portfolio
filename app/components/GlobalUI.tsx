@@ -2,15 +2,16 @@
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
+import { MEDIA_BASE } from "../lib/media";
 
 /* ── Playlist ─────────────────────────────────────────────────── */
 const SONGS = [
-  { title: "The Lady in My Life",          artist: "Michael Jackson", src: "/songs/lady in my life.mp4"              },
-  { title: "(I Like) The Way You Love Me", artist: "Michael Jackson", src: "/songs/I like the way you love me.mp4"   },
-  { title: "All I Do Is Think Of You",     artist: "Michael Jackson", src: "/songs/all i do is think of you.mp4"     },
-  { title: "The Girl Is Mine ft. Paul McCartney", artist: "Michael Jackson", src: "/songs/the girl is mine.mp4" },
-  { title: "You Rock My World",            artist: "Michael Jackson", src: "/songs/rock my world.mp4"                },
-  { title: "Loving You",                   artist: "Michael Jackson", src: "/songs/loving you.mp4"                   },
+  { title: "The Lady in My Life",          artist: "Michael Jackson", src: `${MEDIA_BASE}/songs/lady in my life.mp4`              },
+  { title: "(I Like) The Way You Love Me", artist: "Michael Jackson", src: `${MEDIA_BASE}/songs/I like the way you love me.mp4`   },
+  { title: "All I Do Is Think Of You",     artist: "Michael Jackson", src: `${MEDIA_BASE}/songs/all i do is think of you.mp4`     },
+  { title: "The Girl Is Mine ft. Paul McCartney", artist: "Michael Jackson", src: `${MEDIA_BASE}/songs/the girl is mine.mp4` },
+  { title: "You Rock My World",            artist: "Michael Jackson", src: `${MEDIA_BASE}/songs/rock my world.mp4`                },
+  { title: "Loving You",                   artist: "Michael Jackson", src: `${MEDIA_BASE}/songs/loving you.mp4`                   },
 ];
 
 /* ── Module-level audio singleton ────────────────────────────────

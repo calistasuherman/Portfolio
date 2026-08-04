@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { MEDIA_BASE } from "../lib/media";
 
 export default function NavHeader() {
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
@@ -76,7 +77,7 @@ export default function NavHeader() {
   return (
     <>
       {/* Hidden audio element */}
-      <audio ref={audioRef} src="/mj-loving-you.mp4" loop preload="none" />
+      <audio ref={audioRef} src={`${MEDIA_BASE}/mj-loving-you.mp4`} loop preload="none" />
 
       {/* Custom cursor */}
       <div

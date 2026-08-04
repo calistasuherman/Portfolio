@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Reveal } from "../components/Reveal";
 import { lenisScrollTo } from "../components/GlobalUI";
+import { MEDIA_BASE } from "../lib/media";
 
 /* ── Data ── */
 const CINEMA_VIDEOS = [
@@ -10,20 +11,20 @@ const CINEMA_VIDEOS = [
   "/cinema/cinema7.mp4", "/cinema/cinema8.mp4", "/cinema/cinema9.mp4",
   "/cinema/cinema10.mp4", "/cinema/cinema11.mp4", "/cinema/cinema12.MP4",
   "/cinema/cinema13.MOV", "/cinema/cinema14.mp4",
-].map(src => ({ src }));
+].map(src => ({ src: `${MEDIA_BASE}${src}` }));
 
 const VE_VIDEOS = [
   "ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4",
   "VideoStar1.mp4","VideoStar2.mp4","VideoStar3.mp4","VideoStar4.mp4","VideoStar5.mp4",
-].map(f => ({ src: `/ve/${f}` }));
+].map(f => ({ src: `${MEDIA_BASE}/ve/${f}` }));
 
 const COLLAB_VIDEOS = [
-  { src: "/yt/aelfricedenn.mp4", label: "Aelfric Eden", category: "Fashion"  },
-  { src: "/yt/betterhelpp.mp4",  label: "BetterHelp",   category: "Wellness" },
-  { src: "/yt/just4kiraa.mp4",   label: "Just4Kira",    category: "Beauty"   },
-  { src: "/yt/lewkinn.mp4",      label: "Lewkin",        category: "Fashion"  },
-  { src: "/yt/teddyblakee.mp4",  label: "Teddy Blake",  category: "Luxury"   },
-  { src: "/yt/bypassgptt.mp4",   label: "BypassGPT",    category: "Tech"     },
+  { src: `${MEDIA_BASE}/yt/aelfricedenn.mp4`, label: "Aelfric Eden", category: "Fashion"  },
+  { src: `${MEDIA_BASE}/yt/betterhelpp.mp4`,  label: "BetterHelp",   category: "Wellness" },
+  { src: `${MEDIA_BASE}/yt/just4kiraa.mp4`,   label: "Just4Kira",    category: "Beauty"   },
+  { src: `${MEDIA_BASE}/yt/lewkinn.mp4`,      label: "Lewkin",        category: "Fashion"  },
+  { src: `${MEDIA_BASE}/yt/teddyblakee.mp4`,  label: "Teddy Blake",  category: "Luxury"   },
+  { src: `${MEDIA_BASE}/yt/bypassgptt.mp4`,   label: "BypassGPT",    category: "Tech"     },
 ];
 
 /* ── Vinyl data ── */

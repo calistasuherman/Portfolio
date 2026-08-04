@@ -1,14 +1,15 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Reveal } from "./components/Reveal";
+import { MEDIA_BASE } from "./lib/media";
 
 /* ── Data ── */
 const LABELS = ["Content Creator", "World Traveler", "Industrial Engineer", "Coffee Connoisseur", "Gen Z (21 Y/O)", "Fashion Lover"];
 
 const FEATURED = [
-  { src: "/cinema/cinema3.mp4", tag: "Videography" },
-  { src: "/ve/ve1.mp4",         tag: "Motion Editing" },
-  { src: "/yt/betterhelpp.mp4", tag: "Partnerships" },
+  { src: `${MEDIA_BASE}/cinema/cinema3.mp4`, tag: "Videography" },
+  { src: `${MEDIA_BASE}/ve/ve1.mp4`,         tag: "Motion Editing" },
+  { src: `${MEDIA_BASE}/yt/betterhelpp.mp4`, tag: "Partnerships" },
 ];
 
 const SERVICES = [
@@ -136,7 +137,7 @@ export default function Home() {
       <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 overflow-hidden" style={{ background: "#0a0000" }}>
         <video autoPlay muted loop playsInline preload="auto"
           className="absolute inset-0 w-full h-full object-cover" style={{ zIndex: 0 }}>
-          <source src="/background/pg1.mp4" type="video/mp4" />
+          <source src={`${MEDIA_BASE}/background/pg1.mp4`} type="video/mp4" />
         </video>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center pt-16" style={{ zIndex: 3 }}>
