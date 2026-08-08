@@ -30,6 +30,13 @@ const SERVICES = [
   },
 ];
 
+const MEDIA_KIT_STATS = [
+  { value: "9.6K", label: "Instagram Followers" },
+  { value: "5.1M", label: "Views (Last 30 Days)" },
+  { value: "248K", label: "Interactions (Last 30 Days)" },
+  { value: "+67%", label: "Follower Growth (30 Days)" },
+];
+
 const LOGOS = Array.from({ length: 14 }, (_, i) => `/logos/portfolio${i + 1}.png`);
 
 const TOOLS = [
@@ -234,6 +241,37 @@ export default function Home() {
               <FlipPhoto />
             </Reveal>
           </div>
+        </div>
+      </section>
+
+      {/* ── Media Kit ── */}
+      <section id="media-kit" className="relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "3rem", paddingBottom: "5rem" }}>
+        <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
+          <Reveal>
+            <h2 style={{ lineHeight: 1.1, marginBottom: "0.75rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
+              <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>M</span>
+              <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>edia Kit</span>
+            </h2>
+            <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", color: "rgba(245,240,240,0.5)", letterSpacing: "0.05em", marginBottom: "2.5rem" }}>
+              @cal1star &nbsp;|&nbsp; Instagram Insights
+            </p>
+            <div style={{ borderBottom: "1px solid rgba(245,240,240,0.2)", marginBottom: "2.5rem" }} />
+          </Reveal>
+          <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "2rem" }}>
+            {MEDIA_KIT_STATS.map((stat, i) => (
+              <Reveal key={stat.label} delay={i * 100}>
+                <div style={{ textAlign: "center" }}>
+                  <p style={{ fontFamily: "var(--font-playfair)", fontWeight: 600, fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#960018", lineHeight: 1 }}>{stat.value}</p>
+                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginTop: "0.6rem" }}>{stat.label}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={400}>
+            <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.62rem, 0.95vw, 0.78rem)", color: "rgba(245,240,240,0.45)", letterSpacing: "0.03em", textAlign: "center", marginTop: "3rem" }}>
+              Audience: 78% aged 18–34&nbsp;&nbsp;·&nbsp;&nbsp;Primarily US-based&nbsp;&nbsp;·&nbsp;&nbsp;58% male / 42% female
+            </p>
+          </Reveal>
         </div>
       </section>
 
