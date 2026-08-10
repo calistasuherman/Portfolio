@@ -9,8 +9,8 @@ const CINEMA_VIDEOS = [
   "/cinema/cinema1.mp4", "/cinema/cinema2.mp4", "/cinema/cinema3.mp4",
   "/cinema/cinema4.mp4", "/cinema/cinema5.mp4", "/cinema/cinema6.mp4",
   "/cinema/cinema7.mp4", "/cinema/cinema8.mp4", "/cinema/cinema9.mp4",
-  "/cinema/cinema10.mp4", "/cinema/cinema11.mp4", "/cinema/cinema12.MP4",
-  "/cinema/cinema13.MOV", "/cinema/cinema14.mp4",
+  "/cinema/cinema10.mp4", "/cinema/cinema11.mp4", "/cinema/cinema12.mp4",
+  "/cinema/cinema13.mp4", "/cinema/cinema14.mp4",
 ].map(src => ({ src: `${MEDIA_BASE}${src}` }));
 
 const VE_VIDEOS = [
@@ -259,13 +259,32 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
   useEffect(() => { if (!expanded) return; const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeCard(); }; window.addEventListener("keydown", onKey); return () => window.removeEventListener("keydown", onKey); }, [expanded]);
 
   useEffect(() => {
+    const n = videos.length;
+    const ANGLE_STEP = 360 / n;
+    const VISIBLE_ARC = 50; // only cards within this many degrees of front-facing are allowed to play
+    let lastPlaybackCheck = 0;
+
+    const updatePlayback = (time: number) => {
+      if (time - lastPlaybackCheck < 150) return; // throttle — no need to check every frame
+      lastPlaybackCheck = time;
+      const vids = videosRef.current?.querySelectorAll("video");
+      if (!vids) return;
+      vids.forEach((v, i) => {
+        let eff = (ANGLE_STEP * i + dispRotY.current) % 360;
+        if (eff > 180) eff -= 360;
+        if (eff < -180) eff += 360;
+        const shouldPlay = Math.abs(eff) < VISIBLE_ARC;
+        if (shouldPlay && v.paused) v.play().catch(() => {});
+        else if (!shouldPlay && !v.paused) v.pause();
+      });
+    };
+
     const io = new IntersectionObserver(([entry]) => {
       visibleRef.current = entry.isIntersecting;
-      const vids = videosRef.current?.querySelectorAll("video") ?? [];
       if (entry.isIntersecting) {
-        vids.forEach(v => { v.play().catch(() => {}); });
         if (!rafRef.current) tick();
       } else {
+        const vids = videosRef.current?.querySelectorAll("video") ?? [];
         vids.forEach(v => { v.pause(); });
         if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = undefined; }
       }
@@ -287,10 +306,11 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
       mouseRotX.current = 8 + (d > 0 ? d * 0.8 : d * 2);
     };
 
-    function tick() {
+    function tick(time: number = 0) {
       dispRotY.current += (scrollRotY.current + mouseRotY.current - dispRotY.current) * 0.05;
       dispRotX.current += (mouseRotX.current - dispRotX.current) * 0.05;
       if (innerRef.current) innerRef.current.style.transform = `rotateX(${dispRotX.current}deg) rotateY(${dispRotY.current}deg)`;
+      updatePlayback(time);
       rafRef.current = requestAnimationFrame(tick);
     }
 
@@ -302,7 +322,7 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
       window.removeEventListener("mousemove", onMouse);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [videos.length]);
 
   const n = videos.length;
   return (
@@ -322,7 +342,7 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
             <div ref={innerRef} style={{ position: "relative", width: `${cardW}px`, height: `${cardH}px`, transformStyle: "preserve-3d", transform: "rotateX(8deg) rotateY(0deg)", willChange: "transform" }}>
               {videos.map(({ src }, i) => (
                 <div key={src} onClick={(e) => openCard(src, e)} style={{ position: "absolute", width: `${cardW}px`, height: `${cardH}px`, transform: `rotateY(${(360 / n) * i}deg) translateZ(${radius}px)`, borderRadius: "6px", overflow: "hidden", border: "1px solid rgba(139,0,0,0.3)", boxShadow: "0 16px 48px rgba(0,0,0,0.85), 0 4px 12px rgba(0,0,0,0.6)", cursor: "pointer" }}>
-                  <video src={src} autoPlay muted loop playsInline preload="none" disablePictureInPicture style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
+                  <video src={src} muted loop playsInline preload="none" disablePictureInPicture style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
                 </div>
               ))}
             </div>
