@@ -317,12 +317,12 @@ function OrbitCarousel({ id, videos, cardW, cardH, radius, scrollHeight = "300vh
             {desc && <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.72rem", color: "rgba(245,240,240,0.42)", lineHeight: 1.75, paddingLeft: sectionIndex ? "calc(0.58rem + 1.2rem + 4px)" : 0, maxWidth: "480px" }}>{desc}</p>}
           </div>
         </div>
-        <div ref={videosRef} className="orbit-videos-wrap" style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "30vh", willChange: "transform" }}>
+        <div ref={videosRef} className="orbit-videos-wrap" style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: "8vh", willChange: "transform" }}>
           <div style={{ perspective: "3200px", willChange: "transform" }}>
             <div ref={innerRef} style={{ position: "relative", width: `${cardW}px`, height: `${cardH}px`, transformStyle: "preserve-3d", transform: "rotateX(8deg) rotateY(0deg)", willChange: "transform" }}>
               {videos.map(({ src }, i) => (
                 <div key={src} onClick={(e) => openCard(src, e)} style={{ position: "absolute", width: `${cardW}px`, height: `${cardH}px`, transform: `rotateY(${(360 / n) * i}deg) translateZ(${radius}px)`, borderRadius: "6px", overflow: "hidden", border: "1px solid rgba(139,0,0,0.3)", boxShadow: "0 16px 48px rgba(0,0,0,0.85), 0 4px 12px rgba(0,0,0,0.6)", cursor: "pointer" }}>
-                  <video src={src} autoPlay muted loop playsInline preload="none" disablePictureInPicture style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
+                  <video src={src} autoPlay muted loop playsInline preload="metadata" disablePictureInPicture style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
                 </div>
               ))}
             </div>
