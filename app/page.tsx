@@ -31,10 +31,9 @@ const SERVICES = [
 ];
 
 const MEDIA_KIT_STATS = [
-  { value: "9.6K", label: "Instagram Followers" },
-  { value: "5.1M", label: "Views (Last 30 Days)" },
-  { value: "248K", label: "Interactions (Last 30 Days)" },
-  { value: "+67%", label: "Follower Growth (30 Days)" },
+  { value: "5.3M", label: "Views (Last 30 Days)" },
+  { value: "266K", label: "Interactions (Last 30 Days)" },
+  { value: "+112.3%", label: "Follower Growth (30 Days)" },
 ];
 
 const LOGOS = Array.from({ length: 14 }, (_, i) => `/logos/portfolio${i + 1}.png`);
@@ -220,7 +219,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", color: "rgba(245,240,240,0.5)", letterSpacing: "0.05em" }}>
-              @cal1star &nbsp;|&nbsp; 4K+ Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
+              @cal1star &nbsp;|&nbsp; 10K+ Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
             </p>
             <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", lineHeight: 1.85, textShadow: "0 2px 12px rgba(0,0,0,0.55)", fontWeight: 400 }}>
               Hi! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
@@ -267,11 +266,11 @@ export default function Home() {
       {/* ── Media Kit Stats ── */}
       <section id="media-kit" className="relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
         <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
-          <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "2rem" }}>
+          <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "2rem" }}>
             {MEDIA_KIT_STATS.map((stat, i) => (
               <Reveal key={stat.label} delay={i * 100}>
                 <div style={{ textAlign: "center" }}>
-                  <p style={{ fontFamily: "var(--font-playfair)", fontWeight: 600, fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#960018", lineHeight: 1 }}>{stat.value}</p>
+                  <p style={{ fontFamily: "var(--font-playfair)", fontWeight: 600, fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#ffffff", lineHeight: 1 }}>{stat.value}</p>
                   <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginTop: "0.6rem" }}>{stat.label}</p>
                 </div>
               </Reveal>
