@@ -231,66 +231,65 @@ function OrbitTitle({ parts }: { parts: { text: string; script?: boolean }[] }) 
   );
 }
 
-/* ── FilmstripCard ── */
-function FilmstripCard({ src, idx, onClick }: { src: string; idx: number; onClick: () => void }) {
-  const [hovered, setHovered] = useState(false);
+/* ── CinematicClip ── */
+function CinematicClip({ src, idx, total, onClick }: { src: string; idx: number; total: number; onClick: () => void }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [revealed, setRevealed] = useState(false);
+
   useEffect(() => {
-    const v = videoRef.current; if (!v) return;
-    if (hovered) v.play().catch(() => {});
-    else { v.pause(); v.currentTime = 0; }
-  }, [hovered]);
+    const wrap = wrapRef.current, video = videoRef.current;
+    if (!wrap || !video) return;
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setRevealed(true);
+      if (entry.intersectionRatio > 0.35) video.play().catch(() => {});
+      else video.pause();
+    }, { threshold: [0, 0.35] });
+    io.observe(wrap);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      ref={wrapRef}
       onClick={onClick}
       style={{
-        flexShrink: 0, scrollSnapAlign: "start",
-        width: "clamp(230px, 26vw, 320px)", aspectRatio: "16/9",
-        position: "relative", overflow: "hidden", borderRadius: "6px", cursor: "pointer",
-        border: "1px solid rgba(139,0,0,0.3)",
-        boxShadow: "0 16px 48px rgba(0,0,0,0.85), 0 4px 12px rgba(0,0,0,0.6)",
+        position: "relative", width: "100%", height: "min(82vh, 760px)",
+        overflow: "hidden", cursor: "pointer",
+        opacity: revealed ? 1 : 0,
+        transform: revealed ? "scale(1)" : "scale(0.97)",
+        transition: "opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1)",
       }}
     >
       <video ref={videoRef} src={src} muted loop playsInline preload="metadata" disablePictureInPicture
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.6s ease", transform: hovered ? "scale(1.04)" : "scale(1)" }} />
-      <div style={{ position: "absolute", inset: 0, background: hovered ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.38)", transition: "background 0.4s ease" }} />
-      <span style={{
-        position: "absolute", bottom: "10px", left: "14px",
-        fontFamily: "var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.16em",
-        color: "rgba(245,240,240,0.5)", opacity: hovered ? 0 : 1, transition: "opacity 0.25s ease",
-      }}>
-        {String(idx + 1).padStart(2, "0")}
-      </span>
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.15) 100%)" }} />
+      <div style={{ position: "absolute", bottom: "1.75rem", left: "clamp(1.5rem, 5vw, 4rem)", display: "flex", alignItems: "baseline", gap: "0.5rem" }}>
+        <span style={{ fontFamily: "var(--font-playfair)", fontSize: "1.4rem", color: "#960018" }}>{String(idx + 1).padStart(2, "0")}</span>
+        <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.68rem", color: "rgba(245,240,240,0.4)", letterSpacing: "0.1em" }}>/ {String(total).padStart(2, "0")}</span>
+      </div>
       <div style={{
-        position: "absolute", bottom: "14px", right: "14px",
+        position: "absolute", bottom: "1.6rem", right: "clamp(1.5rem, 5vw, 4rem)",
         background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)",
-        borderRadius: "50%", width: "34px", height: "34px",
+        borderRadius: "50%", width: "44px", height: "44px",
         display: "flex", alignItems: "center", justifyContent: "center",
-        opacity: hovered ? 1 : 0, transform: hovered ? "scale(1)" : "scale(0.7)",
-        transition: "opacity 0.3s ease, transform 0.3s ease",
+        border: "1px solid rgba(245,240,240,0.2)",
       }}>
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
       </div>
     </div>
   );
 }
 
-/* ── Filmstrip ── (Videography) */
-function Filmstrip({ videos }: { videos: { src: string }[] }) {
+/* ── CinematicScroll ── (Videography) */
+function CinematicScroll({ videos }: { videos: { src: string }[] }) {
   const [lightbox, setLightbox] = useState<string | null>(null);
   const close = useCallback(() => setLightbox(null), []);
   return (
-    <div style={{ position: "relative" }}>
-      <div className="hide-scrollbar" style={{
-        display: "flex", gap: "1rem", overflowX: "auto", scrollSnapType: "x mandatory",
-        paddingBottom: "0.5rem", maskImage: "linear-gradient(to right, transparent, black 2%, black 96%, transparent)",
-      }}>
-        {videos.map(({ src }, i) => (
-          <FilmstripCard key={src} src={src} idx={i} onClick={() => setLightbox(src)} />
-        ))}
-      </div>
+    <div style={{ position: "relative", width: "100vw", marginLeft: "calc(50% - 50vw)", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+      {videos.map(({ src }, i) => (
+        <CinematicClip key={src} src={src} idx={i} total={videos.length} onClick={() => setLightbox(src)} />
+      ))}
       {lightbox && <Lightbox src={lightbox} onClose={close} />}
     </div>
   );
@@ -496,7 +495,7 @@ export default function WorkPage() {
               desc="Cinematic short-form and long-form content — filmed, directed, and edited from concept to final cut."
             />
           </Reveal>
-          <Reveal delay={80}><Filmstrip videos={CINEMA_VIDEOS} /></Reveal>
+          <CinematicScroll videos={CINEMA_VIDEOS} />
         </div>
       </section>
 
