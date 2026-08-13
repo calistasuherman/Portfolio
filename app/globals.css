@@ -314,20 +314,11 @@ body.page-fade-out {
     max-width: 80px !important;
   }
 
-  /* Orbit carousel — pull videos up closer to description text */
-  .orbit-videos-wrap {
-    padding-top: 18vh !important;
-  }
-
   /* Contact headline — bigger on mobile */
   .contact-headline {
     font-size: clamp(3.2rem, 17vw, 5rem) !important;
   }
 
-  /* Reduce orbit carousel scroll height + motion editing top padding */
-  .orbit-section {
-    height: 150vh !important;
-  }
   .motion-editing-section {
     padding-top: 1.5rem !important;
   }
