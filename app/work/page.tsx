@@ -231,145 +231,127 @@ function OrbitTitle({ parts }: { parts: { text: string; script?: boolean }[] }) 
   );
 }
 
-/* ── ReelThumb ── */
-function ReelThumb({ src, active, angleDeg, radius, size, onClick }: {
-  src: string; active: boolean; angleDeg: number; radius: number; size: number; onClick: () => void;
-}) {
+/* ── TimelineClip ── */
+function TimelineClip({ src, idx, active, onClick }: { src: string; idx: number; active: boolean; onClick: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const rad = (angleDeg * Math.PI) / 180;
-  const x = Math.cos(rad) * radius;
-  const y = Math.sin(rad) * radius;
   return (
     <div
       onClick={onClick}
       style={{
-        position: "absolute", top: "50%", left: "50%", width: size, height: size,
-        transform: `translate(${x - size / 2}px, ${y - size / 2}px) scale(${active ? 1.18 : 1})`,
-        borderRadius: "50%", overflow: "hidden", cursor: "pointer",
-        border: active ? "2px solid #960018" : "1px solid rgba(245,240,240,0.22)",
-        boxShadow: active ? "0 6px 20px rgba(150,0,24,0.5)" : "0 3px 10px rgba(0,0,0,0.5)",
-        transition: "transform 0.35s cubic-bezier(0.34,1.08,0.64,1), border 0.3s ease, box-shadow 0.3s ease",
-        zIndex: active ? 3 : 1,
+        position: "relative", flex: "1 0 0", height: "100%", overflow: "hidden", cursor: "pointer",
+        borderRight: "1px solid rgba(10,0,0,0.6)",
+        background: "#0a0000",
       }}
     >
       <video ref={videoRef} src={src} muted playsInline preload="metadata" disablePictureInPicture
         onLoadedMetadata={() => { if (videoRef.current) videoRef.current.currentTime = 1; }}
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", opacity: active ? 1 : 0.55, filter: active ? "none" : "grayscale(0.7) brightness(0.7)", transition: "opacity 0.3s ease, filter 0.3s ease", pointerEvents: "none" }} />
+        style={{
+          width: "100%", height: "100%", objectFit: "cover", display: "block",
+          filter: active ? "none" : "grayscale(0.75) brightness(0.55)",
+          transition: "filter 0.3s ease",
+        }} />
+      <span style={{
+        position: "absolute", bottom: "3px", left: "4px",
+        fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.05em",
+        color: active ? "#e8a0a8" : "rgba(245,240,240,0.45)",
+      }}>
+        {String(idx + 1).padStart(2, "0")}
+      </span>
     </div>
   );
 }
 
-/* ── ReelSelector ── (Videography) */
-function ReelSelector({ videos }: { videos: { src: string }[] }) {
+/* ── EditorTimeline ── (Videography) */
+function EditorTimeline({ videos }: { videos: { src: string }[] }) {
   const n = videos.length;
-  const angleStep = 360 / n;
-
-  const [vw, setVw] = useState(1200);
-  useEffect(() => {
-    const update = () => setVw(window.innerWidth);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-  const small = vw < 640;
-  const RADIUS = small ? Math.max(115, Math.min(150, vw * 0.36)) : 250;
-  const THUMB = small ? 40 : 56;
-  const VIEWER_W = small ? Math.max(130, Math.min(160, vw * 0.36)) : 400;
-  const RING = RADIUS * 2 + THUMB;
-
-  const [rotation, setRotation] = useState(0);
-  const [smooth, setSmooth] = useState(false);
   const [activeIdx, setActiveIdx] = useState(0);
   const [lightbox, setLightbox] = useState<string | null>(null);
   const close = useCallback(() => setLightbox(null), []);
-  const drag = useRef({ on: false, startX: 0, startRotation: 0, moved: false });
+  const trackRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<HTMLVideoElement>(null);
+  const dragging = useRef(false);
+  const [scrub, setScrub] = useState(0.5 / n);
+
+  function setFromClientX(clientX: number) {
+    const track = trackRef.current;
+    if (!track) return;
+    const rect = track.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(0.999, (clientX - rect.left) / rect.width));
+    setScrub(ratio);
+    setActiveIdx(Math.floor(ratio * n));
+  }
 
   useEffect(() => {
-    let closest = 0, closestDiff = Infinity;
-    for (let i = 0; i < n; i++) {
-      const norm = (((i * angleStep + rotation) % 360) + 360) % 360;
-      const diff = Math.min(Math.abs(norm - 270), 360 - Math.abs(norm - 270));
-      if (diff < closestDiff) { closestDiff = diff; closest = i; }
-    }
-    setActiveIdx(closest);
-  }, [rotation, n, angleStep]);
+    const onMove = (e: MouseEvent) => { if (dragging.current) setFromClientX(e.clientX); };
+    const onUp = () => { dragging.current = false; };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
+  }, [n]);
 
   useEffect(() => {
     const v = viewerRef.current;
     if (v) { v.currentTime = 0; v.play().catch(() => {}); }
   }, [activeIdx]);
 
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      if (!drag.current.on) return;
-      const dx = e.clientX - drag.current.startX;
-      if (Math.abs(dx) > 3) drag.current.moved = true;
-      setRotation(drag.current.startRotation + dx * 0.6);
-    };
-    const onUp = () => { drag.current.on = false; document.body.style.cursor = ""; };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
-  }, []);
-
   function jumpTo(i: number) {
-    if (drag.current.moved) return;
-    setSmooth(true);
-    const norm = ((rotation % 360) + 360) % 360;
-    const targetNorm = (((270 - i * angleStep) % 360) + 360) % 360;
-    let delta = targetNorm - norm;
-    if (delta > 180) delta -= 360;
-    if (delta < -180) delta += 360;
-    setRotation(rotation + delta);
-    setTimeout(() => setSmooth(false), 450);
+    setActiveIdx(i);
+    setScrub((i + 0.5) / n);
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div>
+      {/* preview viewer */}
       <div
-        style={{ position: "relative", width: RING, height: RING, maxWidth: "100%" }}
-        onMouseDown={e => { drag.current = { on: true, startX: e.clientX, startRotation: rotation, moved: false }; document.body.style.cursor = "grabbing"; }}
+        onClick={() => setLightbox(videos[activeIdx].src)}
+        style={{
+          position: "relative", width: "100%", aspectRatio: "16/9", maxWidth: "820px", margin: "0 auto",
+          borderRadius: "6px", overflow: "hidden", cursor: "pointer",
+          border: "1px solid rgba(139,0,0,0.4)", boxShadow: "0 20px 60px rgba(0,0,0,0.8)",
+          background: "#050000",
+        }}
       >
-        {/* rotating ring layer */}
-        <div style={{ position: "absolute", inset: 0, cursor: "grab", transition: smooth ? "transform 0.45s cubic-bezier(0.16,1,0.3,1)" : "none" }}>
-          {videos.map(({ src }, i) => (
-            <ReelThumb key={src} src={src} active={i === activeIdx} angleDeg={i * angleStep + rotation} radius={RADIUS} size={THUMB} onClick={() => jumpTo(i)} />
-          ))}
+        <video ref={viewerRef} key={videos[activeIdx].src} src={videos[activeIdx].src} autoPlay muted loop playsInline preload="metadata" disablePictureInPicture
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 35%)" }} />
+        <div style={{ position: "absolute", bottom: "10px", left: "12px", display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
+          <span style={{ fontFamily: "var(--font-playfair)", fontSize: "1rem", color: "#e8a0a8" }}>{String(activeIdx + 1).padStart(2, "0")}</span>
+          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.1em" }}>/ {String(n).padStart(2, "0")}</span>
         </div>
-
-        {/* center viewer */}
-        <div
-          onClick={() => setLightbox(videos[activeIdx].src)}
-          style={{
-            position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)",
-            width: VIEWER_W, maxWidth: "68vw", aspectRatio: "16/9", zIndex: 5,
-            borderRadius: "6px", overflow: "hidden", cursor: "pointer",
-            border: "1px solid rgba(139,0,0,0.4)", boxShadow: "0 20px 60px rgba(0,0,0,0.8)",
-            background: "#050000",
-          }}
-        >
-          <video ref={viewerRef} key={videos[activeIdx].src} src={videos[activeIdx].src} autoPlay muted loop playsInline preload="metadata" disablePictureInPicture
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 35%)" }} />
-          <div style={{ position: "absolute", bottom: "10px", left: "12px", display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
-            <span style={{ fontFamily: "var(--font-playfair)", fontSize: "1rem", color: "#e8a0a8" }}>{String(activeIdx + 1).padStart(2, "0")}</span>
-            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.1em" }}>/ {String(n).padStart(2, "0")}</span>
-          </div>
-          <div style={{
-            position: "absolute", bottom: "8px", right: "10px",
-            background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)",
-            borderRadius: "50%", width: "30px", height: "30px",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            border: "1px solid rgba(245,240,240,0.2)",
-          }}>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
-          </div>
+        <div style={{
+          position: "absolute", bottom: "8px", right: "10px",
+          background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)",
+          borderRadius: "50%", width: "30px", height: "30px",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          border: "1px solid rgba(245,240,240,0.2)",
+        }}>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
         </div>
       </div>
-      <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginTop: "1.5rem" }}>
-        drag the reel to browse
-      </p>
+
+      {/* timeline track */}
+      <div style={{ maxWidth: "820px", margin: "1.75rem auto 0" }}>
+        <div
+          ref={trackRef}
+          onMouseDown={e => { dragging.current = true; setFromClientX(e.clientX); }}
+          style={{ position: "relative", height: "56px", display: "flex", cursor: "ew-resize", borderRadius: "3px", overflow: "hidden", border: "1px solid rgba(245,240,240,0.12)" }}
+        >
+          {videos.map(({ src }, i) => (
+            <TimelineClip key={src} src={src} idx={i} active={i === activeIdx} onClick={() => jumpTo(i)} />
+          ))}
+          {/* playhead */}
+          <div style={{
+            position: "absolute", top: "-6px", bottom: "-6px", left: `${scrub * 100}%`,
+            width: "2px", background: "#960018", pointerEvents: "none",
+            boxShadow: "0 0 8px rgba(150,0,24,0.8)",
+          }}>
+            <div style={{ position: "absolute", top: "-6px", left: "50%", transform: "translateX(-50%)", width: "10px", height: "10px", borderRadius: "50%", background: "#960018", boxShadow: "0 0 8px rgba(150,0,24,0.8)" }} />
+          </div>
+        </div>
+        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginTop: "1rem", textAlign: "center" }}>
+          drag the timeline to scrub
+        </p>
+      </div>
       {lightbox && <Lightbox src={lightbox} onClose={close} />}
     </div>
   );
@@ -562,7 +544,7 @@ export default function WorkPage() {
               desc="Cinematic short-form and long-form content — filmed, directed, and edited from concept to final cut."
             />
           </Reveal>
-          <Reveal delay={80}><ReelSelector videos={CINEMA_VIDEOS} /></Reveal>
+          <Reveal delay={80}><EditorTimeline videos={CINEMA_VIDEOS} /></Reveal>
         </div>
       </section>
 
