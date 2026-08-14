@@ -231,65 +231,82 @@ function OrbitTitle({ parts }: { parts: { text: string; script?: boolean }[] }) 
   );
 }
 
-/* ── CinematicClip ── */
-function CinematicClip({ src, idx, total, onClick }: { src: string; idx: number; total: number; onClick: () => void }) {
-  const wrapRef = useRef<HTMLDivElement>(null);
+/* ── SprocketStrip ── (film-perforation edge decoration) */
+function SprocketStrip() {
+  return (
+    <div style={{
+      height: "14px",
+      backgroundColor: "#0a0000",
+      backgroundImage: "radial-gradient(circle, rgba(245,240,240,0.35) 2.2px, transparent 2.6px)",
+      backgroundSize: "26px 14px",
+      backgroundRepeat: "repeat-x",
+      backgroundPosition: "13px center",
+    }} />
+  );
+}
+
+/* ── ContactFrame ── */
+function ContactFrame({ src, idx, onClick }: { src: string; idx: number; onClick: () => void }) {
+  const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [revealed, setRevealed] = useState(false);
-
   useEffect(() => {
-    const wrap = wrapRef.current, video = videoRef.current;
-    if (!wrap || !video) return;
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setRevealed(true);
-      if (entry.intersectionRatio > 0.35) video.play().catch(() => {});
-      else video.pause();
-    }, { threshold: [0, 0.35] });
-    io.observe(wrap);
-    return () => io.disconnect();
-  }, []);
-
+    const v = videoRef.current; if (!v) return;
+    if (hovered) v.play().catch(() => {});
+    else { v.pause(); v.currentTime = 0; }
+  }, [hovered]);
   return (
     <div
-      ref={wrapRef}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       onClick={onClick}
       style={{
-        position: "relative", width: "100%", height: "min(82vh, 760px)",
-        overflow: "hidden", cursor: "pointer",
-        opacity: revealed ? 1 : 0,
-        transform: revealed ? "scale(1)" : "scale(0.97)",
-        transition: "opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1)",
+        position: "relative", aspectRatio: "16/10", overflow: "hidden", cursor: "pointer",
+        background: "#050000",
+        border: "1px solid rgba(245,240,240,0.12)",
       }}
     >
       <video ref={videoRef} src={src} muted loop playsInline preload="metadata" disablePictureInPicture
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.15) 100%)" }} />
-      <div style={{ position: "absolute", bottom: "1.75rem", left: "clamp(1.5rem, 5vw, 4rem)", display: "flex", alignItems: "baseline", gap: "0.5rem" }}>
-        <span style={{ fontFamily: "var(--font-playfair)", fontSize: "1.4rem", color: "#960018" }}>{String(idx + 1).padStart(2, "0")}</span>
-        <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.68rem", color: "rgba(245,240,240,0.4)", letterSpacing: "0.1em" }}>/ {String(total).padStart(2, "0")}</span>
-      </div>
-      <div style={{
-        position: "absolute", bottom: "1.6rem", right: "clamp(1.5rem, 5vw, 4rem)",
-        background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)",
-        borderRadius: "50%", width: "44px", height: "44px",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        border: "1px solid rgba(245,240,240,0.2)",
+        style={{
+          width: "100%", height: "100%", objectFit: "cover", display: "block",
+          filter: hovered ? "grayscale(0) contrast(1) brightness(1) saturate(1)" : "grayscale(0.9) contrast(1.05) brightness(0.75) saturate(0.9)",
+          transform: hovered ? "scale(1.04)" : "scale(1)",
+          transition: "filter 0.5s ease, transform 0.6s ease",
+        }} />
+      <div style={{ position: "absolute", inset: 0, background: hovered ? "rgba(0,0,0,0.05)" : "rgba(80,0,10,0.22)", mixBlendMode: hovered ? "normal" : "multiply", transition: "background 0.4s ease" }} />
+      <span style={{
+        position: "absolute", top: "8px", left: "10px",
+        fontFamily: "var(--font-inter)", fontSize: "0.5rem", letterSpacing: "0.1em",
+        color: hovered ? "#960018" : "rgba(245,240,240,0.55)", fontWeight: 600,
+        transition: "color 0.3s ease",
       }}>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
+        N&deg;{String(idx + 1).padStart(2, "0")}
+      </span>
+      <div style={{
+        position: "absolute", bottom: "8px", right: "8px",
+        opacity: hovered ? 1 : 0, transform: hovered ? "scale(1)" : "scale(0.7)",
+        transition: "opacity 0.25s ease, transform 0.25s ease",
+        background: "rgba(0,0,0,0.55)", borderRadius: "50%", width: "26px", height: "26px",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}>
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
       </div>
     </div>
   );
 }
 
-/* ── CinematicScroll ── (Videography) */
-function CinematicScroll({ videos }: { videos: { src: string }[] }) {
+/* ── ContactSheet ── (Videography) */
+function ContactSheet({ videos }: { videos: { src: string }[] }) {
   const [lightbox, setLightbox] = useState<string | null>(null);
   const close = useCallback(() => setLightbox(null), []);
   return (
-    <div style={{ position: "relative", width: "100vw", marginLeft: "calc(50% - 50vw)", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-      {videos.map(({ src }, i) => (
-        <CinematicClip key={src} src={src} idx={i} total={videos.length} onClick={() => setLightbox(src)} />
-      ))}
+    <div>
+      <SprocketStrip />
+      <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "3px", background: "#0a0000", padding: "3px" }}>
+        {videos.map(({ src }, i) => (
+          <ContactFrame key={src} src={src} idx={i} onClick={() => setLightbox(src)} />
+        ))}
+      </div>
+      <SprocketStrip />
       {lightbox && <Lightbox src={lightbox} onClose={close} />}
     </div>
   );
@@ -482,7 +499,7 @@ export default function WorkPage() {
               desc="Cinematic short-form and long-form content — filmed, directed, and edited from concept to final cut."
             />
           </Reveal>
-          <CinematicScroll videos={CINEMA_VIDEOS} />
+          <Reveal delay={80}><ContactSheet videos={CINEMA_VIDEOS} /></Reveal>
         </div>
       </section>
 
