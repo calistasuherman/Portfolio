@@ -16,6 +16,7 @@ const CINEMA_VIDEOS = [
 const VE_VIDEOS = [
   "ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4",
   "VideoStar1.mp4","VideoStar2.mp4","VideoStar3.mp4","VideoStar4.mp4","VideoStar5.mp4",
+  "ve6.mov","ve7.mov","ve8.mp4",
 ].map(f => ({ src: `${MEDIA_BASE}/ve/${f}` }));
 
 const COLLAB_VIDEOS = [
@@ -29,9 +30,9 @@ const COLLAB_VIDEOS = [
 
 /* ── Vinyl data ── */
 const VINYL_DATA = [
-  { label: "Videography",    href: "videography",   idx: "01", sleeve: "#0e0000", accent: "#960018", labelBg: "#5c0010" },
-  { label: "Motion Editing", href: "motion-editing", idx: "02", sleeve: "#0a0a0a", accent: "#d4cfc8", labelBg: "#4a4540" },
-  { label: "Partnerships",   href: "partnerships",  idx: "03", sleeve: "#0b0800", accent: "#c8a84b", labelBg: "#6b5a18" },
+  { label: "Video Editing", href: "video-editing", idx: "01", sleeve: "#0a0a0a", accent: "#d4cfc8", labelBg: "#4a4540" },
+  { label: "Videography",   href: "videography",   idx: "02", sleeve: "#0e0000", accent: "#960018", labelBg: "#5c0010" },
+  { label: "Partnerships",  href: "partnerships",  idx: "03", sleeve: "#0b0800", accent: "#c8a84b", labelBg: "#6b5a18" },
 ];
 
 /* ── VinylUnit ── */
@@ -491,31 +492,31 @@ export default function WorkPage() {
         <VinylSection />
       </section>
 
-      {/* ── 01 Videography ── */}
-      <section id="videography" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+      {/* ── 01 Video Editing ── */}
+      <section id="video-editing" className="motion-editing-section" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <Reveal>
             <SectionLabel
               index="01"
+              title={<OrbitTitle parts={[{ text: "V", script: true }, { text: "ideo " }, { text: "E", script: true }, { text: "diting" }]} />}
+              desc="Short-form edits, motion graphics, VFX, and dynamic transitions — built to stop the scroll."
+            />
+          </Reveal>
+          <Reveal delay={80}><MotionGrid /></Reveal>
+        </div>
+      </section>
+
+      {/* ── 02 Videography ── */}
+      <section id="videography" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+          <Reveal>
+            <SectionLabel
+              index="02"
               title={<OrbitTitle parts={[{ text: "V", script: true }, { text: "ideography" }]} />}
               desc="Cinematic short-form and long-form content — filmed, directed, and edited from concept to final cut."
             />
           </Reveal>
           <Reveal delay={80}><CinemaShowcase videos={CINEMA_VIDEOS} /></Reveal>
-        </div>
-      </section>
-
-      {/* ── 02 Motion Editing ── */}
-      <section id="motion-editing" className="motion-editing-section" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-          <Reveal>
-            <SectionLabel
-              index="02"
-              title={<OrbitTitle parts={[{ text: "M", script: true }, { text: "otion " }, { text: "E", script: true }, { text: "diting" }]} />}
-              desc="Short-form edits, motion graphics, VFX, and dynamic transitions — built to stop the scroll."
-            />
-          </Reveal>
-          <Reveal delay={80}><MotionGrid /></Reveal>
         </div>
       </section>
 
