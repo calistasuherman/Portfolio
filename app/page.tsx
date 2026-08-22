@@ -31,9 +31,10 @@ const SERVICES = [
 ];
 
 const MEDIA_KIT_STATS = [
-  { value: "5.3M", label: "Views (Last 30 Days)" },
-  { value: "266K", label: "Interactions (Last 30 Days)" },
-  { value: "+112.3%", label: "Follower Growth (30 Days)" },
+  { value: "11.1K", label: "Followers", sub: "+125% in 30 Days" },
+  { value: "5.7M", label: "Reel Views", sub: "Last 30 Days" },
+  { value: "300K", label: "Interactions", sub: "Last 30 Days" },
+  { value: "25.6K", label: "Profile Visits", sub: "Last 30 Days" },
 ];
 
 const LOGOS = Array.from({ length: 14 }, (_, i) => `/logos/portfolio${i + 1}.png`);
@@ -219,7 +220,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", color: "rgba(245,240,240,0.5)", letterSpacing: "0.05em" }}>
-              @cal1star &nbsp;|&nbsp; 10K+ Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
+              @cal1star &nbsp;|&nbsp; 11.1K Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
             </p>
             <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", lineHeight: 1.85, textShadow: "0 2px 12px rgba(0,0,0,0.55)", fontWeight: 400 }}>
               Hi! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
@@ -266,19 +267,20 @@ export default function Home() {
       {/* ── Media Kit Stats ── */}
       <section id="media-kit" className="relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
         <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
-          <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "2rem" }}>
+          <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "2rem" }}>
             {MEDIA_KIT_STATS.map((stat, i) => (
               <Reveal key={stat.label} delay={i * 100}>
                 <div style={{ textAlign: "center" }}>
-                  <p style={{ fontFamily: "var(--font-playfair)", fontWeight: 600, fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#ffffff", lineHeight: 1 }}>{stat.value}</p>
+                  <p style={{ fontFamily: "var(--font-playfair)", fontWeight: 600, fontSize: "clamp(1.7rem, 3vw, 2.6rem)", color: "#ffffff", lineHeight: 1 }}>{stat.value}</p>
                   <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginTop: "0.6rem" }}>{stat.label}</p>
+                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.56rem", letterSpacing: "0.06em", color: "rgba(245,240,240,0.35)", marginTop: "0.25rem" }}>{stat.sub}</p>
                 </div>
               </Reveal>
             ))}
           </div>
           <Reveal delay={400}>
             <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.62rem, 0.95vw, 0.78rem)", color: "rgba(245,240,240,0.45)", letterSpacing: "0.03em", textAlign: "center", marginTop: "3rem" }}>
-              Audience: 78% aged 18–34&nbsp;&nbsp;·&nbsp;&nbsp;Primarily US-based&nbsp;&nbsp;·&nbsp;&nbsp;58% male / 42% female
+              Audience: 78% aged 18–34&nbsp;&nbsp;·&nbsp;&nbsp;Top market: United States (22.4%)&nbsp;&nbsp;·&nbsp;&nbsp;60.4% male / 39.6% female
             </p>
           </Reveal>
         </div>

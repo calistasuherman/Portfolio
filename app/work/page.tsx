@@ -231,127 +231,84 @@ function OrbitTitle({ parts }: { parts: { text: string; script?: boolean }[] }) 
   );
 }
 
-/* ── TimelineClip ── */
-function TimelineClip({ src, idx, active, onClick }: { src: string; idx: number; active: boolean; onClick: () => void }) {
+/* ── CinemaClip ── (Videography) */
+function CinemaClip({ src, idx, onClick }: { src: string; idx: number; onClick: () => void }) {
+  const [hovered, setHovered] = useState(false);
+  const [tapped, setTapped] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const active = hovered || tapped;
+
+  useEffect(() => {
+    const v = videoRef.current; if (!v) return;
+    if (active) v.play().catch(() => {});
+    else { v.pause(); v.currentTime = 1; }
+  }, [active]);
+
   return (
     <div
-      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onTouchStart={e => { e.preventDefault(); if (tapped) { onClick(); setTapped(false); } else setTapped(true); }}
+      onClick={e => { if (!(e as any).changedTouches) onClick(); }}
       style={{
-        position: "relative", flex: "1 0 0", height: "100%", overflow: "hidden", cursor: "pointer",
+        position: "relative", height: "100%", overflow: "hidden", cursor: "pointer",
+        flexGrow: active ? 9 : 1, flexShrink: 0, flexBasis: "56px",
+        scrollSnapAlign: "start",
+        transition: "flex-grow 0.6s cubic-bezier(0.16,1,0.3,1)",
         borderRight: "1px solid rgba(10,0,0,0.6)",
         background: "#0a0000",
       }}
     >
-      <video ref={videoRef} src={src} muted playsInline preload="metadata" disablePictureInPicture
-        onLoadedMetadata={() => { if (videoRef.current) videoRef.current.currentTime = 1; }}
-        style={{
-          width: "100%", height: "100%", objectFit: "cover", display: "block",
-          filter: active ? "none" : "grayscale(0.75) brightness(0.55)",
-          transition: "filter 0.3s ease",
-        }} />
+      <video ref={videoRef} src={src} muted loop playsInline preload="metadata" disablePictureInPicture
+        onLoadedMetadata={() => { if (videoRef.current && !active) videoRef.current.currentTime = 1; }}
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      <div style={{
+        position: "absolute", inset: 0,
+        background: active ? "linear-gradient(to top, rgba(5,0,0,0.55) 0%, rgba(5,0,0,0) 40%)" : "rgba(5,0,0,0.6)",
+        transition: "background 0.4s ease",
+      }} />
       <span style={{
-        position: "absolute", bottom: "3px", left: "4px",
-        fontFamily: "var(--font-inter)", fontSize: "0.42rem", letterSpacing: "0.05em",
-        color: active ? "#e8a0a8" : "rgba(245,240,240,0.45)",
+        position: "absolute", bottom: "10px", left: "50%", transform: "translateX(-50%)",
+        fontFamily: "var(--font-playfair)", color: "#e8a0a8", whiteSpace: "nowrap",
+        fontSize: active ? "0.95rem" : "0.5rem", opacity: active ? 1 : 0.75,
+        transition: "font-size 0.4s ease, opacity 0.3s ease",
       }}>
         {String(idx + 1).padStart(2, "0")}
       </span>
+      <div style={{
+        position: "absolute", bottom: "10px", right: "12px",
+        background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)",
+        borderRadius: "50%", width: "30px", height: "30px",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        border: "1px solid rgba(245,240,240,0.2)",
+        opacity: active ? 1 : 0, transform: active ? "scale(1)" : "scale(0.7)",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+      }}>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
     </div>
   );
 }
 
-/* ── EditorTimeline ── (Videography) */
-function EditorTimeline({ videos }: { videos: { src: string }[] }) {
-  const n = videos.length;
-  const [activeIdx, setActiveIdx] = useState(0);
+/* ── CinemaShowcase ── (Videography) */
+function CinemaShowcase({ videos }: { videos: { src: string }[] }) {
   const [lightbox, setLightbox] = useState<string | null>(null);
   const close = useCallback(() => setLightbox(null), []);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const viewerRef = useRef<HTMLVideoElement>(null);
-  const dragging = useRef(false);
-  const [scrub, setScrub] = useState(0.5 / n);
-
-  function setFromClientX(clientX: number) {
-    const track = trackRef.current;
-    if (!track) return;
-    const rect = track.getBoundingClientRect();
-    const ratio = Math.max(0, Math.min(0.999, (clientX - rect.left) / rect.width));
-    setScrub(ratio);
-    setActiveIdx(Math.floor(ratio * n));
-  }
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => { if (dragging.current) setFromClientX(e.clientX); };
-    const onUp = () => { dragging.current = false; };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
-  }, [n]);
-
-  useEffect(() => {
-    const v = viewerRef.current;
-    if (v) { v.currentTime = 0; v.play().catch(() => {}); }
-  }, [activeIdx]);
-
-  function jumpTo(i: number) {
-    setActiveIdx(i);
-    setScrub((i + 0.5) / n);
-  }
 
   return (
     <div>
-      {/* preview viewer */}
-      <div
-        onClick={() => setLightbox(videos[activeIdx].src)}
-        style={{
-          position: "relative", width: "100%", aspectRatio: "16/9", maxWidth: "820px", margin: "0 auto",
-          borderRadius: "6px", overflow: "hidden", cursor: "pointer",
-          border: "1px solid rgba(139,0,0,0.4)", boxShadow: "0 20px 60px rgba(0,0,0,0.8)",
-          background: "#050000",
-        }}
-      >
-        <video ref={viewerRef} key={videos[activeIdx].src} src={videos[activeIdx].src} autoPlay muted loop playsInline preload="metadata" disablePictureInPicture
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 35%)" }} />
-        <div style={{ position: "absolute", bottom: "10px", left: "12px", display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
-          <span style={{ fontFamily: "var(--font-playfair)", fontSize: "1rem", color: "#e8a0a8" }}>{String(activeIdx + 1).padStart(2, "0")}</span>
-          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.1em" }}>/ {String(n).padStart(2, "0")}</span>
-        </div>
-        <div style={{
-          position: "absolute", bottom: "8px", right: "10px",
-          background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)",
-          borderRadius: "50%", width: "30px", height: "30px",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          border: "1px solid rgba(245,240,240,0.2)",
-        }}>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="#f5f0f0"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
+      <div style={{
+        display: "flex", height: "clamp(300px, 36vw, 460px)", maxWidth: "1100px", margin: "0 auto",
+        overflowX: "auto", overflowY: "hidden", scrollSnapType: "x proximity",
+        borderRadius: "6px", border: "1px solid rgba(139,0,0,0.4)", boxShadow: "0 20px 60px rgba(0,0,0,0.8)",
+      }}>
+        {videos.map(({ src }, i) => (
+          <CinemaClip key={src} src={src} idx={i} onClick={() => setLightbox(src)} />
+        ))}
       </div>
-
-      {/* timeline track */}
-      <div style={{ maxWidth: "820px", margin: "1.75rem auto 0" }}>
-        <div
-          ref={trackRef}
-          onMouseDown={e => { dragging.current = true; setFromClientX(e.clientX); }}
-          style={{ position: "relative", height: "56px", display: "flex", cursor: "ew-resize", borderRadius: "3px", overflow: "hidden", border: "1px solid rgba(245,240,240,0.12)" }}
-        >
-          {videos.map(({ src }, i) => (
-            <TimelineClip key={src} src={src} idx={i} active={i === activeIdx} onClick={() => jumpTo(i)} />
-          ))}
-          {/* playhead */}
-          <div style={{
-            position: "absolute", top: "-6px", bottom: "-6px", left: `${scrub * 100}%`,
-            width: "2px", background: "#960018", pointerEvents: "none",
-            boxShadow: "0 0 8px rgba(150,0,24,0.8)",
-          }}>
-            <div style={{ position: "absolute", top: "-6px", left: "50%", transform: "translateX(-50%)", width: "10px", height: "10px", borderRadius: "50%", background: "#960018", boxShadow: "0 0 8px rgba(150,0,24,0.8)" }} />
-          </div>
-        </div>
-        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginTop: "1rem", textAlign: "center" }}>
-          drag the timeline to scrub
-        </p>
-      </div>
+      <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginTop: "1rem", textAlign: "center" }}>
+        hover a frame to preview · click to watch
+      </p>
       {lightbox && <Lightbox src={lightbox} onClose={close} />}
     </div>
   );
@@ -544,7 +501,7 @@ export default function WorkPage() {
               desc="Cinematic short-form and long-form content — filmed, directed, and edited from concept to final cut."
             />
           </Reveal>
-          <Reveal delay={80}><EditorTimeline videos={CINEMA_VIDEOS} /></Reveal>
+          <Reveal delay={80}><CinemaShowcase videos={CINEMA_VIDEOS} /></Reveal>
         </div>
       </section>
 
