@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Reveal } from "../components/Reveal";
-import { lenisScrollTo } from "../components/GlobalUI";
 import { MEDIA_BASE } from "../lib/media";
 
 /* ── Data ── */
@@ -13,11 +12,21 @@ const CINEMA_VIDEOS = [
   "/cinema/cinema13.MOV", "/cinema/cinema14.mp4",
 ].map(src => ({ src: `${MEDIA_BASE}${src}` }));
 
-const VE_VIDEOS = [
-  "ve1.mp4","ve2.mp4","ve3.mp4","ve4.mp4","ve5.mp4",
-  "VideoStar1.mp4","VideoStar2.mp4","VideoStar3.mp4","VideoStar4.mp4","VideoStar5.mp4",
-  "ve6.mov","ve7.mov","ve8.mp4",
-].map(f => ({ src: `${MEDIA_BASE}/ve/${f}` }));
+const VE_VIDEOS: { file: string; seek?: number }[] = [
+  { file: "ve6.mov" },
+  { file: "ve7.mov" },
+  { file: "ve8.mp4" },
+  { file: "ve1.mp4" },
+  { file: "ve2.mp4" },
+  { file: "ve3.mp4" },
+  { file: "ve4.mp4" },
+  { file: "ve5.mp4" },
+  { file: "VideoStar1.mp4" },
+  { file: "VideoStar2.mp4", seek: 2 },
+  { file: "VideoStar3.mp4" },
+  { file: "VideoStar4.mp4" },
+  { file: "VideoStar5.mp4", seek: 0.5 },
+].map(v => ({ src: `${MEDIA_BASE}/ve/${v.file}`, seek: v.seek ?? 1 }));
 
 const COLLAB_VIDEOS = [
   { src: `${MEDIA_BASE}/yt/aelfricedenn.mp4`, label: "Aelfric Eden", category: "Fashion"  },
@@ -39,7 +48,7 @@ const VINYL_DATA = [
 const SLEEVE = 322;
 const DISC = 292;
 
-function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA[0]; defaultX: number; defaultY: number; floatDelay: number }) {
+function VinylUnit({ v, defaultX, defaultY, floatDelay, onSelect }: { v: typeof VINYL_DATA[0]; defaultX: number; defaultY: number; floatDelay: number; onSelect: (href: string) => void }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const posRef = useRef({ x: defaultX, y: defaultY });
   const [hovered, setHovered] = useState(false);
@@ -82,8 +91,7 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA
       }}
       onClick={() => {
         if (drag.current.moved) return;
-        const el = document.getElementById(v.href);
-        if (el) lenisScrollTo(el, { offset: -80, duration: 1.0, easing: (t: number) => Math.sin((t * Math.PI) / 2) });
+        onSelect(v.href);
       }}
       title={`Go to ${v.label}`}
     >
@@ -142,14 +150,13 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay }: { v: typeof VINYL_DATA
 }
 
 /* ── VinylSection ── */
-function MobileVinylCard({ v, delay }: { v: typeof VINYL_DATA[0]; delay: number }) {
+function MobileVinylCard({ v, delay, onSelect }: { v: typeof VINYL_DATA[0]; delay: number; onSelect: (href: string) => void }) {
   const S = 158; const D = 142; const r = D / 2;
   const [h, setH] = useState(false);
-  const scroll = () => { const el = document.getElementById(v.href); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); };
   const grooves = Array.from({ length: 24 }, (_, i) => r * 0.3 + (r * 0.62) * (i / 24));
   return (
     /* width = S so flex centers by sleeve; disc overflows right naturally */
-    <div onClick={scroll} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
+    <div onClick={() => onSelect(v.href)} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
       style={{ position: "relative", width: S, height: S, cursor: "pointer", flexShrink: 0, overflow: "visible", animation: `vinylFloat 3.5s ease-in-out ${delay}s infinite` }}>
       {/* disc — same SVG as desktop, slides right, overflows card div */}
       <div style={{ position: "absolute", left: (S - D) / 2, top: (S - D) / 2, transform: `translateX(${h ? 54 : 27}px)`, transition: "transform 0.55s cubic-bezier(0.34,1.08,0.64,1)", zIndex: 1 }}>
@@ -176,7 +183,7 @@ function MobileVinylCard({ v, delay }: { v: typeof VINYL_DATA[0]; delay: number 
   );
 }
 
-function VinylSection() {
+function VinylSection({ onSelect }: { onSelect: (href: string) => void }) {
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -199,22 +206,22 @@ function VinylSection() {
 
   if (mounted && isMobile) {
     return (
-      <div style={{ paddingTop: "calc(80px + 2rem)", paddingBottom: "1rem" }}>
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", paddingTop: "80px" }}>
         <div style={{ display: "flex", justifyContent: "center", gap: "1rem", padding: "0 1rem 1.5rem" }}>
-          {VINYL_DATA.slice(0, 2).map((v, i) => <MobileVinylCard key={v.href} v={v} delay={i * 0.8} />)}
+          {VINYL_DATA.slice(0, 2).map((v, i) => <MobileVinylCard key={v.href} v={v} delay={i * 0.8} onSelect={onSelect} />)}
         </div>
         <div style={{ display: "flex", justifyContent: "center", padding: "0 1rem 0.5rem" }}>
-          <MobileVinylCard v={VINYL_DATA[2]} delay={1.6} />
+          <MobileVinylCard v={VINYL_DATA[2]} delay={1.6} onSelect={onSelect} />
         </div>
       </div>
     );
   }
 
   return (
-    <div style={{ paddingTop: "calc(80px + 2.5rem)", paddingBottom: "2rem" }}>
-      <div style={{ position: "relative", height: SLEEVE + 60, overflow: "visible" }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: "80px" }}>
+      <div style={{ position: "relative", width: "100%", height: SLEEVE + 60, overflow: "visible" }}>
         {mounted && VINYL_DATA.map((v, i) => (
-          <VinylUnit key={v.href} v={v} defaultX={positions[i].x} defaultY={positions[i].y} floatDelay={i * 0.8} />
+          <VinylUnit key={v.href} v={v} defaultX={positions[i].x} defaultY={positions[i].y} floatDelay={i * 0.8} onSelect={onSelect} />
         ))}
       </div>
     </div>
@@ -422,14 +429,13 @@ function MotionGrid() {
   return (
     <Reveal direction="up">
       <div style={{ ...rowStyle, height: "260px", marginBottom: "5px" }}>
-        {VE_VIDEOS.slice(0, 5).map(({ src }, i) => (
-          <AccordionCard key={src} src={src} idx={i} compact={false} onClick={() => setLightbox({ src, compact: false })} />
+        {VE_VIDEOS.slice(0, 5).map(({ src, seek }, i) => (
+          <AccordionCard key={src} src={src} idx={i} compact={false} onClick={() => setLightbox({ src, compact: false })} seekTo={seek} />
         ))}
       </div>
       <div style={{ ...rowStyle, height: "220px" }}>
-        {VE_VIDEOS.slice(5).map(({ src }, i) => (
-          <AccordionCard key={src} src={src} idx={i + 5} compact={true} onClick={() => setLightbox({ src, compact: true })}
-            seekTo={i === 1 ? 2 : i === 4 ? 0.5 : 1} />
+        {VE_VIDEOS.slice(5).map(({ src, seek }, i) => (
+          <AccordionCard key={src} src={src} idx={i + 5} compact={true} onClick={() => setLightbox({ src, compact: true })} seekTo={seek} />
         ))}
       </div>
       {lightbox && <Lightbox src={lightbox.src} compact={lightbox.compact} onClose={close} />}
@@ -484,55 +490,77 @@ function PartnerGrid() {
 
 /* ── Page ── */
 export default function WorkPage() {
+  const [active, setActive] = useState<string | null>(null);
+
+  if (!active) {
+    return (
+      <main className="relative min-h-screen overflow-x-clip">
+        <VinylSection onSelect={setActive} />
+      </main>
+    );
+  }
+
   return (
     <main className="relative min-h-screen overflow-x-clip">
 
-      {/* ── Film Reel entry ── */}
-      <section className="relative" style={{ paddingBottom: "4rem" }}>
-        <VinylSection />
-      </section>
+      <button
+        onClick={() => setActive(null)}
+        style={{
+          position: "fixed", top: "clamp(84px, 10vh, 100px)", left: "clamp(1.5rem, 5vw, 4rem)", zIndex: 40,
+          background: "none", border: "none", padding: 0,
+          fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase",
+          color: "rgba(245,240,240,0.4)", transition: "color 0.3s ease",
+        }}
+        onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.85)")}
+        onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.4)")}
+      >
+        ← Back
+      </button>
 
-      {/* ── 01 Video Editing ── */}
-      <section id="video-editing" className="motion-editing-section" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-          <Reveal>
-            <SectionLabel
-              index="01"
-              title={<OrbitTitle parts={[{ text: "V", script: true }, { text: "ideo " }, { text: "E", script: true }, { text: "diting" }]} />}
-              desc="Short-form edits, motion graphics, VFX, and dynamic transitions — built to stop the scroll."
-            />
-          </Reveal>
-          <Reveal delay={80}><MotionGrid /></Reveal>
-        </div>
-      </section>
+      {active === "video-editing" && (
+        <section id="video-editing" className="motion-editing-section" style={{ padding: "8rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <Reveal>
+              <SectionLabel
+                index="01"
+                title={<OrbitTitle parts={[{ text: "V", script: true }, { text: "ideo " }, { text: "E", script: true }, { text: "diting" }]} />}
+                desc="Short-form edits, motion graphics, VFX, and dynamic transitions — built to stop the scroll."
+              />
+            </Reveal>
+            <Reveal delay={80}><MotionGrid /></Reveal>
+          </div>
+        </section>
+      )}
 
-      {/* ── 02 Videography ── */}
-      <section id="videography" style={{ padding: "5rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-          <Reveal>
-            <SectionLabel
-              index="02"
-              title={<OrbitTitle parts={[{ text: "V", script: true }, { text: "ideography" }]} />}
-              desc="Cinematic short-form and long-form content — filmed, directed, and edited from concept to final cut."
-            />
-          </Reveal>
-          <Reveal delay={80}><CinemaShowcase videos={CINEMA_VIDEOS} /></Reveal>
-        </div>
-      </section>
+      {active === "videography" && (
+        <section id="videography" style={{ padding: "8rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <Reveal>
+              <SectionLabel
+                index="02"
+                title={<OrbitTitle parts={[{ text: "V", script: true }, { text: "ideography" }]} />}
+                desc="Cinematic short-form and long-form content — filmed, directed, and edited from concept to final cut."
+              />
+            </Reveal>
+            <Reveal delay={80}><CinemaShowcase videos={CINEMA_VIDEOS} /></Reveal>
+          </div>
+        </section>
+      )}
 
-      {/* ── 03 Partnerships ── */}
-      <section id="partnerships" style={{ padding: "3rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-          <Reveal>
-            <SectionLabel
-              index="03"
-              title={<OrbitTitle parts={[{ text: "P", script: true }, { text: "artnerships" }]} />}
-              desc="Brand integrations and sponsored content that feel native — from fashion to wellness to tech."
-            />
-          </Reveal>
-          <PartnerGrid />
-        </div>
-      </section>
+      {active === "partnerships" && (
+        <section id="partnerships" style={{ padding: "8rem clamp(1.5rem, 5vw, 4rem) 6rem", scrollMarginTop: "80px" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <Reveal>
+              <SectionLabel
+                index="03"
+                title={<OrbitTitle parts={[{ text: "P", script: true }, { text: "artnerships" }]} />}
+                desc="Brand integrations and sponsored content that feel native — from fashion to wellness to tech."
+              />
+            </Reveal>
+            <PartnerGrid />
+          </div>
+        </section>
+      )}
 
       <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
         <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
