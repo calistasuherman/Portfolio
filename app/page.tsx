@@ -31,7 +31,7 @@ const SERVICES = [
 ];
 
 const MEDIA_KIT_STATS = [
-  { value: "11.1K", label: "Followers", sub: "+125% in 30 Days" },
+  { value: "11.4K", label: "Followers", sub: "+125% in 30 Days" },
   { value: "5.7M", label: "Reel Views", sub: "Last 30 Days" },
   { value: "300K", label: "Interactions", sub: "Last 30 Days" },
   { value: "25.6K", label: "Profile Visits", sub: "Last 30 Days" },
@@ -220,7 +220,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", color: "rgba(245,240,240,0.5)", letterSpacing: "0.05em" }}>
-              @cal1star &nbsp;|&nbsp; 11.1K Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
+              @cal1star &nbsp;|&nbsp; 11.4K Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
             </p>
             <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", lineHeight: 1.85, textShadow: "0 2px 12px rgba(0,0,0,0.55)", fontWeight: 400 }}>
               Hi! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
@@ -335,7 +335,7 @@ export default function Home() {
       {/* ── Footer ── */}
       <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
         <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
-          @2026 CALISTA SUHERMAN.&nbsp;&nbsp;PSALM 46:5
+          @2026 CAL1STAR.&nbsp;&nbsp;PSALM 46:5
         </p>
       </footer>
 
