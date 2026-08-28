@@ -12,7 +12,7 @@ const CINEMA_VIDEOS = [
   "/cinema/cinema13.MOV", "/cinema/cinema14.mp4",
 ].map(src => ({ src: `${MEDIA_BASE}${src}` }));
 
-const VE_VIDEOS: { file: string; seek?: number }[] = [
+const VE_VIDEO_FILES: { file: string; seek?: number }[] = [
   { file: "ve6.mov" },
   { file: "ve7.mov" },
   { file: "ve8.mp4" },
@@ -26,7 +26,8 @@ const VE_VIDEOS: { file: string; seek?: number }[] = [
   { file: "VideoStar3.mp4" },
   { file: "VideoStar4.mp4" },
   { file: "VideoStar5.mp4", seek: 0.5 },
-].map(v => ({ src: `${MEDIA_BASE}/ve/${v.file}`, seek: v.seek ?? 1 }));
+];
+const VE_VIDEOS = VE_VIDEO_FILES.map(v => ({ src: `${MEDIA_BASE}/ve/${v.file}`, seek: v.seek ?? 1 }));
 
 const COLLAB_VIDEOS = [
   { src: `${MEDIA_BASE}/yt/aelfricedenn.mp4`, label: "Aelfric Eden", category: "Fashion"  },
