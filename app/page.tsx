@@ -157,6 +157,48 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Trusted By ── */}
+      <section className="section-content relative py-6 overflow-hidden">
+        <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
+      </section>
+
+      {/* ── Portfolio Strip ── */}
+      <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
+        <div style={{ overflow: "hidden", maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}>
+          <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content", alignItems: "center", gap: "2rem" }}>
+            {[...LOGOS, ...LOGOS].map((src, i) => (
+              <img key={i} src={src} alt="" style={{ height: "36px", width: "auto", borderRadius: "4px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block", userSelect: "none" }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+                onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
+                draggable={false}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Media Kit Stats ── */}
+      <section id="media-kit" className="relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
+        <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
+          <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "2rem" }}>
+            {MEDIA_KIT_STATS.map((stat, i) => (
+              <Reveal key={stat.label} delay={i * 100}>
+                <div style={{ textAlign: "center" }}>
+                  <p style={{ fontFamily: "var(--font-playfair)", fontWeight: 600, fontSize: "clamp(1.7rem, 3vw, 2.6rem)", color: "#ffffff", lineHeight: 1 }}>{stat.value}</p>
+                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginTop: "0.6rem" }}>{stat.label}</p>
+                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.56rem", letterSpacing: "0.06em", color: "rgba(245,240,240,0.35)", marginTop: "0.25rem" }}>{stat.sub}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={400}>
+            <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.62rem, 0.95vw, 0.78rem)", color: "rgba(245,240,240,0.45)", letterSpacing: "0.03em", textAlign: "center", marginTop: "3rem" }}>
+              Audience: 78% aged 18–34&nbsp;&nbsp;·&nbsp;&nbsp;Top market: United States (22.4%)&nbsp;&nbsp;·&nbsp;&nbsp;60.4% male / 39.6% female
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ── Selected Work ── */}
       <section style={{ padding: "7rem clamp(1.5rem, 6vw, 5rem)" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
@@ -223,48 +265,6 @@ export default function Home() {
               <FlipPhoto />
             </Reveal>
           </div>
-        </div>
-      </section>
-
-      {/* ── Trusted By ── */}
-      <section className="section-content relative py-6 overflow-hidden">
-        <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
-      </section>
-
-      {/* ── Portfolio Strip ── */}
-      <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
-        <div style={{ overflow: "hidden", maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}>
-          <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content", alignItems: "center", gap: "2rem" }}>
-            {[...LOGOS, ...LOGOS].map((src, i) => (
-              <img key={i} src={src} alt="" style={{ height: "36px", width: "auto", borderRadius: "4px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block", userSelect: "none" }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-                onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
-                draggable={false}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Media Kit Stats ── */}
-      <section id="media-kit" className="relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
-        <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
-          <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "2rem" }}>
-            {MEDIA_KIT_STATS.map((stat, i) => (
-              <Reveal key={stat.label} delay={i * 100}>
-                <div style={{ textAlign: "center" }}>
-                  <p style={{ fontFamily: "var(--font-playfair)", fontWeight: 600, fontSize: "clamp(1.7rem, 3vw, 2.6rem)", color: "#ffffff", lineHeight: 1 }}>{stat.value}</p>
-                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginTop: "0.6rem" }}>{stat.label}</p>
-                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.56rem", letterSpacing: "0.06em", color: "rgba(245,240,240,0.35)", marginTop: "0.25rem" }}>{stat.sub}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal delay={400}>
-            <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.62rem, 0.95vw, 0.78rem)", color: "rgba(245,240,240,0.45)", letterSpacing: "0.03em", textAlign: "center", marginTop: "3rem" }}>
-              Audience: 78% aged 18–34&nbsp;&nbsp;·&nbsp;&nbsp;Top market: United States (22.4%)&nbsp;&nbsp;·&nbsp;&nbsp;60.4% male / 39.6% female
-            </p>
-          </Reveal>
         </div>
       </section>
 
