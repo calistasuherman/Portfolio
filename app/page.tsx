@@ -12,24 +12,6 @@ const FEATURED = [
   { src: `${MEDIA_BASE}/yt/betterhelpp.mp4`, tag: "Partnerships" },
 ];
 
-const SERVICES = [
-  {
-    index: "01",
-    title: "Videography",
-    desc: "From concept to final cut, I film, direct, and edit short-form and long-form content tailored to your brand. Specializing in cinematic storytelling, color grading, transitions, and sound design.",
-  },
-  {
-    index: "02",
-    title: "Motion Editing",
-    desc: "From clean, precise cuts to flashy motion edits, VFX, SFX, dynamic transitions, color grading, and effects that make every frame hit. The kind of edits you see in the Video Editing section, polished, high-energy, and built to stop the scroll.",
-  },
-  {
-    index: "03",
-    title: "Partnerships",
-    desc: "Sponsored content and YouTube integrations that feel native, not forced. Brand partnerships, outfit content creation, styling, aesthetic curation, platform growth strategy, and trend-driven content calendars for fashion and lifestyle brands.",
-  },
-];
-
 const MEDIA_KIT_STATS = [
   { value: "11.4K", label: "Followers", sub: "+125% in 30 Days" },
   { value: "5.7M", label: "Reel Views", sub: "Last 30 Days" },
@@ -166,10 +148,10 @@ export default function Home() {
 
         {/* Buttons */}
         <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.8s", position: "absolute", bottom: "clamp(2.5rem, 6vh, 5rem)", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "1rem", zIndex: 3 }}>
-          <a href="/work" className="inline-block px-8 py-3 rounded-none text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "var(--font-inter)" }}>
+          <a href="/work" className="inline-block px-8 py-3 rounded-none border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "var(--font-inter)" }}>
             explore my work
           </a>
-          <a href="/contact" className="inline-block px-8 py-3 rounded-none border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "var(--font-inter)" }}>
+          <a href="/contact" className="inline-block px-8 py-3 rounded-none text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "var(--font-inter)" }}>
             work with me
           </a>
         </div>
@@ -283,31 +265,6 @@ export default function Home() {
               Audience: 78% aged 18–34&nbsp;&nbsp;·&nbsp;&nbsp;Top market: United States (22.4%)&nbsp;&nbsp;·&nbsp;&nbsp;60.4% male / 39.6% female
             </p>
           </Reveal>
-        </div>
-      </section>
-
-      {/* ── Signature Services ── */}
-      <section id="trusted" className="relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "6rem", paddingBottom: "4rem" }}>
-        <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
-          <Reveal>
-            <h2 style={{ lineHeight: 1.1, marginBottom: "2rem", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
-              <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
-              <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ignature</span>
-              {" "}
-              <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>S</span>
-              <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>ervices</span>
-            </h2>
-            <div style={{ borderBottom: "1px solid rgba(245,240,240,0.2)", marginBottom: "0" }} />
-          </Reveal>
-          {SERVICES.map((s, i) => (
-            <Reveal key={s.index} delay={i * 120} direction="right">
-              <div className="services-row" style={{ display: "grid", gridTemplateColumns: "40px 180px 1fr", gap: "2rem", padding: "1.75rem 0", borderBottom: "1px solid rgba(245,240,240,0.15)", alignItems: "start" }}>
-                <span className="services-index" style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", color: "rgba(245,240,240,0.3)", letterSpacing: "0.1em", paddingTop: "3px" }}>{s.index}</span>
-                <p style={{ fontFamily: "var(--font-inter)", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#f5f0f0" }}>{s.title}</p>
-                <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.75rem", color: "rgba(245,240,240,0.65)", lineHeight: 1.8 }}>{s.desc}</p>
-              </div>
-            </Reveal>
-          ))}
         </div>
       </section>
 
