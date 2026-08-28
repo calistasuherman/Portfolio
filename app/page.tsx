@@ -191,6 +191,7 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+          <div style={{ borderBottom: "1px dotted rgba(245,240,240,0.25)", marginTop: "3rem" }} />
         </div>
       </section>
 
