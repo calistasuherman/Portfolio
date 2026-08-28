@@ -225,7 +225,7 @@ export default function Home() {
       </section>
 
       {/* ── About ── */}
-      <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "1.5rem", backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "cover", backgroundPosition: "center 15%", backgroundAttachment: "fixed" }}>
+      <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "1.5rem", backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "cover", backgroundPosition: "center 15%" }}>
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
           <Reveal className="order-1" direction="left">
@@ -269,7 +269,7 @@ export default function Home() {
       </section>
 
       {/* ── Editing Toolkit ── */}
-      <section className="relative" style={{ paddingTop: "1.5rem", paddingBottom: "4rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <section className="relative" style={{ paddingTop: "7rem", paddingBottom: "6rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
         <div style={{ maxWidth: "900px", width: "100%", padding: "0 2rem", textAlign: "center" }}>
           <Reveal>
             <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 3.8vw, 3.8rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "4.5rem" }}>
