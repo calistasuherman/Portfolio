@@ -191,11 +191,6 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
-          <Reveal delay={400}>
-            <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.62rem, 0.95vw, 0.78rem)", color: "rgba(245,240,240,0.45)", letterSpacing: "0.03em", textAlign: "center", marginTop: "3rem" }}>
-              Audience: 78% aged 18–34&nbsp;&nbsp;·&nbsp;&nbsp;Top market: United States (22.4%)&nbsp;&nbsp;·&nbsp;&nbsp;60.4% male / 39.6% female
-            </p>
-          </Reveal>
         </div>
       </section>
 
@@ -225,7 +220,7 @@ export default function Home() {
       </section>
 
       {/* ── About ── */}
-      <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "1.5rem", backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "cover", backgroundPosition: "center 15%" }}>
+      <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "1.5rem", backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "cover", backgroundPosition: "center 15%", backgroundAttachment: "fixed" }}>
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
           <Reveal className="order-1" direction="left">
