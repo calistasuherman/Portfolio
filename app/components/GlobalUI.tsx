@@ -65,7 +65,13 @@ export default function GlobalUI() {
 
   /* Lenis smooth scroll */
   useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.065, smoothWheel: true, wheelMultiplier: 1.0, touchMultiplier: 1.5 });
+    const lenis = new Lenis({
+      duration: 1.1,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
+    });
     _lenis = lenis;
     let raf: number;
     const loop = (time: number) => { lenis.raf(time); raf = requestAnimationFrame(loop); };
