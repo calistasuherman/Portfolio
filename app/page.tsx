@@ -288,7 +288,7 @@ export default function Home() {
       {/* ── Footer ── */}
       <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
         <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
-          @2026 CAL1STAR.&nbsp;&nbsp;PSALM 46:5
+          @2026 CAL1STAR EDITING
         </p>
       </footer>
 
