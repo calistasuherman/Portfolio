@@ -12,13 +12,6 @@ const FEATURED = [
   { src: `${MEDIA_BASE}/yt/betterhelpp.mp4`, tag: "Partnerships" },
 ];
 
-const MEDIA_KIT_STATS = [
-  { value: "11.4K", label: "Followers", sub: "+125% in 30 Days" },
-  { value: "5.7M", label: "Reel Views", sub: "Last 30 Days" },
-  { value: "300K", label: "Interactions", sub: "Last 30 Days" },
-  { value: "25.6K", label: "Profile Visits", sub: "Last 30 Days" },
-];
-
 const LOGOS = Array.from({ length: 14 }, (_, i) => `/logos/portfolio${i + 1}.png`);
 
 const TOOLS = [
@@ -174,24 +167,6 @@ export default function Home() {
               />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── Media Kit Stats ── */}
-      <section id="media-kit" className="relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
-        <div className="max-w-5xl mx-auto" style={{ width: "100%" }}>
-          <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "2rem" }}>
-            {MEDIA_KIT_STATS.map((stat, i) => (
-              <Reveal key={stat.label} delay={i * 100}>
-                <div style={{ textAlign: "center" }}>
-                  <p style={{ fontFamily: "var(--font-playfair)", fontWeight: 600, fontSize: "clamp(1.7rem, 3vw, 2.6rem)", color: "#ffffff", lineHeight: 1 }}>{stat.value}</p>
-                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginTop: "0.6rem" }}>{stat.label}</p>
-                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.56rem", letterSpacing: "0.06em", color: "rgba(245,240,240,0.35)", marginTop: "0.25rem" }}>{stat.sub}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-          <div style={{ borderBottom: "1px dotted rgba(245,240,240,0.25)", marginTop: "3rem" }} />
         </div>
       </section>
 
