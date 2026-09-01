@@ -4,7 +4,7 @@ import { Reveal } from "./components/Reveal";
 import { MEDIA_BASE } from "./lib/media";
 
 /* ── Data ── */
-const LABELS = ["Content Creator", "World Traveler", "Industrial Engineer", "Coffee Connoisseur", "Gen Z (21 Y/O)", "Fashion Lover"];
+const LABELS = ["Content Creator", "World Traveler", "Woman of God", "Coffee Connoisseur", "Gen Z (21 Y/O)", "Fashion Lover"];
 
 const FEATURED = [
   { src: `${MEDIA_BASE}/cinema/cinema3.mp4`, tag: "Videography" },
