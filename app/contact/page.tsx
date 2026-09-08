@@ -66,7 +66,7 @@ export default function ContactPage() {
               Email
             </p>
             <a
-              href="mailto:cal1starcollab@gmail.com"
+              href="mailto:cal1starpartnerships@gmail.com"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -95,7 +95,7 @@ export default function ContactPage() {
                 el.style.color = "#f5f0f0";
               }}
             >
-              cal1starcollab@gmail.com
+              cal1starpartnerships@gmail.com
               <span style={{ fontSize: "0.85rem" }}>→</span>
             </a>
           </div>
