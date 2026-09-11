@@ -59,7 +59,7 @@ const LABELS = ["Content Creator", "World Traveler", "Woman of God", "Coffee Con
 
 const FEATURED = [
   { src: `${MEDIA_BASE}/cinema/cinema3.mp4`, tag: "Videography" },
-  { src: `${MEDIA_BASE}/ve/ve1.mp4`,         tag: "Motion Editing" },
+  { src: `${MEDIA_BASE}/ve/ve1.mp4`,         tag: "Creative Editing" },
   { src: `${MEDIA_BASE}/yt/invideocollab.mp4`, tag: "Partnerships" },
 ];
 
