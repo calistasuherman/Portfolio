@@ -1,7 +1,58 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Reveal, useReveal } from "./components/Reveal";
 import { MEDIA_BASE } from "./lib/media";
+
+/* ── Re-triggering reveal (home page only) ──
+   Unlike the shared Reveal component, this toggles visibility every time
+   the element enters/leaves the viewport, so sections fade in scrolling
+   down and fade back out scrolling away, instead of revealing once. */
+function useRevealToggle(threshold = 0.12) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return { ref, visible };
+}
+
+function RevealToggle({
+  children,
+  className = "",
+  direction = "up",
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  direction?: "up" | "left" | "right";
+  delay?: number;
+}) {
+  const { ref, visible } = useRevealToggle();
+  const translateMap = {
+    up: "translateY(36px)",
+    left: "translateX(-36px)",
+    right: "translateX(36px)",
+  };
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translate(0,0)" : translateMap[direction],
+        transition: `opacity 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 /* ── Data ── */
 const LABELS = ["Content Creator", "World Traveler", "Woman of God", "Coffee Connoisseur", "Gen Z (21 Y/O)", "Fashion Lover"];
@@ -104,15 +155,15 @@ function FlipPhoto() {
 }
 
 function ToolkitSection() {
-  const { ref, visible } = useReveal();
+  const { ref, visible } = useRevealToggle();
   return (
     <section className="relative" style={{ paddingTop: "7rem", paddingBottom: "8rem" }}>
       <div style={{ maxWidth: "1000px", width: "100%", margin: "0 auto", padding: "0 2rem", textAlign: "center" }}>
-        <Reveal>
+        <RevealToggle>
           <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 3.8vw, 3.8rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "5.5rem" }}>
             My Toolkit
           </div>
-        </Reveal>
+        </RevealToggle>
         <div ref={ref} className="toolkit-timeline" style={{ position: "relative", height: "clamp(280px, 32vw, 360px)" }}>
           <div style={{
             position: "absolute", left: "50%", top: "50%", transform: "translateX(-50%)",
@@ -125,7 +176,7 @@ function ToolkitSection() {
               const up = i % 2 === 0;
               const stem = 38;
               return (
-                <Reveal key={label} delay={i * 90}>
+                <RevealToggle key={label} delay={i * 90}>
                   <div className="toolkit-slot" style={{ position: "relative", height: "100%", width: "clamp(90px, 13vw, 140px)" }}>
                     <div style={{
                       position: "absolute", left: "50%", top: "50%",
@@ -142,7 +193,7 @@ function ToolkitSection() {
                       <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.68rem, 0.95vw, 0.88rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.05em", textAlign: "center", whiteSpace: "nowrap" }}>{label}</p>
                     </div>
                   </div>
-                </Reveal>
+                </RevealToggle>
               );
             })}
           </div>
@@ -222,7 +273,7 @@ export default function Home() {
       {/* ── Selected Work ── */}
       <section style={{ padding: "7rem clamp(1.5rem, 6vw, 5rem)" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-          <Reveal>
+          <RevealToggle>
             <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: "1px solid rgba(245,240,240,0.1)", paddingBottom: "1.2rem", marginBottom: "2.5rem" }}>
               <span>
                 <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", fontWeight: "normal" }}>S</span>
@@ -233,12 +284,12 @@ export default function Home() {
                 onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.4)")}
               >View all →</a>
             </div>
-          </Reveal>
+          </RevealToggle>
           <div className="mobile-1col" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem" }}>
             {FEATURED.map((item, i) => (
-              <Reveal key={item.src} delay={i * 110}>
+              <RevealToggle key={item.src} delay={i * 110}>
                 <FeaturedCard {...item} />
-              </Reveal>
+              </RevealToggle>
             ))}
           </div>
         </div>
@@ -248,7 +299,7 @@ export default function Home() {
       <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "1.5rem", backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "cover", backgroundPosition: "center 15%", backgroundAttachment: "fixed" }}>
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
-          <Reveal className="order-1" direction="left">
+          <RevealToggle className="order-1" direction="left">
             <div className="leading-none" style={{ position: "relative", marginTop: "2rem", marginBottom: "1.2rem" }} suppressHydrationWarning>
               <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(3px, 3px)", pointerEvents: "none", letterSpacing: "0.05em", color: "#000000" }}>
                 <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal" }}>A</span>
@@ -278,12 +329,12 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </Reveal>
+          </RevealToggle>
 
           <div className="order-2 flex justify-center" style={{ marginTop: "1rem" }}>
-            <Reveal direction="right" delay={200}>
+            <RevealToggle direction="right" delay={200}>
               <FlipPhoto />
-            </Reveal>
+            </RevealToggle>
           </div>
         </div>
       </section>
