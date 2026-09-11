@@ -58,8 +58,8 @@ function RevealToggle({
 const LABELS = ["Content Creator", "World Traveler", "Woman of God", "Coffee Connoisseur", "Gen Z (21 Y/O)", "Fashion Lover"];
 
 const FEATURED = [
+  { src: `${MEDIA_BASE}/ve/ve1.mp4`,         tag: "Video Editing" },
   { src: `${MEDIA_BASE}/cinema/cinema3.mp4`, tag: "Videography" },
-  { src: `${MEDIA_BASE}/ve/ve1.mp4`,         tag: "Creative Editing" },
   { src: `${MEDIA_BASE}/yt/invideocollab.mp4`, tag: "Partnerships" },
 ];
 
@@ -147,48 +147,23 @@ function FlipPhoto() {
 }
 
 function ToolkitSection() {
-  const { ref, visible } = useRevealToggle();
   return (
-    <section className="relative" style={{ paddingTop: "7rem", paddingBottom: "8rem" }}>
-      <div style={{ maxWidth: "1000px", width: "100%", margin: "0 auto", padding: "0 2rem", textAlign: "center" }}>
+    <section className="relative" style={{ paddingTop: "7rem", paddingBottom: "6rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div style={{ maxWidth: "900px", width: "100%", padding: "0 2rem", textAlign: "center" }}>
         <RevealToggle>
-          <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 3.8vw, 3.8rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "5.5rem" }}>
+          <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 3.8vw, 3.8rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "4.5rem" }}>
             My Toolkit
           </div>
         </RevealToggle>
-        <div ref={ref} className="toolkit-timeline" style={{ position: "relative", height: "clamp(280px, 32vw, 360px)" }}>
-          <div style={{
-            position: "absolute", left: "50%", top: "50%", transform: "translateX(-50%)",
-            width: visible ? "100%" : "0%",
-            borderTop: "1px dotted rgba(245,240,240,0.3)",
-            transition: "width 1.4s cubic-bezier(0.16,1,0.3,1)",
-          }} />
-          <div className="toolkit-row" style={{ position: "relative", display: "flex", justifyContent: "space-between", height: "100%" }}>
-            {TOOLS.map(({ src, label }, i) => {
-              const up = i % 2 === 0;
-              const stem = 38;
-              return (
-                <RevealToggle key={label} delay={i * 90}>
-                  <div className="toolkit-slot" style={{ position: "relative", height: "100%", width: "clamp(90px, 13vw, 140px)" }}>
-                    <div style={{
-                      position: "absolute", left: "50%", top: "50%",
-                      width: "1px", height: stem,
-                      background: "rgba(245,240,240,0.3)",
-                      transform: up ? "translate(-50%, -100%)" : "translate(-50%, 0)",
-                    }} />
-                    <div style={{
-                      position: "absolute", left: "50%", transform: "translateX(-50%)", width: "100%",
-                      display: "flex", flexDirection: "column", alignItems: "center", gap: "0.55rem",
-                      ...(up ? { bottom: `calc(50% + ${stem}px)` } : { top: `calc(50% + ${stem}px)` }),
-                    }}>
-                      <img src={src} alt={label} style={{ width: "clamp(68px, 9vw, 100px)", display: "block", borderRadius: "22%" }} />
-                      <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.68rem, 0.95vw, 0.88rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.05em", textAlign: "center", whiteSpace: "nowrap" }}>{label}</p>
-                    </div>
-                  </div>
-                </RevealToggle>
-              );
-            })}
-          </div>
+        <div className="toolkit-row" style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: "clamp(1.2rem, 4vw, 3.5rem)" }}>
+          {TOOLS.map(({ src, label }, i) => (
+            <RevealToggle key={label} direction="left" delay={i * 90}>
+              <div style={{ textAlign: "center", width: "clamp(64px, 9vw, 100px)" }}>
+                <img src={src} alt={label} style={{ width: "100%", display: "block", borderRadius: "22%" }} />
+                <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.52rem, 0.75vw, 0.68rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.05em", marginTop: "0.4rem" }}>{label}</p>
+              </div>
+            </RevealToggle>
+          ))}
         </div>
       </div>
     </section>
