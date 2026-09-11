@@ -60,7 +60,7 @@ const LABELS = ["Content Creator", "World Traveler", "Woman of God", "Coffee Con
 const FEATURED = [
   { src: `${MEDIA_BASE}/cinema/cinema3.mp4`, tag: "Videography" },
   { src: `${MEDIA_BASE}/ve/ve1.mp4`,         tag: "Motion Editing" },
-  { src: `${MEDIA_BASE}/yt/betterhelpp.mp4`, tag: "Partnerships" },
+  { src: `${MEDIA_BASE}/yt/invideocollab.mp4`, tag: "Partnerships" },
 ];
 
 const LOGOS = Array.from({ length: 14 }, (_, i) => `/logos/portfolio${i + 1}.png`);
