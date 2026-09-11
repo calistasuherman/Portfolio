@@ -30,6 +30,8 @@ const VE_VIDEO_FILES: { file: string; seek?: number }[] = [
 const VE_VIDEOS = VE_VIDEO_FILES.map(v => ({ src: `${MEDIA_BASE}/ve/${v.file}`, seek: v.seek ?? 1 }));
 
 const COLLAB_VIDEOS = [
+  { src: `${MEDIA_BASE}/yt/captions2collab.mp4`, label: "Captions 2.0", category: "AI" },
+  { src: `${MEDIA_BASE}/yt/invideocollab.mp4`,   label: "Invideo",      category: "AI" },
   { src: `${MEDIA_BASE}/yt/aelfricedenn.mp4`, label: "Aelfric Eden", category: "Fashion"  },
   { src: `${MEDIA_BASE}/yt/betterhelpp.mp4`,  label: "BetterHelp",   category: "Wellness" },
   { src: `${MEDIA_BASE}/yt/just4kiraa.mp4`,   label: "Just4Kira",    category: "Beauty"   },
@@ -555,7 +557,7 @@ export default function WorkPage() {
               <SectionLabel
                 index="03"
                 title={<OrbitTitle parts={[{ text: "P", script: true }, { text: "artnerships" }]} />}
-                desc="Brand integrations and sponsored content that feel native — from fashion to wellness to tech."
+                desc="Brand integrations and sponsored content that feel native — from fashion to wellness to AI."
               />
             </Reveal>
             <PartnerGrid />
