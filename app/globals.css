@@ -298,15 +298,31 @@ body.page-fade-out {
     width: 100% !important;
   }
 
-  /* Toolkit — wrap into 2 rows of 3 */
+  /* Toolkit — drop the timeline/stems, wrap into 2 rows of 3 */
+  .toolkit-timeline {
+    height: auto !important;
+  }
+  .toolkit-timeline > div:first-child {
+    display: none !important;
+  }
   .toolkit-row {
     flex-wrap: wrap !important;
     gap: 1.4rem 2rem !important;
     justify-content: center !important;
   }
-  .toolkit-row > * {
+  .toolkit-slot {
+    position: static !important;
+    height: auto !important;
     width: calc(33% - 1rem) !important;
     max-width: 80px !important;
+  }
+  .toolkit-slot > div:first-child {
+    display: none !important;
+  }
+  .toolkit-slot > div:last-child {
+    position: static !important;
+    transform: none !important;
+    flex-direction: column !important;
   }
 
   /* Contact headline — bigger on mobile */
