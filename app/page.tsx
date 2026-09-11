@@ -86,14 +86,6 @@ const PHOTO_OFFSETS = [
 
 function FeaturedCard({ src, tag }: { src: string; tag: string }) {
   const [hovered, setHovered] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    if (hovered) v.play().catch(() => {});
-    else { v.pause(); v.currentTime = 0; }
-  }, [hovered]);
 
   return (
     <a
@@ -103,7 +95,7 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
       style={{ display: "block", position: "relative", aspectRatio: "16/9", overflow: "hidden", borderRadius: "4px", textDecoration: "none" }}
     >
       <video
-        ref={videoRef} src={src} muted loop playsInline preload="metadata"
+        src={src} autoPlay muted loop playsInline preload="auto"
         style={{
           width: "100%", height: "100%", objectFit: "cover", display: "block",
           transition: "transform 0.8s cubic-bezier(0.16,1,0.3,1)",
