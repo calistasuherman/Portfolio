@@ -139,7 +139,7 @@ export default function Home() {
             <div style={{ position: "relative" }} suppressHydrationWarning>
               <div aria-hidden="true" className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(3px, 3px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
               <div aria-hidden="true" className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.12, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
-              <div className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#960018", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
+              <div className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#6b0016", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
             </div>
           </div>
 
