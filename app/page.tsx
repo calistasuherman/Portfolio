@@ -15,12 +15,12 @@ const FEATURED = [
 const LOGOS = Array.from({ length: 14 }, (_, i) => `/logos/portfolio${i + 1}.png`);
 
 const TOOLS = [
-  { src: "/apps/dr.png",     label: "DaVinci Resolve", stars: 5 },
-  { src: "/apps/fcp.png",    label: "Final Cut Pro",   stars: 5 },
-  { src: "/apps/vs.png",     label: "Video Star",      stars: 5 },
-  { src: "/apps/cc.png",     label: "CapCut",          stars: 5 },
-  { src: "/apps/c.png",      label: "Canva",           stars: 4 },
-  { src: "/apps/claude.png", label: "Claude",          stars: 4 },
+  { src: "/apps/dr.png",     label: "DaVinci Resolve" },
+  { src: "/apps/fcp.png",    label: "Final Cut Pro"   },
+  { src: "/apps/vs.png",     label: "Video Star"      },
+  { src: "/apps/cc.png",     label: "CapCut"          },
+  { src: "/apps/c.png",      label: "Canva"           },
+  { src: "/apps/claude.png", label: "Claude"          },
 ];
 
 const STACK_PHOTOS = ["/c1.png","/c2.png","/c3.png","/c4.png","/c5.png","/c6.png","/c7.png"];
@@ -99,16 +99,6 @@ function FlipPhoto() {
           </div>
         );
       })}
-    </div>
-  );
-}
-
-function StarRow({ count }: { count: number }) {
-  return (
-    <div style={{ display: "flex", gap: "2px", justifyContent: "center" }}>
-      {Array.from({ length: 5 }, (_, i) => (
-        <span key={i} style={{ fontSize: "0.6rem", lineHeight: 1, color: i < count ? "#960018" : "rgba(245,240,240,0.2)" }}>★</span>
-      ))}
     </div>
   );
 }
@@ -250,43 +240,22 @@ export default function Home() {
       </section>
 
       {/* ── Editing Toolkit ── */}
-      <section className="relative" style={{ paddingTop: "7rem", paddingBottom: "8rem" }}>
-        <div style={{ maxWidth: "1000px", width: "100%", margin: "0 auto", padding: "0 2rem" }}>
+      <section className="relative" style={{ paddingTop: "7rem", paddingBottom: "6rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={{ maxWidth: "900px", width: "100%", padding: "0 2rem", textAlign: "center" }}>
           <Reveal>
-            <div style={{ display: "flex", alignItems: "baseline", marginBottom: "5rem" }}>
-              <span style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", color: "#f5f0f0", lineHeight: 1 }}>Tool</span>
-              <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1.8rem, 3.5vw, 3.2rem)", color: "#f5f0f0", letterSpacing: "0.04em", lineHeight: 1 }}>kit</span>
+            <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 3.8vw, 3.8rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "4.5rem" }}>
+              My Toolkit
             </div>
           </Reveal>
-          <div className="toolkit-timeline" style={{ position: "relative", height: "clamp(210px, 24vw, 260px)" }}>
-            <div style={{ position: "absolute", left: 0, right: 0, top: "50%", borderTop: "1px dotted rgba(245,240,240,0.3)" }} />
-            <div className="toolkit-row" style={{ position: "relative", display: "flex", justifyContent: "space-between", height: "100%" }}>
-              {TOOLS.map(({ src, label, stars }, i) => {
-                const up = i % 2 === 0;
-                const stem = 26;
-                return (
-                  <Reveal key={label} delay={i * 90}>
-                    <div className="toolkit-slot" style={{ position: "relative", height: "100%", width: "clamp(64px, 9vw, 96px)" }}>
-                      <div style={{
-                        position: "absolute", left: "50%", top: "50%",
-                        width: "1px", height: stem,
-                        background: "rgba(245,240,240,0.3)",
-                        transform: up ? "translate(-50%, -100%)" : "translate(-50%, 0)",
-                      }} />
-                      <div style={{
-                        position: "absolute", left: "50%", transform: "translateX(-50%)", width: "100%",
-                        display: "flex", flexDirection: up ? "column-reverse" : "column", alignItems: "center", gap: "0.4rem",
-                        ...(up ? { bottom: `calc(50% + ${stem}px)` } : { top: `calc(50% + ${stem}px)` }),
-                      }}>
-                        <img src={src} alt={label} style={{ width: "clamp(44px, 6vw, 64px)", display: "block", borderRadius: "22%" }} />
-                        <StarRow count={stars} />
-                        <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.52rem, 0.75vw, 0.68rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.05em", textAlign: "center", whiteSpace: "nowrap" }}>{label}</p>
-                      </div>
-                    </div>
-                  </Reveal>
-                );
-              })}
-            </div>
+          <div className="toolkit-row" style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: "clamp(1.2rem, 4vw, 3.5rem)" }}>
+            {TOOLS.map(({ src, label }, i) => (
+              <Reveal key={label} direction="left" delay={i * 90}>
+                <div style={{ textAlign: "center", width: "clamp(64px, 9vw, 100px)" }}>
+                  <img src={src} alt={label} style={{ width: "100%", display: "block", borderRadius: "22%" }} />
+                  <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.52rem, 0.75vw, 0.68rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.05em", marginTop: "0.4rem" }}>{label}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
