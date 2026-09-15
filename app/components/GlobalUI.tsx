@@ -209,10 +209,9 @@ export default function GlobalUI() {
         style={{
           position: "fixed", left: 0, right: 0, top: "-150vh", height: "400vh",
           zIndex: -1,
-          backgroundColor: "#dcdad2",
           backgroundImage: "url('/bg-red.jpg')",
           backgroundSize: "100% auto",
-          backgroundRepeat: "no-repeat",
+          backgroundRepeat: "repeat-y",
           backgroundPosition: "top center",
           willChange: "transform",
           pointerEvents: "none",
