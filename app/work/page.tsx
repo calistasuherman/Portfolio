@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Reveal } from "../components/Reveal";
+import { Reveal, useReveal } from "../components/Reveal";
 import { MEDIA_BASE } from "../lib/media";
 
 /* ── Data ── */
@@ -369,8 +369,10 @@ function AccordionCard({ src, idx, onClick, compact }: { src: string; idx: numbe
   const [hovered, setHovered] = useState(false);
   const [tapped, setTapped] = useState(false);
   const active = hovered || tapped;
+  const { ref, visible } = useReveal(0.01);
   return (
     <div
+      ref={ref}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onTouchStart={e => { e.preventDefault(); if (tapped) { onClick(); setTapped(false); } else setTapped(true); }}
@@ -387,8 +389,10 @@ function AccordionCard({ src, idx, onClick, compact }: { src: string; idx: numbe
         minWidth: 0,
       }}
     >
-      <video src={src} autoPlay muted loop playsInline preload="auto" disablePictureInPicture
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      {visible && (
+        <video src={src} autoPlay muted loop playsInline preload="metadata" disablePictureInPicture
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      )}
 
       {/* Dark overlay — lighter when expanded */}
       <div style={{
@@ -520,10 +524,10 @@ export default function WorkPage() {
           position: "fixed", top: "clamp(84px, 10vh, 100px)", left: "clamp(1.5rem, 5vw, 4rem)", zIndex: 40,
           background: "none", border: "none", padding: 0,
           fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase",
-          color: "rgba(245,240,240,0.4)", transition: "color 0.3s ease",
+          color: "#4a4a4a", transition: "color 0.3s ease",
         }}
-        onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.85)")}
-        onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.4)")}
+        onMouseEnter={e => (e.currentTarget.style.color = "#2a2a2a")}
+        onMouseLeave={e => (e.currentTarget.style.color = "#4a4a4a")}
       >
         ← Back
       </button>
