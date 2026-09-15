@@ -12,7 +12,7 @@ const CINEMA_VIDEOS = [
   "/cinema/cinema13.MOV", "/cinema/cinema14.mp4",
 ].map(src => ({ src: `${MEDIA_BASE}${src}` }));
 
-const VE_VIDEO_FILES: { file: string; seek?: number }[] = [
+const VE_VIDEO_FILES: { file: string }[] = [
   { file: "ve6.mov" },
   { file: "ve7.mov" },
   { file: "ve8.mp4" },
@@ -22,10 +22,10 @@ const VE_VIDEO_FILES: { file: string; seek?: number }[] = [
   { file: "ve4.mp4" },
   { file: "ve5.mp4" },
   { file: "VideoStar1.mp4" },
-  { file: "VideoStar2.mp4", seek: 2 },
+  { file: "VideoStar2.mp4" },
   { file: "VideoStar3.mp4" },
   { file: "VideoStar4.mp4" },
-  { file: "VideoStar5.mp4", seek: 0.5 },
+  { file: "VideoStar5.mp4" },
   { file: "ve9.mp4" },
   { file: "ve10.mp4" },
   { file: "ve11.mp4" },
@@ -34,7 +34,7 @@ const VE_VIDEO_FILES: { file: string; seek?: number }[] = [
   { file: "ve14.mp4" },
   { file: "ve15.mp4" },
 ];
-const VE_VIDEOS = VE_VIDEO_FILES.map(v => ({ src: `${MEDIA_BASE}/ve/${v.file}`, seek: v.seek ?? 1 }));
+const VE_VIDEOS = VE_VIDEO_FILES.map(v => ({ src: `${MEDIA_BASE}/ve/${v.file}` }));
 
 const COLLAB_VIDEOS = [
   { src: `${MEDIA_BASE}/yt/captions2collab.mp4`, label: "Captions 2.0", category: "AI" },
@@ -365,16 +365,10 @@ function SectionLabel({ index, title, desc }: { index: string; title: React.Reac
 }
 
 /* ── AccordionCard ── */
-function AccordionCard({ src, idx, onClick, compact, seekTo = 1 }: { src: string; idx: number; onClick: () => void; compact: boolean; seekTo?: number }) {
+function AccordionCard({ src, idx, onClick, compact }: { src: string; idx: number; onClick: () => void; compact: boolean }) {
   const [hovered, setHovered] = useState(false);
   const [tapped, setTapped] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const active = hovered || tapped;
-  useEffect(() => {
-    const v = videoRef.current; if (!v) return;
-    if (active) v.play().catch(() => {});
-    else { v.pause(); v.currentTime = seekTo; }
-  }, [active, seekTo]);
   return (
     <div
       onMouseEnter={() => setHovered(true)}
@@ -393,8 +387,7 @@ function AccordionCard({ src, idx, onClick, compact, seekTo = 1 }: { src: string
         minWidth: 0,
       }}
     >
-      <video ref={videoRef} src={src} muted loop playsInline preload="metadata" disablePictureInPicture
-        onLoadedMetadata={() => { if (videoRef.current && !hovered) videoRef.current.currentTime = seekTo; }}
+      <video src={src} autoPlay muted loop playsInline preload="auto" disablePictureInPicture
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
 
       {/* Dark overlay — lighter when expanded */}
@@ -436,18 +429,20 @@ function MotionGrid() {
   const [lightbox, setLightbox] = useState<{ src: string; compact: boolean } | null>(null);
   const close = useCallback(() => setLightbox(null), []);
   const rowStyle: React.CSSProperties = { display: "flex", gap: "5px", width: "100%" };
+  const rows: typeof VE_VIDEOS[] = [];
+  for (let i = 0; i < VE_VIDEOS.length; i += 5) rows.push(VE_VIDEOS.slice(i, i + 5));
   return (
     <Reveal direction="up">
-      <div style={{ ...rowStyle, height: "260px", marginBottom: "5px" }}>
-        {VE_VIDEOS.slice(0, 5).map(({ src, seek }, i) => (
-          <AccordionCard key={src} src={src} idx={i} compact={false} onClick={() => setLightbox({ src, compact: false })} seekTo={seek} />
-        ))}
-      </div>
-      <div style={{ ...rowStyle, height: "220px" }}>
-        {VE_VIDEOS.slice(5).map(({ src, seek }, i) => (
-          <AccordionCard key={src} src={src} idx={i + 5} compact={true} onClick={() => setLightbox({ src, compact: true })} seekTo={seek} />
-        ))}
-      </div>
+      {rows.map((row, r) => {
+        const compact = r > 0;
+        return (
+          <div key={r} style={{ ...rowStyle, height: compact ? "220px" : "260px", marginBottom: "5px" }}>
+            {row.map(({ src }, i) => (
+              <AccordionCard key={src} src={src} idx={r * 5 + i} compact={compact} onClick={() => setLightbox({ src, compact })} />
+            ))}
+          </div>
+        );
+      })}
       {lightbox && <Lightbox src={lightbox.src} compact={lightbox.compact} onClose={close} />}
     </Reveal>
   );
