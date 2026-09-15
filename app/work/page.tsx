@@ -315,6 +315,9 @@ function CinemaShowcase({ videos }: { videos: { src: string }[] }) {
 
   return (
     <div>
+      <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
+        hover a frame to preview · click to watch
+      </p>
       <div style={{
         display: "flex", height: "clamp(300px, 36vw, 460px)", maxWidth: "1100px", margin: "0 auto",
         overflowX: "auto", overflowY: "hidden", scrollSnapType: "x proximity",
@@ -324,9 +327,6 @@ function CinemaShowcase({ videos }: { videos: { src: string }[] }) {
           <CinemaClip key={src} src={src} idx={i} onClick={() => setLightbox(src)} />
         ))}
       </div>
-      <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginTop: "1rem", textAlign: "center" }}>
-        hover a frame to preview · click to watch
-      </p>
       {lightbox && <Lightbox src={lightbox} onClose={close} />}
     </div>
   );
@@ -433,6 +433,9 @@ function MotionGrid() {
   for (let i = 0; i < VE_VIDEOS.length; i += 5) rows.push(VE_VIDEOS.slice(i, i + 5));
   return (
     <Reveal direction="up">
+      <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
+        hover a frame to preview · click to watch
+      </p>
       {rows.map((row, r) => {
         const compact = r > 0;
         return (
@@ -481,6 +484,9 @@ function PartnerGrid() {
   const close = useCallback(() => setLightbox(null), []);
   return (
     <>
+      <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
+        hover a frame to preview · click to watch
+      </p>
       <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
         {COLLAB_VIDEOS.map((item, i) => (
           <Reveal key={item.src} delay={i * 80}>

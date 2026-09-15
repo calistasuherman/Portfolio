@@ -252,6 +252,9 @@ export default function Home() {
               >View all →</a>
             </div>
           </RevealToggle>
+          <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
+            hover a frame to preview · click to watch
+          </p>
           <div className="mobile-1col" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem" }}>
             {FEATURED.map((item, i) => (
               <RevealToggle key={item.src} delay={i * 110}>
