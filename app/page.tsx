@@ -202,7 +202,7 @@ export default function Home() {
 
           {/* Tagline */}
           <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.75rem", textAlign: "center" }}>
-            <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.6)", fontSize: "clamp(0.55rem, 0.85vw, 0.72rem)", letterSpacing: "0.18em" }}>{"Video editing at its finest."}</p>
+            <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.6)", fontSize: "clamp(0.55rem, 0.85vw, 0.72rem)", letterSpacing: "0.18em" }}>{"Engineer by training. Video editor by choice."}</p>
           </div>
         </div>
 
