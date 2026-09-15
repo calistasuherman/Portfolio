@@ -220,7 +220,7 @@ export default function GlobalUI() {
           backgroundImage: "url('/bg-red.jpg')",
           backgroundSize: "125% auto",
           backgroundRepeat: "repeat-y",
-          backgroundPosition: "100% top",
+          backgroundPosition: "70% top",
           willChange: "transform",
           pointerEvents: "none",
         }}
