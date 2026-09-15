@@ -74,7 +74,7 @@ const TOOLS = [
   { src: "/apps/claude.png", label: "Claude"          },
 ];
 
-const STACK_PHOTOS = ["/c1.png","/c2.png","/c3.png","/c4.png","/c5.png","/c6.png","/c7.png"];
+const STACK_PHOTOS = ["/c1.jpg","/c2.jpg","/c3.jpg","/c4.jpg","/c5.jpg","/c6.jpg","/c7.jpg"];
 const PHOTO_OFFSETS = [
   { rotate: 0, tx: 0, ty: 0 }, { rotate: -3, tx: -8, ty: 0 },
   { rotate: 5, tx: 10, ty: 0 }, { rotate: -6, tx: -14, ty: 0 },
