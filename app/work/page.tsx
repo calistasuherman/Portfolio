@@ -26,6 +26,13 @@ const VE_VIDEO_FILES: { file: string; seek?: number }[] = [
   { file: "VideoStar3.mp4" },
   { file: "VideoStar4.mp4" },
   { file: "VideoStar5.mp4", seek: 0.5 },
+  { file: "ve9.mp4" },
+  { file: "ve10.mp4" },
+  { file: "ve11.mp4" },
+  { file: "ve12.mp4" },
+  { file: "ve13.mp4" },
+  { file: "ve14.mp4" },
+  { file: "ve15.mp4" },
 ];
 const VE_VIDEOS = VE_VIDEO_FILES.map(v => ({ src: `${MEDIA_BASE}/ve/${v.file}`, seek: v.seek ?? 1 }));
 
