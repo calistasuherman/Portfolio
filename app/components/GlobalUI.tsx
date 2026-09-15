@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Lenis from "lenis";
 import { MEDIA_BASE } from "../lib/media";
 
@@ -35,6 +35,7 @@ function getAudio(): HTMLAudioElement | null {
 
 export default function GlobalUI() {
   const pathname = usePathname();
+  const router = useRouter();
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [cursorHover, setCursorHover] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -43,7 +44,6 @@ export default function GlobalUI() {
   const [duration, setDuration] = useState(0);
   const [trackIndex, setTrackIndex] = useState(0);
   const playerRef = useRef<HTMLDivElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
 
   /* click outside player → close popup */
   useEffect(() => {
@@ -75,18 +75,12 @@ export default function GlobalUI() {
     });
     _lenis = lenis;
     let raf: number;
-    const loop = (time: number) => {
-      lenis.raf(time);
-      if (bgRef.current) {
-        bgRef.current.style.transform = `translate3d(0, ${-lenis.scroll * 0.3}px, 0)`;
-      }
-      raf = requestAnimationFrame(loop);
-    };
+    const loop = (time: number) => { lenis.raf(time); raf = requestAnimationFrame(loop); };
     raf = requestAnimationFrame(loop);
     return () => { lenis.destroy(); cancelAnimationFrame(raf); };
   }, []);
 
-  /* page-fade on link clicks */
+  /* page-fade on link clicks — client-side nav so audio/scroll state survives */
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       const anchor = (e.target as Element).closest("a");
@@ -95,11 +89,16 @@ export default function GlobalUI() {
       if (!href || href.startsWith("http") || href.startsWith("mailto") || href.startsWith("#")) return;
       e.preventDefault();
       document.body.classList.add("page-fade-out");
-      setTimeout(() => { window.location.href = href; }, 300);
+      setTimeout(() => { router.push(href); }, 300);
     };
     document.addEventListener("click", handler, true);
     return () => document.removeEventListener("click", handler, true);
-  }, []);
+  }, [router]);
+
+  /* fade the new page back in once the route has actually changed */
+  useEffect(() => {
+    document.body.classList.remove("page-fade-out");
+  }, [pathname]);
 
   useEffect(() => {
     const on = () => setCursorHover(true);
@@ -201,23 +200,6 @@ export default function GlobalUI() {
 
   return (
     <>
-      {/* Parallax background — GPU-composited transform, driven by Lenis's
-          own eased scroll value each frame for smooth, jank-free panning */}
-      <div
-        ref={bgRef}
-        aria-hidden="true"
-        style={{
-          position: "fixed", left: 0, right: 0, top: "-150vh", height: "400vh",
-          zIndex: -1,
-          backgroundImage: "url('/bg-red.jpg')",
-          backgroundSize: "100% auto",
-          backgroundRepeat: "repeat-y",
-          backgroundPosition: "top center",
-          willChange: "transform",
-          pointerEvents: "none",
-        }}
-      />
-
       {/* Custom cursor */}
       <div
         className="cursor-dot"

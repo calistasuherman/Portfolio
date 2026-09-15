@@ -64,24 +64,15 @@ html {
 }
 
 body {
-  background-color: #7a0000;
+  background-color: #f7f4ee;
   color: #f5f0f0;
   cursor: none;
   overscroll-behavior: none;
+  transition: opacity 0.3s ease;
 }
 
 a, button {
   cursor: none;
-}
-
-/* â”€â”€ Dark overlay for legibility â”€â”€ */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: rgba(10, 0, 0, 0.45);
 }
 
 /* â”€â”€ Grain texture â”€â”€ */
