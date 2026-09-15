@@ -44,6 +44,7 @@ export default function GlobalUI() {
   const [duration, setDuration] = useState(0);
   const [trackIndex, setTrackIndex] = useState(0);
   const playerRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
 
   /* click outside player → close popup */
   useEffect(() => {
@@ -75,7 +76,13 @@ export default function GlobalUI() {
     });
     _lenis = lenis;
     let raf: number;
-    const loop = (time: number) => { lenis.raf(time); raf = requestAnimationFrame(loop); };
+    const loop = (time: number) => {
+      lenis.raf(time);
+      if (bgRef.current) {
+        bgRef.current.style.transform = `translate3d(0, ${-lenis.scroll * 0.3}px, 0)`;
+      }
+      raf = requestAnimationFrame(loop);
+    };
     raf = requestAnimationFrame(loop);
     return () => { lenis.destroy(); cancelAnimationFrame(raf); };
   }, []);
@@ -200,6 +207,25 @@ export default function GlobalUI() {
 
   return (
     <>
+      {/* Parallax background */}
+      <div
+        ref={bgRef}
+        style={{
+          position: "fixed",
+          left: 0,
+          right: 0,
+          top: "-150vh",
+          height: "400vh",
+          zIndex: -1,
+          backgroundImage: "url('/bg-red.jpg')",
+          backgroundSize: "100% auto",
+          backgroundRepeat: "repeat-y",
+          backgroundPosition: "top center",
+          willChange: "transform",
+          pointerEvents: "none",
+        }}
+      />
+
       {/* Custom cursor */}
       <div
         className="cursor-dot"
