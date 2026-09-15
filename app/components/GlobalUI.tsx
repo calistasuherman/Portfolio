@@ -218,9 +218,9 @@ export default function GlobalUI() {
           height: "400vh",
           zIndex: -1,
           backgroundImage: "url('/bg-red.jpg')",
-          backgroundSize: "125% auto",
+          backgroundSize: "100% auto",
           backgroundRepeat: "repeat-y",
-          backgroundPosition: "70% top",
+          backgroundPosition: "top center",
           willChange: "transform",
           pointerEvents: "none",
         }}
