@@ -20,11 +20,6 @@ const VE_VIDEO_FILES: { file: string }[] = [
   { file: "ve11.mp4" },
   { file: "ve10.mp4" },
   { file: "ve9.mp4" },
-  { file: "VideoStar5.mp4" },
-  { file: "VideoStar4.mp4" },
-  { file: "VideoStar3.mp4" },
-  { file: "VideoStar2.mp4" },
-  { file: "VideoStar1.mp4" },
   { file: "ve6.mov" },
   { file: "ve7.mov" },
   { file: "ve8.mp4" },
@@ -33,6 +28,11 @@ const VE_VIDEO_FILES: { file: string }[] = [
   { file: "ve3.mp4" },
   { file: "ve4.mp4" },
   { file: "ve5.mp4" },
+  { file: "VideoStar5.mp4" },
+  { file: "VideoStar4.mp4" },
+  { file: "VideoStar3.mp4" },
+  { file: "VideoStar2.mp4" },
+  { file: "VideoStar1.mp4" },
 ];
 const VE_VIDEOS = VE_VIDEO_FILES.map(v => ({ src: `${MEDIA_BASE}/ve/${v.file}` }));
 
