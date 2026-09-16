@@ -521,7 +521,7 @@ export default function WorkPage() {
       <button
         onClick={() => setActive(null)}
         style={{
-          position: "fixed", top: "clamp(84px, 10vh, 100px)", left: "calc(clamp(1.5rem, 5vw, 4rem) + 0.58rem + 1.2rem + 4px)", zIndex: 40,
+          position: "fixed", top: "clamp(84px, 10vh, 100px)", left: "calc(clamp(1.5rem, 5vw, 4rem) + 0.58rem + 1.2rem + 4px + 1.5rem)", zIndex: 40,
           background: "none", border: "none", padding: 0,
           fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase",
           color: "rgba(245,240,240,0.4)", transition: "color 0.3s ease",
