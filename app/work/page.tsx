@@ -45,6 +45,7 @@ const COLLAB_VIDEOS = [
   { src: `${MEDIA_BASE}/yt/lewkinn.mp4`,      label: "Lewkin",        category: "Fashion"  },
   { src: `${MEDIA_BASE}/yt/teddyblakee.mp4`,  label: "Teddy Blake",  category: "Luxury"   },
   { src: `${MEDIA_BASE}/yt/bypassgptt.mp4`,   label: "BypassGPT",    category: "Tech"     },
+  { src: `${MEDIA_BASE}/yt/epidemicsound.mp4`, label: "Epidemic Sound", category: "SFX"   },
 ];
 
 /* ── Vinyl data ── */
