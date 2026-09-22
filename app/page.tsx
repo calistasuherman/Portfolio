@@ -63,7 +63,7 @@ const FEATURED = [
   { src: `${MEDIA_BASE}/yt/invideocollab.mp4`, tag: "Partnerships" },
 ];
 
-const LOGOS = Array.from({ length: 14 }, (_, i) => `/logos/portfolio${i + 1}.png`);
+const LOGOS = Array.from({ length: 17 }, (_, i) => `/logos/portfolio${i + 1}.png`);
 
 const TOOLS = [
   { src: "/apps/dr.png",     label: "DaVinci Resolve" },
