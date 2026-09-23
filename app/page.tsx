@@ -63,7 +63,11 @@ const FEATURED = [
   { src: `${MEDIA_BASE}/yt/invideocollab.mp4`, tag: "Partnerships" },
 ];
 
-const LOGOS = Array.from({ length: 17 }, (_, i) => `/logos/portfolio${i + 1}.png`);
+const LOGO_SCALE: Record<number, number> = { 15: 3, 17: 2 };
+const LOGOS = Array.from({ length: 17 }, (_, i) => ({
+  src: `/logos/portfolio${i + 1}.png`,
+  scale: LOGO_SCALE[i + 1] ?? 1,
+}));
 
 const TOOLS = [
   { src: "/apps/dr.png",     label: "DaVinci Resolve" },
@@ -226,8 +230,8 @@ export default function Home() {
       <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
         <div style={{ overflow: "hidden", maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}>
           <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content", alignItems: "center", gap: "2rem" }}>
-            {[...LOGOS, ...LOGOS].map((src, i) => (
-              <img key={i} src={src} alt="" style={{ height: "36px", width: "auto", borderRadius: "4px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block", userSelect: "none" }}
+            {[...LOGOS, ...LOGOS].map(({ src, scale }, i) => (
+              <img key={i} src={src} alt="" style={{ height: `${36 * scale}px`, width: "auto", borderRadius: "4px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block", userSelect: "none" }}
                 onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
                 onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
                 draggable={false}
