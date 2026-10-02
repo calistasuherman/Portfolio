@@ -309,24 +309,42 @@ body.page-fade-out {
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Course page: big vinyl on the left, signup on the right */
+/* Course page: giant vinyl half off the left edge, signup on the right */
 .course-hero {
+  --disc: min(100vh, 75vw);
+  position: relative;
+  overflow: clip;
   display: flex;
   align-items: center;
-  gap: clamp(2rem, 5vw, 5rem);
+  padding-left: calc(var(--disc) / 2 + clamp(2rem, 5vw, 5rem)) !important;
 }
 .course-vinyl {
-  width: 384px;
-  height: 384px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: var(--disc);
+  height: var(--disc);
+  transform: translate(-50%, -50%);
+  z-index: 0;
 }
+.course-hero > div:not(.course-vinyl) { position: relative; z-index: 1; }
 @media (max-width: 900px) {
   .course-hero {
-    flex-direction: column-reverse;
+    --disc: 90vw;
+    flex-direction: column;
     align-items: stretch;
+    padding-left: clamp(1.8rem, 5vw, 5rem) !important;
   }
   .course-vinyl {
-    width: min(300px, 75vw);
-    height: min(300px, 75vw);
-    margin: 0 auto;
+    position: relative;
+    top: auto;
+    transform: none;
+    margin-left: calc(-1 * var(--disc) / 2 - clamp(1.8rem, 5vw, 5rem));
+    margin-bottom: 1rem;
+    order: -1;
   }
+}
+@media (max-width: 900px) {
+  .course-picker { width: 46vw !important; padding: 0.6rem 0.3rem !important; }
+  .course-picker button { font-size: 0.62rem !important; padding: 0.35rem 0.4rem !important; }
 }

@@ -126,31 +126,39 @@ function SongVinyl() {
   return (
     <div
       className="course-vinyl"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-      onClick={() => setOpen(o => !o)}
-      style={{ position: "relative", flexShrink: 0 }}
+      onPointerEnter={e => { if (e.pointerType === "mouse") setOpen(true); }}
+      onPointerLeave={e => { if (e.pointerType === "mouse") setOpen(false); }}
+      onPointerUp={e => { if (e.pointerType !== "mouse") setOpen(o => !o); }}
+      
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/vinyl.png"
-        alt="Music player"
-        draggable={false}
+      {/* Same disc as the work page */}
+      <svg
+        viewBox="0 0 292 292"
         style={{
-          width: "100%", height: "100%", objectFit: "contain", display: "block",
-          animation: "vinylSpin 3s linear infinite",
-          filter: playing ? "drop-shadow(0 0 28px rgba(139,0,0,0.65))" : "drop-shadow(0 8px 32px rgba(0,0,0,0.65))",
+          width: "100%", height: "100%", display: "block",
+          animation: `vinylSpin ${open ? "1.4s" : "6s"} linear infinite`,
+          filter: playing ? "drop-shadow(0 0 60px rgba(139,0,0,0.55))" : "drop-shadow(0 20px 60px rgba(0,0,0,0.7))",
           transition: "filter 0.4s ease",
-          userSelect: "none",
+          willChange: "transform",
         }}
-      />
+      >
+        {(() => { const r = 146; const grooves = Array.from({ length: 24 }, (_, i) => r * 0.3 + (r * 0.62) * (i / 24)); return (<>
+          <circle cx={r} cy={r} r={r} fill="#090909"/>
+          {grooves.map((gr, i) => <circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"} strokeWidth="0.55"/>)}
+          <circle cx={r} cy={r} r={r * 0.29} fill="#960018"/>
+          <circle cx={r} cy={r} r={r * 0.25} fill="#960018" opacity="0.85"/>
+          {([-r*0.09, r*0.02, r*0.12] as number[]).map((dy, i) => <line key={i} x1={r - r*0.18} y1={r+dy} x2={r + r*0.18} y2={r+dy} stroke="rgba(255,255,255,0.28)" strokeWidth={i===0?0.9:0.6}/>)}
+          <circle cx={r} cy={r} r={r * 0.045} fill="#000"/>
+        </>); })()}
+      </svg>
 
       {/* Song picker */}
       <div
-        onClick={e => e.stopPropagation()}
+        className="course-picker"
+        onPointerUp={e => e.stopPropagation()}
         style={{
-          position: "absolute", left: "50%", top: "50%",
-          width: "min(17rem, 80%)",
+          position: "absolute", left: "75%", top: "50%",
+          width: "min(17rem, 40%)",
           transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -46%) scale(0.96)",
           opacity: open ? 1 : 0,
           pointerEvents: open ? "auto" : "none",
@@ -243,7 +251,7 @@ export default function CoursePage() {
             margin: "0 0 1rem",
             lineHeight: 1.7,
           }}>
-            Never edited a video before? You&apos;re in the right place. We&apos;ll start simple in CapCut, then I&apos;ll walk you through DaVinci Resolve step by step, no experience needed. Want to level up later? Advanced effects and transitions are an optional add-on.
+            Never edited a video before? You&apos;re in the right place. We&apos;ll start simple in CapCut, then I&apos;ll walk you through DaVinci Resolve step by step, all the way up to advanced effects and transitions. No experience needed.
           </p>
           <h2 style={{
             fontFamily: "BillaMount, cursive",
