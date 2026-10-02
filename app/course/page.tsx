@@ -157,8 +157,8 @@ function SongVinyl() {
         className="course-picker"
         onPointerUp={e => e.stopPropagation()}
         style={{
-          position: "absolute", left: "75%", top: "50%",
-          width: "min(17rem, 40%)",
+          position: "absolute", left: "82.5%", top: "50%",
+          width: "min(17rem, 30%)",
           transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -46%) scale(0.96)",
           opacity: open ? 1 : 0,
           pointerEvents: open ? "auto" : "none",
@@ -258,9 +258,9 @@ export default function CoursePage() {
             fontSize: "clamp(1.6rem, 2.8vw, 2.3rem)",
             fontWeight: "normal", color: "#f5f0f0",
             lineHeight: 1.2,
-            padding: "0.9em 0 0.8em",
+            padding: "0.9em 0 1.4em",
           }}>
-            Be first in line
+            Be first in line!
           </h2>
           <WaitlistForm />
         </div>
@@ -271,7 +271,7 @@ export default function CoursePage() {
         style={{ zIndex: 2, borderTop: "1px solid rgba(139,0,0,0.15)" }}
       >
         <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
-          @2026 CAL1STAR EDITING.&nbsp;&nbsp;PSALM 46:5
+          @2026 CALISTA SUHERMAN.&nbsp;&nbsp;PSALM 46:5
         </p>
       </footer>
     </main>

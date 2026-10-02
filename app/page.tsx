@@ -201,7 +201,7 @@ export default function Home() {
             <div style={{ position: "relative" }} suppressHydrationWarning>
               <div aria-hidden="true" className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(3px, 3px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
               <div aria-hidden="true" className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.12, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}>Calista Suherman</div>
-              <div className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#6b0016", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
+              <div className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#c8102e", lineHeight: 1.15, position: "relative", textShadow: "0 0 28px rgba(200,16,46,0.35)", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>Calista Suherman</div>
             </div>
           </div>
 
@@ -219,54 +219,6 @@ export default function Home() {
           <a href="/contact" className="inline-block px-8 py-3 rounded-none text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "var(--font-inter)" }}>
             work with me
           </a>
-        </div>
-      </section>
-
-      {/* ── Trusted By ── */}
-      <section className="section-content relative py-6 overflow-hidden">
-        <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
-      </section>
-
-      {/* ── Portfolio Strip ── */}
-      <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
-        <div style={{ overflow: "hidden", maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}>
-          <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content", alignItems: "center", gap: "2rem" }}>
-            {[...LOGOS, ...LOGOS].map(({ src, scale }, i) => (
-              <img key={i} src={src} alt="" style={{ height: `${36 * scale}px`, width: "auto", borderRadius: "4px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block", userSelect: "none" }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-                onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
-                draggable={false}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Selected Work ── */}
-      <section style={{ padding: "7rem clamp(1.5rem, 6vw, 5rem)" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-          <RevealToggle>
-            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: "1px solid rgba(245,240,240,0.1)", paddingBottom: "1.2rem", marginBottom: "2.5rem" }}>
-              <span>
-                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", fontWeight: "normal" }}>S</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.4rem, 2.8vw, 2.5rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.04em" }}>elected Work</span>
-              </span>
-              <a href="/work" style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.4)", textDecoration: "none", transition: "color 0.3s ease" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.85)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.4)")}
-              >View all →</a>
-            </div>
-          </RevealToggle>
-          <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
-            hover a frame to preview · click to watch
-          </p>
-          <div className="mobile-1col" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem" }}>
-            {FEATURED.map((item, i) => (
-              <RevealToggle key={item.src} delay={i * 110}>
-                <FeaturedCard {...item} />
-              </RevealToggle>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -314,13 +266,78 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Course teaser ── */}
+      <section style={{ padding: "6rem clamp(1.5rem, 6vw, 5rem) 1rem", textAlign: "center" }}>
+        <RevealToggle>
+          <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.45)" }}>New · A beginner course by me</p>
+          <h2 style={{ fontWeight: "normal", color: "#f5f0f0", fontSize: "clamp(2.6rem, 5vw, 4.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.5em", whiteSpace: "nowrap" }}>
+            <span style={{ fontFamily: "BillaMount, cursive" }}>Editing</span>
+            <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
+          </h2>
+          <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.8rem, 1vw, 0.9rem)", color: "rgba(245,240,240,0.7)", maxWidth: "30rem", margin: "0 auto 2rem", lineHeight: 1.7 }}>
+            Never edited before? I&apos;ll take you from CapCut to DaVinci Resolve to the effects and transitions you see in my videos.
+          </p>
+          <a href="/course" className="inline-block px-8 py-3 rounded-none text-[10px] uppercase tracking-[0.2em] text-white transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", fontFamily: "var(--font-inter)" }}>
+            Join the waitlist →
+          </a>
+        </RevealToggle>
+      </section>
+
+      {/* ── Selected Work ── */}
+      <section style={{ padding: "7rem clamp(1.5rem, 6vw, 5rem)" }}>
+        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+          <RevealToggle>
+            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: "1px solid rgba(245,240,240,0.1)", paddingBottom: "1.2rem", marginBottom: "2.5rem" }}>
+              <span>
+                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", fontWeight: "normal" }}>S</span>
+                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.4rem, 2.8vw, 2.5rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.04em" }}>elected Work</span>
+              </span>
+              <a href="/work" style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.4)", textDecoration: "none", transition: "color 0.3s ease" }}
+                onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.85)")}
+                onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.4)")}
+              >View all →</a>
+            </div>
+          </RevealToggle>
+          <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
+            hover a frame to preview · click to watch
+          </p>
+          <div className="mobile-1col" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem" }}>
+            {FEATURED.map((item, i) => (
+              <RevealToggle key={item.src} delay={i * 110}>
+                <FeaturedCard {...item} />
+              </RevealToggle>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Trusted By ── */}
+      <section className="section-content relative py-6 overflow-hidden">
+        <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
+      </section>
+
+      {/* ── Portfolio Strip ── */}
+      <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
+        <div style={{ overflow: "hidden", maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}>
+          <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content", alignItems: "center", gap: "2rem" }}>
+            {[...LOGOS, ...LOGOS].map(({ src, scale }, i) => (
+              <img key={i} src={src} alt="" style={{ height: `${36 * scale}px`, width: "auto", borderRadius: "4px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block", userSelect: "none" }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+                onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
+                draggable={false}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Editing Toolkit ── */}
       <ToolkitSection />
 
       {/* ── Footer ── */}
       <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
         <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
-          @2026 CAL1STAR EDITING.&nbsp;&nbsp;PSALM 46:5
+          @2026 CALISTA SUHERMAN.&nbsp;&nbsp;PSALM 46:5
         </p>
       </footer>
 
