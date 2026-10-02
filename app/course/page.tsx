@@ -245,7 +245,7 @@ export default function CoursePage() {
           <p style={{
             fontFamily: "var(--font-inter)",
             fontWeight: 300,
-            fontSize: "clamp(0.95rem, 1.4vw, 1.15rem)",
+            fontSize: "clamp(0.85rem, 1.1vw, 0.95rem)",
             color: "rgba(245,240,240,0.75)",
             maxWidth: "34rem",
             margin: "0 0 1rem",
@@ -254,11 +254,11 @@ export default function CoursePage() {
             Never edited a video before? You&apos;re in the right place. We&apos;ll start simple in CapCut, then I&apos;ll walk you through DaVinci Resolve step by step, all the way up to advanced effects and transitions. No experience needed.
           </p>
           <h2 style={{
-            fontFamily: "var(--font-melodrama)",
+            fontFamily: "BillaMount, cursive",
             fontSize: "clamp(2rem, 3.6vw, 3rem)",
             fontWeight: "normal", color: "#f5f0f0",
-            lineHeight: 1.1,
-            margin: "1.5rem 0 1.2rem",
+            lineHeight: 1.2,
+            padding: "0.9em 0 0.8em",
           }}>
             Be first in line
           </h2>
