@@ -64,7 +64,7 @@ const FEATURED = [
 ];
 
 const LOGO_SCALE: Record<number, number> = { 15: 0.5, 17: 2 };
-const LOGO_IDS = [2, 7, 9, 11, 15, 16, 17];
+const LOGO_IDS = [15, 16, 17];
 const LOGOS = LOGO_IDS.map(id => ({
   src: `/logos/portfolio${id}.png`,
   scale: LOGO_SCALE[id] ?? 1,
@@ -284,7 +284,7 @@ export default function Home() {
       </section>
 
       {/* ── Selected Work ── */}
-      <section style={{ padding: "7rem clamp(1.5rem, 6vw, 5rem)" }}>
+      <section style={{ position: "relative", padding: "7rem clamp(1.5rem, 6vw, 5rem)", backgroundImage: "linear-gradient(rgba(10,0,0,0.55), rgba(10,0,0,0.7)), url('/background/record-store.jpg')", backgroundSize: "cover", backgroundPosition: "center 40%", backgroundAttachment: "fixed" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <RevealToggle>
             <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: "1px solid rgba(245,240,240,0.1)", paddingBottom: "1.2rem", marginBottom: "2.5rem" }}>
@@ -318,16 +318,14 @@ export default function Home() {
 
       {/* ── Portfolio Strip ── */}
       <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
-        <div style={{ overflow: "hidden", maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}>
-          <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content", alignItems: "center", gap: "2rem" }}>
-            {[...LOGOS, ...LOGOS].map(({ src, scale }, i) => (
-              <img key={i} src={src} alt="" style={{ height: `${36 * scale}px`, width: "auto", borderRadius: "4px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block", userSelect: "none" }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-                onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
-                draggable={false}
-              />
-            ))}
-          </div>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "clamp(2rem, 6vw, 5rem)", flexWrap: "wrap", padding: "0.5rem 0 2rem" }}>
+          {LOGOS.map(({ src, scale }, i) => (
+            <img key={i} src={src} alt="" style={{ height: `${36 * scale}px`, width: "auto", borderRadius: "4px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block", userSelect: "none" }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+              onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
+              draggable={false}
+            />
+          ))}
         </div>
       </section>
 

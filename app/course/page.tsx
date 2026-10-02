@@ -137,6 +137,7 @@ function SongVinyl() {
         style={{
           width: "100%", height: "100%", display: "block",
           animation: `vinylSpin ${open ? "1.4s" : "6s"} linear infinite`,
+          animationPlayState: playing ? "running" : "paused",
           filter: playing ? "drop-shadow(0 0 60px rgba(139,0,0,0.55))" : "drop-shadow(0 20px 60px rgba(0,0,0,0.7))",
           transition: "filter 0.4s ease",
           willChange: "transform",
