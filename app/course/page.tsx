@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-import { Reveal } from "../components/Reveal";
+import { useState, useEffect } from "react";
+import { SONGS, playSong, getAudio, currentTrack } from "../components/GlobalUI";
 
 // Kit (ConvertKit) form ID — replace with your own from Kit → Grow → Landing Pages & Forms
 const KIT_FORM_ID = "9993946";
@@ -32,7 +32,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
   if (sent) {
     return (
       <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, color: "#f5f0f0", letterSpacing: "0.04em", textAlign: center ? "center" : "left" }}>
-        You&apos;re on the list. Check your inbox to confirm.
+        You&apos;re in! Check your inbox to confirm your spot.
       </p>
     );
   }
@@ -92,6 +92,108 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
   );
 }
 
+/* Big spinning vinyl: hover (or tap) to pick a Michael Jackson song */
+function SongVinyl() {
+  const [open, setOpen] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [track, setTrack] = useState(0);
+
+  useEffect(() => {
+    const audio = getAudio();
+    if (!audio) return;
+    const sync = () => { setPlaying(!audio.paused); setTrack(currentTrack()); };
+    sync();
+    audio.addEventListener("play", sync);
+    audio.addEventListener("pause", sync);
+    window.addEventListener("cal1star:track", sync);
+    return () => {
+      audio.removeEventListener("play", sync);
+      audio.removeEventListener("pause", sync);
+      window.removeEventListener("cal1star:track", sync);
+    };
+  }, []);
+
+  function pick(i: number) {
+    const audio = getAudio();
+    if (!audio) return;
+    if (i === track) {
+      if (audio.paused) audio.play().catch(() => {}); else audio.pause();
+    } else {
+      playSong(i);
+    }
+  }
+
+  return (
+    <div
+      className="course-vinyl"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      onClick={() => setOpen(o => !o)}
+      style={{ position: "relative", flexShrink: 0 }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/vinyl.png"
+        alt="Music player"
+        draggable={false}
+        style={{
+          width: "100%", height: "100%", objectFit: "contain", display: "block",
+          animation: "vinylSpin 3s linear infinite",
+          filter: playing ? "drop-shadow(0 0 28px rgba(139,0,0,0.65))" : "drop-shadow(0 8px 32px rgba(0,0,0,0.65))",
+          transition: "filter 0.4s ease",
+          userSelect: "none",
+        }}
+      />
+
+      {/* Song picker */}
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          position: "absolute", left: "50%", top: "50%",
+          width: "min(17rem, 80%)",
+          transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -46%) scale(0.96)",
+          opacity: open ? 1 : 0,
+          pointerEvents: open ? "auto" : "none",
+          transition: "opacity 0.3s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1)",
+          background: "rgba(10,0,0,0.88)",
+          backdropFilter: "blur(20px)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          borderRadius: "14px",
+          padding: "0.9rem 0.6rem",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
+        }}
+      >
+        <p style={{ ...label, textAlign: "center", marginBottom: "0.5rem" }}>Pick a song</p>
+        {SONGS.map((s, i) => {
+          const active = i === track && playing;
+          return (
+            <button
+              key={s.title}
+              onClick={() => pick(i)}
+              style={{
+                display: "flex", alignItems: "center", gap: "0.6rem",
+                width: "100%", textAlign: "left",
+                padding: "0.45rem 0.6rem",
+                background: active ? "rgba(150,0,24,0.35)" : "transparent",
+                border: "none", borderRadius: "8px",
+                color: "#f5f0f0", cursor: "none",
+                fontFamily: "var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.03em",
+                transition: "background 0.2s",
+              }}
+              onMouseEnter={e => { if (!active) e.currentTarget.style.background = "rgba(245,240,240,0.08)"; }}
+              onMouseLeave={e => { if (!active) e.currentTarget.style.background = "transparent"; }}
+            >
+              <span style={{ width: "0.8rem", fontSize: "0.6rem", opacity: 0.7 }}>{active ? "❚❚" : "▶"}</span>
+              <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.title}</span>
+            </button>
+          );
+        })}
+        <p style={{ ...label, textAlign: "center", marginTop: "0.5rem", fontSize: "0.5rem" }}>Michael Jackson</p>
+      </div>
+    </div>
+  );
+}
+
 export default function CoursePage() {
   const pad = "clamp(1.8rem, 5vw, 5rem)";
 
@@ -110,63 +212,53 @@ export default function CoursePage() {
         background: "linear-gradient(to bottom, rgba(8,2,5,0.6) 0%, rgba(8,2,5,0.85) 45%, rgba(8,2,5,0.95) 100%)",
       }} />
 
-      {/* Hero */}
       <section
-        className="section-content"
+        className="section-content course-hero"
         style={{
           position: "relative", zIndex: 2,
           minHeight: "100vh",
-          display: "flex", flexDirection: "column", justifyContent: "center",
           padding: `calc(80px + 3rem) ${pad} 5rem`,
         }}
       >
-        <p style={{ ...label, marginBottom: "1rem" }}>A beginner course by @cal1star</p>
-        <h1 style={{ fontWeight: "normal", color: "#f5f0f0", margin: 0 }}>
-          <span style={{
-            display: "block",
-            fontFamily: "BillaMount, cursive",
-            fontSize: "clamp(3.6rem, 9vw, 8rem)",
-            lineHeight: 1.1,
-            padding: "0.95em 0 0.55em",
-          }}>
-            Editing
-          </span>
-          <span style={{
-            display: "block",
-            fontFamily: "var(--font-melodrama)",
-            fontSize: "clamp(3rem, 7vw, 6rem)",
-            lineHeight: 1,
-            marginTop: "clamp(0.5rem, 2vw, 1.5rem)",
-            textWrap: "balance" as React.CSSProperties["textWrap"],
-          }}>
-            101
-          </span>
-        </h1>
-        <p style={{
-          fontFamily: "var(--font-inter)",
-          fontWeight: 300,
-          fontSize: "clamp(0.95rem, 1.4vw, 1.15rem)",
-          color: "rgba(245,240,240,0.75)",
-          maxWidth: "34rem",
-          margin: "2rem 0 2.5rem",
-          lineHeight: 1.7,
-        }}>
-          Never edited before? Start here. Learn the basics on CapCut, then step up to professional editing in DaVinci Resolve. Want to go further? Advanced effects and transitions are available as an add-on.
-        </p>
-        <WaitlistForm />
-        <p style={{ ...label, marginTop: "1rem", letterSpacing: "0.12em" }}>
-          Waitlist gets the lowest price it will ever be
-        </p>
-      </section>
+        <SongVinyl />
 
-      {/* Final CTA */}
-      <section className="section-content" style={{ position: "relative", zIndex: 2, padding: `6rem ${pad}`, borderTop: "1px solid rgba(139,0,0,0.2)", textAlign: "center" }}>
-        <Reveal>
-          <h2 style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(3rem, 7vw, 5.5rem)", fontWeight: "normal", color: "#f5f0f0", lineHeight: 1.2, padding: "0.9em 0 0.6em", marginBottom: "1.5rem" }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <p style={{ ...label, marginBottom: "0.5rem" }}>A beginner course by @cal1star</p>
+          <h1 style={{
+            fontWeight: "normal", color: "#f5f0f0", margin: 0,
+            whiteSpace: "nowrap",
+            fontSize: "clamp(3rem, 6.5vw, 6.5rem)",
+            lineHeight: 1.1,
+            padding: "0.9em 0 0.5em",
+          }}>
+            <span style={{ fontFamily: "BillaMount, cursive" }}>Editing</span>
+            <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
+          </h1>
+          <p style={{
+            fontFamily: "var(--font-inter)",
+            fontWeight: 300,
+            fontSize: "clamp(0.95rem, 1.4vw, 1.15rem)",
+            color: "rgba(245,240,240,0.75)",
+            maxWidth: "34rem",
+            margin: "0 0 1rem",
+            lineHeight: 1.7,
+          }}>
+            Never edited a video before? You&apos;re in the right place. We&apos;ll start simple in CapCut, then I&apos;ll walk you through DaVinci Resolve step by step, no experience needed. Want to level up later? Advanced effects and transitions are an optional add-on.
+          </p>
+          <h2 style={{
+            fontFamily: "BillaMount, cursive",
+            fontSize: "clamp(2.2rem, 4.5vw, 3.6rem)",
+            fontWeight: "normal", color: "#f5f0f0",
+            lineHeight: 1.2,
+            padding: "0.9em 0 0.5em",
+          }}>
             Be first in line
           </h2>
-          <WaitlistForm center />
-        </Reveal>
+          <WaitlistForm />
+          <p style={{ ...label, marginTop: "1rem", letterSpacing: "0.12em" }}>
+            Join now for the lowest price it&apos;ll ever be
+          </p>
+        </div>
       </section>
 
       <footer

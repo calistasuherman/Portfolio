@@ -5,7 +5,7 @@ import Lenis from "lenis";
 import { MEDIA_BASE } from "../lib/media";
 
 /* ── Playlist ─────────────────────────────────────────────────── */
-const SONGS = [
+export const SONGS = [
   { title: "The Lady in My Life",          artist: "Michael Jackson", src: `${MEDIA_BASE}/songs/lady in my life.mp4`              },
   { title: "(I Like) The Way You Love Me", artist: "Michael Jackson", src: `${MEDIA_BASE}/songs/I like the way you love me.mp4`   },
   { title: "All I Do Is Think Of You",     artist: "Michael Jackson", src: `${MEDIA_BASE}/songs/all i do is think of you.mp4`     },
@@ -24,7 +24,21 @@ export function lenisScrollTo(target: HTMLElement | string | number, options?: a
 }
 let _trackIndex = 0;
 
-function getAudio(): HTMLAudioElement | null {
+export function currentTrack() { return _trackIndex; }
+
+/* Play a song by index from anywhere (e.g. the course page vinyl) */
+export function playSong(idx: number) {
+  const audio = getAudio();
+  if (!audio) return;
+  const next = ((idx % SONGS.length) + SONGS.length) % SONGS.length;
+  _trackIndex = next;
+  audio.src = SONGS[next].src;
+  audio.load();
+  audio.play().catch(() => {});
+  window.dispatchEvent(new Event("cal1star:track"));
+}
+
+export function getAudio(): HTMLAudioElement | null {
   if (typeof window === "undefined") return null;
   if (!_audio) {
     _audio = new Audio(SONGS[0].src);
@@ -132,8 +146,17 @@ export default function GlobalUI() {
     audio.addEventListener("timeupdate", onTime);
     audio.addEventListener("loadedmetadata", onMeta);
     audio.addEventListener("ended", onEnded);
+    const onPlay = () => setPlaying(true);
+    const onPause = () => setPlaying(false);
+    const onTrack = () => { setTrackIndex(_trackIndex); setProgress(0); setDuration(0); };
+    audio.addEventListener("play", onPlay);
+    audio.addEventListener("pause", onPause);
+    window.addEventListener("cal1star:track", onTrack);
     setPlaying(!audio.paused);
     return () => {
+      audio.removeEventListener("play", onPlay);
+      audio.removeEventListener("pause", onPause);
+      window.removeEventListener("cal1star:track", onTrack);
       audio.removeEventListener("timeupdate", onTime);
       audio.removeEventListener("loadedmetadata", onMeta);
       audio.removeEventListener("ended", onEnded);
@@ -141,16 +164,7 @@ export default function GlobalUI() {
   }, []);
 
   function skipTo(idx: number) {
-    const audio = getAudio();
-    if (!audio) return;
-    const next = ((idx % SONGS.length) + SONGS.length) % SONGS.length;
-    _trackIndex = next;
-    setTrackIndex(next);
-    setProgress(0);
-    setDuration(0);
-    audio.src = SONGS[next].src;
-    audio.load();
-    audio.play().catch(() => {});
+    playSong(idx);
     setPlaying(true);
     setPlayerOpen(true);
   }
@@ -260,7 +274,7 @@ export default function GlobalUI() {
       </header>
 
       {/* Music player */}
-      <div ref={playerRef} style={{ position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 200, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.6rem" }}>
+      <div ref={playerRef} style={{ position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 200, display: pathname === "/course" ? "none" : "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.6rem" }}>
 
         {/* Expanded player card */}
         <div style={{

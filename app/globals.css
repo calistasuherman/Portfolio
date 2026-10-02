@@ -308,3 +308,25 @@ body.page-fade-out {
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Course page: big vinyl on the left, signup on the right */
+.course-hero {
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+.course-vinyl {
+  width: 384px;
+  height: 384px;
+}
+@media (max-width: 900px) {
+  .course-hero {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .course-vinyl {
+    width: min(300px, 75vw);
+    height: min(300px, 75vw);
+    margin: 0 auto;
+  }
+}
