@@ -266,18 +266,38 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Trusted By ── */}
+      <section className="section-content relative py-6 overflow-hidden">
+        <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
+      </section>
+
+      {/* ── Portfolio Strip ── */}
+      <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
+        <div style={{ overflow: "hidden", maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}>
+          <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content", alignItems: "center" }}>
+            {Array.from({ length: 12 }, () => LOGOS).flat().map(({ src, scale }, i) => (
+              <img key={i} src={src} alt="" style={{ height: `${36 * scale}px`, width: "auto", borderRadius: "4px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block", userSelect: "none", marginRight: "4rem" }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+                onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
+                draggable={false}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Course teaser ── */}
-      <section style={{ padding: "6rem clamp(1.5rem, 6vw, 5rem) 1rem", textAlign: "center" }}>
+      <section style={{ minHeight: "85vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "7rem clamp(1.5rem, 6vw, 5rem)", textAlign: "center" }}>
         <RevealToggle>
-          <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.45)" }}>New · A beginner course by me</p>
-          <h2 style={{ fontWeight: "normal", color: "#f5f0f0", fontSize: "clamp(2.6rem, 5vw, 4.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.5em", whiteSpace: "nowrap" }}>
+          <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)" }}>New · A beginner course by me</p>
+          <h2 style={{ fontWeight: "normal", color: "#f5f0f0", fontSize: "clamp(3.4rem, 9vw, 8.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.45em", whiteSpace: "nowrap" }}>
             <span style={{ fontFamily: "BillaMount, cursive" }}>Editing</span>
             <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
           </h2>
-          <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.8rem, 1vw, 0.9rem)", color: "rgba(245,240,240,0.7)", maxWidth: "30rem", margin: "0 auto 2rem", lineHeight: 1.7 }}>
+          <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.95rem, 1.4vw, 1.2rem)", color: "rgba(245,240,240,0.78)", maxWidth: "38rem", margin: "0 auto 2.75rem", lineHeight: 1.75 }}>
             Never edited before? I&apos;ll take you from CapCut to DaVinci Resolve to the effects and transitions you see in my videos.
           </p>
-          <a href="/course" className="inline-block px-8 py-3 rounded-none text-[10px] uppercase tracking-[0.2em] text-white transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", fontFamily: "var(--font-inter)" }}>
+          <a href="/course" className="inline-block rounded-none uppercase text-white transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", fontFamily: "var(--font-inter)", fontSize: "0.8rem", letterSpacing: "0.2em", padding: "1.1rem 2.6rem" }}>
             Join the waitlist →
           </a>
         </RevealToggle>
@@ -308,24 +328,6 @@ export default function Home() {
               </RevealToggle>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── Trusted By ── */}
-      <section className="section-content relative py-6 overflow-hidden">
-        <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
-      </section>
-
-      {/* ── Portfolio Strip ── */}
-      <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "clamp(2rem, 6vw, 5rem)", flexWrap: "wrap", padding: "0.5rem 0 2rem" }}>
-          {LOGOS.map(({ src, scale }, i) => (
-            <img key={i} src={src} alt="" style={{ height: `${36 * scale}px`, width: "auto", borderRadius: "4px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block", userSelect: "none" }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-              onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
-              draggable={false}
-            />
-          ))}
         </div>
       </section>
 
