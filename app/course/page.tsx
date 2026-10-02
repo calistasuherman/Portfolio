@@ -245,7 +245,7 @@ export default function CoursePage() {
           <p style={{
             fontFamily: "var(--font-inter)",
             fontWeight: 300,
-            fontSize: "clamp(0.85rem, 1.1vw, 0.95rem)",
+            fontSize: "clamp(0.78rem, 0.95vw, 0.85rem)",
             color: "rgba(245,240,240,0.75)",
             maxWidth: "34rem",
             margin: "0 0 1rem",
@@ -255,7 +255,7 @@ export default function CoursePage() {
           </p>
           <h2 style={{
             fontFamily: "BillaMount, cursive",
-            fontSize: "clamp(2rem, 3.6vw, 3rem)",
+            fontSize: "clamp(1.6rem, 2.8vw, 2.3rem)",
             fontWeight: "normal", color: "#f5f0f0",
             lineHeight: 1.2,
             padding: "0.9em 0 0.8em",
