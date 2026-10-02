@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Reveal } from "../components/Reveal";
 
 // Kit (ConvertKit) form ID — replace with your own from Kit → Grow → Landing Pages & Forms
-const KIT_FORM_ID = "YOUR_FORM_ID";
+const KIT_FORM_ID = "9993946";
 
 const MODULES: [string, string, string][] = [
   ["00", "Setup without the overwhelm", "Install the free version, tour the pages, and set up a vertical project for Reels."],
@@ -11,13 +11,13 @@ const MODULES: [string, string, string][] = [
   ["02", "Cutting to music", "Beat markers, pacing, and smooth speed ramps."],
   ["03", "Transitions & motion", "Keyframes, smooth zooms, whip pans and match cuts."],
   ["04", "Color grading basics", "Nodes, exposure, white balance, LUTs and natural skin tones."],
-  ["05", "Cinematic looks", "My glow, halation and film grain looks, and building one you can reuse."],
+  ["05", "Signature effects", "My glow, halation and film grain effects, and building presets you can reuse."],
   ["06", "Audio, text & captions", "Clean sound, simple sound design, and titles that pop."],
   ["07", "Export for Instagram", "The settings that keep your Reel sharp after upload."],
 ];
 
 const EXTRAS = [
-  "A final project: edit a cinematic travel Reel with real footage I provide",
+  "A final project: edit a travel Reel with real footage I provide",
   "My project files and a starter LUT pack",
   "A one-page DaVinci shortcut cheat sheet",
   "Short 5–10 minute lessons you can watch at your own pace",
@@ -146,7 +146,7 @@ export default function CoursePage() {
             fontSize: "clamp(4rem, 11vw, 9.5rem)",
             lineHeight: 1.1,
           }}>
-            Cinematic
+            Editing
           </span>
           <span style={{
             display: "block",
@@ -156,7 +156,7 @@ export default function CoursePage() {
             marginTop: "0.5rem",
             textWrap: "balance" as React.CSSProperties["textWrap"],
           }}>
-            editing in DaVinci Resolve
+            effects & transitions in DaVinci Resolve
           </span>
         </h1>
         <p style={{
@@ -168,7 +168,7 @@ export default function CoursePage() {
           margin: "2rem 0 2.5rem",
           lineHeight: 1.7,
         }}>
-          Go from never opening an editor to your first cinematic Reel. You&apos;ll use the free version and learn the exact looks I use on my videos.
+          Learn the advanced effects and transitions behind my videos, step by step in DaVinci Resolve&apos;s free version, even if you&apos;re just starting out.
         </p>
         <WaitlistForm />
         <p style={{ ...label, marginTop: "1rem", letterSpacing: "0.12em" }}>
@@ -243,7 +243,7 @@ export default function CoursePage() {
               Hi, I&apos;m Calista
             </h2>
             <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, color: "rgba(245,240,240,0.7)", lineHeight: 1.8, maxWidth: "32rem" }}>
-              I&apos;m the video editor behind @cal1star, where I break down the effects behind cinematic edits. This course is everything I wish I had when I started, in the order that actually makes sense.
+              I&apos;m the video editor behind @cal1star, where I break down the effects and transitions behind my edits. This course is everything I wish I had when I started, in the order that actually makes sense.
             </p>
           </Reveal>
         </div>
