@@ -251,7 +251,7 @@ export default function CoursePage() {
             margin: "0 0 1rem",
             lineHeight: 1.7,
           }}>
-            Never edited a video before? You&apos;re in the right place. We&apos;ll start simple in CapCut, then I&apos;ll walk you through DaVinci Resolve step by step, all the way up to advanced effects and transitions. No experience needed.
+            Editing changed my life, and I want to make it feel easy for you. I&apos;ll walk you through CapCut first, then DaVinci Resolve, then the fun stuff: the effects and transitions you see in my videos. No experience needed, just come as you are.
           </p>
           <h2 style={{
             fontFamily: "BillaMount, cursive",
