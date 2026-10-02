@@ -287,17 +287,17 @@ export default function Home() {
       </section>
 
       {/* ── Course teaser ── */}
-      <section style={{ minHeight: "85vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "7rem clamp(1.5rem, 6vw, 5rem)", textAlign: "center" }}>
+      <section style={{ minHeight: "70vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "5.5rem clamp(1.5rem, 6vw, 5rem)", textAlign: "center" }}>
         <RevealToggle>
           <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)" }}>New · A beginner course by me</p>
-          <h2 style={{ fontWeight: "normal", color: "#f5f0f0", fontSize: "clamp(3.4rem, 9vw, 8.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.45em", whiteSpace: "nowrap" }}>
+          <h2 style={{ fontWeight: "normal", color: "#f5f0f0", fontSize: "clamp(3rem, 7vw, 6.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.45em", whiteSpace: "nowrap" }}>
             <span style={{ fontFamily: "BillaMount, cursive" }}>Editing</span>
             <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
           </h2>
-          <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.95rem, 1.4vw, 1.2rem)", color: "rgba(245,240,240,0.78)", maxWidth: "38rem", margin: "0 auto 2.75rem", lineHeight: 1.75 }}>
+          <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)", color: "rgba(245,240,240,0.78)", maxWidth: "34rem", margin: "0 auto 2.25rem", lineHeight: 1.75 }}>
             Never edited before? I&apos;ll take you from CapCut to DaVinci Resolve to the effects and transitions you see in my videos.
           </p>
-          <a href="/course" className="inline-block rounded-none uppercase text-white transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", fontFamily: "var(--font-inter)", fontSize: "0.8rem", letterSpacing: "0.2em", padding: "1.1rem 2.6rem" }}>
+          <a href="/course" className="inline-block rounded-none uppercase text-white transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", fontFamily: "var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.2em", padding: "0.95rem 2.2rem" }}>
             Join the waitlist →
           </a>
         </RevealToggle>
