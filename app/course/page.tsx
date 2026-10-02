@@ -134,12 +134,12 @@ export default function CoursePage() {
           <span style={{
             display: "block",
             fontFamily: "var(--font-melodrama)",
-            fontSize: "clamp(2.2rem, 5.5vw, 4.6rem)",
-            lineHeight: 1.05,
+            fontSize: "clamp(3rem, 7vw, 6rem)",
+            lineHeight: 1,
             marginTop: "clamp(0.5rem, 2vw, 1.5rem)",
             textWrap: "balance" as React.CSSProperties["textWrap"],
           }}>
-            effects & transitions in DaVinci Resolve
+            101
           </span>
         </h1>
         <p style={{
@@ -151,7 +151,7 @@ export default function CoursePage() {
           margin: "2rem 0 2.5rem",
           lineHeight: 1.7,
         }}>
-          Learn the advanced effects and transitions behind my videos, step by step in DaVinci Resolve&apos;s free version, even if you&apos;re just starting out.
+          Never edited before? Start here. Learn the basics on CapCut, then step up to professional editing in DaVinci Resolve. Want to go further? Advanced effects and transitions are available as an add-on.
         </p>
         <WaitlistForm />
         <p style={{ ...label, marginTop: "1rem", letterSpacing: "0.12em" }}>
