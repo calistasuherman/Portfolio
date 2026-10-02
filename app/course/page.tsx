@@ -254,18 +254,15 @@ export default function CoursePage() {
             Never edited a video before? You&apos;re in the right place. We&apos;ll start simple in CapCut, then I&apos;ll walk you through DaVinci Resolve step by step, all the way up to advanced effects and transitions. No experience needed.
           </p>
           <h2 style={{
-            fontFamily: "BillaMount, cursive",
-            fontSize: "clamp(2.2rem, 4.5vw, 3.6rem)",
+            fontFamily: "var(--font-melodrama)",
+            fontSize: "clamp(2rem, 3.6vw, 3rem)",
             fontWeight: "normal", color: "#f5f0f0",
-            lineHeight: 1.2,
-            padding: "0.9em 0 0.5em",
+            lineHeight: 1.1,
+            margin: "1.5rem 0 1.2rem",
           }}>
             Be first in line
           </h2>
           <WaitlistForm />
-          <p style={{ ...label, marginTop: "1rem", letterSpacing: "0.12em" }}>
-            Join now for the lowest price it&apos;ll ever be
-          </p>
         </div>
       </section>
 
