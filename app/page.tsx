@@ -122,7 +122,7 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
 function FlipPhoto() {
   const [order, setOrder] = useState(STACK_PHOTOS.map((_, i) => i));
   return (
-    <div style={{ position: "relative", width: "clamp(240px, 26vw, 365px)", height: "clamp(300px, 33vw, 470px)" }}>
+    <div style={{ position: "relative", width: "clamp(270px, 30vw, 420px)", height: "clamp(340px, 38vw, 540px)", transform: "scale(0.85)" }}>
       {order.map((photoIdx, stackPos) => {
         const off = PHOTO_OFFSETS[stackPos] ?? PHOTO_OFFSETS[PHOTO_OFFSETS.length - 1];
         const isTop = stackPos === 0;
@@ -289,7 +289,7 @@ export default function Home() {
       {/* ── Course teaser ── */}
       <section style={{ minHeight: "70vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "5.5rem clamp(1.5rem, 6vw, 5rem)", textAlign: "center" }}>
         <RevealToggle>
-          <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)" }}>New · A beginner course by me</p>
+          <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginBottom: "1.75rem" }}>New · A beginner course by me</p>
           <h2 style={{ fontWeight: "normal", color: "#f5f0f0", fontSize: "clamp(3rem, 7vw, 6.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.45em", whiteSpace: "nowrap" }}>
             <span style={{ fontFamily: "BillaMount, cursive" }}>Editing</span>
             <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
@@ -337,7 +337,7 @@ export default function Home() {
       {/* ── Footer ── */}
       <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
         <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
-          @2026 CALISTA SUHERMAN.&nbsp;&nbsp;PSALM 46:5
+          @2026 CAL1STAR EDITING.&nbsp;&nbsp;PSALM 46:5
         </p>
       </footer>
 
