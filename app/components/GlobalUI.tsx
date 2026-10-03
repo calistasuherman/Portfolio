@@ -207,7 +207,6 @@ export default function GlobalUI() {
   const navLinks = [
     { label: "Home",    href: "/" },
     { label: "My Work", href: "/work" },
-    { label: "Course",  href: "/course" },
     { label: "Contact", href: "/contact" },
   ];
 
