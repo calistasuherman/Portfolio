@@ -256,7 +256,7 @@ export default function Home() {
               @cal1star &nbsp;|&nbsp; 20K Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
             </p>
             <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", lineHeight: 1.85, textShadow: "0 2px 12px rgba(0,0,0,0.55)", fontWeight: 400 }}>
-              Hi! I&apos;m Calista, your friendly neighborhood videographer/video editor, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
+              Hi! I&apos;m Calista, your friendly neighborhood video editor/videographer, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
             </p>
             <div className="font-inter" style={{ fontSize: "clamp(0.55rem, 0.9vw, 0.72rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", display: "flex", gap: "2rem", color: "#e8e4e0" }}>
               {[0, 1].map(col => (
@@ -300,7 +300,7 @@ export default function Home() {
       {/* ── Course teaser ── */}
       <section style={{ minHeight: "70vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "5.5rem clamp(1.5rem, 6vw, 5rem)", textAlign: "center" }}>
         <RevealToggle>
-          <div style={{ position: "relative", top: "-3rem" }}>
+          <div style={{ position: "relative", top: "-1.5rem" }}>
           <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginBottom: "1.75rem" }}>New · A beginner course by me</p>
           <h2 style={{ fontWeight: "normal", color: "#f5f0f0", fontSize: "clamp(3rem, 7vw, 6.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.45em", whiteSpace: "nowrap" }}>
             <span style={{ fontFamily: "BillaMount, cursive" }}>Editing</span>

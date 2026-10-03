@@ -348,3 +348,8 @@ body.page-fade-out {
   .course-picker { width: 46vw !important; padding: 0.6rem 0.3rem !important; }
   .course-picker button { font-size: 0.62rem !important; padding: 0.35rem 0.4rem !important; }
 }
+
+/* Phone: tuck the music vinyl left so the visible record lines up with the page's content margin */
+@media (max-width: 767px) {
+  .music-player { left: -0.45rem !important; }
+}

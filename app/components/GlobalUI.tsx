@@ -274,7 +274,7 @@ export default function GlobalUI() {
       </header>
 
       {/* Music player */}
-      <div ref={playerRef} style={{ position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 200, display: pathname === "/course" ? "none" : "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.6rem" }}>
+      <div ref={playerRef} className="music-player" style={{ position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 200, display: pathname === "/course" ? "none" : "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.6rem" }}>
 
         {/* Expanded player card */}
         <div style={{
