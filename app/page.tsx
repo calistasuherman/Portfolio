@@ -303,10 +303,9 @@ export default function Home() {
           <div style={{ position: "relative", top: "-1.5rem" }}>
           <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginBottom: "1.75rem" }}>New · A beginner course by me</p>
           <h2 style={{ fontWeight: "normal", color: "#f5f0f0", fontSize: "clamp(3rem, 7vw, 6.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.45em", whiteSpace: "nowrap" }}>
-            <span style={{ fontFamily: "BillaMount, cursive" }}>Side</span>
-            <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>A</span>
+            <span style={{ fontFamily: "BillaMount, cursive" }}>Editing</span>
+            <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
           </h2>
-          <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.7)", margin: "0 0 1.5rem" }}>Editing 101</p>
           <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)", color: "rgba(245,240,240,0.78)", maxWidth: "34rem", margin: "0 auto 2.25rem", lineHeight: 1.75 }}>
             Never edited before? I&apos;ll take you from CapCut to DaVinci Resolve to the effects and transitions you see in my videos.
           </p>
