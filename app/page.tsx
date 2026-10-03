@@ -312,6 +312,14 @@ export default function Home() {
           <a href="/course" className="inline-block rounded-none uppercase text-white transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", fontFamily: "var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.2em", padding: "0.95rem 2.2rem" }}>
             Join the waitlist →
           </a>
+          <div style={{ marginTop: "1.5rem" }}>
+            <a href="https://cal1starediting.gumroad.com" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--font-inter)", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", textDecoration: "none", borderBottom: "1px solid rgba(245,240,240,0.25)", paddingBottom: "0.2rem", transition: "color 0.3s ease" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.95)")}
+              onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.55)")}
+            >
+              Or browse my Gumroad store →
+            </a>
+          </div>
           </div>
         </RevealToggle>
       </section>
