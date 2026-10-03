@@ -91,6 +91,16 @@ const PHOTO_OFFSETS = [
 
 function FeaturedCard({ src, tag }: { src: string; tag: string }) {
   const [hovered, setHovered] = useState(false);
+  /* only start downloading the video once the card is near the screen */
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setNear(true); obs.disconnect(); } }, { rootMargin: "400px" });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   return (
     <a
@@ -100,7 +110,8 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
       style={{ display: "block", position: "relative", aspectRatio: "16/9", overflow: "hidden", borderRadius: "4px", textDecoration: "none" }}
     >
       <video
-        src={src} autoPlay muted loop playsInline preload="auto"
+        ref={videoRef}
+        src={near ? src : undefined} autoPlay muted loop playsInline preload={near ? "auto" : "none"}
         style={{
           width: "100%", height: "100%", objectFit: "cover", display: "block",
           transition: "transform 0.8s cubic-bezier(0.16,1,0.3,1)",
