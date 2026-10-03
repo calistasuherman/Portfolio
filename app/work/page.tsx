@@ -40,6 +40,11 @@ const COLLAB_VIDEOS = [
   { src: `${MEDIA_BASE}/yt/epidemicsound.mp4`, label: "Epidemic Sound", category: "SFX"   },
   { src: `${MEDIA_BASE}/yt/captions2collab.mp4`, label: "Captions 2.0", category: "AI" },
   { src: `${MEDIA_BASE}/yt/invideocollab.mp4`,   label: "Invideo",      category: "AI" },
+  { src: `${MEDIA_BASE}/yt/invideotutorial.mp4`, label: "Invideo",      category: "AI" },
+];
+
+const TUTORIAL_VIDEOS = [
+  { src: `${MEDIA_BASE}/yt/invideotutorial.mp4`, label: "Invideo", category: "Tutorial" },
 ];
 
 /* ── Vinyl data ── */
@@ -478,7 +483,7 @@ function PartnerCard({ src, label, category, onClick }: { src: string; label: st
   );
 }
 
-function PartnerGrid() {
+function PartnerGrid({ videos = COLLAB_VIDEOS }: { videos?: { src: string; label: string; category: string }[] }) {
   const [lightbox, setLightbox] = useState<string | null>(null);
   const close = useCallback(() => setLightbox(null), []);
   return (
@@ -487,7 +492,7 @@ function PartnerGrid() {
         hover a frame to preview · click to watch
       </p>
       <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
-        {COLLAB_VIDEOS.map((item, i) => (
+        {videos.map((item, i) => (
           <Reveal key={item.src} delay={i * 80}>
             <PartnerCard {...item} onClick={() => setLightbox(item.src)} />
           </Reveal>
@@ -538,6 +543,16 @@ export default function WorkPage() {
               />
             </Reveal>
             <Reveal delay={80}><MotionGrid /></Reveal>
+            <div style={{ marginTop: "6rem" }}>
+              <Reveal>
+                <SectionLabel
+                  index="01.1"
+                  title={<OrbitTitle parts={[{ text: "T", script: true }, { text: "utorials" }]} />}
+                  desc="Quick walkthroughs of the tools and techniques behind my edits."
+                />
+              </Reveal>
+              <PartnerGrid videos={TUTORIAL_VIDEOS} />
+            </div>
           </div>
         </section>
       )}
