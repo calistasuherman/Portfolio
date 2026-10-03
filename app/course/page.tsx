@@ -245,9 +245,10 @@ export default function CoursePage() {
             lineHeight: 1.1,
             padding: "0.9em 0 0.5em",
           }}>
-            <span style={{ fontFamily: "BillaMount, cursive" }}>Editing</span>
-            <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
+            <span style={{ fontFamily: "BillaMount, cursive" }}>Side</span>
+            <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>A</span>
           </h1>
+          <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.7)", margin: "0 0 1.5rem" }}>Editing 101</p>
           <p style={{
             fontFamily: "var(--font-inter)",
             fontWeight: 300,
