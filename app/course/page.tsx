@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SONGS, playSong, getAudio, currentTrack } from "../components/GlobalUI";
 
 // Kit (ConvertKit) form ID — replace with your own from Kit → Grow → Landing Pages & Forms
@@ -97,6 +97,7 @@ function SongVinyl() {
   const [open, setOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [track, setTrack] = useState(0);
+  const pointerType = useRef("mouse");
 
   useEffect(() => {
     const audio = getAudio();
@@ -128,7 +129,8 @@ function SongVinyl() {
       className="course-vinyl"
       onPointerEnter={e => { if (e.pointerType === "mouse") setOpen(true); }}
       onPointerLeave={e => { if (e.pointerType === "mouse") setOpen(false); }}
-      onPointerUp={e => { if (e.pointerType !== "mouse") setOpen(o => !o); }}
+      onPointerDown={e => { pointerType.current = e.pointerType; }}
+      onClick={() => { if (pointerType.current !== "mouse") setOpen(o => !o); }}
       
     >
       {/* Same disc as the work page */}
@@ -136,8 +138,7 @@ function SongVinyl() {
         viewBox="0 0 292 292"
         style={{
           width: "100%", height: "100%", display: "block",
-          animation: `vinylSpin ${open ? "1.4s" : "6s"} linear infinite`,
-          animationPlayState: playing ? "running" : "paused",
+          animation: "vinylSpin 6s linear infinite",
           filter: playing ? "drop-shadow(0 0 60px rgba(139,0,0,0.55))" : "drop-shadow(0 20px 60px rgba(0,0,0,0.7))",
           transition: "filter 0.4s ease",
           willChange: "transform",
@@ -161,11 +162,12 @@ function SongVinyl() {
       {/* Song picker */}
       <div
         className="course-picker"
-        onPointerUp={e => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
         style={{
-          position: "absolute", left: "77.5%", top: "50%",
-          width: "min(17rem, 38%)",
-          transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -46%) scale(0.96)",
+          position: "absolute", left: "72%", top: "72%",
+          width: "17rem",
+          transformOrigin: "top left",
+          transform: open ? "scale(1)" : "translateY(-0.5rem) scale(0.96)",
           opacity: open ? 1 : 0,
           pointerEvents: open ? "auto" : "none",
           transition: "opacity 0.3s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1)",
