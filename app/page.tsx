@@ -122,7 +122,7 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
 function FlipPhoto() {
   const [order, setOrder] = useState(STACK_PHOTOS.map((_, i) => i));
   return (
-    <div style={{ position: "relative", width: "clamp(270px, 30vw, 420px)", height: "clamp(340px, 38vw, 540px)" }}>
+    <div style={{ position: "relative", width: "clamp(240px, 26vw, 365px)", height: "clamp(300px, 33vw, 470px)" }}>
       {order.map((photoIdx, stackPos) => {
         const off = PHOTO_OFFSETS[stackPos] ?? PHOTO_OFFSETS[PHOTO_OFFSETS.length - 1];
         const isTop = stackPos === 0;
