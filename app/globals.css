@@ -316,7 +316,7 @@ body.page-fade-out {
   overflow: clip;
   display: flex;
   align-items: center;
-  padding-left: calc(var(--disc) * 0.35 + clamp(2rem, 5vw, 5rem)) !important;
+  padding-left: calc(var(--disc) * 0.45 + clamp(2rem, 5vw, 5rem)) !important;
 }
 .course-vinyl {
   position: absolute;
@@ -324,7 +324,7 @@ body.page-fade-out {
   top: 50%;
   width: var(--disc);
   height: var(--disc);
-  transform: translate(-65%, -50%);
+  transform: translate(-55%, -50%);
   z-index: 0;
 }
 .course-hero > div:not(.course-vinyl) { position: relative; z-index: 1; }
@@ -339,7 +339,7 @@ body.page-fade-out {
     position: relative;
     top: auto;
     transform: none;
-    margin-left: calc(-0.65 * var(--disc) - clamp(1.8rem, 5vw, 5rem));
+    margin-left: calc(-0.55 * var(--disc) - clamp(1.8rem, 5vw, 5rem));
     margin-bottom: 1rem;
     order: -1;
   }

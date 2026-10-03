@@ -146,6 +146,11 @@ function SongVinyl() {
         {(() => { const r = 146; const grooves = Array.from({ length: 24 }, (_, i) => r * 0.3 + (r * 0.62) * (i / 24)); return (<>
           <circle cx={r} cy={r} r={r} fill="#090909"/>
           {grooves.map((gr, i) => <circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"} strokeWidth="0.55"/>)}
+          {/* light catching a few grooves, so the spin reads at the edge */}
+          {[0.55, 0.68, 0.8, 0.9].map((k, i) => (
+            <circle key={`hl${i}`} cx={r} cy={r} r={r * k} fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="1.1"
+              strokeDasharray={`${r * k * 0.5} ${r * k * 5.8}`} strokeDashoffset={r * k * i * 1.3} strokeLinecap="round"/>
+          ))}
           <circle cx={r} cy={r} r={r * 0.29} fill="#960018"/>
           <circle cx={r} cy={r} r={r * 0.25} fill="#960018" opacity="0.85"/>
           {([-r*0.09, r*0.02, r*0.12] as number[]).map((dy, i) => <line key={i} x1={r - r*0.18} y1={r+dy} x2={r + r*0.18} y2={r+dy} stroke="rgba(255,255,255,0.28)" strokeWidth={i===0?0.9:0.6}/>)}
@@ -158,8 +163,8 @@ function SongVinyl() {
         className="course-picker"
         onPointerUp={e => e.stopPropagation()}
         style={{
-          position: "absolute", left: "82.5%", top: "50%",
-          width: "min(17rem, 30%)",
+          position: "absolute", left: "77.5%", top: "50%",
+          width: "min(17rem, 38%)",
           transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -46%) scale(0.96)",
           opacity: open ? 1 : 0,
           pointerEvents: open ? "auto" : "none",
@@ -231,7 +236,7 @@ export default function CoursePage() {
       >
         <SongVinyl />
 
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ flex: 1, minWidth: 0, textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <p style={{ ...label, marginBottom: "0.5rem" }}>A beginner course by @cal1star</p>
           <h1 style={{
             fontWeight: "normal", color: "#f5f0f0", margin: 0,
@@ -263,7 +268,7 @@ export default function CoursePage() {
           }}>
             Be first in line!
           </h2>
-          <WaitlistForm />
+          <WaitlistForm center />
         </div>
       </section>
 
