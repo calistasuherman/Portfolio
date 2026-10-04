@@ -327,12 +327,13 @@ body.page-fade-out {
   transform: translate(-45%, -45%);
   z-index: 0;
 }
-.course-hero > div:not(.course-vinyl) { position: relative; z-index: 1; max-width: 40rem; }
+.course-hero > div:not(.course-vinyl) { position: relative; z-index: 1; max-width: 40rem; top: calc(-4.5rem + max(0px, (900px - 100vh) * 0.3)); }
 @media (max-width: 900px) {
   .course-hero {
     --disc: 72vw;
     padding-top: calc(36vw + 2.5rem) !important;
   }
+  .course-hero > div:not(.course-vinyl) { top: 0; }
   .course-picker { width: 46vw !important; padding: 0.6rem 0.3rem !important; }
   .course-picker button { font-size: 0.62rem !important; padding: 0.35rem 0.4rem !important; }
 }
