@@ -31,7 +31,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
 
   if (sent) {
     return (
-      <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, color: "#f5f0f0", letterSpacing: "0.04em", textAlign: center ? "center" : "left" }}>
+      <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.78rem, 0.95vw, 0.85rem)", lineHeight: 1.7, color: "#f5f0f0", textAlign: center ? "center" : "left" }}>
         You&apos;re in! Check your inbox to confirm your spot.
       </p>
     );

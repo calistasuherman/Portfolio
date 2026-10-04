@@ -324,7 +324,7 @@ body.page-fade-out {
   top: 0;
   width: var(--disc);
   height: var(--disc);
-  transform: translate(-60%, -60%);
+  transform: translate(-45%, -45%);
   z-index: 0;
 }
 .course-hero > div:not(.course-vinyl) { position: relative; z-index: 1; max-width: 40rem; }
