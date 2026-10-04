@@ -324,7 +324,7 @@ body.page-fade-out {
   top: 0;
   width: var(--disc);
   height: var(--disc);
-  transform: translate(-45%, -45%);
+  transform: translate(-38%, -38%);
   z-index: 0;
 }
 .course-hero > div:not(.course-vinyl) { position: relative; z-index: 1; max-width: 40rem; }
@@ -334,6 +334,7 @@ body.page-fade-out {
     padding-top: calc(40vw + 1.5rem) !important;
     align-items: flex-start;
   }
+  .course-vinyl { transform: translate(-45%, -45%); }
   .course-picker { width: 46vw !important; padding: 0.6rem 0.3rem !important; }
   .course-picker button { font-size: 0.62rem !important; padding: 0.35rem 0.4rem !important; }
 }
