@@ -130,29 +130,11 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
   );
 }
 
-const heroSmall: React.CSSProperties = {
-  fontFamily: "var(--font-inter)",
-  color: "rgba(245,240,240,0.6)",
-  letterSpacing: "0.18em",
-  whiteSpace: "nowrap",
-  lineHeight: 1.6,
-  margin: 0,
-};
-
-/* withLabels: "est. 2026" + tagline sit just above the word "Editing" (main layer only) */
-function HeroNameText({ withLabels = false }: { withLabels?: boolean }) {
+function HeroNameText() {
   return (
     <>
       <span style={{ fontFamily: "BillaMount, cursive" }}>Cal1star</span>{" "}
-      <span style={{ fontFamily: "BillaMount, cursive", position: "relative", display: "inline-block", marginLeft: "-0.18em" }}>
-        {withLabels && (
-          <span className="hero-labels-inline" style={{ position: "absolute", bottom: "88%", left: "50%", transform: "translateX(-50%)", textAlign: "center", display: "block" }}>
-            <span style={{ ...heroSmall, display: "block", fontSize: "clamp(0.5rem, 0.9vw, 0.7rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)" }}>est. 2026</span>
-            <span style={{ ...heroSmall, display: "block", fontSize: "clamp(0.5rem, 0.8vw, 0.68rem)" }}>Video editing at its finest.</span>
-          </span>
-        )}
-        Editing
-      </span>
+      <span style={{ fontFamily: "BillaMount, cursive", display: "inline-block", marginLeft: "-0.18em" }}>Editing</span>
     </>
   );
 }
@@ -235,16 +217,17 @@ export default function Home() {
         <div className="absolute inset-0 flex flex-col items-center justify-center pt-16" style={{ zIndex: 3 }}>
           {/* Name block */}
           <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative", textAlign: "center" }}>
-            {/* phones: the name wraps to two lines, so the labels sit above the whole name instead */}
-            <div className="hero-labels-stack" style={{ display: "none", textAlign: "center", marginBottom: "0.8rem" }}>
-              <span style={{ ...heroSmall, display: "block", fontSize: "0.55rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)" }}>est. 2026</span>
-              <span style={{ ...heroSmall, display: "block", fontSize: "0.55rem" }}>Video editing at its finest.</span>
-            </div>
+            <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "1rem", marginTop: "-4rem", position: "relative", zIndex: 2 }}>est. 2026</p>
             <div style={{ position: "relative" }} suppressHydrationWarning>
               <div aria-hidden="true" className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(3px, 3px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}><HeroNameText /></div>
               <div aria-hidden="true" className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.12, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}><HeroNameText /></div>
-              <div className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#6b0016", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}><HeroNameText withLabels /></div>
+              <div className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#6b0016", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}><HeroNameText /></div>
             </div>
+          </div>
+
+          {/* Tagline */}
+          <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.75rem", textAlign: "center", position: "relative", zIndex: 2 }}>
+            <p style={{ fontFamily: "var(--font-inter)", color: "rgba(245,240,240,0.6)", fontSize: "clamp(0.55rem, 0.85vw, 0.72rem)", letterSpacing: "0.18em" }}>{"Video editing at its finest."}</p>
           </div>
         </div>
 
@@ -329,7 +312,7 @@ export default function Home() {
           <div style={{ position: "relative", top: "-1.5rem" }}>
           <p style={{ fontFamily: "var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginBottom: "1.75rem" }}>New · A beginner course by me</p>
           <h2 style={{ fontWeight: "normal", color: "#f5f0f0", fontSize: "clamp(3rem, 7vw, 6.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.45em", whiteSpace: "nowrap" }}>
-            <span style={{ fontFamily: "BillaMount, cursive" }}>Editing</span>
+            <span style={{ fontFamily: "BillaMount, cursive", display: "inline-block", marginLeft: "-0.18em" }}>Editing</span>
             <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
           </h2>
           <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)", color: "rgba(245,240,240,0.78)", maxWidth: "34rem", margin: "0 auto 2.25rem", lineHeight: 1.75 }}>
