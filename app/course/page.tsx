@@ -17,16 +17,10 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
 
-  async function submit(e: React.FormEvent) {
-    e.preventDefault();
-    const body = new FormData();
-    body.append("email_address", email);
-    await fetch(`https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`, {
-      method: "POST",
-      body,
-      mode: "no-cors",
-    }).catch(() => {});
-    setSent(true);
+  // Plain browser form post into a hidden iframe: the same request Kit's own
+  // no-JS embed sends, so it isn't blocked the way a cross-site fetch can be.
+  function submit() {
+    setTimeout(() => setSent(true), 400);
   }
 
   if (sent) {
@@ -39,6 +33,9 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
 
   return (
     <form
+      action={`https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`}
+      method="POST"
+      target="kit-waitlist-frame"
       onSubmit={submit}
       style={{
         display: "flex",
@@ -51,6 +48,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
     >
       <input
         type="email"
+        name="email_address"
         required
         value={email}
         onChange={e => setEmail(e.target.value)}
@@ -271,6 +269,7 @@ export default function CoursePage() {
             Be first in line!
           </h2>
           <WaitlistForm center />
+          <iframe name="kit-waitlist-frame" title="Waitlist signup" style={{ display: "none" }} />
         </div>
       </section>
 
