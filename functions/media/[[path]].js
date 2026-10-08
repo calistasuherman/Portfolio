@@ -2,8 +2,9 @@
 // Some networks (e.g. ISPs in Indonesia) block *.r2.dev, which made every video fail to load.
 const ORIGIN = "https://pub-339b8fdf5f2b413b8d0d9613ab2595b2.r2.dev";
 
-export async function onRequest({ request, params }) {
-  const path = (Array.isArray(params.path) ? params.path : [params.path]).map(encodeURIComponent).join("/");
+export async function onRequest({ request }) {
+  // keep the path exactly as the browser encoded it (file names with spaces)
+  const path = new URL(request.url).pathname.replace(/^\/media\//, "");
   const headers = new Headers();
   const range = request.headers.get("Range");
   if (range) headers.set("Range", range);
