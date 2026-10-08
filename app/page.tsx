@@ -133,7 +133,7 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
 function HeroNameText() {
   return (
     <>
-      <span style={{ fontFamily: "BillaMount, cursive" }}>cal1star</span>{" "}
+      <span style={{ fontFamily: "BillaMount, cursive" }}>Cal1star</span>{" "}
       <span style={{ fontFamily: "BillaMount, cursive" }}>Editing</span>
     </>
   );
