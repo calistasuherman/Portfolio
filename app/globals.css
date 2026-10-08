@@ -252,6 +252,8 @@ body.page-fade-out {
     font-size: clamp(2.6rem, 13vw, 3.8rem) !important;
     white-space: normal !important;
   }
+  .hero-labels-inline { display: none !important; }
+  .hero-labels-stack { display: block !important; }
 
   /* Services rows — collapse to 2 cols, hide index number */
   .services-row {
