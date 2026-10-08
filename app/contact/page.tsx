@@ -32,7 +32,7 @@ export default function ContactPage() {
       >
         {/* Headline */}
         <h1 className="contact-headline" style={{
-          fontFamily: "var(--font-ballet), cursive",
+          fontFamily: "BillaMount, cursive",
           fontSize: "clamp(3.8rem, 11vw, 10.5rem)",
           color: "#f5f0f0",
           lineHeight: 0.95,

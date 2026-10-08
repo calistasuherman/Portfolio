@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond, Pinyon_Script, Instrument_Serif, Luxurious_Script, Cinzel, Playfair_Display, Ballet } from "next/font/google";
+import { Inter, Cormorant_Garamond, Pinyon_Script, Instrument_Serif, Luxurious_Script, Cinzel, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import GlobalUI from "./components/GlobalUI";
 
@@ -46,11 +46,6 @@ const instrumentSerif = Instrument_Serif({
   variable: "--font-melodrama",
 });
 
-const ballet = Ballet({
-  subsets: ["latin"],
-  variable: "--font-ballet",
-});
-
 export const metadata: Metadata = {
   title: "Calista Suherman — Portfolio",
   description: "AI Visuals · Graphic Design · Creative Direction",
@@ -64,7 +59,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${cormorant.variable} ${pinyon.variable} ${instrumentSerif.variable} ${luxuriousScript.variable} ${cinzel.variable} ${playfair.variable} ${ballet.variable} bg-bg text-text-primary antialiased`}>
+      <body className={`${inter.variable} ${cormorant.variable} ${pinyon.variable} ${instrumentSerif.variable} ${luxuriousScript.variable} ${cinzel.variable} ${playfair.variable} bg-bg text-text-primary antialiased`}>
         <GlobalUI />
         {children}
       </body>

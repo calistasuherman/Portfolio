@@ -146,7 +146,7 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay, onSelect }: { v: typeof 
             <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.18em", color: "#960018", fontWeight: 700 }}>
               {v.idx}
             </span>
-            <p style={{ fontFamily: "var(--font-ballet), cursive", fontSize: "2rem", color: "#960018", lineHeight: 1.0, fontWeight: 700, whiteSpace: "nowrap" }}>
+            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "2rem", color: "#960018", lineHeight: 1.0, fontWeight: 700, whiteSpace: "nowrap" }}>
               {v.label}
             </p>
             <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#960018", fontWeight: 600 }}>
@@ -185,7 +185,7 @@ function MobileVinylCard({ v, delay, onSelect }: { v: typeof VINYL_DATA[0]; dela
         <img src="/vinyl-sleeve.png" alt="" draggable={false} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", textAlign: "center", padding: "0.6rem" }}>
           <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.18em", color: "#960018", fontWeight: 700 }}>{v.idx}</span>
-          <p style={{ fontFamily: "var(--font-ballet), cursive", fontSize: "1.05rem", color: "#960018", lineHeight: 1.05, fontWeight: 700 }}>{v.label}</p>
+          <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.05rem", color: "#960018", lineHeight: 1.05, fontWeight: 700 }}>{v.label}</p>
           <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.38rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#960018", fontWeight: 600 }}>tap to explore</span>
         </div>
       </div>
@@ -243,7 +243,7 @@ function OrbitTitle({ parts }: { parts: { text: string; script?: boolean }[] }) 
   return (
     <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
       {parts.map(({ text, script }, i) => (
-        <span key={i} style={{ fontFamily: script ? "var(--font-ballet), cursive" : "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>{text}</span>
+        <span key={i} style={{ fontFamily: script ? "BillaMount, cursive" : "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>{text}</span>
       ))}
     </div>
   );

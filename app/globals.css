@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @font-face {
+  font-family: "BillaMount";
+  src: url("/fonts/BillaMount-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: "SloopScript";
   src: url("/fonts/SloopScript.ttf") format("truetype");
   font-weight: normal;
