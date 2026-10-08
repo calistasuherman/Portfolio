@@ -37,10 +37,10 @@ const VE_VIDEO_FILES: { file: string }[] = [
 const VE_VIDEOS = VE_VIDEO_FILES.map(v => ({ src: `${MEDIA_BASE}/ve/${v.file}` }));
 
 const COLLAB_VIDEOS = [
+  { src: `${MEDIA_BASE}/yt/invideotutorial.mp4`, label: "Invideo",      category: "AI" },
   { src: `${MEDIA_BASE}/yt/epidemicsound.mp4`, label: "Epidemic Sound", category: "SFX"   },
   { src: `${MEDIA_BASE}/yt/captions2collab.mp4`, label: "Captions 2.0", category: "AI" },
   { src: `${MEDIA_BASE}/yt/invideocollab.mp4`,   label: "Invideo",      category: "AI" },
-  { src: `${MEDIA_BASE}/yt/invideotutorial.mp4`, label: "Invideo",      category: "AI" },
 ];
 
 const TUTORIAL_VIDEOS = [
