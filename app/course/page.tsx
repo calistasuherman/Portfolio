@@ -247,7 +247,7 @@ export default function CoursePage() {
             lineHeight: 1.1,
             padding: "0.9em 0 0.5em",
           }}>
-            <span style={{ fontFamily: "BillaMount, cursive" }}>Editing</span>
+            <span style={{ fontFamily: "var(--font-ballet), cursive" }}>Editing</span>
             <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
           </h1>
           <p style={{
@@ -262,7 +262,7 @@ export default function CoursePage() {
             Editing changed my life, and I want to make it feel easy for you. I&apos;ll walk you through CapCut first, then DaVinci Resolve, then the fun stuff: the effects and transitions you see in my videos. No experience needed, just come as you are.
           </p>
           <h2 style={{
-            fontFamily: "BillaMount, cursive",
+            fontFamily: "var(--font-ballet), cursive",
             fontSize: "clamp(1.6rem, 2.8vw, 2.3rem)",
             fontWeight: "normal", color: "#f5f0f0",
             lineHeight: 1.2,
