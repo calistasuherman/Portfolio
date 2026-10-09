@@ -2,9 +2,6 @@
 import { useState, useEffect, useRef } from "react";
 import { SONGS, playSong, getAudio, currentTrack } from "../components/GlobalUI";
 
-// Kit (ConvertKit) form ID — replace with your own from Kit → Grow → Landing Pages & Forms
-const KIT_FORM_ID = "10021620";
-
 const label: React.CSSProperties = {
   fontFamily: "var(--font-inter)",
   fontSize: "0.58rem",
@@ -16,11 +13,29 @@ const label: React.CSSProperties = {
 function WaitlistForm({ center = false }: { center?: boolean }) {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
 
-  // Plain browser form post into a hidden iframe: the same request Kit's own
-  // no-JS embed sends, so it isn't blocked the way a cross-site fetch can be.
-  function submit() {
-    setTimeout(() => setSent(true), 400);
+  // Posts to our own /api/waitlist function, which forwards the email to Kit
+  // server-side, so it works even where Kit's domains are blocked.
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    setBusy(true);
+    setError("");
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) setSent(true);
+      else setError(data.error || "Signup didn't go through. Please try again.");
+    } catch {
+      setError("Signup didn't go through. Please try again.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   if (sent) {
@@ -33,9 +48,6 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
 
   return (
     <form
-      action={`https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`}
-      method="POST"
-      target="kit-waitlist-frame"
       onSubmit={submit}
       style={{
         display: "flex",
@@ -69,6 +81,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
       />
       <button
         type="submit"
+        disabled={busy}
         style={{
           padding: "0.85rem 1.4rem",
           background: "#960018",
@@ -84,8 +97,13 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
         onMouseEnter={e => { e.currentTarget.style.background = "#b3001d"; e.currentTarget.style.borderColor = "#b3001d"; }}
         onMouseLeave={e => { e.currentTarget.style.background = "#960018"; e.currentTarget.style.borderColor = "#960018"; }}
       >
-        Join the waitlist →
+        {busy ? "Joining…" : "Join the waitlist →"}
       </button>
+      {error && (
+        <p role="alert" style={{ flexBasis: "100%", margin: 0, fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "0.8rem", color: "#ff8a8a", textAlign: center ? "center" : "left" }}>
+          {error}
+        </p>
+      )}
     </form>
   );
 }
@@ -269,7 +287,6 @@ export default function CoursePage() {
             Be first in line!
           </h2>
           <WaitlistForm center />
-          <iframe name="kit-waitlist-frame" title="Waitlist signup" style={{ display: "none" }} />
         </div>
       </section>
 
