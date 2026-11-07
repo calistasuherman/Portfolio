@@ -188,9 +188,115 @@ function ToolkitSection() {
   );
 }
 
+/* ── Parallax ──
+   [data-pscroll="s"]  : translateY = scrollY * s   (hero layers, which start at the top)
+   [data-prel="s"]     : drifts against scroll relative to the viewport center (lower sections)
+   Transforms only (GPU-composited); skipped for prefers-reduced-motion. */
+function useParallax() {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const y = window.scrollY;
+      const vh = window.innerHeight;
+      document.querySelectorAll<HTMLElement>("[data-pscroll]").forEach(el => {
+        el.style.transform = `translate3d(0, ${y * parseFloat(el.dataset.pscroll!)}px, 0)`;
+      });
+      document.querySelectorAll<HTMLElement>("[data-prel]").forEach(el => {
+        const cur = parseFloat(el.dataset.pcur || "0");
+        const rect = el.getBoundingClientRect();
+        const center = rect.top - cur + rect.height / 2;
+        const next = -(center - vh / 2) * parseFloat(el.dataset.prel!);
+        el.dataset.pcur = String(next);
+        el.style.transform = `translate3d(0, ${next}px, 0)`;
+      });
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+}
+
+/* ── Hero collage: muted looping clips in columns that scroll at different speeds ── */
+const HERO_CLIPS = Array.from({ length: 12 }, (_, i) => `${MEDIA_BASE}/hero/h${i + 1}.mp4`);
+
+type CollageLayout = { gap: number; tileH: number; cols: { speed: number; offset: number; rows: number }[] };
+
+function HeroCollage() {
+  const [layout, setLayout] = useState<CollageLayout | null>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const calc = () => {
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const phone = vw < 768;
+      const gap = phone ? 6 : 10;
+      const speeds = phone ? [0.14, 0.32] : [0.12, 0.3, 0.2];
+      const nCols = speeds.length;
+      const tileW = (vw - gap * (nCols - 1)) / nCols;
+      const tileH = phone ? (tileW * 4) / 3 : (tileW * 9) / 16;
+      const stagger = phone ? [0, tileH * 0.5] : [0, tileH * 0.45, tileH * 0.2];
+      setLayout({
+        gap, tileH,
+        cols: speeds.map((speed, c) => ({
+          speed,
+          offset: speed * vh + stagger[c],
+          rows: Math.ceil((vh * (1 + speed) + stagger[c]) / (tileH + gap)) + 1,
+        })),
+      });
+    };
+    calc();
+    let t: ReturnType<typeof setTimeout>;
+    const onResize = () => { clearTimeout(t); t = setTimeout(calc, 200); };
+    window.addEventListener("resize", onResize);
+    return () => { clearTimeout(t); window.removeEventListener("resize", onResize); };
+  }, []);
+
+  // pause the clips once the hero has scrolled out of view
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el || !layout) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      el.querySelectorAll("video").forEach(v => { if (entry.isIntersecting) v.play().catch(() => {}); else v.pause(); });
+    });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [layout]);
+
+  useEffect(() => { if (layout) window.dispatchEvent(new Event("scroll")); }, [layout]);
+
+  return (
+    <div ref={wrapRef} aria-hidden="true" className="absolute inset-0" style={{ zIndex: 0, overflow: "hidden" }}>
+      {layout && (
+        <div style={{ display: "flex", gap: layout.gap, width: "100%", height: "100%" }}>
+          {layout.cols.map((col, c) => (
+            <div key={c} data-pscroll={col.speed} style={{ flex: 1, minWidth: 0, marginTop: -col.offset, display: "flex", flexDirection: "column", gap: layout.gap, willChange: "transform" }}>
+              {Array.from({ length: col.rows }, (_, r) => (
+                <div key={r} style={{ height: layout.tileH, flexShrink: 0, overflow: "hidden", borderRadius: "4px", background: "#140404" }}>
+                  <video src={HERO_CLIPS[(c * 4 + r * 3) % HERO_CLIPS.length]} autoPlay muted loop playsInline preload="auto" disablePictureInPicture
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "brightness(0.7) saturate(1.05)" }} />
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, rgba(10,0,0,0.9) 0%, rgba(10,0,0,0.68) 55%, rgba(10,0,0,0.82) 100%)" }} />
+    </div>
+  );
+}
+
 /* ── Page ── */
 export default function Home() {
   const [heroVisible, setHeroVisible] = useState(false);
+  useParallax();
 
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 120);
@@ -202,15 +308,12 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 overflow-hidden" style={{ background: "#0a0000" }}>
-        <video autoPlay muted loop playsInline preload="auto"
-          className="absolute inset-0 w-full h-full object-cover" style={{ zIndex: 0 }}>
-          <source src={`${MEDIA_BASE}/background/pg1.mp4`} type="video/mp4" />
-        </video>
+        <HeroCollage />
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center pt-16" style={{ zIndex: 3 }}>
+        <div data-pscroll="0.4" className="absolute inset-0 flex flex-col items-center justify-center pt-16" style={{ zIndex: 3, willChange: "transform" }}>
           {/* Name block */}
           <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative", textAlign: "center" }}>
-            <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "1rem", marginTop: "-4rem", position: "relative", zIndex: 2 }}>est. 2026</p>
+            <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.8)", marginBottom: "1rem", marginTop: "-4rem", position: "relative", zIndex: 2 }}>est. 2026</p>
             <div style={{ position: "relative" }} suppressHydrationWarning>
               <div
                 role="img"
@@ -235,7 +338,7 @@ export default function Home() {
 
           {/* Tagline */}
           <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.75rem", textAlign: "center", position: "relative", zIndex: 2 }}>
-            <p style={{ fontFamily: "'HelvLight', var(--font-inter)", color: "rgba(245,240,240,0.6)", fontSize: "clamp(0.55rem, 0.85vw, 0.72rem)", letterSpacing: "0.18em" }}>{"Video editing at its finest."}</p>
+            <p style={{ fontFamily: "'HelvLight', var(--font-inter)", color: "rgba(245,240,240,0.9)", fontSize: "clamp(0.55rem, 0.85vw, 0.72rem)", letterSpacing: "0.18em" }}>{"Video editing at its finest."}</p>
           </div>
         </div>
 
@@ -286,7 +389,7 @@ export default function Home() {
             </div>
           </RevealToggle>
 
-          <div className="order-2 flex justify-center" style={{ marginTop: "1rem" }}>
+          <div data-prel="0.1" className="order-2 flex justify-center" style={{ marginTop: "1rem", willChange: "transform" }}>
             <RevealToggle direction="right" delay={200}>
               <FlipPhoto />
             </RevealToggle>
@@ -317,7 +420,7 @@ export default function Home() {
       {/* ── Course teaser ── */}
       <section style={{ minHeight: "70vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "5.5rem clamp(1.5rem, 6vw, 5rem)", textAlign: "center" }}>
         <RevealToggle>
-          <div style={{ position: "relative", top: "-1.5rem" }}>
+          <div data-prel="0.08" style={{ position: "relative", top: "-1.5rem", willChange: "transform" }}>
           <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginBottom: "1.75rem" }}>New · A beginner course by me</p>
           <h2 style={{ fontWeight: "normal", color: "#f5f0f0", fontSize: "clamp(3rem, 7vw, 6.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.45em", whiteSpace: "nowrap" }}>
             <span style={{ fontFamily: "BillaMount, cursive", display: "inline-block", marginLeft: "-0.18em" }}>Editing</span>
