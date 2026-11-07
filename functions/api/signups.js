@@ -3,10 +3,12 @@
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const t = { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" } };
-  if (!env.SIGNUPS_KEY) {
+  const want = String(env.SIGNUPS_KEY || "").trim();
+  const got = String(url.searchParams.get("key") || "").trim();
+  if (!want) {
     return new Response("The SIGNUPS_KEY password isn't set up yet (or the site wasn't redeployed after adding it).", { status: 503, ...t });
   }
-  if (url.searchParams.get("key") !== env.SIGNUPS_KEY) {
+  if (got.toLowerCase() !== want.toLowerCase()) {
     return new Response("Wrong password. Check the ?key= part of the link.", { status: 401, ...t });
   }
   if (!env.WAITLIST) {
