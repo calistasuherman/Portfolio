@@ -60,16 +60,16 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
         justifyContent: center ? "center" : undefined,
       }}
     >
+      <div style={{ position: "relative", flex: "1 1 100%", display: "flex" }}>
       <input
         type="email"
         name="email_address"
         required
         value={email}
         onChange={e => setEmail(e.target.value)}
-        placeholder="Your email"
-        aria-label="Email address"
+                aria-label="Email address"
         style={{
-          flex: "1 1 15rem",
+          width: "100%", boxSizing: "border-box",
           padding: "0.85rem 1.1rem",
           background: "rgba(8,2,5,0.55)",
           border: "1px solid rgba(245,240,240,0.2)",
@@ -81,6 +81,10 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
           outline: "none",
         }}
       />
+        {!email && (
+          <img src="/course/ph-email.svg" alt="" aria-hidden="true" style={{ position: "absolute", left: "1.1rem", top: "50%", transform: "translateY(-50%)", height: "0.95rem", width: "auto", pointerEvents: "none" }} />
+        )}
+      </div>
       <button
         type="submit"
         disabled={busy}
@@ -99,7 +103,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
         onMouseEnter={e => { e.currentTarget.style.background = "#b3001d"; e.currentTarget.style.borderColor = "#b3001d"; }}
         onMouseLeave={e => { e.currentTarget.style.background = "#960018"; e.currentTarget.style.borderColor = "#960018"; }}
       >
-        {busy ? "Joining…" : "Join the waitlist →"}
+        <img src={busy ? "/course/btn-joining.svg" : "/course/btn-join.svg"} alt={busy ? "Joining…" : "Join the waitlist"} style={{ display: "block", height: "0.8rem", width: "auto" }} />
       </button>
       {error && (
         <p role="alert" style={{ flexBasis: "100%", margin: 0, fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "0.8rem", color: "#ff8a8a", textAlign: center ? "center" : "left" }}>
@@ -257,7 +261,7 @@ export default function CoursePage() {
         <SongVinyl />
 
         <div style={{ flex: 1, minWidth: 0, textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(1.75rem, 4.5vh, 2.75rem)" }}>
-          <p style={{ ...label, margin: 0 }}>A beginner course by @cal1star</p>
+          <p style={{ ...label, margin: 0, lineHeight: 0 }}><img src="/course/label-course.svg" alt="A beginner course by @cal1star" style={{ display: "block", height: "0.58rem", width: "auto" }} /></p>
           <h1 style={{
             fontWeight: "normal", color: "#f5f0f0", margin: 0,
             lineHeight: 1,
