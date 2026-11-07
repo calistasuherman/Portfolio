@@ -337,20 +337,20 @@ export default function Home() {
           </div>
 
           {/* Tagline */}
-          <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.75rem", textAlign: "center", position: "relative", zIndex: 2 }}>
-            <p style={{ fontFamily: "'HelvLight', var(--font-inter)", color: "rgba(245,240,240,0.9)", fontSize: "clamp(0.55rem, 0.85vw, 0.72rem)", letterSpacing: "0.18em" }}>{"Video editing at its finest."}</p>
+          <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1rem", textAlign: "center", position: "relative", zIndex: 2 }}>
+            <p style={{ fontFamily: "'HelvLight', var(--font-inter)", color: "rgba(245,240,240,0.9)", fontSize: "clamp(0.55rem, 0.85vw, 0.72rem)", letterSpacing: "0.18em" }}>{"Video editing made easy"}</p>
+          </div>
+          {/* Buttons */}
+          <div className={`hero-item hero-buttons${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.8s", position: "absolute", bottom: "clamp(2.5rem, 6vh, 5rem)", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "1rem", zIndex: 3 }}>
+            <a href="/work" className="inline-block px-8 py-3 rounded-none border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "'HelvLight', var(--font-inter)" }}>
+              explore my work
+            </a>
+            <a href="/contact" className="inline-block px-8 py-3 rounded-none text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "'HelvLight', var(--font-inter)" }}>
+              work with me
+            </a>
           </div>
         </div>
 
-        {/* Buttons */}
-        <div className={`hero-item hero-buttons${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.8s", position: "absolute", bottom: "clamp(2.5rem, 6vh, 5rem)", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "1rem", zIndex: 3 }}>
-          <a href="/work" className="inline-block px-8 py-3 rounded-none border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "'HelvLight', var(--font-inter)" }}>
-            explore my work
-          </a>
-          <a href="/contact" className="inline-block px-8 py-3 rounded-none text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "'HelvLight', var(--font-inter)" }}>
-            work with me
-          </a>
-        </div>
       </section>
 
       {/* ── About ── */}
@@ -373,7 +373,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", color: "rgba(245,240,240,0.5)", letterSpacing: "0.05em" }}>
-              @cal1star &nbsp;|&nbsp; 20K+ Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
+              @cal1star &nbsp;|&nbsp; 30K+ Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
             </p>
             <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", lineHeight: 1.85, textShadow: "0 2px 12px rgba(0,0,0,0.55)", fontWeight: 400 }}>
               Hi! I&apos;m Calista, your friendly neighborhood video editor/videographer, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
@@ -420,19 +420,24 @@ export default function Home() {
       {/* ── Course teaser ── */}
       <section style={{ minHeight: "70vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "5.5rem clamp(1.5rem, 6vw, 5rem)", textAlign: "center" }}>
         <RevealToggle>
-          <div data-prel="0.08" style={{ position: "relative", top: "-1.5rem", willChange: "transform" }}>
-          <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginBottom: "1.75rem" }}>New · A beginner course by me</p>
-          <h2 style={{ fontWeight: "normal", color: "#f5f0f0", fontSize: "clamp(3rem, 7vw, 6.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.45em", whiteSpace: "nowrap" }}>
-            <span style={{ fontFamily: "BillaMount, cursive", display: "inline-block", marginLeft: "-0.18em" }}>Editing</span>
-            <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
+          <div data-prel="0.08" style={{ position: "relative", top: "-1.5rem", willChange: "transform", display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(1.75rem, 4.5vh, 2.75rem)" }}>
+          <p style={{ margin: 0, lineHeight: 0 }}><img src="/course/label-course.svg" alt="A beginner course by @cal1star" style={{ display: "block", height: "0.58rem", width: "auto" }} /></p>
+          <h2 style={{ fontWeight: "normal", color: "#f5f0f0", margin: 0, lineHeight: 1, padding: 0 }}>
+            <img src="/course/editing-101.svg" alt="Editing 101: made easy" style={{ display: "block", width: "min(21rem, 72vw)", height: "auto", margin: "0 auto" }} />
           </h2>
-          <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)", color: "rgba(245,240,240,0.78)", maxWidth: "34rem", margin: "0 auto 2.25rem", lineHeight: 1.75 }}>
-            Never edited before? I&apos;ll take you from CapCut to DaVinci Resolve to the effects and transitions you see in my videos.
-          </p>
+          <picture style={{ display: "block", margin: "0 auto" }}>
+            <source media="(min-width: 700px)" srcSet="/course/intro-desktop.svg" />
+            <img
+              src="/course/intro-phone.svg"
+              alt="Editing changed my life, and I want to make it feel easy for you. I'll walk you through CapCut first, then DaVinci Resolve, then the fun stuff: the effects and transitions you see in my videos. No experience needed, just come as you are."
+              className="course-intro"
+              style={{ display: "block", height: "auto", margin: "0 auto" }}
+            />
+          </picture>
           <a href="/course" className="inline-block rounded-none uppercase text-white transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.2em", padding: "0.95rem 2.2rem" }}>
             Join the waitlist →
           </a>
-          <div style={{ marginTop: "1.5rem" }}>
+          <div style={{ marginTop: "-0.5rem" }}>
             <a href="https://cal1starediting.gumroad.com" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", textDecoration: "none", borderBottom: "1px solid rgba(245,240,240,0.25)", paddingBottom: "0.2rem", transition: "color 0.3s ease" }}
               onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.95)")}
               onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.55)")}
@@ -445,7 +450,7 @@ export default function Home() {
       </section>
 
       {/* ── Selected Work ── */}
-      <section style={{ position: "relative", padding: "7rem clamp(1.5rem, 6vw, 5rem)", backgroundImage: "linear-gradient(rgba(10,0,0,0.55), rgba(10,0,0,0.7)), url('/background/record-store.jpg')", backgroundSize: "cover", backgroundPosition: "center 40%", backgroundAttachment: "fixed" }}>
+      <section style={{ position: "relative", padding: "7rem clamp(1.5rem, 6vw, 5rem)" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <RevealToggle>
             <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: "1px solid rgba(245,240,240,0.1)", paddingBottom: "1.2rem", marginBottom: "2.5rem" }}>
