@@ -44,6 +44,13 @@
   font-style: normal;
 }
 
+/* Helvetica Light from the visitor's own device (built into iPhone/Mac). No font file is served:
+   the Helvetica license doesn't allow web embedding. Other devices fall back to Inter. */
+@font-face {
+  font-family: "HelvLight";
+  src: local("HelveticaNeue-Light"), local("Helvetica Neue Light"), local("Helvetica-Light"), local("Helvetica Light");
+}
+
 :root {
   --font-inter: "Inter", sans-serif;
   --font-cormorant: "Cormorant Garamond", serif;
@@ -64,6 +71,7 @@ html {
 }
 
 body {
+  font-family: "HelvLight", var(--font-inter), sans-serif;
   background-color: #f7f4ee;
   color: #f5f0f0;
   cursor: none;

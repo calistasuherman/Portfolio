@@ -143,13 +143,13 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay, onSelect }: { v: typeof 
           />
           {/* Text: idx top, label center, explore bottom */}
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", textAlign: "center", padding: "1rem" }}>
-            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.18em", color: "#960018", fontWeight: 700 }}>
+            <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.18em", color: "#960018", fontWeight: 700 }}>
               {v.idx}
             </span>
             <p style={{ fontFamily: "BillaMount, cursive", fontSize: "2rem", color: "#960018", lineHeight: 1.0, fontWeight: 700, whiteSpace: "nowrap" }}>
               {v.label}
             </p>
-            <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#960018", fontWeight: 600 }}>
+            <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#960018", fontWeight: 600 }}>
               click to explore ↓
             </span>
           </div>
@@ -184,9 +184,9 @@ function MobileVinylCard({ v, delay, onSelect }: { v: typeof VINYL_DATA[0]; dela
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/vinyl-sleeve.png" alt="" draggable={false} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", textAlign: "center", padding: "0.6rem" }}>
-          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.18em", color: "#960018", fontWeight: 700 }}>{v.idx}</span>
+          <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.18em", color: "#960018", fontWeight: 700 }}>{v.idx}</span>
           <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.05rem", color: "#960018", lineHeight: 1.05, fontWeight: 700 }}>{v.label}</p>
-          <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.38rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#960018", fontWeight: 600 }}>tap to explore</span>
+          <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.38rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#960018", fontWeight: 600 }}>tap to explore</span>
         </div>
       </div>
     </div>
@@ -315,7 +315,7 @@ function CinemaShowcase({ videos }: { videos: { src: string }[] }) {
 
   return (
     <div>
-      <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
+      <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
         hover a frame to preview · click to watch
       </p>
       <div style={{
@@ -356,10 +356,10 @@ function SectionLabel({ index, title, desc }: { index: string; title: React.Reac
   return (
     <div style={{ paddingTop: "1.8rem", marginBottom: "3rem" }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: "1.2rem", marginBottom: "0.75rem" }}>
-        <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{index}</span>
+        <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{index}</span>
         {title}
       </div>
-      <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.72rem", color: "rgba(245,240,240,0.42)", lineHeight: 1.75, paddingLeft: "calc(0.58rem + 1.2rem + 4px)", maxWidth: "480px" }}>{desc}</p>
+      <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", color: "rgba(245,240,240,0.42)", lineHeight: 1.75, paddingLeft: "calc(0.58rem + 1.2rem + 4px)", maxWidth: "480px" }}>{desc}</p>
     </div>
   );
 }
@@ -404,7 +404,7 @@ function AccordionCard({ src, idx, onClick, compact }: { src: string; idx: numbe
       {/* Index number — visible when collapsed, fades on expand */}
       <span style={{
         position: "absolute", bottom: "10px", left: "50%", transform: "translateX(-50%)",
-        fontFamily: "var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.16em",
+        fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.16em",
         color: "rgba(245,240,240,0.5)",
         opacity: active ? 0 : 1,
         transition: "opacity 0.25s ease",
@@ -437,7 +437,7 @@ function MotionGrid() {
   for (let i = 0; i < VE_VIDEOS.length; i += 5) rows.push(VE_VIDEOS.slice(i, i + 5));
   return (
     <Reveal direction="up">
-      <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
+      <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
         hover a frame to preview · click to watch
       </p>
       {rows.map((row, r) => {
@@ -471,7 +471,7 @@ function PartnerCard({ src, label, category, onClick }: { src: string; label: st
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.6s ease", transform: hovered ? "scale(1.04)" : "scale(1)" }} />
       <div style={{ position: "absolute", inset: 0, background: hovered ? "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%)" : "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 60%)", transition: "background 0.4s ease" }} />
       <div style={{ position: "absolute", bottom: 0, left: 0, padding: "1.4rem 1.6rem" }}>
-        <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.3rem" }}>{category}</p>
+        <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.3rem" }}>{category}</p>
         <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.2rem, 2vw, 1.8rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.05em", lineHeight: 1 }}>{label}</p>
       </div>
       {hovered && (
@@ -488,7 +488,7 @@ function PartnerGrid({ videos = COLLAB_VIDEOS }: { videos?: { src: string; label
   const close = useCallback(() => setLightbox(null), []);
   return (
     <>
-      <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
+      <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
         hover a frame to preview · click to watch
       </p>
       <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
@@ -523,7 +523,7 @@ export default function WorkPage() {
         style={{
           position: "fixed", top: "clamp(84px, 10vh, 100px)", left: "calc(clamp(1.5rem, 5vw, 4rem) + 0.58rem + 1.2rem + 4px + 1.5rem)", zIndex: 40,
           background: "none", border: "none", padding: 0,
-          fontFamily: "var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase",
+          fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase",
           color: "rgba(245,240,240,0.4)", transition: "color 0.3s ease",
         }}
         onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.85)")}

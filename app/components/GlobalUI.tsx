@@ -301,8 +301,8 @@ export default function GlobalUI() {
                 style={{ width: "36px", height: "36px", objectFit: "contain", animation: "vinylSpin 3s linear infinite", flexShrink: 0 }}
               />
               <div style={{ overflow: "hidden", flex: 1 }}>
-                <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#f5f0f0", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{song.title}</p>
-                <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.55rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.04em" }}>{song.artist}</p>
+                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#f5f0f0", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{song.title}</p>
+                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.55rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.04em" }}>{song.artist}</p>
               </div>
             </div>
 
@@ -331,8 +331,8 @@ export default function GlobalUI() {
               <div style={{ height: "100%", background: "rgba(245,240,240,0.7)", borderRadius: "2px", width: duration ? `${(progress / duration) * 100}%` : "0%", transition: "width 0.5s linear" }} />
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px" }}>
-              <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", color: "rgba(245,240,240,0.35)" }}>{fmt(progress)}</span>
-              <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.48rem", color: "rgba(245,240,240,0.35)" }}>{duration ? fmt(duration) : "--:--"}</span>
+              <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.48rem", color: "rgba(245,240,240,0.35)" }}>{fmt(progress)}</span>
+              <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.48rem", color: "rgba(245,240,240,0.35)" }}>{duration ? fmt(duration) : "--:--"}</span>
             </div>
           </div>
         </div>

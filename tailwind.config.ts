@@ -18,9 +18,9 @@ const config: Config = {
       },
       fontFamily: {
         serif: ["Cormorant Garamond", "serif"],
-        sans: ["Inter", "sans-serif"],
+        sans: ["HelvLight", "var(--font-inter)", "sans-serif"],
         melodrama: ["var(--font-melodrama)", "serif"],
-        inter: ["var(--font-inter)", "sans-serif"],
+        inter: ["HelvLight", "var(--font-inter)", "sans-serif"],
       },
     },
   },

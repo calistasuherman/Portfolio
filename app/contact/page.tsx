@@ -56,7 +56,7 @@ export default function ContactPage() {
           {/* Email CTA */}
           <div>
             <p style={{
-              fontFamily: "var(--font-inter)",
+              fontFamily: "'HelvLight', var(--font-inter)",
               fontSize: "0.58rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
@@ -71,7 +71,7 @@ export default function ContactPage() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.6rem",
-                fontFamily: "var(--font-inter)",
+                fontFamily: "'HelvLight', var(--font-inter)",
                 fontSize: "clamp(0.85rem, 1.5vw, 1.1rem)",
                 color: "#f5f0f0",
                 textDecoration: "none",
@@ -103,7 +103,7 @@ export default function ContactPage() {
           {/* Socials */}
           <div>
             <p style={{
-              fontFamily: "var(--font-inter)",
+              fontFamily: "'HelvLight', var(--font-inter)",
               fontSize: "0.58rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
@@ -124,7 +124,7 @@ export default function ContactPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
-                    fontFamily: "var(--font-inter)",
+                    fontFamily: "'HelvLight', var(--font-inter)",
                     fontSize: "clamp(0.8rem, 1.2vw, 0.95rem)",
                     color: "rgba(245,240,240,0.45)",
                     textDecoration: "none",

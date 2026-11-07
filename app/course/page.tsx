@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { SONGS, playSong, getAudio, currentTrack } from "../components/GlobalUI";
 
 const label: React.CSSProperties = {
-  fontFamily: "var(--font-inter)",
+  fontFamily: "'HelvLight', var(--font-inter)",
   fontSize: "0.58rem",
   letterSpacing: "0.22em",
   textTransform: "uppercase",
@@ -41,7 +41,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
 
   if (sent) {
     return (
-      <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.78rem, 0.95vw, 0.85rem)", lineHeight: 1.7, color: "#f5f0f0", textAlign: center ? "center" : "left" }}>
+      <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.78rem, 0.95vw, 0.85rem)", lineHeight: 1.7, color: "#f5f0f0", textAlign: center ? "center" : "left" }}>
         {confirm ? "You're in! Check your inbox to confirm your spot." : "You're in! I'll email you as soon as Editing 101 opens."}
       </p>
     );
@@ -75,7 +75,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
           border: "1px solid rgba(245,240,240,0.2)",
           borderRadius: "2px",
           color: "#f5f0f0",
-          fontFamily: "var(--font-inter)",
+          fontFamily: "'HelvLight', var(--font-inter)",
           fontWeight: 300,
           fontSize: "0.95rem",
           outline: "none",
@@ -94,7 +94,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
           border: "1px solid #960018",
           borderRadius: "2px",
           color: "#fff",
-          fontFamily: "var(--font-inter)",
+          fontFamily: "'HelvLight', var(--font-inter)",
           fontSize: "0.8rem",
           letterSpacing: "0.14em",
           textTransform: "uppercase",
@@ -106,7 +106,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
         <img src={busy ? "/course/btn-joining.svg" : "/course/btn-join.svg"} alt={busy ? "Joining…" : "Join the waitlist"} style={{ display: "block", height: "0.8rem", width: "auto" }} />
       </button>
       {error && (
-        <p role="alert" style={{ flexBasis: "100%", margin: 0, fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "0.8rem", color: "#ff8a8a", textAlign: center ? "center" : "left" }}>
+        <p role="alert" style={{ flexBasis: "100%", margin: 0, fontFamily: "'HelvLight', var(--font-inter)", fontWeight: 300, fontSize: "0.8rem", color: "#ff8a8a", textAlign: center ? "center" : "left" }}>
           {error}
         </p>
       )}
@@ -215,7 +215,7 @@ function SongVinyl() {
                 background: active ? "rgba(150,0,24,0.35)" : "transparent",
                 border: "none", borderRadius: "8px",
                 color: "#f5f0f0", cursor: "none",
-                fontFamily: "var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.03em",
+                fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.03em",
                 transition: "background 0.2s",
               }}
               onMouseEnter={e => { if (!active) e.currentTarget.style.background = "rgba(245,240,240,0.08)"; }}
