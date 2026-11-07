@@ -2,8 +2,12 @@
 // Add &format=csv to download a spreadsheet file.
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
-  if (!env.SIGNUPS_KEY || url.searchParams.get("key") !== env.SIGNUPS_KEY) {
-    return new Response("Not found", { status: 404 });
+  const t = { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" } };
+  if (!env.SIGNUPS_KEY) {
+    return new Response("The SIGNUPS_KEY password isn't set up yet (or the site wasn't redeployed after adding it).", { status: 503, ...t });
+  }
+  if (url.searchParams.get("key") !== env.SIGNUPS_KEY) {
+    return new Response("Wrong password. Check the ?key= part of the link.", { status: 401, ...t });
   }
   if (!env.WAITLIST) {
     return new Response("The WAITLIST storage isn't connected yet.", { status: 503 });
