@@ -262,7 +262,7 @@ export default function CoursePage() {
             lineHeight: 1,
             padding: "clamp(2rem, 5vh, 3.5rem) 0 clamp(1.5rem, 3vh, 2.25rem)",
           }}>
-            {/* Lettering is fixed artwork (Coolvetica + Instrument Serif), not a webfont: the Coolvetica license doesn't allow web embedding. */}
+            {/* Lettering is fixed artwork (Inter Display + Instrument Serif; "Be first in line!" is Coolvetica), not a webfont: the Coolvetica license doesn't allow web embedding. */}
             <img src="/course/editing-101.svg" alt="Editing 101: editing made easy" style={{ display: "block", width: "min(34rem, 86vw)", height: "auto", margin: "0 auto" }} />
           </h1>
           <p style={{
