@@ -263,7 +263,7 @@ export default function CoursePage() {
             lineHeight: 1,
             padding: 0,
           }}>
-            {/* Lettering is fixed artwork (EDITING wordmark from the CAL1STAR logo + Relationship of Mélodrame + Helvetica Bold), not a webfont: the Coolvetica license doesn't allow web embedding. */}
+            {/* Lettering is fixed artwork (EDITING wordmark from the CAL1STAR logo + Helvetica Bold; the Helvetica file is licensed, so it is outlined, not served as a webfont), not a webfont: the Coolvetica license doesn't allow web embedding. */}
             <img src="/course/editing-101.svg" alt="Editing 101: made easy" style={{ display: "block", width: "min(21rem, 72vw)", height: "auto", margin: "0 auto" }} />
           </h1>
           <p style={{
@@ -285,7 +285,7 @@ export default function CoursePage() {
             margin: 0,
             padding: 0,
           }}>
-            be first in line!
+            <img src="/course/be-first-in-line.svg" alt="be first in line!" style={{ display: "block", height: "clamp(1.5rem, 2.6vw, 2.2rem)", width: "auto", margin: "0 auto" }} />
           </h2>
           <WaitlistForm center />
         </div>
