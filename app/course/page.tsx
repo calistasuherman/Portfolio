@@ -13,11 +13,12 @@ const label: React.CSSProperties = {
 function WaitlistForm({ center = false }: { center?: boolean }) {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [confirm, setConfirm] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
-  // Posts to our own /api/waitlist function, which forwards the email to Kit
-  // server-side, so it works even where Kit's domains are blocked.
+  // Posts to our own /api/waitlist function, which saves the email on the
+  // site itself (see functions/api/waitlist.js).
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
@@ -29,7 +30,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
         body: JSON.stringify({ email }),
       });
       const data = await res.json().catch(() => ({}));
-      if (res.ok && data.ok) setSent(true);
+      if (res.ok && data.ok) { setConfirm(!!data.confirm); setSent(true); }
       else setError(data.error || "Signup didn't go through. Please try again.");
     } catch {
       setError("Signup didn't go through. Please try again.");
@@ -41,7 +42,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
   if (sent) {
     return (
       <p style={{ fontFamily: "var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.78rem, 0.95vw, 0.85rem)", lineHeight: 1.7, color: "#f5f0f0", textAlign: center ? "center" : "left" }}>
-        You&apos;re in! Check your inbox to confirm your spot.
+        {confirm ? "You're in! Check your inbox to confirm your spot." : "You're in! I'll email you as soon as Editing 101 opens."}
       </p>
     );
   }
