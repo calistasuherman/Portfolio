@@ -84,6 +84,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
         type="submit"
         disabled={busy}
         style={{
+          marginTop: "1.1rem",
           padding: "0.85rem 1.4rem",
           background: "#960018",
           border: "1px solid #960018",
@@ -263,7 +264,7 @@ export default function CoursePage() {
             padding: "clamp(2rem, 5vh, 3.5rem) 0 clamp(1.5rem, 3vh, 2.25rem)",
           }}>
             {/* Lettering is fixed artwork (Helvetica Bold + Relationship of Mélodrame), not a webfont: the Coolvetica license doesn't allow web embedding. */}
-            <img src="/course/editing-101.svg" alt="Editing 101: made easy" style={{ display: "block", width: "min(17rem, 60vw)", height: "auto", margin: "0 auto" }} />
+            <img src="/course/editing-101.svg" alt="Editing 101: made easy" style={{ display: "block", width: "min(21rem, 72vw)", height: "auto", margin: "0 auto" }} />
           </h1>
           <p style={{
             fontFamily: "var(--font-inter)",
@@ -278,7 +279,7 @@ export default function CoursePage() {
           </p>
           <h2 style={{
             fontFamily: "RelationshipMelodrame, serif",
-            fontSize: "clamp(1.6rem, 2.8vw, 2.3rem)",
+            fontSize: "clamp(2.3rem, 4vw, 3.3rem)",
             fontWeight: "normal", color: "#f5f0f0",
             lineHeight: 1.2,
             padding: "0.9em 0 1.4em",
