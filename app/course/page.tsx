@@ -284,7 +284,7 @@ export default function CoursePage() {
             lineHeight: 1.2,
             padding: "0.9em 0 1.4em",
           }}>
-            Be first in line!
+            be first in line!
           </h2>
           <WaitlistForm center />
         </div>
