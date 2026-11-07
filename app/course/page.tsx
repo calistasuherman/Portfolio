@@ -54,6 +54,7 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
         display: "flex",
         flexWrap: "wrap",
         gap: "0.6rem",
+        rowGap: "clamp(1.75rem, 4.5vh, 2.75rem)",
         maxWidth: "30rem",
         margin: center ? "0 auto" : undefined,
         justifyContent: center ? "center" : undefined,
@@ -84,7 +85,6 @@ function WaitlistForm({ center = false }: { center?: boolean }) {
         type="submit"
         disabled={busy}
         style={{
-          marginTop: "1.1rem",
           padding: "0.85rem 1.4rem",
           background: "#960018",
           border: "1px solid #960018",
@@ -256,12 +256,12 @@ export default function CoursePage() {
       >
         <SongVinyl />
 
-        <div style={{ flex: 1, minWidth: 0, textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <p style={{ ...label, marginBottom: "0.5rem" }}>A beginner course by @cal1star</p>
+        <div style={{ flex: 1, minWidth: 0, textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(1.75rem, 4.5vh, 2.75rem)" }}>
+          <p style={{ ...label, margin: 0 }}>A beginner course by @cal1star</p>
           <h1 style={{
             fontWeight: "normal", color: "#f5f0f0", margin: 0,
             lineHeight: 1,
-            padding: "clamp(2rem, 5vh, 3.5rem) 0 clamp(1.5rem, 3vh, 2.25rem)",
+            padding: 0,
           }}>
             {/* Lettering is fixed artwork (Helvetica Bold + Relationship of Mélodrame), not a webfont: the Coolvetica license doesn't allow web embedding. */}
             <img src="/course/editing-101.svg" alt="Editing 101: made easy" style={{ display: "block", width: "min(21rem, 72vw)", height: "auto", margin: "0 auto" }} />
@@ -272,7 +272,7 @@ export default function CoursePage() {
             fontSize: "clamp(0.78rem, 0.95vw, 0.85rem)",
             color: "rgba(245,240,240,0.75)",
             maxWidth: "34rem",
-            margin: "0 0 1rem",
+            margin: 0,
             lineHeight: 1.7,
           }}>
             Editing changed my life, and I want to make it feel easy for you. I&apos;ll walk you through CapCut first, then DaVinci Resolve, then the fun stuff: the effects and transitions you see in my videos. No experience needed, just come as you are.
@@ -281,8 +281,9 @@ export default function CoursePage() {
             fontFamily: "RelationshipMelodrame, serif",
             fontSize: "clamp(2.3rem, 4vw, 3.3rem)",
             fontWeight: "normal", color: "#f5f0f0",
-            lineHeight: 1.2,
-            padding: "0.9em 0 1.4em",
+            lineHeight: 1,
+            margin: 0,
+            padding: 0,
           }}>
             be first in line!
           </h2>
