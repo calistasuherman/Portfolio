@@ -347,10 +347,6 @@ body.page-fade-out {
   .course-picker button { font-size: 0.62rem !important; padding: 0.35rem 0.4rem !important; }
 }
 
-/* Phone: tuck the music vinyl left so the visible record lines up with the page's content margin */
-@media (max-width: 767px) {
-  .music-player { left: -0.45rem !important; }
-}
 
 @font-face {
   font-family: "RelationshipMelodrame";
@@ -361,3 +357,12 @@ body.page-fade-out {
 }
 .course-intro { width: min(20.6rem, 88vw); }
 @media (min-width: 700px) { .course-intro { width: 32.98rem; } }
+
+/* Liquid-glass music player */
+.glass-btn:hover { background: rgba(255,255,255,0.18) !important; transform: scale(1.08); }
+.glass-btn:active { transform: scale(0.94); }
+
+/* Phone: lift the hero buttons clear of the music pill */
+@media (max-width: 767px) {
+  .hero-buttons { bottom: 6.5rem !important; }
+}

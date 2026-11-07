@@ -320,7 +320,7 @@ export default function Home() {
                 aria-label="cal1star editing"
                 style={{
                   width: "clamp(250px, 42vw, 640px)",
-                  aspectRatio: "1753 / 721",
+                  aspectRatio: "1753 / 722",
                   backgroundColor: HERO_LOGO_COLOR,
                   WebkitMaskImage: "url(/cal1star-editing-logo.webp)",
                   maskImage: "url(/cal1star-editing-logo.webp)",
@@ -343,7 +343,7 @@ export default function Home() {
         </div>
 
         {/* Buttons */}
-        <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.8s", position: "absolute", bottom: "clamp(2.5rem, 6vh, 5rem)", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "1rem", zIndex: 3 }}>
+        <div className={`hero-item hero-buttons${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.8s", position: "absolute", bottom: "clamp(2.5rem, 6vh, 5rem)", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "1rem", zIndex: 3 }}>
           <a href="/work" className="inline-block px-8 py-3 rounded-none border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "'HelvLight', var(--font-inter)" }}>
             explore my work
           </a>

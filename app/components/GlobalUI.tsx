@@ -53,24 +53,10 @@ export default function GlobalUI() {
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [cursorHover, setCursorHover] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [playerOpen, setPlayerOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [trackIndex, setTrackIndex] = useState(0);
-  const playerRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
-
-  /* click outside player → close popup */
-  useEffect(() => {
-    if (!playerOpen) return;
-    const handler = (e: MouseEvent) => {
-      if (playerRef.current && !playerRef.current.contains(e.target as Node)) {
-        setPlayerOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, [playerOpen]);
 
   /* cursor */
   useEffect(() => {
@@ -166,7 +152,6 @@ export default function GlobalUI() {
   function skipTo(idx: number) {
     playSong(idx);
     setPlaying(true);
-    setPlayerOpen(true);
   }
 
   function togglePlay() {
@@ -175,34 +160,11 @@ export default function GlobalUI() {
     if (audio.paused) {
       audio.play().catch(() => {});
       setPlaying(true);
-      setPlayerOpen(true);
-    } else {
+      } else {
       audio.pause();
       setPlaying(false);
     }
   }
-
-  function handleVinylClick() {
-    const audio = getAudio();
-    if (!audio) return;
-    if (audio.paused) {
-      audio.play().catch(() => {});
-      setPlaying(true);
-      setPlayerOpen(true);
-    } else {
-      setPlayerOpen(o => !o);
-    }
-  }
-
-  function seek(e: React.MouseEvent<HTMLDivElement>) {
-    const audio = getAudio();
-    if (!audio || !duration) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    audio.currentTime = ((e.clientX - rect.left) / rect.width) * duration;
-  }
-
-  const fmt = (s: number) =>
-    `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
   const navLinks = [
     { label: "Home",    href: "/" },
@@ -212,11 +174,11 @@ export default function GlobalUI() {
 
   const song = SONGS[trackIndex];
 
-  /* icon style reused for prev/next/play buttons */
-  const ctrlBtn: React.CSSProperties = {
-    background: "none", border: "none", cursor: "none",
-    padding: "4px", color: "#f5f0f0", flexShrink: 0,
+  const glassBtn: React.CSSProperties = {
+    width: "36px", height: "36px", borderRadius: "50%", border: "none", cursor: "none",
+    background: "transparent", color: "#fff", flexShrink: 0, padding: 0,
     display: "flex", alignItems: "center", justifyContent: "center",
+    transition: "transform 0.2s ease, background 0.2s ease",
   };
 
   return (
@@ -273,92 +235,44 @@ export default function GlobalUI() {
         </nav>
       </header>
 
-      {/* Music player */}
-      <div ref={playerRef} className="music-player" style={{ position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 200, display: pathname === "/course" ? "none" : "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.6rem" }}>
+      {/* Music player — liquid-glass pill */}
+      <div
+        className="music-player"
+        style={{
+          position: "fixed", bottom: "1.1rem", left: "1.1rem", zIndex: 200,
+          display: pathname === "/course" ? "none" : "flex", alignItems: "center", gap: "0.15rem",
+          maxWidth: "calc(100vw - 2.2rem)",
+          padding: "0.4rem 1rem 0.4rem 0.4rem",
+          borderRadius: "999px",
+          background: "linear-gradient(135deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.07) 55%, rgba(255,255,255,0.14) 100%)",
+          backdropFilter: "blur(22px) saturate(180%)",
+          WebkitBackdropFilter: "blur(22px) saturate(180%)",
+          border: "1px solid rgba(255,255,255,0.3)",
+          boxShadow: "0 10px 34px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(255,255,255,0.1)",
+          color: "#fff",
+        }}
+      >
+        <button className="glass-btn" aria-label="Previous song" onClick={() => skipTo(trackIndex - 1)} style={glassBtn}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,5 9,12 19,19"/><rect x="5" y="5" width="2.4" height="14" rx="1"/></svg>
+        </button>
+        <button className="glass-btn" aria-label={playing ? "Pause" : "Play"} onClick={togglePlay} style={{ ...glassBtn, width: "42px", height: "42px", background: "linear-gradient(145deg, rgba(255,255,255,0.4), rgba(255,255,255,0.12))", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 10px rgba(0,0,0,0.25)" }}>
+          {playing ? (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ marginLeft: "2px" }}><polygon points="6,3 20,12 6,21"/></svg>
+          )}
+        </button>
+        <button className="glass-btn" aria-label="Next song" onClick={() => skipTo(trackIndex + 1)} style={glassBtn}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,5 15,12 5,19"/><rect x="16.6" y="5" width="2.4" height="14" rx="1"/></svg>
+        </button>
 
-        {/* Expanded player card */}
-        <div style={{
-          overflow: "hidden",
-          maxHeight: playerOpen ? "140px" : "0",
-          opacity: playerOpen ? 1 : 0,
-          transform: playerOpen ? "translateY(0) scale(1)" : "translateY(8px) scale(0.97)",
-          transition: "max-height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease, transform 0.35s ease",
-        }}>
-          <div style={{
-            background: "rgba(10,0,0,0.88)",
-            backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "14px",
-            padding: "12px 16px",
-            width: "256px",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
-          }}>
-            {/* Track info row */}
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-              <img
-                src="/vinyl.png"
-                alt=""
-                style={{ width: "36px", height: "36px", objectFit: "contain", animation: "vinylSpin 3s linear infinite", flexShrink: 0 }}
-              />
-              <div style={{ overflow: "hidden", flex: 1 }}>
-                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#f5f0f0", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{song.title}</p>
-                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.55rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.04em" }}>{song.artist}</p>
-              </div>
-            </div>
-
-            {/* Controls */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", marginBottom: "10px" }}>
-              {/* Prev */}
-              <button onClick={() => skipTo(trackIndex - 1)} style={ctrlBtn}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,5 9,12 19,19"/><rect x="5" y="5" width="2" height="14"/></svg>
-              </button>
-              {/* Play/Pause */}
-              <button onClick={togglePlay} style={{ ...ctrlBtn, width: "28px", height: "28px", borderRadius: "50%", background: "rgba(245,240,240,0.12)" }}>
-                {playing ? (
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-                ) : (
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-                )}
-              </button>
-              {/* Next */}
-              <button onClick={() => skipTo(trackIndex + 1)} style={ctrlBtn}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,5 15,12 5,19"/><rect x="17" y="5" width="2" height="14"/></svg>
-              </button>
-            </div>
-
-            {/* Progress bar */}
-            <div onClick={seek} style={{ width: "100%", height: "3px", background: "rgba(255,255,255,0.12)", borderRadius: "2px", cursor: "none" }}>
-              <div style={{ height: "100%", background: "rgba(245,240,240,0.7)", borderRadius: "2px", width: duration ? `${(progress / duration) * 100}%` : "0%", transition: "width 0.5s linear" }} />
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px" }}>
-              <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.48rem", color: "rgba(245,240,240,0.35)" }}>{fmt(progress)}</span>
-              <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.48rem", color: "rgba(245,240,240,0.35)" }}>{duration ? fmt(duration) : "--:--"}</span>
-            </div>
+        <div style={{ marginLeft: "0.55rem", minWidth: 0, width: "clamp(96px, 34vw, 170px)" }}>
+          <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", fontWeight: 500, letterSpacing: "0.02em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", textShadow: "0 1px 6px rgba(0,0,0,0.35)" }}>{song.title}</p>
+          <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.6rem", color: "rgba(255,255,255,0.7)", letterSpacing: "0.03em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{song.artist}</p>
+          <div style={{ height: "2px", marginTop: "0.3rem", borderRadius: "2px", background: "rgba(255,255,255,0.2)", overflow: "hidden" }}>
+            <div style={{ height: "100%", background: "rgba(255,255,255,0.85)", width: duration ? `${(progress / duration) * 100}%` : "0%", transition: "width 0.5s linear" }} />
           </div>
         </div>
-
-        {/* Spinning star / vinyl button — 2× size = 128px */}
-        <button
-          onClick={handleVinylClick}
-          aria-label="Toggle music player"
-          style={{
-            width: "128px", height: "128px",
-            border: "none", background: "transparent",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "none", padding: 0,
-            transition: "transform 0.2s ease",
-            transform: playerOpen ? "scale(1.05)" : "scale(1)",
-            filter: playing
-              ? "drop-shadow(0 0 14px rgba(139,0,0,0.65))"
-              : "drop-shadow(0 4px 16px rgba(0,0,0,0.65))",
-          }}
-        >
-          <img
-            src="/vinyl.png"
-            alt="Music player"
-            style={{ width: "128px", height: "128px", objectFit: "contain", animation: "vinylSpin 3s linear infinite" }}
-          />
-        </button>
       </div>
     </>
   );
