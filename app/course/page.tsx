@@ -263,7 +263,7 @@ export default function CoursePage() {
             lineHeight: 1,
             padding: 0,
           }}>
-            {/* Lettering is fixed artwork (Helvetica Bold + Relationship of Mélodrame), not a webfont: the Coolvetica license doesn't allow web embedding. */}
+            {/* Lettering is fixed artwork (EDITING wordmark from the CAL1STAR logo + Relationship of Mélodrame + Helvetica Bold), not a webfont: the Coolvetica license doesn't allow web embedding. */}
             <img src="/course/editing-101.svg" alt="Editing 101: made easy" style={{ display: "block", width: "min(21rem, 72vw)", height: "auto", margin: "0 auto" }} />
           </h1>
           <p style={{
