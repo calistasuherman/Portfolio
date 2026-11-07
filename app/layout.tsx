@@ -43,6 +43,7 @@ const playfair = Playfair_Display({
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: ["400"],
+  style: ["normal", "italic"],
   variable: "--font-melodrama",
 });
 
