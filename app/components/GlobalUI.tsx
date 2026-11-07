@@ -214,11 +214,11 @@ export default function GlobalUI() {
 
       {/* Fixed header */}
       <header className="section-content fixed top-0 left-0 right-0 z-50 py-5 px-6">
-        <a href="/" style={{ position: "absolute", top: "0.5rem", left: "-1rem" }}>
+        <a href="/" style={{ position: "absolute", top: "1rem", left: "1.25rem" }}>
           <img
-            src="/cs-monogram.png"
-            alt="CS"
-            style={{ width: "clamp(58px, 7vw, 90px)", opacity: 0.9, display: "block" }}
+            src="/cal1star-mark.webp"
+            alt="cal1star editing"
+            style={{ width: "clamp(56px, 6.5vw, 84px)", aspectRatio: "600 / 379", display: "block", filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.45))" }}
           />
         </a>
         <nav className="flex justify-end gap-8 md:gap-12">
