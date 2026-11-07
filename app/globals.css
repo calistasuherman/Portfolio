@@ -351,3 +351,5 @@ body.page-fade-out {
   font-style: normal;
   font-display: swap;
 }
+.course-intro { width: min(20.6rem, 88vw); }
+@media (min-width: 700px) { .course-intro { width: 32.98rem; } }

@@ -266,17 +266,16 @@ export default function CoursePage() {
             {/* Lettering is fixed artwork (EDITING wordmark from the CAL1STAR logo + Helvetica Bold/Light; the Helvetica files is licensed, so it is outlined, not served as a webfont), not a webfont: the Coolvetica license doesn't allow web embedding. */}
             <img src="/course/editing-101.svg" alt="Editing 101: made easy" style={{ display: "block", width: "min(21rem, 72vw)", height: "auto", margin: "0 auto" }} />
           </h1>
-          <p style={{
-            fontFamily: "var(--font-inter)",
-            fontWeight: 300,
-            fontSize: "clamp(0.78rem, 0.95vw, 0.85rem)",
-            color: "rgba(245,240,240,0.75)",
-            maxWidth: "34rem",
-            margin: 0,
-            lineHeight: 1.7,
-          }}>
-            Editing changed my life, and I want to make it feel easy for you. I&apos;ll walk you through CapCut first, then DaVinci Resolve, then the fun stuff: the effects and transitions you see in my videos. No experience needed, just come as you are.
-          </p>
+          {/* Intro text is outlined Helvetica Light artwork (licensed font, not served as a webfont); alt carries the text. */}
+          <picture style={{ display: "block", margin: "0 auto" }}>
+            <source media="(min-width: 700px)" srcSet="/course/intro-desktop.svg" />
+            <img
+              src="/course/intro-phone.svg"
+              alt="Editing changed my life, and I want to make it feel easy for you. I'll walk you through CapCut first, then DaVinci Resolve, then the fun stuff: the effects and transitions you see in my videos. No experience needed, just come as you are."
+              className="course-intro"
+              style={{ display: "block", height: "auto", margin: "0 auto" }}
+            />
+          </picture>
           <h2 style={{
             fontFamily: "RelationshipMelodrame, serif",
             fontSize: "clamp(2.3rem, 4vw, 3.3rem)",
@@ -285,7 +284,7 @@ export default function CoursePage() {
             margin: 0,
             padding: 0,
           }}>
-            <img src="/course/be-first-in-line.svg" alt="be first in line!" style={{ display: "block", height: "clamp(1.5rem, 2.6vw, 2.2rem)", width: "auto", margin: "0 auto" }} />
+            <img src="/course/be-first-in-line.png" alt="be first in line!" style={{ display: "block", height: "clamp(1.5rem, 2.6vw, 2.2rem)", width: "auto", margin: "0 auto" }} />
           </h2>
           <WaitlistForm center />
         </div>
