@@ -130,14 +130,7 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
   );
 }
 
-function HeroNameText() {
-  return (
-    <>
-      <span style={{ fontFamily: "BillaMount, cursive" }}>Cal1star</span>{" "}
-      <span style={{ fontFamily: "BillaMount, cursive", display: "inline-block", marginLeft: "-0.18em" }}>Editing</span>
-    </>
-  );
-}
+const HERO_LOGO_COLOR = "#f5f0f0";
 
 function FlipPhoto() {
   const [order, setOrder] = useState(STACK_PHOTOS.map((_, i) => i));
@@ -219,9 +212,24 @@ export default function Home() {
           <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative", textAlign: "center" }}>
             <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "1rem", marginTop: "-4rem", position: "relative", zIndex: 2 }}>est. 2026</p>
             <div style={{ position: "relative" }} suppressHydrationWarning>
-              <div aria-hidden="true" className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(3px, 3px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}><HeroNameText /></div>
-              <div aria-hidden="true" className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.12, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}><HeroNameText /></div>
-              <div className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#6b0016", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}><HeroNameText /></div>
+              <div
+                role="img"
+                aria-label="cal1star editing"
+                style={{
+                  width: "clamp(250px, 42vw, 640px)",
+                  aspectRatio: "1753 / 721",
+                  backgroundColor: HERO_LOGO_COLOR,
+                  WebkitMaskImage: "url(/cal1star-editing-logo.webp)",
+                  maskImage: "url(/cal1star-editing-logo.webp)",
+                  WebkitMaskSize: "contain",
+                  maskSize: "contain",
+                  WebkitMaskRepeat: "no-repeat",
+                  maskRepeat: "no-repeat",
+                  WebkitMaskPosition: "center",
+                  maskPosition: "center",
+                  filter: "drop-shadow(0 4px 14px rgba(0,0,0,0.45))",
+                }}
+              />
             </div>
           </div>
 
