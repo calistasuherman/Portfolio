@@ -343,3 +343,11 @@ body.page-fade-out {
 @media (max-width: 767px) {
   .music-player { left: -0.45rem !important; }
 }
+
+@font-face {
+  font-family: "RelationshipMelodrame";
+  src: url("/fonts/RelationshipMelodrame.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

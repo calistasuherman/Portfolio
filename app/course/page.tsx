@@ -262,7 +262,7 @@ export default function CoursePage() {
             lineHeight: 1,
             padding: "clamp(2rem, 5vh, 3.5rem) 0 clamp(1.5rem, 3vh, 2.25rem)",
           }}>
-            {/* Lettering is fixed artwork (Helvetica Bold + Instrument Serif), not a webfont: the Coolvetica license doesn't allow web embedding. */}
+            {/* Lettering is fixed artwork (Helvetica Bold + Relationship of Mélodrame), not a webfont: the Coolvetica license doesn't allow web embedding. */}
             <img src="/course/editing-101.svg" alt="Editing 101: made easy" style={{ display: "block", width: "min(17rem, 60vw)", height: "auto", margin: "0 auto" }} />
           </h1>
           <p style={{
@@ -277,8 +277,7 @@ export default function CoursePage() {
             Editing changed my life, and I want to make it feel easy for you. I&apos;ll walk you through CapCut first, then DaVinci Resolve, then the fun stuff: the effects and transitions you see in my videos. No experience needed, just come as you are.
           </p>
           <h2 style={{
-            fontFamily: "var(--font-melodrama)",
-            fontStyle: "italic",
+            fontFamily: "RelationshipMelodrame, serif",
             fontSize: "clamp(1.6rem, 2.8vw, 2.3rem)",
             fontWeight: "normal", color: "#f5f0f0",
             lineHeight: 1.2,
