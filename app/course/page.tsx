@@ -259,13 +259,11 @@ export default function CoursePage() {
           <p style={{ ...label, marginBottom: "0.5rem" }}>A beginner course by @cal1star</p>
           <h1 style={{
             fontWeight: "normal", color: "#f5f0f0", margin: 0,
-            whiteSpace: "nowrap",
-            fontSize: "clamp(3rem, 6.5vw, 6.5rem)",
-            lineHeight: 1.1,
-            padding: "0.9em 0 0.5em",
+            lineHeight: 1,
+            padding: "clamp(2rem, 5vh, 3.5rem) 0 clamp(1.5rem, 3vh, 2.25rem)",
           }}>
-            <span style={{ fontFamily: "PerandoryCondensed, sans-serif", letterSpacing: "0.04em" }}>Editing</span>
-            <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
+            {/* Lettering is fixed artwork (Coolvetica + Instrument Serif), not a webfont: the Coolvetica license doesn't allow web embedding. */}
+            <img src="/course/editing-101.svg" alt="Editing 101: editing made easy" style={{ display: "block", width: "min(34rem, 86vw)", height: "auto", margin: "0 auto" }} />
           </h1>
           <p style={{
             fontFamily: "var(--font-inter)",
@@ -279,14 +277,12 @@ export default function CoursePage() {
             Editing changed my life, and I want to make it feel easy for you. I&apos;ll walk you through CapCut first, then DaVinci Resolve, then the fun stuff: the effects and transitions you see in my videos. No experience needed, just come as you are.
           </p>
           <h2 style={{
-            fontFamily: "PerandoryCondensed, sans-serif",
-            letterSpacing: "0.04em",
             fontSize: "clamp(1.6rem, 2.8vw, 2.3rem)",
             fontWeight: "normal", color: "#f5f0f0",
             lineHeight: 1.2,
             padding: "0.9em 0 1.4em",
           }}>
-            Be first in line!
+            <img src="/course/be-first-in-line.svg" alt="Be first in line!" style={{ display: "block", height: "clamp(1.4rem, 2.4vw, 2rem)", width: "auto", margin: "0 auto" }} />
           </h2>
           <WaitlistForm center />
         </div>
