@@ -79,14 +79,6 @@ const TOOLS = [
   { src: "/apps/claude.png", label: "Claude"          },
 ];
 
-const STACK_PHOTOS = ["/c1.jpg","/c2.jpg","/c3.jpg","/c4.jpg","/c5.jpg","/c6.jpg","/c7.jpg"];
-const PHOTO_OFFSETS = [
-  { rotate: 0, tx: 0, ty: 0 }, { rotate: -3, tx: -8, ty: 0 },
-  { rotate: 5, tx: 10, ty: 0 }, { rotate: -6, tx: -14, ty: 0 },
-  { rotate: 3, tx: 6, ty: 0 }, { rotate: -4, tx: -10, ty: 0 },
-  { rotate: 7, tx: 12, ty: 0 },
-];
-
 /* ── Components ── */
 
 function FeaturedCard({ src, tag }: { src: string; tag: string }) {
@@ -132,34 +124,46 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
 
 const HERO_LOGO_COLOR = "#f5f0f0";
 
-function FlipPhoto() {
-  const [order, setOrder] = useState(STACK_PHOTOS.map((_, i) => i));
+function TiltPhoto() {
+  const ref = useRef<HTMLDivElement>(null);
+  const rest = "perspective(900px) rotateY(0deg) rotateX(0deg) scale(1)";
+
+  const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    el.style.transform = `perspective(900px) rotateY(${px * 30}deg) rotateX(${-py * 12}deg) scale(1.03)`;
+    el.style.boxShadow = `${-px * 28}px ${18 - py * 10}px 40px rgba(0,0,0,0.5)`;
+  };
+  const onLeave = () => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.transform = rest;
+    el.style.boxShadow = "0 8px 26px rgba(0,0,0,0.45)";
+  };
+
   return (
-    <div style={{ position: "relative", width: "clamp(270px, 30vw, 420px)", height: "clamp(340px, 38vw, 540px)", transform: "scale(0.85)" }}>
-      {order.map((photoIdx, stackPos) => {
-        const off = PHOTO_OFFSETS[stackPos] ?? PHOTO_OFFSETS[PHOTO_OFFSETS.length - 1];
-        const isTop = stackPos === 0;
-        return (
-          <div
-            key={photoIdx}
-            onClick={isTop ? () => setOrder(prev => { const n = [...prev]; n.push(n.shift()!); return n; }) : undefined}
-            style={{
-              position: "absolute", inset: 0,
-              transform: `translate(${off.tx}px,${off.ty}px) rotate(${off.rotate}deg)`,
-              transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
-              zIndex: order.length - stackPos,
-              cursor: isTop ? "pointer" : "default",
-              borderRadius: "12px", overflow: "hidden",
-              boxShadow: "0 4px 14px rgba(0,0,0,0.45)",
-            }}
-          >
-            <img
-              src={STACK_PHOTOS[photoIdx]} alt="" draggable={false}
-              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block", userSelect: "none", pointerEvents: "none" }}
-            />
-          </div>
-        );
-      })}
+    <div
+      ref={ref}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+      onPointerCancel={onLeave}
+      style={{
+        width: "clamp(250px, 28vw, 380px)",
+        aspectRatio: "1000 / 1500",
+        borderRadius: "12px",
+        overflow: "hidden",
+        transform: rest,
+        transition: "transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease",
+        boxShadow: "0 8px 26px rgba(0,0,0,0.45)",
+        willChange: "transform",
+        touchAction: "pan-y",
+      }}
+    >
+      <img src="/about-capcut.jpg" alt="Calista at CapCut World LA" draggable={false}
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }} />
     </div>
   );
 }
@@ -391,7 +395,7 @@ export default function Home() {
 
           <div data-prel="0.1" className="order-2 flex justify-center" style={{ marginTop: "1rem", willChange: "transform" }}>
             <RevealToggle direction="right" delay={200}>
-              <FlipPhoto />
+              <TiltPhoto />
             </RevealToggle>
           </div>
         </div>
