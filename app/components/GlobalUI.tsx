@@ -56,37 +56,22 @@ export default function GlobalUI() {
   const [trackIndex, setTrackIndex] = useState(0);
   const bgRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
   const progRef = useRef<HTMLDivElement>(null);
 
-  /* cursor: exact dot + eased trailing ring, driven by rAF (no React re-renders) */
+  /* cursor: single dot that grows over links/buttons (positioned directly, no React re-renders) */
   useEffect(() => {
-    if (window.matchMedia("(hover: none)").matches) return;
-    const dot = dotRef.current, ring = ringRef.current;
-    if (!dot || !ring) return;
-    let mx = -100, my = -100, rx = -100, ry = -100, hover = false, shown = false, raf = 0;
-    const loop = () => {
-      rx += (mx - rx) * 0.2;
-      ry += (my - ry) * 0.2;
-      dot.style.transform = `translate3d(${mx}px, ${my}px, 0) translate(-50%, -50%) scale(${hover ? 0.5 : 1})`;
-      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) scale(${hover ? 1.8 : 1})`;
-      raf = requestAnimationFrame(loop);
+    const dot = dotRef.current;
+    if (!dot) return;
+    const move = (e: MouseEvent) => { dot.style.left = `${e.clientX}px`; dot.style.top = `${e.clientY}px`; };
+    const over = (e: MouseEvent) => {
+      const hover = !!(e.target as Element).closest?.("a, button");
+      dot.style.transform = `translate(-50%, -50%) scale(${hover ? 2.8 : 1})`;
     };
-    const move = (e: MouseEvent) => {
-      mx = e.clientX; my = e.clientY;
-      if (!shown) { shown = true; rx = mx; ry = my; dot.style.opacity = "1"; ring.style.opacity = "1"; }
-    };
-    const over = (e: MouseEvent) => { hover = !!(e.target as Element).closest?.("a, button, [data-cursor]"); };
-    const leave = () => { shown = false; dot.style.opacity = "0"; ring.style.opacity = "0"; };
     window.addEventListener("mousemove", move);
     document.addEventListener("mouseover", over);
-    document.documentElement.addEventListener("mouseleave", leave);
-    raf = requestAnimationFrame(loop);
     return () => {
-      cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", move);
       document.removeEventListener("mouseover", over);
-      document.documentElement.removeEventListener("mouseleave", leave);
     };
   }, []);
 
@@ -247,8 +232,11 @@ export default function GlobalUI() {
       </div>
 
       {/* Custom cursor */}
-      <div ref={ringRef} className="cursor-ring" aria-hidden="true" />
-      <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
+      <div
+        ref={dotRef}
+        className="cursor-dot"
+        style={{ left: -100, top: -100, transform: "translate(-50%, -50%)" }}
+      />
 
       {/* Fixed header */}
       <header className="section-content fixed top-0 left-0 right-0 z-50 py-5 px-6">

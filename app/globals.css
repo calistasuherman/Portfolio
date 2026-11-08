@@ -98,33 +98,14 @@ body::after {
 /* â”€â”€ Custom cursor â”€â”€ */
 .cursor-dot {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(232, 228, 224, 0.9);
+  background: rgba(232, 228, 224, 0.85);
   pointer-events: none;
   z-index: 9999;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: transform 0.2s ease;
   mix-blend-mode: difference;
-  will-change: transform;
-}
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid rgba(232, 228, 224, 0.6);
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  mix-blend-mode: difference;
-  will-change: transform;
 }
 
 /* â”€â”€ Nav pill â”€â”€ */
@@ -265,7 +246,7 @@ body.page-fade-out {
   html { cursor: auto; }
   body { cursor: auto; }
   a, button { cursor: auto; }
-  .cursor-dot, .cursor-ring { display: none; }
+  .cursor-dot { display: none; }
 
   /* Disable fixed bg on iOS (causes white flash) */
   #about { background-attachment: scroll !important; }

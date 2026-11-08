@@ -191,7 +191,7 @@ function TiltPhoto() {
       onPointerMove={onMove}
       onPointerLeave={onLeave}
       onPointerCancel={onLeave}
-      style={{ width: "clamp(250px, 28vw, 380px)", aspectRatio: "1000 / 1500", touchAction: "pan-y" }}
+      style={{ width: "clamp(215px, 23vw, 320px)", aspectRatio: "1000 / 1500", touchAction: "pan-y" }}
     >
       <div
         ref={card}
@@ -451,31 +451,23 @@ export default function Home() {
       </section>
 
       {/* ── About ── */}
-      <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "1.5rem", backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "cover", backgroundPosition: "center 15%", backgroundAttachment: "fixed" }}>
+      <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "1.5rem", background: "linear-gradient(180deg, #ffffff 0%, #f3f3f3 32%, #d6d6d6 72%, #b4b4b4 100%)" }}>
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
           <RevealToggle className="order-1" direction="left">
             <div className="leading-none" style={{ position: "relative", marginTop: "2rem", marginBottom: "1.2rem" }} suppressHydrationWarning>
-              <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(3px, 3px)", pointerEvents: "none", letterSpacing: "0.05em", color: "#000000" }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal" }}>A</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)", fontWeight: "normal" }}>bout me</span>
-              </div>
-              <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, opacity: 0.12, transform: "translate(6px, 6px)", pointerEvents: "none", letterSpacing: "0.05em", color: "#000000" }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal" }}>A</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)", fontWeight: "normal" }}>bout me</span>
-              </div>
-              <h2 style={{ fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em", position: "relative" }}>
+              <h2 style={{ fontWeight: "normal", color: "#0a0a0a", letterSpacing: "0.05em", position: "relative" }}>
                 <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)" }}>A</span>
                 <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)" }}>bout me</span>
               </h2>
             </div>
-            <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", color: "rgba(245,240,240,0.5)", letterSpacing: "0.05em" }}>
+            <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", color: "#0a0a0a", letterSpacing: "0.05em" }}>
               @cal1star &nbsp;|&nbsp; 30K+ Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
             </p>
-            <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", lineHeight: 1.85, textShadow: "0 2px 12px rgba(0,0,0,0.55)", fontWeight: 400 }}>
+            <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", lineHeight: 1.85, color: "#0a0a0a", fontWeight: 400 }}>
               Hi! I&apos;m Calista, your friendly neighborhood video editor/videographer, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
             </p>
-            <div className="font-inter" style={{ fontSize: "clamp(0.55rem, 0.9vw, 0.72rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", display: "flex", gap: "2rem", color: "#e8e4e0" }}>
+            <div className="font-inter" style={{ fontSize: "clamp(0.55rem, 0.9vw, 0.72rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", display: "flex", gap: "2rem", color: "#0a0a0a" }}>
               {[0, 1].map(col => (
                 <div key={col} style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
                   {LABELS.filter((_, i) => i % 2 === col).map(label => (
@@ -486,7 +478,7 @@ export default function Home() {
             </div>
           </RevealToggle>
 
-          <div data-prel="0.1" className="order-2 flex justify-center" style={{ marginTop: "1rem", willChange: "transform" }}>
+          <div className="order-2 flex justify-center" style={{ marginTop: "1rem" }}>
             <RevealToggle direction="right" delay={200}>
               <TiltPhoto />
             </RevealToggle>
