@@ -366,3 +366,19 @@ body.page-fade-out {
 @media (max-width: 767px) {
   .hero-buttons { bottom: 6.5rem !important; }
 }
+
+/* About: tilted film strip behind the photo */
+.about-strip {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(271px, 29vw, 403px);
+  height: calc(100% + 640px);
+  transform: translate(-50%, -50%) rotate(6deg);
+  background: url("/bg-film.webp") center top / 100% auto repeat-y;
+  z-index: -1;
+  pointer-events: none;
+}
+@media (max-width: 767px) {
+  .about-strip { height: calc(100% + 120px); }
+}

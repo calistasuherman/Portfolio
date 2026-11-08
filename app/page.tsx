@@ -191,7 +191,7 @@ function TiltPhoto() {
       onPointerMove={onMove}
       onPointerLeave={onLeave}
       onPointerCancel={onLeave}
-      style={{ width: "clamp(215px, 23vw, 320px)", aspectRatio: "1000 / 1500", touchAction: "pan-y" }}
+      style={{ width: "clamp(215px, 23vw, 320px)", aspectRatio: "1000 / 1500", touchAction: "pan-y", transform: "rotate(-2deg)" }}
     >
       <div
         ref={card}
@@ -451,7 +451,7 @@ export default function Home() {
       </section>
 
       {/* ── About ── */}
-      <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "1.5rem", background: "linear-gradient(180deg, #ffffff 0%, #f3f3f3 32%, #d6d6d6 72%, #b4b4b4 100%)" }}>
+      <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "1.5rem", overflow: "hidden", background: "linear-gradient(180deg, #ffffff 0%, #f3f3f3 32%, #d6d6d6 72%, #b4b4b4 100%)" }}>
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
 
           <RevealToggle className="order-1" direction="left">
@@ -478,7 +478,8 @@ export default function Home() {
             </div>
           </RevealToggle>
 
-          <div className="order-2 flex justify-center" style={{ marginTop: "1rem" }}>
+          <div className="order-2 flex justify-center" style={{ marginTop: "1rem", position: "relative" }}>
+            <div aria-hidden="true" className="about-strip" />
             <RevealToggle direction="right" delay={200}>
               <TiltPhoto />
             </RevealToggle>
