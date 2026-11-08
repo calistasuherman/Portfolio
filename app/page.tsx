@@ -125,45 +125,72 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
 const HERO_LOGO_COLOR = "#f5f0f0";
 
 function TiltPhoto() {
-  const ref = useRef<HTMLDivElement>(null);
-  const rest = "perspective(900px) rotateY(0deg) rotateX(0deg) scale(1)";
+  const card = useRef<HTMLDivElement>(null);
+  const glare = useRef<HTMLDivElement>(null);
+  const st = useRef({ tx: 0, ty: 0, x: 0, y: 0, sc: 1, hover: false, raf: 0, reduce: false });
 
-  const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = ref.current;
+  useEffect(() => {
+    st.current.reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    return () => cancelAnimationFrame(st.current.raf);
+  }, []);
+
+  // Eases toward the pointer every frame (transform only), so motion stays smooth
+  // and the loop stops by itself once the card has settled.
+  const tick = () => {
+    const s = st.current, el = card.current;
     if (!el) return;
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `perspective(900px) rotateY(${px * 30}deg) rotateX(${-py * 12}deg) scale(1.03)`;
-    el.style.boxShadow = `${-px * 28}px ${18 - py * 10}px 40px rgba(0,0,0,0.5)`;
+    s.x += (s.tx - s.x) * 0.1;
+    s.y += (s.ty - s.y) * 0.1;
+    s.sc += ((s.hover ? 1.03 : 1) - s.sc) * 0.1;
+    el.style.transform = `perspective(1100px) rotateY(${s.x * 13}deg) rotateX(${-s.y * 6}deg) scale(${s.sc})`;
+    if (glare.current) {
+      glare.current.style.transform = `translate3d(${s.x * 45}%, 0, 0)`;
+      glare.current.style.opacity = String(s.hover ? 1 : Math.max(0, (s.sc - 1) / 0.03));
+    }
+    const settled = !s.hover && Math.abs(s.x) < 0.001 && Math.abs(s.y) < 0.001 && Math.abs(s.sc - 1) < 0.0005;
+    if (settled) { el.style.transform = ""; s.raf = 0; return; }
+    s.raf = requestAnimationFrame(tick);
+  };
+  const start = () => { if (!st.current.raf) st.current.raf = requestAnimationFrame(tick); };
+
+  // listeners live on the static wrapper (not the rotating card) so the pointer math never feeds back
+  const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const s = st.current;
+    if (s.reduce) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    s.tx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1));
+    s.ty = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1));
+    s.hover = true;
+    start();
   };
   const onLeave = () => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.transform = rest;
-    el.style.boxShadow = "0 8px 26px rgba(0,0,0,0.45)";
+    const s = st.current;
+    s.hover = false; s.tx = 0; s.ty = 0;
+    start();
   };
 
   return (
     <div
-      ref={ref}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
       onPointerCancel={onLeave}
-      style={{
-        width: "clamp(250px, 28vw, 380px)",
-        aspectRatio: "1000 / 1500",
-        borderRadius: "12px",
-        overflow: "hidden",
-        transform: rest,
-        transition: "transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease",
-        boxShadow: "0 8px 26px rgba(0,0,0,0.45)",
-        willChange: "transform",
-        touchAction: "pan-y",
-      }}
+      style={{ width: "clamp(250px, 28vw, 380px)", aspectRatio: "1000 / 1500", touchAction: "pan-y" }}
     >
-      <img src="/about-capcut.jpg" alt="Calista at CapCut World LA" draggable={false}
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }} />
+      <div
+        ref={card}
+        style={{
+          position: "relative", width: "100%", height: "100%",
+          overflow: "hidden", borderRadius: 0,
+          boxShadow: "0 16px 38px rgba(0,0,0,0.45)",
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+        }}
+      >
+        <img src="/about-capcut.jpg" alt="Calista at CapCut World LA" draggable={false}
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }} />
+        <div ref={glare} aria-hidden="true"
+          style={{ position: "absolute", inset: 0, opacity: 0, pointerEvents: "none", background: "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.16) 50%, transparent 70%)", willChange: "transform, opacity" }} />
+      </div>
     </div>
   );
 }
