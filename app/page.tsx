@@ -63,8 +63,8 @@ const FEATURED = [
   { src: `${MEDIA_BASE}/yt/invideocollab.mp4`, tag: "Partnerships" },
 ];
 
-const LOGO_SCALE: Record<number, number> = { 15: 0.6, 17: 2, 18: 0.45 };
-const LOGO_IDS = [15, 16, 17, 18];
+const LOGO_SCALE: Record<number, number> = { 15: 0.6, 17: 2, 18: 0.45, 19: 0.7, 20: 0.7 };
+const LOGO_IDS = [20, 19, 15, 16, 17, 18];
 const LOGOS = LOGO_IDS.map(id => ({
   src: `/logos/portfolio${id}.png`,
   scale: LOGO_SCALE[id] ?? 1,
