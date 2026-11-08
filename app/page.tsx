@@ -99,6 +99,11 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
       href="/work"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onMouseMove={e => {
+        const r = e.currentTarget.getBoundingClientRect();
+        e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+        e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+      }}
       style={{ display: "block", position: "relative", aspectRatio: "16/9", overflow: "hidden", borderRadius: "4px", textDecoration: "none" }}
     >
       <video
@@ -115,8 +120,20 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
         background: hovered ? "rgba(5,0,0,0.15)" : "rgba(5,0,0,0.42)",
         transition: "background 0.5s ease",
       }} />
+      <div aria-hidden="true" style={{
+        position: "absolute", inset: 0, pointerEvents: "none",
+        background: "radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.2), transparent 65%)",
+        opacity: hovered ? 1 : 0, transition: "opacity 0.4s ease",
+      }} />
       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.2rem 1rem" }}>
-        <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.7)" }}>{tag}</p>
+        <p style={{
+          fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.7)",
+          display: "flex", alignItems: "center", gap: "0.6rem",
+          transform: hovered ? "translateY(-4px)" : "translateY(0)", transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
+        }}>
+          {tag}
+          <span style={{ opacity: hovered ? 1 : 0, transform: hovered ? "translateX(0)" : "translateX(-6px)", transition: "opacity 0.4s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1)" }}>→</span>
+        </p>
       </div>
     </a>
   );
@@ -255,6 +272,31 @@ function useParallax() {
   }, []);
 }
 
+/* ── Marquee: speeds up with scroll velocity, eases back to normal ── */
+function useMarqueeVelocity() {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const el = document.querySelector<HTMLElement>("[data-marquee]");
+    if (!el) return;
+    let last = window.scrollY, boost = 0, raf = 0;
+    const tick = () => {
+      const anim = el.getAnimations()[0];
+      boost *= 0.94;
+      if (anim) anim.playbackRate = 1 + boost;
+      if (boost > 0.02) raf = requestAnimationFrame(tick);
+      else { boost = 0; if (anim) anim.playbackRate = 1; raf = 0; }
+    };
+    const onScroll = () => {
+      const y = window.scrollY;
+      boost = Math.min(3.5, Math.max(boost, Math.abs(y - last) * 0.05));
+      last = y;
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(raf); };
+  }, []);
+}
+
 /* ── Hero collage: muted looping clips in columns that scroll at different speeds ── */
 const HERO_CLIPS = Array.from({ length: 12 }, (_, i) => `${MEDIA_BASE}/hero/h${i + 1}.mp4`);
 
@@ -303,10 +345,33 @@ function HeroCollage() {
 
   useEffect(() => { if (layout) window.dispatchEvent(new Event("scroll")); }, [layout]);
 
+  // the whole collage drifts gently against the pointer (separate layer from the scroll parallax)
+  const driftRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!layout) return;
+    if (window.matchMedia("(hover: none)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const el = driftRef.current;
+    if (!el) return;
+    let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+    const tick = () => {
+      x += (tx - x) * 0.06;
+      y += (ty - y) * 0.06;
+      el.style.transform = `translate3d(${x}px, ${y}px, 0) scale(1.06)`;
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.05 ? requestAnimationFrame(tick) : 0;
+    };
+    const move = (e: PointerEvent) => {
+      tx = -(e.clientX / window.innerWidth - 0.5) * 36;
+      ty = -(e.clientY / window.innerHeight - 0.5) * 22;
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    window.addEventListener("pointermove", move, { passive: true });
+    return () => { window.removeEventListener("pointermove", move); cancelAnimationFrame(raf); };
+  }, [layout]);
+
   return (
     <div ref={wrapRef} aria-hidden="true" className="absolute inset-0" style={{ zIndex: 0, overflow: "hidden" }}>
       {layout && (
-        <div style={{ display: "flex", gap: layout.gap, width: "100%", height: "100%" }}>
+        <div ref={driftRef} style={{ display: "flex", gap: layout.gap, width: "100%", height: "100%", transform: "scale(1.06)", willChange: "transform" }}>
           {layout.cols.map((col, c) => (
             <div key={c} data-pscroll={col.speed} style={{ flex: 1, minWidth: 0, marginTop: -col.offset, display: "flex", flexDirection: "column", gap: layout.gap, willChange: "transform" }}>
               {Array.from({ length: col.rows }, (_, r) => (
@@ -328,6 +393,7 @@ function HeroCollage() {
 export default function Home() {
   const [heroVisible, setHeroVisible] = useState(false);
   useParallax();
+  useMarqueeVelocity();
 
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 120);
@@ -373,10 +439,10 @@ export default function Home() {
           </div>
           {/* Buttons */}
           <div className={`hero-item hero-buttons${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.8s", position: "absolute", bottom: "clamp(2.5rem, 6vh, 5rem)", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "1rem", zIndex: 3 }}>
-            <a href="/work" className="inline-block px-8 py-3 rounded-none border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "'HelvLight', var(--font-inter)" }}>
+            <a data-magnetic href="/work" className="inline-block px-8 py-3 rounded-none border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "'HelvLight', var(--font-inter)" }}>
               explore my work
             </a>
-            <a href="/contact" className="inline-block px-8 py-3 rounded-none text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "'HelvLight', var(--font-inter)" }}>
+            <a data-magnetic href="/contact" className="inline-block px-8 py-3 rounded-none text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "'HelvLight', var(--font-inter)" }}>
               work with me
             </a>
           </div>
@@ -436,7 +502,7 @@ export default function Home() {
       {/* ── Portfolio Strip ── */}
       <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
         <div style={{ overflow: "hidden", maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}>
-          <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content", alignItems: "center" }}>
+          <div data-marquee style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content", alignItems: "center" }}>
             {Array.from({ length: 12 }, () => LOGOS).flat().map(({ src, scale }, i) => (
               <img key={i} src={src} alt="" style={{ height: `${36 * scale}px`, width: "auto", borderRadius: "4px", objectFit: "cover", opacity: 0.75, transition: "opacity 0.3s", display: "block", userSelect: "none", marginRight: "4rem" }}
                 onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
@@ -459,7 +525,7 @@ export default function Home() {
           <p style={{ margin: 0, fontFamily: "'HelvLight', var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)", color: "rgba(245,240,240,0.78)", maxWidth: "34rem", lineHeight: 1.75 }}>
             Never edited before? I&apos;ll take you from CapCut to DaVinci Resolve to the effects and transitions you see in my videos.
           </p>
-          <a href="/course" className="inline-block rounded-none uppercase text-white transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.2em", padding: "0.95rem 2.2rem" }}>
+          <a data-magnetic href="/course" className="inline-block rounded-none uppercase text-white transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.2em", padding: "0.95rem 2.2rem" }}>
             Join the waitlist →
           </a>
           <div style={{ marginTop: "-0.5rem" }}>

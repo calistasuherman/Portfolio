@@ -50,19 +50,67 @@ export function getAudio(): HTMLAudioElement | null {
 export default function GlobalUI() {
   const pathname = usePathname();
   const router = useRouter();
-  const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
-  const [cursorHover, setCursorHover] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [trackIndex, setTrackIndex] = useState(0);
   const bgRef = useRef<HTMLDivElement>(null);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const progRef = useRef<HTMLDivElement>(null);
 
-  /* cursor */
+  /* cursor: exact dot + eased trailing ring, driven by rAF (no React re-renders) */
   useEffect(() => {
-    const move = (e: MouseEvent) => setCursorPos({ x: e.clientX, y: e.clientY });
+    if (window.matchMedia("(hover: none)").matches) return;
+    const dot = dotRef.current, ring = ringRef.current;
+    if (!dot || !ring) return;
+    let mx = -100, my = -100, rx = -100, ry = -100, hover = false, shown = false, raf = 0;
+    const loop = () => {
+      rx += (mx - rx) * 0.2;
+      ry += (my - ry) * 0.2;
+      dot.style.transform = `translate3d(${mx}px, ${my}px, 0) translate(-50%, -50%) scale(${hover ? 0.5 : 1})`;
+      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) scale(${hover ? 1.8 : 1})`;
+      raf = requestAnimationFrame(loop);
+    };
+    const move = (e: MouseEvent) => {
+      mx = e.clientX; my = e.clientY;
+      if (!shown) { shown = true; rx = mx; ry = my; dot.style.opacity = "1"; ring.style.opacity = "1"; }
+    };
+    const over = (e: MouseEvent) => { hover = !!(e.target as Element).closest?.("a, button, [data-cursor]"); };
+    const leave = () => { shown = false; dot.style.opacity = "0"; ring.style.opacity = "0"; };
     window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
+    document.addEventListener("mouseover", over);
+    document.documentElement.addEventListener("mouseleave", leave);
+    raf = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseover", over);
+      document.documentElement.removeEventListener("mouseleave", leave);
+    };
+  }, []);
+
+  /* magnetic buttons: [data-magnetic] leans toward the pointer */
+  useEffect(() => {
+    if (window.matchMedia("(hover: none)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const reset = (el: HTMLElement) => { el.style.setProperty("--tw-translate-x", "0px"); el.style.setProperty("--tw-translate-y", "0px"); };
+    let cur: HTMLElement | null = null;
+    const move = (e: PointerEvent) => {
+      const el = (e.target as Element).closest?.("[data-magnetic]") as HTMLElement | null;
+      if (cur && cur !== el) reset(cur);
+      cur = el;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--tw-translate-x", `${(e.clientX - (r.left + r.width / 2)) * 0.22}px`);
+      el.style.setProperty("--tw-translate-y", `${(e.clientY - (r.top + r.height / 2)) * 0.32}px`);
+    };
+    const out = (e: PointerEvent) => {
+      const el = (e.target as Element).closest?.("[data-magnetic]") as HTMLElement | null;
+      if (el && !el.contains(e.relatedTarget as Node)) reset(el);
+    };
+    document.addEventListener("pointermove", move);
+    document.addEventListener("pointerout", out);
+    return () => { document.removeEventListener("pointermove", move); document.removeEventListener("pointerout", out); };
   }, []);
 
   /* Lenis smooth scroll */
@@ -80,6 +128,9 @@ export default function GlobalUI() {
       lenis.raf(time);
       if (bgRef.current) {
         bgRef.current.style.transform = `translate3d(0, ${-lenis.scroll * 0.3}px, 0)`;
+      }
+      if (progRef.current) {
+        progRef.current.style.transform = `scaleX(${lenis.limit > 0 ? Math.min(1, Math.max(0, lenis.scroll / lenis.limit)) : 0})`;
       }
       raf = requestAnimationFrame(loop);
     };
@@ -106,21 +157,6 @@ export default function GlobalUI() {
   useEffect(() => {
     document.body.classList.remove("page-fade-out");
   }, [pathname]);
-
-  useEffect(() => {
-    const on = () => setCursorHover(true);
-    const off = () => setCursorHover(false);
-    const attach = () => {
-      document.querySelectorAll("a, button").forEach(el => {
-        el.addEventListener("mouseenter", on);
-        el.addEventListener("mouseleave", off);
-      });
-    };
-    attach();
-    const obs = new MutationObserver(attach);
-    obs.observe(document.body, { childList: true, subtree: true });
-    return () => obs.disconnect();
-  }, []);
 
   /* audio event listeners */
   useEffect(() => {
@@ -205,15 +241,14 @@ export default function GlobalUI() {
         }}
       />
 
+      {/* Scroll progress */}
+      <div aria-hidden="true" style={{ position: "fixed", top: 0, left: 0, right: 0, height: "2px", zIndex: 60, pointerEvents: "none" }}>
+        <div ref={progRef} style={{ height: "100%", background: "linear-gradient(90deg, #960018, #e8a0a8)", transformOrigin: "left center", transform: "scaleX(0)", willChange: "transform" }} />
+      </div>
+
       {/* Custom cursor */}
-      <div
-        className="cursor-dot"
-        style={{
-          left: cursorPos.x,
-          top: cursorPos.y,
-          transform: `translate(-50%, -50%) scale(${cursorHover ? 2.8 : 1})`,
-        }}
-      />
+      <div ref={ringRef} className="cursor-ring" aria-hidden="true" />
+      <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
 
       {/* Fixed header */}
       <header className="section-content fixed top-0 left-0 right-0 z-50 py-5 px-6">
