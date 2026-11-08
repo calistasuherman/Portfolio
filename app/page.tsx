@@ -434,7 +434,7 @@ export default function Home() {
           </div>
 
           {/* Tagline */}
-          <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1rem", textAlign: "center", position: "relative", zIndex: 2 }}>
+          <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "-0.6rem", textAlign: "center", position: "relative", zIndex: 2 }}>
             <p style={{ fontFamily: "'HelvLight', var(--font-inter)", color: "rgba(245,240,240,0.9)", fontSize: "clamp(0.55rem, 0.85vw, 0.72rem)", letterSpacing: "0.18em" }}>{"Video editing made easy"}</p>
           </div>
           {/* Buttons */}
