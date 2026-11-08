@@ -183,6 +183,9 @@ export default function GlobalUI() {
 
   return (
     <>
+      {/* Backdrop color behind the film strip */}
+      <div aria-hidden="true" style={{ position: "fixed", inset: 0, zIndex: -2, background: "#2a0509", pointerEvents: "none" }} />
+
       {/* Parallax background */}
       <div
         ref={bgRef}
@@ -191,10 +194,10 @@ export default function GlobalUI() {
           left: 0,
           right: 0,
           top: "-150vh",
-          height: "400vh",
+          height: "800vh",
           zIndex: -1,
-          backgroundImage: "url('/bg-red.jpg')",
-          backgroundSize: "100% auto",
+          backgroundImage: "url('/bg-film.webp')",
+          backgroundSize: "clamp(300px, 36vw, 560px) auto",
           backgroundRepeat: "repeat-y",
           backgroundPosition: "top center",
           willChange: "transform",
@@ -218,7 +221,7 @@ export default function GlobalUI() {
           <img
             src="/cal1star-mark.webp"
             alt="cal1star editing"
-            style={{ width: "clamp(56px, 6.5vw, 84px)", aspectRatio: "600 / 379", display: "block", filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.45))" }}
+            style={{ width: "clamp(34px, 4vw, 50px)", aspectRatio: "600 / 379", display: "block", filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.45))" }}
           />
         </a>
         <nav className="flex justify-end gap-8 md:gap-12">

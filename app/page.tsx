@@ -425,19 +425,13 @@ export default function Home() {
       <section style={{ minHeight: "70vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "5.5rem clamp(1.5rem, 6vw, 5rem)", textAlign: "center" }}>
         <RevealToggle>
           <div data-prel="0.08" style={{ position: "relative", top: "-1.5rem", willChange: "transform", display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(1.75rem, 4.5vh, 2.75rem)" }}>
-          <p style={{ margin: 0, lineHeight: 0 }}><img src="/course/label-course.svg" alt="A beginner course by @cal1star" style={{ display: "block", height: "0.58rem", width: "auto" }} /></p>
+          <p style={{ margin: 0, fontFamily: "'HelvLight', var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)" }}>New · A beginner course by @cal1star</p>
           <h2 style={{ fontWeight: "normal", color: "#f5f0f0", margin: 0, lineHeight: 1, padding: 0 }}>
             <img src="/course/editing-101.svg" alt="Editing 101: made easy" style={{ display: "block", width: "min(21rem, 72vw)", height: "auto", margin: "0 auto" }} />
           </h2>
-          <picture style={{ display: "block", margin: "0 auto" }}>
-            <source media="(min-width: 700px)" srcSet="/course/intro-desktop.svg" />
-            <img
-              src="/course/intro-phone.svg"
-              alt="Editing changed my life, and I want to make it feel easy for you. I'll walk you through CapCut first, then DaVinci Resolve, then the fun stuff: the effects and transitions you see in my videos. No experience needed, just come as you are."
-              className="course-intro"
-              style={{ display: "block", height: "auto", margin: "0 auto" }}
-            />
-          </picture>
+          <p style={{ margin: 0, fontFamily: "'HelvLight', var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)", color: "rgba(245,240,240,0.78)", maxWidth: "34rem", lineHeight: 1.75 }}>
+            Never edited before? I&apos;ll take you from CapCut to DaVinci Resolve to the effects and transitions you see in my videos.
+          </p>
           <a href="/course" className="inline-block rounded-none uppercase text-white transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.2em", padding: "0.95rem 2.2rem" }}>
             Join the waitlist →
           </a>
