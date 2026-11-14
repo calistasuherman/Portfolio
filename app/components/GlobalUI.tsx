@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Lenis from "lenis";
 import { MEDIA_BASE } from "../lib/media";
+import { LOGO_SRC } from "../logo-data";
 
 /* ── Playlist ─────────────────────────────────────────────────── */
 export const SONGS = [
@@ -211,7 +212,7 @@ export default function GlobalUI() {
   /* icon style reused for prev/next/play buttons */
   const ctrlBtn: React.CSSProperties = {
     background: "none", border: "none", cursor: "pointer",
-    padding: "4px", color: "#1c1713", flexShrink: 0,
+    padding: "4px", color: "#161616", flexShrink: 0,
     display: "flex", alignItems: "center", justifyContent: "center",
   };
 
@@ -229,11 +230,11 @@ export default function GlobalUI() {
 
       {/* Fixed header */}
       <header className="section-content fixed top-0 left-0 right-0 z-50 py-5 px-6">
-        <a href="/" style={{ position: "absolute", top: "0.5rem", left: "-1rem" }}>
+        <a href="/" style={{ position: "absolute", top: "1.15rem", left: "0.9rem" }}>
           <img
-            src="/cs-monogram.png"
-            alt="CS"
-            style={{ width: "clamp(58px, 7vw, 90px)", opacity: 0.9, display: "block" }}
+            src={LOGO_SRC}
+            alt="cal1star editing"
+            style={{ height: "clamp(28px, 3.6vw, 40px)", width: "auto", display: "block" }}
           />
         </a>
         <nav className="nav-pill" style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "clamp(1.1rem, 3vw, 2.2rem)", width: "fit-content", marginLeft: "auto" }}>
@@ -250,7 +251,7 @@ export default function GlobalUI() {
           <a
             href="/contact"
             className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95"
-            style={{ textDecoration: "none", background: "#960018", color: "#fff", padding: "0.5rem 1rem", borderRadius: "9999px", whiteSpace: "nowrap" }}
+            style={{ textDecoration: "none", background: "#c9971c", color: "#161616", fontWeight: 600, padding: "0.5rem 1rem", borderRadius: "9999px", whiteSpace: "nowrap" }}
           >
             Work with me
           </a>
@@ -271,11 +272,11 @@ export default function GlobalUI() {
           <div style={{
             background: "rgba(255,253,249,0.94)",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(28,23,19,0.14)",
+            border: "1px solid rgba(22,22,22,0.14)",
             borderRadius: "14px",
             padding: "12px 16px",
             width: "248px",
-            boxShadow: "0 8px 32px rgba(28,23,19,0.18)",
+            boxShadow: "0 8px 32px rgba(22,22,22,0.18)",
           }}>
             {/* Track info row */}
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
@@ -285,8 +286,8 @@ export default function GlobalUI() {
                 style={{ width: "36px", height: "36px", objectFit: "contain", animation: "vinylSpin 3s linear infinite", flexShrink: 0 }}
               />
               <div style={{ overflow: "hidden", flex: 1 }}>
-                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#1c1713", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{song.title}</p>
-                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.55rem", color: "rgba(28,23,19,0.5)", letterSpacing: "0.04em" }}>{song.artist}</p>
+                <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.6rem", fontWeight: 600, color: "#161616", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{song.title}</p>
+                <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.55rem", color: "rgba(22,22,22,0.5)", letterSpacing: "0.04em" }}>{song.artist}</p>
               </div>
             </div>
 
@@ -297,7 +298,7 @@ export default function GlobalUI() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,5 9,12 19,19"/><rect x="5" y="5" width="2" height="14"/></svg>
               </button>
               {/* Play/Pause */}
-              <button onClick={togglePlay} style={{ ...ctrlBtn, width: "28px", height: "28px", borderRadius: "50%", background: "rgba(28,23,19,0.08)" }}>
+              <button onClick={togglePlay} style={{ ...ctrlBtn, width: "28px", height: "28px", borderRadius: "50%", background: "rgba(22,22,22,0.08)" }}>
                 {playing ? (
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                 ) : (
@@ -311,12 +312,12 @@ export default function GlobalUI() {
             </div>
 
             {/* Progress bar */}
-            <div onClick={seek} style={{ width: "100%", height: "3px", background: "rgba(28,23,19,0.14)", borderRadius: "2px", cursor: "pointer" }}>
-              <div style={{ height: "100%", background: "#960018", borderRadius: "2px", width: duration ? `${(progress / duration) * 100}%` : "0%", transition: "width 0.5s linear" }} />
+            <div onClick={seek} style={{ width: "100%", height: "3px", background: "rgba(22,22,22,0.14)", borderRadius: "2px", cursor: "pointer" }}>
+              <div style={{ height: "100%", background: "#c9971c", borderRadius: "2px", width: duration ? `${(progress / duration) * 100}%` : "0%", transition: "width 0.5s linear" }} />
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px" }}>
-              <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.48rem", color: "rgba(28,23,19,0.45)" }}>{fmt(progress)}</span>
-              <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.48rem", color: "rgba(28,23,19,0.45)" }}>{duration ? fmt(duration) : "--:--"}</span>
+              <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.48rem", color: "rgba(22,22,22,0.45)" }}>{fmt(progress)}</span>
+              <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.48rem", color: "rgba(22,22,22,0.45)" }}>{duration ? fmt(duration) : "--:--"}</span>
             </div>
           </div>
         </div>
@@ -333,8 +334,8 @@ export default function GlobalUI() {
             transition: "transform 0.2s ease",
             transform: playerOpen ? "scale(1.05)" : "scale(1)",
             filter: playing
-              ? "drop-shadow(0 0 14px rgba(150,0,24,0.45))"
-              : "drop-shadow(0 4px 16px rgba(28,23,19,0.35))",
+              ? "drop-shadow(0 0 14px rgba(201,151,28,0.45))"
+              : "drop-shadow(0 4px 16px rgba(22,22,22,0.35))",
           }}
         >
           <img

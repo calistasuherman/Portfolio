@@ -126,8 +126,8 @@ export default function NavHeader() {
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
               <img src="/vinyl.png" alt="" style={{ width: "34px", height: "34px", borderRadius: "50%", animation: "vinylSpin 3s linear infinite", flexShrink: 0 }} />
               <div style={{ overflow: "hidden" }}>
-                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#f5f0f0", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Loving You</p>
-                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.55rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.04em" }}>Michael Jackson</p>
+                <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.6rem", fontWeight: 600, color: "#f5f0f0", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Loving You</p>
+                <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.55rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.04em" }}>Michael Jackson</p>
               </div>
               {/* Play/pause */}
               <button onClick={togglePlay} style={{ marginLeft: "auto", background: "none", border: "none", cursor: "none", padding: "4px", color: "#f5f0f0", flexShrink: 0 }}>
@@ -144,8 +144,8 @@ export default function NavHeader() {
               <div style={{ height: "100%", background: "rgba(245,240,240,0.7)", borderRadius: "2px", width: duration ? `${(progress / duration) * 100}%` : "0%", transition: "width 0.5s linear" }} />
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px" }}>
-              <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.48rem", color: "rgba(245,240,240,0.35)" }}>{fmt(progress)}</span>
-              <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.48rem", color: "rgba(245,240,240,0.35)" }}>{duration ? fmt(duration) : "--:--"}</span>
+              <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.48rem", color: "rgba(245,240,240,0.35)" }}>{fmt(progress)}</span>
+              <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.48rem", color: "rgba(245,240,240,0.35)" }}>{duration ? fmt(duration) : "--:--"}</span>
             </div>
           </div>
         </div>
@@ -162,7 +162,7 @@ export default function NavHeader() {
             cursor: "none", padding: 0,
             transition: "transform 0.2s ease",
             transform: playerOpen ? "scale(1.08)" : "scale(1)",
-            filter: playing ? "drop-shadow(0 0 10px rgba(139,0,0,0.5))" : "drop-shadow(0 4px 12px rgba(0,0,0,0.6))",
+            filter: playing ? "drop-shadow(0 0 10px rgba(201,151,28,0.5))" : "drop-shadow(0 4px 12px rgba(0,0,0,0.6))",
           }}
         >
           <img
