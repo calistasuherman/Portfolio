@@ -284,8 +284,11 @@ function initHome() {
             openLightbox(watchBtn.getAttribute("data-src"), watchBtn.getAttribute("data-tag"));
           });
         }
-        function createWorkCard(item, i, categoryTitle) {
-          var display = item.category ? item.label : (item.label + " \u00B7 " + pad2(i + 1));
+        /* Only Partnerships cards carry a title under the video (the brand
+           names); Video Editing, Videography and the Tutorials subsection
+           show the bare frame with its number tag, per Calista's request. */
+        function createWorkCard(item, i, categoryTitle, titled) {
+          var display = titled ? (item.category ? item.label : (item.label + " \u00B7 " + pad2(i + 1))) : pad2(i + 1);
           var card = document.createElement("div");
           card.className = "work-card work-card--in";
           card.style.animationDelay = Math.min(i * 60, 360) + "ms";
@@ -309,22 +312,25 @@ function initHome() {
           watchBtn.setAttribute("aria-label", "Watch " + display + " (" + categoryTitle + ")");
           watchBtn.setAttribute("data-popup", "Click to watch");
           frame.appendChild(v); frame.appendChild(play); frame.appendChild(tag); frame.appendChild(watchBtn);
-          var label = document.createElement("p");
-          label.className = "work-card-label";
-          label.textContent = item.label;
-          if (item.category) {
-            var cat = document.createElement("span");
-            cat.textContent = item.category;
-            label.appendChild(cat);
+          card.appendChild(frame);
+          if (titled) {
+            var label = document.createElement("p");
+            label.className = "work-card-label";
+            label.textContent = item.label;
+            if (item.category) {
+              var cat = document.createElement("span");
+              cat.textContent = item.category;
+              label.appendChild(cat);
+            }
+            card.appendChild(label);
           }
-          card.appendChild(frame); card.appendChild(label);
           bindFrame(frame, v, watchBtn);
           return card;
         }
-        function renderGallery(container, videos, layout, categoryTitle) {
+        function renderGallery(container, videos, layout, categoryTitle, titled) {
           container.innerHTML = "";
           container.className = "work-grid work-grid--" + layout;
-          videos.forEach(function (item, i) { container.appendChild(createWorkCard(item, i, categoryTitle)); });
+          videos.forEach(function (item, i) { container.appendChild(createWorkCard(item, i, categoryTitle, titled)); });
         }
 
         var vinylView = document.getElementById("vinylView");
@@ -346,12 +352,12 @@ function initHome() {
               subNote.textContent = " \u00B7 plus " + d.sub.videos.length + " tutorial";
               countEl.appendChild(subNote);
             }
-            renderGallery(workGallery, d.videos, d.layout, d.title);
+            renderGallery(workGallery, d.videos, d.layout, d.title, btn.getAttribute("data-cat") === "partnerships");
             if (d.sub) {
               document.getElementById("detailSubIdx").textContent = d.sub.idx + " \u00B7 My work";
               document.getElementById("detailSubTitle").textContent = d.sub.title;
               document.getElementById("detailSubDesc").textContent = d.sub.desc;
-              renderGallery(workSubGallery, d.sub.videos, "wide", d.sub.title);
+              renderGallery(workSubGallery, d.sub.videos, "wide", d.sub.title, false);
               workSubsection.hidden = false;
             } else {
               workSubGallery.innerHTML = "";
