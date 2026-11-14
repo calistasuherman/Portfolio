@@ -62,6 +62,7 @@ export default function GlobalUI() {
 
   /* click outside player → close popup */
   useEffect(() => {
+    if (pathname === "/") return;
     if (!playerOpen) return;
     const handler = (e: MouseEvent) => {
       if (playerRef.current && !playerRef.current.contains(e.target as Node)) {
@@ -70,17 +71,19 @@ export default function GlobalUI() {
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
-  }, [playerOpen]);
+  }, [playerOpen, pathname]);
 
   /* cursor */
   useEffect(() => {
+    if (pathname === "/") return;
     const move = (e: MouseEvent) => setCursorPos({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
-  }, []);
+  }, [pathname]);
 
   /* Lenis smooth scroll */
   useEffect(() => {
+    if (pathname === "/") return;
     const lenis = new Lenis({
       duration: 1.1,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -99,10 +102,11 @@ export default function GlobalUI() {
     };
     raf = requestAnimationFrame(loop);
     return () => { lenis.destroy(); cancelAnimationFrame(raf); };
-  }, []);
+  }, [pathname]);
 
   /* page-fade on link clicks — client-side nav so audio/scroll state survives */
   useEffect(() => {
+    if (pathname === "/") return;
     const handler = (e: MouseEvent) => {
       const anchor = (e.target as Element).closest("a");
       if (!anchor) return;
@@ -114,7 +118,7 @@ export default function GlobalUI() {
     };
     document.addEventListener("click", handler, true);
     return () => document.removeEventListener("click", handler, true);
-  }, [router]);
+  }, [router, pathname]);
 
   /* fade the new page back in once the route has actually changed */
   useEffect(() => {
@@ -122,6 +126,7 @@ export default function GlobalUI() {
   }, [pathname]);
 
   useEffect(() => {
+    if (pathname === "/") return;
     const on = () => setCursorHover(true);
     const off = () => setCursorHover(false);
     const attach = () => {
@@ -134,10 +139,11 @@ export default function GlobalUI() {
     const obs = new MutationObserver(attach);
     obs.observe(document.body, { childList: true, subtree: true });
     return () => obs.disconnect();
-  }, []);
+  }, [pathname]);
 
   /* audio event listeners */
   useEffect(() => {
+    if (pathname === "/") return;
     const audio = getAudio();
     if (!audio) return;
     const onTime = () => setProgress(audio.currentTime);
@@ -161,7 +167,7 @@ export default function GlobalUI() {
       audio.removeEventListener("loadedmetadata", onMeta);
       audio.removeEventListener("ended", onEnded);
     };
-  }, []);
+  }, [pathname]);
 
   function skipTo(idx: number) {
     playSong(idx);
@@ -218,6 +224,12 @@ export default function GlobalUI() {
     padding: "4px", color: "#f5f0f0", flexShrink: 0,
     display: "flex", alignItems: "center", justifyContent: "center",
   };
+
+  /* The homepage runs the approved rebrand design with its own header,
+     cursor, music player and scrolling, so this shared chrome steps
+     aside there. Every effect above is gated the same way, and the
+     other pages keep this component exactly as before. */
+  if (pathname === "/") return null;
 
   return (
     <>
