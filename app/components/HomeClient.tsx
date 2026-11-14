@@ -6,8 +6,8 @@ import { BRAND_CAPCUT, BRAND_ELEVENLABS, BRAND_HIGGSFIELD, CAL1STAR_LOGO, CAPCUT
 /* Homepage behaviours, ported from the approved preview's page script:
    follower milestone, the simulated Michael Jackson mini player, the photo
    stack flip and parallax, the work galleries and lightbox, the waitlist
-   form (posting to /api/waitlist like the live course page), the glide
-   scrolling, the scroll moving backgrounds, the scroll reveals, the custom
+   form (posting to /api/waitlist like the live course page), native
+   scrolling with eased link glides, the scroll moving backgrounds, the scroll reveals, the custom
    cursor and the hero video wall. It runs once on mount and every handler
    that outlives the page checks for the homepage root first, so nothing
    here can leak into the other pages. */
@@ -439,7 +439,7 @@ function initHome() {
           });
         });
 
-        /* ---------- smooth scrolling: the whole page glides ---------- */
+        /* ---------- scrolling: native, with an eased glide for in page links ---------- */
         (function initSmoothScroll() {
           var reducedScroll = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
           if (reducedScroll) { return; }
@@ -450,55 +450,14 @@ function initHome() {
           function clampY(y) { return Math.min(maxScroll(), Math.max(0, y)); }
           function currentY() { return window.pageYOffset || document.documentElement.scrollTop || 0; }
 
-          /* Wheel gliding: regular wheel and trackpad scrolling eases toward
-             its target instead of stepping, so the whole page feels like it
-             glides. It stays natural, not floaty: each frame closes 16% of
-             the remaining distance and it settles within a few hundred
-             milliseconds. Touch scrolling is left to the device's own
-             momentum, pinch zoom stays native, and anything else that moves
-             the page (touch, a drag, a key press) takes over at once. */
-          var wheelTarget = null;
-          var wheelRaf = null;
-          function stopWheel() {
-            if (wheelRaf) { cancelAnimationFrame(wheelRaf); wheelRaf = null; }
-            wheelTarget = null;
-          }
-          function wheelStep() {
-            wheelRaf = null;
-            if (wheelTarget === null) { return; }
-            var y = currentY();
-            var diff = wheelTarget - y;
-            if (Math.abs(diff) < 0.6) {
-              window.scrollTo(0, wheelTarget);
-              wheelTarget = null;
-              return;
-            }
-            window.scrollTo(0, y + diff * 0.16);
-            wheelRaf = requestAnimationFrame(wheelStep);
-          }
-          if (window.matchMedia("(pointer: fine)").matches) {
-            window.addEventListener("wheel", function (e) {
-              if (!document.getElementById("c1sRoot")) { return; }
-              if (e.ctrlKey || e.metaKey) { return; }
-              if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { return; }
-              if (e.target && e.target.closest && e.target.closest(".picker, dialog, textarea, select")) { return; }
-              var dlg = document.getElementById("lightbox");
-              if (dlg && dlg.open) { return; }
-              e.preventDefault();
-              stopGlide();
-              if (wheelTarget === null) { wheelTarget = currentY(); }
-              var delta = e.deltaY;
-              if (e.deltaMode === 1) { delta *= 16; }
-              else if (e.deltaMode === 2) { delta *= window.innerHeight; }
-              wheelTarget = clampY(wheelTarget + delta);
-              if (!wheelRaf) { wheelRaf = requestAnimationFrame(wheelStep); }
-            }, { passive: false });
-            window.addEventListener("touchstart", stopWheel, { passive: true });
-            window.addEventListener("pointerdown", stopWheel, { passive: true });
-            window.addEventListener("keydown", function (e) {
-              if (["PageDown", "PageUp", "Home", "End", "ArrowDown", "ArrowUp", " "].indexOf(e.key) !== -1) { stopWheel(); }
-            }, { passive: true });
-          }
+          /* Scrolling itself is left entirely to the browser. An earlier
+             version hijacked every wheel event (preventDefault on a non
+             passive listener) and eased window.scrollTo on the main
+             thread each frame; that switched off the compositor's own
+             scrolling and felt laggy, worst on trackpads. Native wheel,
+             trackpad and touch scrolling needs no help, so the only
+             scroll listeners in this section are passive ones that
+             cancel a link glide (below) when real scroll input arrives. */
 
           /* In page links: one soft eased glide to the section */
           var DURATION = 900;
@@ -506,7 +465,6 @@ function initHome() {
           function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
           function stopGlide() { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
           function glideTo(targetY) {
-            stopWheel();
             var startY = currentY();
             var distance = targetY - startY;
             if (Math.abs(distance) < 2) { return; }
@@ -521,6 +479,11 @@ function initHome() {
             rafId = requestAnimationFrame(step);
           }
           window.addEventListener("touchstart", stopGlide, { passive: true });
+          window.addEventListener("wheel", stopGlide, { passive: true });
+          window.addEventListener("pointerdown", stopGlide, { passive: true });
+          window.addEventListener("keydown", function (e) {
+            if (["PageDown", "PageUp", "Home", "End", "ArrowDown", "ArrowUp", " "].indexOf(e.key) !== -1) { stopGlide(); }
+          }, { passive: true });
           document.querySelectorAll('a[href^="#"]').forEach(function (link) {
             link.addEventListener("click", function (e) {
               var hash = link.getAttribute("href");
@@ -541,6 +504,10 @@ function initHome() {
         /* ---------- scroll moving backgrounds ----------
            One rAF gated pass per scroll or resize frame, and only
            while a frame is actually owed: at rest this costs nothing.
+           Section positions are measured once and cached (re measured
+           on resize, or whenever the document height changes), so a
+           scroll frame does no layout reads at all, and a --py write
+           only happens when the rounded value actually changed.
            Everything it moves is a transform on a dedicated layer
            (the fixed stage's single grid and glow, each section's
            --py fed grid and glow plates), never a layout or paint
@@ -569,29 +536,43 @@ function initHome() {
           });
           if (!grid && !glow && !sections.length) { return; }
           var ticking = false;
+          var vh = window.innerHeight || 1;
+          var docH = document.documentElement.scrollHeight || 1;
+          var measured = [];
+          function measure() {
+            vh = window.innerHeight || 1;
+            docH = document.documentElement.scrollHeight || 1;
+            var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+            measured = sections.map(function (el) {
+              var r = el.getBoundingClientRect();
+              return { el: el, top: r.top + y, height: r.height, lastPy: null };
+            });
+          }
           function update() {
             ticking = false;
             if (!document.getElementById("c1sRoot")) { return; }
             var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-            var vh = window.innerHeight || 1;
-            var max = Math.max(1, (document.documentElement.scrollHeight || 1) - vh);
+            if ((document.documentElement.scrollHeight || 1) !== docH) { measure(); }
+            var max = Math.max(1, docH - vh);
             var p = Math.min(1, Math.max(0, y / max));
             if (grid) { grid.style.transform = "translate3d(0," + (-((y * 0.3) % 54)).toFixed(1) + "px,0)"; }
             if (glow) {
               var sway = Math.sin(p * Math.PI * 2) * 16;
               glow.style.transform = "translate3d(calc(-50% + " + sway.toFixed(1) + "vw)," + (p * 88).toFixed(1) + "vh,0)";
             }
-            sections.forEach(function (sec) {
-              var r = sec.getBoundingClientRect();
-              if (r.bottom < -320 || r.top > vh + 320) { return; }
-              var delta = (r.top + r.height / 2) - vh / 2;
-              var py = Math.max(-110, Math.min(110, -delta * 0.16));
-              sec.style.setProperty("--py", py.toFixed(1) + "px");
+            measured.forEach(function (sec) {
+              var top = sec.top - y;
+              if (top + sec.height < -320 || top > vh + 320) { return; }
+              var delta = (top + sec.height / 2) - vh / 2;
+              var py = Math.max(-110, Math.min(110, -delta * 0.16)).toFixed(1);
+              if (sec.lastPy !== py) { sec.lastPy = py; sec.el.style.setProperty("--py", py + "px"); }
             });
           }
           function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+          function onResize() { measure(); onScroll(); }
           window.addEventListener("scroll", onScroll, { passive: true });
-          window.addEventListener("resize", onScroll, { passive: true });
+          window.addEventListener("resize", onResize, { passive: true });
+          measure();
           update();
         })();
 
@@ -690,16 +671,29 @@ function initHome() {
             heroWallVideos.forEach(function (v) { v.preload = "metadata"; v.removeAttribute("autoplay"); v.pause(); });
           } else {
             var heroEl = document.querySelector(".hero");
+            var wallOnScreen = false;
             var playWall = function () { attachWall(); heroWallVideos.forEach(function (v) { var pr = v.play(); if (pr) { pr.catch(function () {}); } }); };
             var pauseWall = function () { heroWallVideos.forEach(function (v) { v.pause(); }); };
             if (heroEl && "IntersectionObserver" in window) {
               var heroIO = new IntersectionObserver(function (entries) {
-                entries.forEach(function (en) { if (en.isIntersecting) { playWall(); } else { pauseWall(); } });
+                entries.forEach(function (en) {
+                  wallOnScreen = !!en.isIntersecting;
+                  if (en.isIntersecting) { playWall(); } else { pauseWall(); }
+                });
               }, { threshold: 0.02 });
               heroIO.observe(heroEl);
             } else {
+              wallOnScreen = true;
               playWall();
             }
+            /* A hidden tab should not keep decoding 76 videos either:
+               pause the wall while the page is hidden, and resume on
+               return if the hero is on screen. */
+            document.addEventListener("visibilitychange", function () {
+              if (!document.getElementById("c1sRoot")) { return; }
+              if (document.hidden) { pauseWall(); }
+              else if (wallOnScreen) { playWall(); }
+            });
           }
         }
       
