@@ -1,6 +1,5 @@
 // Homepage markup, ported one to one from the approved rebrand preview.
 // Rendered by app/page.tsx and wired up by app/components/HomeClient.tsx.
-import { BRAND_CAPCUT, BRAND_ELEVENLABS, BRAND_HIGGSFIELD, CAL1STAR_LOGO, CAPCUT_WORLD_1, CAPCUT_WORLD_2, CAPCUT_WORLD_3, CE_LOGO, EDITING_101_CLEAN } from "./home-assets";
 
 export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
     <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
@@ -14,7 +13,7 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
 
     <header class="nav">
       <div class="wrap nav-inner">
-        <a class="wordmark" href="#top" aria-label="Cal1star Editing, home" data-popup="Back to top" data-popup-pos="bottom"><img src="${CE_LOGO}" alt="Cal1star Editing" /></a>
+        <a class="wordmark" href="#top" aria-label="Cal1star Editing, home" data-popup="Back to top" data-popup-pos="bottom"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="ce" alt="Cal1star Editing" /></a>
         <nav class="links" aria-label="Site">
           <a href="#top" data-popup="Home" data-popup-pos="bottom">Home</a>
           <a href="#about" data-popup="About me" data-popup-pos="bottom">About</a>
@@ -36,100 +35,100 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
           <div class="hero-row hero-row--right">
             <div class="hero-row-track">
               <div class="hero-row-set">
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve15.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema1.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve14.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/yt/epidemicsound.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve13.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema2.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve12.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/VideoStar5.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema3.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve11.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/yt/invideocollab.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve10.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema4.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve15.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema1.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve14.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/yt/epidemicsound.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve13.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema2.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve12.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/VideoStar5.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema3.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve11.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/yt/invideocollab.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve10.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema4.mp4" tabindex="-1"></video>
               </div>
               <div class="hero-row-set">
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve15.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema1.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve14.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/yt/epidemicsound.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve13.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema2.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve12.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/VideoStar5.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema3.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve11.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/yt/invideocollab.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve10.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema4.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve15.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema1.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve14.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/yt/epidemicsound.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve13.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema2.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve12.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/VideoStar5.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema3.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve11.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/yt/invideocollab.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve10.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema4.mp4" tabindex="-1"></video>
               </div>
             </div>
           </div>
           <div class="hero-row hero-row--left">
             <div class="hero-row-track">
               <div class="hero-row-set">
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve9.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema5.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve6.mov" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/yt/captions2collab.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve7.mov" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema6.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve8.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/VideoStar4.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema7.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve5.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/yt/invideotutorial.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve4.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema8.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve9.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema5.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve6.mov" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/yt/captions2collab.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve7.mov" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema6.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve8.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/VideoStar4.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema7.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve5.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/yt/invideotutorial.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve4.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema8.mp4" tabindex="-1"></video>
               </div>
               <div class="hero-row-set">
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve9.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema5.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve6.mov" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/yt/captions2collab.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve7.mov" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema6.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve8.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/VideoStar4.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema7.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve5.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/yt/invideotutorial.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve4.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema8.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve9.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema5.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve6.mov" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/yt/captions2collab.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve7.mov" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema6.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve8.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/VideoStar4.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema7.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve5.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/yt/invideotutorial.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve4.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema8.mp4" tabindex="-1"></video>
               </div>
             </div>
           </div>
           <div class="hero-row hero-row--right">
             <div class="hero-row-track">
               <div class="hero-row-set">
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve3.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema9.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve2.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/VideoStar3.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema10.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve1.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/VideoStar2.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema11.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/VideoStar1.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema12.MP4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema13.MOV" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema14.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve3.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema9.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve2.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/VideoStar3.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema10.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve1.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/VideoStar2.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema11.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/VideoStar1.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema12.MP4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema13.MOV" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema14.mp4" tabindex="-1"></video>
               </div>
               <div class="hero-row-set">
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve3.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema9.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve2.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/VideoStar3.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema10.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/ve1.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/VideoStar2.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema11.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/ve/VideoStar1.mp4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema12.MP4" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema13.MOV" tabindex="-1"></video>
-                <video autoplay muted loop playsinline preload="metadata" src="/media/cinema/cinema14.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve3.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema9.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve2.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/VideoStar3.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema10.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/ve1.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/VideoStar2.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema11.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/ve/VideoStar1.mp4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema12.MP4" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema13.MOV" tabindex="-1"></video>
+                <video autoplay muted loop playsinline preload="none" data-src="/media/cinema/cinema14.mp4" tabindex="-1"></video>
               </div>
             </div>
           </div>
@@ -138,7 +137,7 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
         <div class="wrap hero-grid">
           <div>
             <p class="label">Est. 2026</p>
-            <h1><img class="hero-logo" src="${CAL1STAR_LOGO}" alt="Cal1star Editing" /></h1>
+            <h1><img class="hero-logo" src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="cal" alt="Cal1star Editing" /></h1>
             <p class="tagline">Video editing at its finest.</p>
             <p class="sub">Everything I make lives here: the tutorials, the transitions and the brand work you see on @cal1star, now in one brighter place.</p>
             <div class="btn-row">
@@ -212,9 +211,9 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
           </div>
           <div class="stack-zone">
             <button class="stack" id="photoStack" type="button" aria-label="Flip through Calista photos">
-              <span class="stack-card"><img src="${CAPCUT_WORLD_2}" alt="Calista holding a CapCut sign inside the big frame at the CapCut World event" draggable="false" /></span>
-              <span class="stack-card" aria-hidden="true"><img src="${CAPCUT_WORLD_1}" alt="" draggable="false" /></span>
-              <span class="stack-card" aria-hidden="true"><img src="${CAPCUT_WORLD_3}" alt="" draggable="false" /></span>
+              <span class="stack-card"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="capcut2" alt="Calista holding a CapCut sign inside the big frame at the CapCut World event" draggable="false" /></span>
+              <span class="stack-card" aria-hidden="true"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="capcut1" alt="" draggable="false" /></span>
+              <span class="stack-card" aria-hidden="true"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="capcut3" alt="" draggable="false" /></span>
             </button>
           </div>
         </div>
@@ -232,36 +231,36 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
               <span class="brand-slot"><img src="/logos/portfolio17.png" alt="Mirage" /></span>
               <span class="brand-slot"><img src="/logos/portfolio18.png" alt="Insta360" /></span>
               <span class="brand-slot"><img src="/logos/portfolio15.png" alt="Epidemic Sound" /></span>
-              <span class="brand-slot"><img src="${BRAND_HIGGSFIELD}" alt="Higgsfield" /></span>
-              <span class="brand-slot"><img src="${BRAND_CAPCUT}" alt="CapCut" /></span>
-              <span class="brand-slot"><img src="${BRAND_ELEVENLABS}" alt="ElevenLabs" /></span>
+              <span class="brand-slot"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="brand-higgsfield" alt="Higgsfield" /></span>
+              <span class="brand-slot"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="brand-capcut" alt="CapCut" /></span>
+              <span class="brand-slot"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="brand-elevenlabs" alt="ElevenLabs" /></span>
             </div>
             <div class="brand-set" aria-hidden="true">
               <span class="brand-slot"><img src="/logos/portfolio16.png" alt="" /></span>
               <span class="brand-slot"><img src="/logos/portfolio17.png" alt="" /></span>
               <span class="brand-slot"><img src="/logos/portfolio18.png" alt="" /></span>
               <span class="brand-slot"><img src="/logos/portfolio15.png" alt="" /></span>
-              <span class="brand-slot"><img src="${BRAND_HIGGSFIELD}" alt="" /></span>
-              <span class="brand-slot"><img src="${BRAND_CAPCUT}" alt="" /></span>
-              <span class="brand-slot"><img src="${BRAND_ELEVENLABS}" alt="" /></span>
+              <span class="brand-slot"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="brand-higgsfield" alt="" /></span>
+              <span class="brand-slot"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="brand-capcut" alt="" /></span>
+              <span class="brand-slot"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="brand-elevenlabs" alt="" /></span>
             </div>
             <div class="brand-set" aria-hidden="true">
               <span class="brand-slot"><img src="/logos/portfolio16.png" alt="" /></span>
               <span class="brand-slot"><img src="/logos/portfolio17.png" alt="" /></span>
               <span class="brand-slot"><img src="/logos/portfolio18.png" alt="" /></span>
               <span class="brand-slot"><img src="/logos/portfolio15.png" alt="" /></span>
-              <span class="brand-slot"><img src="${BRAND_HIGGSFIELD}" alt="" /></span>
-              <span class="brand-slot"><img src="${BRAND_CAPCUT}" alt="" /></span>
-              <span class="brand-slot"><img src="${BRAND_ELEVENLABS}" alt="" /></span>
+              <span class="brand-slot"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="brand-higgsfield" alt="" /></span>
+              <span class="brand-slot"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="brand-capcut" alt="" /></span>
+              <span class="brand-slot"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="brand-elevenlabs" alt="" /></span>
             </div>
             <div class="brand-set" aria-hidden="true">
               <span class="brand-slot"><img src="/logos/portfolio16.png" alt="" /></span>
               <span class="brand-slot"><img src="/logos/portfolio17.png" alt="" /></span>
               <span class="brand-slot"><img src="/logos/portfolio18.png" alt="" /></span>
               <span class="brand-slot"><img src="/logos/portfolio15.png" alt="" /></span>
-              <span class="brand-slot"><img src="${BRAND_HIGGSFIELD}" alt="" /></span>
-              <span class="brand-slot"><img src="${BRAND_CAPCUT}" alt="" /></span>
-              <span class="brand-slot"><img src="${BRAND_ELEVENLABS}" alt="" /></span>
+              <span class="brand-slot"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="brand-higgsfield" alt="" /></span>
+              <span class="brand-slot"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="brand-capcut" alt="" /></span>
+              <span class="brand-slot"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="brand-elevenlabs" alt="" /></span>
             </div>
           </div>
         </div>
@@ -343,7 +342,7 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
       <section class="course" id="course">
         <div class="wrap">
           <p class="label" data-reveal>New &middot; A beginner course by @cal1star</p>
-          <h2 style="margin: 0; --reveal-delay: .06s" data-reveal><img class="course-logo" src="${EDITING_101_CLEAN}" alt="Editing 101: made easy" /></h2>
+          <h2 style="margin: 0; --reveal-delay: .06s" data-reveal><img class="course-logo" src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="editing101" alt="Editing 101: made easy" /></h2>
           <p class="course-copy" data-reveal style="--reveal-delay: .12s">Editing changed my life, and I want to make it feel easy for you. I&rsquo;ll walk you through CapCut first, then DaVinci Resolve, then the fun stuff: the effects and transitions you see in my videos. No experience needed, just come as you are.</p>
           <img class="first-line-img" data-reveal style="--reveal-delay: .18s" src="/course/be-first-in-line.png" alt="Be first in line!" />
           <form class="waitlist" id="waitlistForm" novalidate data-reveal style="--reveal-delay: .24s">
@@ -380,7 +379,7 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
       <div class="wrap">
         <div class="foot-grid">
           <div data-reveal>
-            <img class="foot-logo" src="${CAL1STAR_LOGO}" alt="Cal1star Editing" />
+            <img class="foot-logo" src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="cal" alt="Cal1star Editing" />
             <p class="tagline">For partnerships, tutorials or just to say hi, you can find me on Instagram at @cal1star.</p>
             <div class="btn-row" style="margin-top: 26px;">
               <a class="btn btn-light" href="/course" target="_blank" rel="noopener">Join the waitlist</a>

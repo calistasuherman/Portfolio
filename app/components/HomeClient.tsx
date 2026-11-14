@@ -1,7 +1,7 @@
 // @ts-nocheck
 "use client";
 import { useEffect } from "react";
-import { BOOTZY_FONT_SRC } from "../home-assets";
+import { BRAND_CAPCUT, BRAND_ELEVENLABS, BRAND_HIGGSFIELD, CAL1STAR_LOGO, CAPCUT_WORLD_1, CAPCUT_WORLD_2, CAPCUT_WORLD_3, CE_LOGO, EDITING_101_CLEAN } from "../home-assets";
 
 /* Homepage behaviours, ported from the approved preview's page script:
    follower milestone, the simulated Michael Jackson mini player, the photo
@@ -13,12 +13,6 @@ import { BOOTZY_FONT_SRC } from "../home-assets";
    here can leak into the other pages. */
 export default function HomeClient() {
   useEffect(() => {
-    try {
-      if ("FontFace" in window && document.fonts && document.fonts.add) {
-        var face = new FontFace("BootzyTM", 'url("' + BOOTZY_FONT_SRC + '") format("truetype")', { weight: "400", style: "normal" });
-        face.load().then(function (loaded) { document.fonts.add(loaded); }).catch(function () {});
-      }
-    } catch (e) { /* the @font-face rule in home.css still applies */ }
     initHome();
   }, []);
   return null;
@@ -27,6 +21,22 @@ export default function HomeClient() {
 function initHome() {
 
         "use strict";
+
+        /* ---------- image assets: assigned from this bundle on mount ----------
+           The markup ships a 1px placeholder in each <img data-asset> so the
+           multi hundred KB of image data stays out of the HTML document
+           (where the server render plus flight payload shipped it twice)
+           and arrives once, in this cacheable JS file. */
+        var ASSET_SRC = {
+          "ce": CE_LOGO, "cal": CAL1STAR_LOGO,
+          "capcut1": CAPCUT_WORLD_1, "capcut2": CAPCUT_WORLD_2, "capcut3": CAPCUT_WORLD_3,
+          "brand-higgsfield": BRAND_HIGGSFIELD, "brand-capcut": BRAND_CAPCUT, "brand-elevenlabs": BRAND_ELEVENLABS,
+          "editing101": EDITING_101_CLEAN
+        };
+        document.querySelectorAll("img[data-asset]").forEach(function (img) {
+          var real = ASSET_SRC[img.getAttribute("data-asset")];
+          if (real) { img.src = real; }
+        });
 
         /* ---------- follower count: milestone label from the one SITE DATA value ---------- */
         var followerData = window.CAL1STAR_DATA || { instagramFollowers: 0 };
@@ -647,11 +657,21 @@ function initHome() {
         var heroWallVideos = document.querySelectorAll(".hero-video-wall video");
         if (heroWallVideos.length) {
           var heroReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          /* Lazy attach: the markup carries data-src and preload="none", so
+             none of the 76 clips fetch anything until the wall is actually
+             started here; files then stream exactly as before. */
+          var attachWall = function () {
+            heroWallVideos.forEach(function (v) {
+              var s = v.getAttribute("data-src");
+              if (s && !v.getAttribute("src")) { v.src = s; }
+            });
+          };
           if (heroReduced) {
-            heroWallVideos.forEach(function (v) { v.removeAttribute("autoplay"); v.pause(); });
+            attachWall();
+            heroWallVideos.forEach(function (v) { v.preload = "metadata"; v.removeAttribute("autoplay"); v.pause(); });
           } else {
             var heroEl = document.querySelector(".hero");
-            var playWall = function () { heroWallVideos.forEach(function (v) { var pr = v.play(); if (pr) { pr.catch(function () {}); } }); };
+            var playWall = function () { attachWall(); heroWallVideos.forEach(function (v) { var pr = v.play(); if (pr) { pr.catch(function () {}); } }); };
             var pauseWall = function () { heroWallVideos.forEach(function (v) { v.pause(); }); };
             if (heroEl && "IntersectionObserver" in window) {
               var heroIO = new IntersectionObserver(function (entries) {
