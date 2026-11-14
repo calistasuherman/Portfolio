@@ -396,9 +396,9 @@
 .c1s .vinyl:hover .vinyl-sleeve, .c1s .vinyl:focus-visible .vinyl-sleeve { transform: translateX(-13%) rotate(-10deg); box-shadow: 0 28px 60px rgba(0, 0, 0, 0.65); }
 .c1s .vinyl-sleeve img { width: 100%; height: 100%; object-fit: cover; }
 .c1s .sleeve-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 20px 14px; color: #111111; }
-.c1s .sleeve-idx { font-size: 12px; font-weight: 700; letter-spacing: 0.22em; color: #000000; }
-.c1s .sleeve-name { font-family: var(--font-display); font-size: clamp(25px, 2.6vw, 32px); font-weight: 400; font-style: normal; font-synthesis: none; letter-spacing: 0.02em; line-height: 1.05; }
-.c1s .sleeve-explore { font-size: 10.5px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #111111; opacity: 0.72; }
+.c1s .sleeve-idx { font-size: 9.6px; font-weight: 700; letter-spacing: 0.22em; color: #000000; }
+.c1s .sleeve-name { font-family: var(--font-display); font-size: clamp(20px, 2.08vw, 25.6px); font-weight: 400; font-style: normal; font-synthesis: none; letter-spacing: 0.02em; line-height: 1.05; }
+.c1s .sleeve-explore { font-size: 8.4px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #111111; opacity: 0.72; }
 .c1s .work-back { background: none; border: none; color: var(--on-dark-muted); font-family: var(--font); font-size: 12px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; padding: 10px 4px; min-height: 44px; }
 .c1s .work-back:hover { color: #ffffff; }
 .c1s .work-detail-head { text-align: center; margin: var(--gap-sm) auto var(--gap-md); max-width: 640px; }
