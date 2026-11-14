@@ -110,7 +110,7 @@ function WaitlistForm({ center = false, tone = "dark" }: { center?: boolean; ton
         <img src={busy ? "/course/btn-joining.svg" : "/course/btn-join.svg"} alt={busy ? "Joining…" : "Join the waitlist"} style={{ display: "block", height: "0.8rem", width: "auto" }} />
       </button>
       {error && (
-        <p role="alert" style={{ flexBasis: "100%", margin: 0, fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontWeight: 300, fontSize: "0.8rem", color: light ? "#9c7410" : "#e9cf87", textAlign: center ? "center" : "left" }}>
+        <p role="alert" style={{ flexBasis: "100%", margin: 0, fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontWeight: 300, fontSize: "0.8rem", color: light ? "#161616" : "#d9d9d9", textAlign: center ? "center" : "left" }}>
           {error}
         </p>
       )}
@@ -166,7 +166,7 @@ function SongVinyl() {
         style={{
           width: "100%", height: "100%", display: "block",
           animation: "vinylSpin 6s linear infinite",
-          filter: playing ? "drop-shadow(0 0 60px rgba(201,151,28,0.55))" : "drop-shadow(0 20px 60px rgba(0,0,0,0.35))",
+          filter: playing ? "drop-shadow(0 0 60px rgba(255,255,255,0.55))" : "drop-shadow(0 20px 60px rgba(0,0,0,0.35))",
           transition: "filter 0.4s ease",
           willChange: "transform",
         }}
@@ -179,8 +179,8 @@ function SongVinyl() {
             <circle key={`hl${i}`} cx={r} cy={r} r={r * k} fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="1.1"
               strokeDasharray={`${r * k * 0.5} ${r * k * 5.8}`} strokeDashoffset={r * k * i * 1.3} strokeLinecap="round"/>
           ))}
-          <circle cx={r} cy={r} r={r * 0.29} fill="#c9971c"/>
-          <circle cx={r} cy={r} r={r * 0.25} fill="#c9971c" opacity="0.85"/>
+          <circle cx={r} cy={r} r={r * 0.29} fill="#e8e8e8"/>
+          <circle cx={r} cy={r} r={r * 0.25} fill="#e8e8e8" opacity="0.85"/>
           {([-r*0.09, r*0.02, r*0.12] as number[]).map((dy, i) => <line key={i} x1={r - r*0.18} y1={r+dy} x2={r + r*0.18} y2={r+dy} stroke="rgba(255,255,255,0.28)" strokeWidth={i===0?0.9:0.6}/>)}
           <circle cx={r} cy={r} r={r * 0.045} fill="#000"/>
         </>); })()}
@@ -217,7 +217,7 @@ function SongVinyl() {
                 display: "flex", alignItems: "center", gap: "0.6rem",
                 width: "100%", textAlign: "left",
                 padding: "0.45rem 0.6rem",
-                background: active ? "rgba(201,151,28,0.35)" : "transparent",
+                background: active ? "rgba(255,255,255,0.35)" : "transparent",
                 border: "none", borderRadius: "8px",
                 color: "#f5f0f0", cursor: "pointer",
                 fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.72rem", letterSpacing: "0.03em",
@@ -285,7 +285,7 @@ export default function CoursePage() {
   const pad = "clamp(1.8rem, 5vw, 5rem)";
 
   return (
-    <main className="relative min-h-screen overflow-x-clip" style={{ background: "#f6eeda", color: INK }}>
+    <main className="relative min-h-screen overflow-x-clip" style={{ background: "transparent", color: INK }}>
 
       {/* ── Hero: her artwork and the waitlist form at the very top, held in one deep panel
            so the light lettering artwork keeps the dark setting it was made for ── */}
@@ -342,7 +342,7 @@ export default function CoursePage() {
           <div style={{ marginTop: "2rem", display: "flex", flexDirection: "column" }}>
             {LEARN_ITEMS.map((item, i) => (
               <div key={item.h} style={{ display: "flex", gap: "1.4rem", padding: "1.3rem 0", borderBottom: i < LEARN_ITEMS.length - 1 ? "1px solid rgba(22,22,22,0.12)" : "none", alignItems: "baseline" }}>
-                <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "1.1rem", color: "#9c7410", margin: 0, minWidth: "2rem" }}>{String(i + 1).padStart(2, "0")}</p>
+                <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "1.1rem", color: "#161616", margin: 0, minWidth: "2rem" }}>{String(i + 1).padStart(2, "0")}</p>
                 <div>
                   <p style={{ fontFamily: H_FONT, fontSize: "1rem", fontWeight: 600, color: INK, margin: 0 }}>{item.h}</p>
                   <p style={{ fontFamily: H_FONT, fontWeight: 300, fontSize: "0.9rem", color: MUTED, lineHeight: 1.8, marginTop: "0.35rem", maxWidth: "34rem" }}>{item.p}</p>

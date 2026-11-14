@@ -68,10 +68,10 @@ const SMALL_LABEL: React.CSSProperties = {
   color: FAINT,
 };
 
-/* Section heading in the one type system: Helvetica Neue, bold, with a soft gold offset shadow */
+/* Section heading in the one type system: Helvetica Neue, bold, with a soft gray offset shadow */
 function SectionTitle({ first, rest, size = "clamp(2.4rem, 5vw, 4.2rem)" }: { first: string; rest: string; size?: string }) {
   return (
-    <h2 style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontWeight: 700, fontSize: size, color: INK, letterSpacing: "-0.01em", lineHeight: 1.05, margin: 0, textShadow: "0.045em 0.045em 0 rgba(201,151,28,0.30)" }}>
+    <h2 style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontWeight: 700, fontSize: size, color: INK, letterSpacing: "-0.01em", lineHeight: 1.05, margin: 0, textShadow: "0.045em 0.045em 0 rgba(17,17,17,0.30)" }}>
       {first}{rest}
     </h2>
   );
@@ -233,7 +233,7 @@ function MusicSection() {
                     display: "flex", alignItems: "center", gap: "0.8rem",
                     width: "100%", textAlign: "left",
                     padding: "0.7rem 0.9rem",
-                    background: active ? "rgba(201,151,28,0.08)" : "transparent",
+                    background: active ? "rgba(17,17,17,0.08)" : "transparent",
                     border: "none", borderRadius: "8px",
                     color: INK, cursor: "pointer",
                     fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.85rem", letterSpacing: "0.03em",
@@ -242,7 +242,7 @@ function MusicSection() {
                   onMouseEnter={e => { if (!active) e.currentTarget.style.background = "rgba(22,22,22,0.05)"; }}
                   onMouseLeave={e => { if (!active) e.currentTarget.style.background = "transparent"; }}
                 >
-                  <span style={{ width: "0.8rem", fontSize: "0.6rem", color: "#9c7410" }}>{active ? "❚❚" : "▶"}</span>
+                  <span style={{ width: "0.8rem", fontSize: "0.6rem", color: "#161616" }}>{active ? "❚❚" : "▶"}</span>
                   <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.title}</span>
                   <span style={{ marginLeft: "auto", fontSize: "0.7rem", color: FAINT, whiteSpace: "nowrap" }}>{s.artist}</span>
                 </button>
@@ -267,11 +267,17 @@ export default function Home() {
   const pad = "clamp(1.5rem, 6vw, 5rem)";
 
   return (
-    <main className="relative min-h-screen overflow-x-clip" style={{ background: "#f6eeda" }}>
+    <main className="relative min-h-screen overflow-x-clip" style={{ background: "transparent" }}>
 
       {/* ── Hero ── */}
       <section className="relative flex items-center px-6 pt-32 pb-20 overflow-hidden" style={{ minHeight: "92vh" }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto", width: "100%", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 26rem), 1fr))", gap: "clamp(2.5rem, 6vw, 6rem)", alignItems: "center" }}>
+        {/* Her edits montage playing in the background, as on her live site */}
+        <video autoPlay muted loop playsInline preload="auto" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}>
+          <source src={`${MEDIA_BASE}/background/pg1.mp4`} type="video/mp4" />
+        </video>
+        {/* Soft white ombre over the video, so the black logo and text stay easy to read */}
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(100deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.66) 46%, rgba(255,255,255,0.30) 100%)" }} />
+        <div style={{ position: "relative", zIndex: 1, maxWidth: "1200px", margin: "0 auto", width: "100%" }}>
 
           <div>
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative" }}>
@@ -289,7 +295,7 @@ export default function Home() {
             </div>
 
             <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.8s", marginTop: "2.2rem", display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-              <a href="/work" className="inline-block px-8 py-3 uppercase text-[10px] tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#c9971c", color: "#161616", borderRadius: "2px", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+              <a href="/work" className="inline-block px-8 py-3 uppercase text-[10px] tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#161616", color: "#ffffff", borderRadius: "2px", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 Watch my work
               </a>
               <a href="/course" className="inline-block px-8 py-3 uppercase text-[10px] tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95" style={{ border: `1px solid rgba(22,22,22,0.35)`, color: INK, borderRadius: "2px", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
@@ -298,17 +304,10 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Hero clip, with her vinyl resting at the corner at a modest size */}
-          <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.45s", position: "relative" }}>
-            <div style={{ borderRadius: "14px", overflow: "hidden", boxShadow: "0 24px 60px rgba(22,22,22,0.22)" }}>
-              <video autoPlay muted loop playsInline preload="auto" style={{ width: "100%", aspectRatio: "4/3", objectFit: "cover", display: "block" }}>
-                <source src={`${MEDIA_BASE}/background/pg1.mp4`} type="video/mp4" />
-              </video>
-            </div>
-            <img src="/vinyl.png" alt="" style={{ position: "absolute", left: "-26px", bottom: "-26px", width: "104px", height: "104px", objectFit: "contain", animation: "vinylSpin 8s linear infinite", filter: "drop-shadow(0 10px 24px rgba(22,22,22,0.3))" }} />
-          </div>
-
         </div>
+
+        {/* Her vinyl, tucked away as one small quiet detail in the corner of the cover */}
+        <img src="/vinyl.png" alt="" style={{ position: "absolute", right: "1.4rem", bottom: "1.4rem", width: "54px", height: "54px", objectFit: "contain", opacity: 0.85, animation: "vinylSpin 14s linear infinite", filter: "drop-shadow(0 6px 14px rgba(22,22,22,0.25))", zIndex: 1 }} />
       </section>
 
       {/* ── Proof strip ── */}
@@ -385,7 +384,7 @@ export default function Home() {
           </div>
           <RevealToggle>
             <div style={{ marginTop: "2.2rem" }}>
-              <a href="/contact" className="inline-block px-8 py-3 uppercase text-[10px] tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#c9971c", color: "#161616", borderRadius: "2px", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+              <a href="/contact" className="inline-block px-8 py-3 uppercase text-[10px] tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#161616", color: "#ffffff", borderRadius: "2px", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
                 Work with me
               </a>
             </div>
@@ -403,7 +402,7 @@ export default function Home() {
           <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontWeight: 300, fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)", color: MUTED, maxWidth: "34rem", margin: "0 auto 2.25rem", lineHeight: 1.75 }}>
             Never edited before? I&apos;ll take you from CapCut to DaVinci Resolve to the effects and transitions you see in my videos.
           </p>
-          <a href="/course" className="inline-block uppercase transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#c9971c", color: "#161616", borderRadius: "2px", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.72rem", letterSpacing: "0.2em", padding: "0.95rem 2.2rem" }}>
+          <a href="/course" className="inline-block uppercase transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#161616", color: "#ffffff", borderRadius: "2px", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.72rem", letterSpacing: "0.2em", padding: "0.95rem 2.2rem" }}>
             Join the waitlist →
           </a>
           <div style={{ marginTop: "1.5rem" }}>

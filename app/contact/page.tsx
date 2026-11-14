@@ -84,9 +84,9 @@ export default function ContactPage() {
               }}
               onMouseEnter={e => {
                 const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = "#c9971c";
-                el.style.borderColor = "#c9971c";
-                el.style.color = "#161616";
+                el.style.background = "#161616";
+                el.style.borderColor = "#161616";
+                el.style.color = "#ffffff";
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLAnchorElement;
@@ -154,7 +154,7 @@ export default function ContactPage() {
 
       <footer
         className="section-content relative py-8 text-center"
-        style={{ zIndex: 2, borderTop: "1px solid rgba(201,151,28,0.15)" }}
+        style={{ zIndex: 2, borderTop: "1px solid rgba(255,255,255,0.15)" }}
       >
         <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
           @2026 CAL1STAR EDITING.&nbsp;&nbsp;PSALM 46:5

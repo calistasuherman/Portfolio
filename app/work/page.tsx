@@ -50,7 +50,7 @@ const TUTORIAL_VIDEOS = [
 /* ── Vinyl data ── */
 const VINYL_DATA = [
   { label: "Video Editing", href: "video-editing", idx: "01", sleeve: "#0a0a0a", accent: "#d4cfc8", labelBg: "#454545" },
-  { label: "Videography",   href: "videography",   idx: "02", sleeve: "#101010", accent: "#c9971c", labelBg: "#262626" },
+  { label: "Videography",   href: "videography",   idx: "02", sleeve: "#101010", accent: "#e8e8e8", labelBg: "#262626" },
   { label: "Partnerships",  href: "partnerships",  idx: "03", sleeve: "#101010", accent: "#c8a84b", labelBg: "#262626" },
 ];
 
@@ -119,8 +119,8 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay, onSelect }: { v: typeof 
             {(() => { const r = DISC / 2; const grooves = Array.from({ length: 24 }, (_, i) => r * 0.3 + (r * 0.62) * (i / 24)); return (<>
               <circle cx={r} cy={r} r={r} fill="#090909"/>
               {grooves.map((gr, i) => <circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"} strokeWidth="0.55"/>)}
-              <circle cx={r} cy={r} r={r * 0.29} fill="#c9971c"/>
-              <circle cx={r} cy={r} r={r * 0.25} fill="#c9971c" opacity="0.85"/>
+              <circle cx={r} cy={r} r={r * 0.29} fill="#e8e8e8"/>
+              <circle cx={r} cy={r} r={r * 0.25} fill="#e8e8e8" opacity="0.85"/>
               {([-r*0.09, r*0.02, r*0.12] as number[]).map((dy, i) => <line key={i} x1={r - r*0.18} y1={r+dy} x2={r + r*0.18} y2={r+dy} stroke="rgba(255,255,255,0.28)" strokeWidth={i===0?0.9:0.6}/>)}
               <circle cx={r} cy={r} r={r * 0.045} fill="#000"/>
             </>); })()}
@@ -143,13 +143,13 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay, onSelect }: { v: typeof 
           />
           {/* Text: idx top, label center, explore bottom */}
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", textAlign: "center", padding: "1rem" }}>
-            <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.52rem", letterSpacing: "0.18em", color: "#c9971c", fontWeight: 700 }}>
+            <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.52rem", letterSpacing: "0.18em", color: "#e8e8e8", fontWeight: 700 }}>
               {v.idx}
             </span>
-            <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "2rem", color: "#c9971c", lineHeight: 1.0, fontWeight: 700, whiteSpace: "nowrap" }}>
+            <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "2rem", color: "#e8e8e8", lineHeight: 1.0, fontWeight: 700, whiteSpace: "nowrap" }}>
               {v.label}
             </p>
-            <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.44rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#c9971c", fontWeight: 600 }}>
+            <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.44rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#e8e8e8", fontWeight: 600 }}>
               click to explore ↓
             </span>
           </div>
@@ -173,8 +173,8 @@ function MobileVinylCard({ v, delay, onSelect }: { v: typeof VINYL_DATA[0]; dela
         <svg width={D} height={D} viewBox={`0 0 ${D} ${D}`} style={{ display: "block", animation: "vinylSpin 6s linear infinite" }}>
           <circle cx={r} cy={r} r={r} fill="#090909"/>
           {grooves.map((gr, i) => <circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"} strokeWidth="0.55"/>)}
-          <circle cx={r} cy={r} r={r * 0.29} fill="#c9971c"/>
-          <circle cx={r} cy={r} r={r * 0.25} fill="#c9971c" opacity="0.85"/>
+          <circle cx={r} cy={r} r={r * 0.29} fill="#e8e8e8"/>
+          <circle cx={r} cy={r} r={r * 0.25} fill="#e8e8e8" opacity="0.85"/>
           {([-r*0.09, r*0.02, r*0.12] as number[]).map((dy, i) => <line key={i} x1={r - r*0.18} y1={r+dy} x2={r + r*0.18} y2={r+dy} stroke="rgba(255,255,255,0.28)" strokeWidth={i===0?0.9:0.6}/>)}
           <circle cx={r} cy={r} r={r * 0.045} fill="#000"/>
         </svg>
@@ -184,9 +184,9 @@ function MobileVinylCard({ v, delay, onSelect }: { v: typeof VINYL_DATA[0]; dela
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/vinyl-sleeve.png" alt="" draggable={false} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", textAlign: "center", padding: "0.6rem" }}>
-          <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.44rem", letterSpacing: "0.18em", color: "#c9971c", fontWeight: 700 }}>{v.idx}</span>
-          <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "1.05rem", color: "#c9971c", lineHeight: 1.05, fontWeight: 700 }}>{v.label}</p>
-          <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.38rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#c9971c", fontWeight: 600 }}>tap to explore</span>
+          <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.44rem", letterSpacing: "0.18em", color: "#e8e8e8", fontWeight: 700 }}>{v.idx}</span>
+          <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "1.05rem", color: "#e8e8e8", lineHeight: 1.05, fontWeight: 700 }}>{v.label}</p>
+          <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.38rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#e8e8e8", fontWeight: 600 }}>tap to explore</span>
         </div>
       </div>
     </div>
@@ -321,7 +321,7 @@ function CinemaShowcase({ videos }: { videos: { src: string }[] }) {
       <div style={{
         display: "flex", height: "clamp(300px, 36vw, 460px)", maxWidth: "1100px", margin: "0 auto",
         overflowX: "auto", overflowY: "hidden", scrollSnapType: "x proximity",
-        borderRadius: "6px", border: "1px solid rgba(201,151,28,0.4)", boxShadow: "0 20px 60px rgba(0,0,0,0.8)",
+        borderRadius: "6px", border: "1px solid rgba(230,230,230,0.4)", boxShadow: "0 20px 60px rgba(0,0,0,0.8)",
       }}>
         {videos.map(({ src }, i) => (
           <CinemaClip key={src} src={src} idx={i} onClick={() => setLightbox(src)} />
@@ -587,7 +587,7 @@ export default function WorkPage() {
         </section>
       )}
 
-      <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(201,151,28,0.2)" }}>
+      <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(230,230,230,0.2)" }}>
         <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
           @2026 CAL1STAR EDITING.&nbsp;&nbsp;PSALM 46:5
         </p>
