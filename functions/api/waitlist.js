@@ -1,12 +1,66 @@
 // Course waitlist signup. The browser posts here (same site).
 //
 // Signups are stored on the site itself, in the Cloudflare KV namespace bound
-// to this Pages project as WAITLIST. Calista views/downloads the list at
-// /api/signups?key=<SIGNUPS_KEY>.
+// to this Pages project as WAITLIST. Calista views and downloads the list at
+// /api/signups (that address needs the SIGNUPS_KEY value in it).
 //
-// Until the WAITLIST binding exists, signups fall back to the old Kit form so
-// the page never breaks.
-const KIT_FORM_ID = "10021620";
+// Each signup now also goes to Kit, into the Newsletter site form with the
+// Course Waitlist tag, so the course launch emails can be sent from Kit. The
+// Kit step uses the Kit API and the same three calls the Kit connection uses:
+// create the subscriber, join the form, apply the tag. The API key is read
+// from the KIT_API_KEY secret on this Pages project. Until that secret is
+// added, the Kit step is skipped and signups still save on the site as before,
+// so the page never breaks.
+//
+// Until the WAITLIST binding exists, signups fall back to the old public Kit
+// form post so the page never breaks.
+const LEGACY_KIT_FORM_ID = "10021620";
+const KIT_FORM_ID = "10158402";
+const KIT_TAG_ID = "25846583";
+const KIT_API_BASE = "https://api.kit.com/v4";
+
+async function addToKit(email, apiKey) {
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "X-Kit-Api-Key": apiKey,
+  };
+  const created = await fetch(KIT_API_BASE + "/subscribers", {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ email_address: email, state: "active" }),
+  });
+  if (!created.ok) {
+    console.log("Kit subscriber create failed", created.status, (await created.text()).slice(0, 300));
+    return false;
+  }
+  const payload = await created.json().catch(() => ({}));
+  const subscriberId = payload && payload.subscriber ? payload.subscriber.id : null;
+  if (!subscriberId) {
+    console.log("Kit subscriber create gave no subscriber id");
+    return false;
+  }
+  const joins = await Promise.all([
+    fetch(KIT_API_BASE + "/forms/" + KIT_FORM_ID + "/subscribers", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ subscriber_id: subscriberId }),
+    }),
+    fetch(KIT_API_BASE + "/tags/" + KIT_TAG_ID + "/subscribers", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ subscriber_id: subscriberId }),
+    }),
+  ]);
+  let allOk = true;
+  for (const res of joins) {
+    if (!res.ok) {
+      allOk = false;
+      console.log("Kit form or tag join failed", res.status, (await res.text()).slice(0, 300));
+    }
+  }
+  return allOk;
+}
 
 export async function onRequestPost({ request, env }) {
   let email = "";
@@ -18,6 +72,7 @@ export async function onRequestPost({ request, env }) {
     return Response.json({ ok: false, error: "Please enter a valid email." }, { status: 400 });
   }
 
+  let stored = false;
   if (env.WAITLIST) {
     const key = "email:" + email.toLowerCase();
     const existing = await env.WAITLIST.get(key);
@@ -31,10 +86,23 @@ export async function onRequestPost({ request, env }) {
         })
       );
     }
+    stored = true;
+  }
+
+  let kitDone = false;
+  if (env.KIT_API_KEY) {
+    try {
+      kitDone = await addToKit(email, env.KIT_API_KEY);
+    } catch (err) {
+      console.log("Kit sync failed", String(err).slice(0, 300));
+    }
+  }
+
+  if (stored || kitDone) {
     return Response.json({ ok: true, confirm: false });
   }
 
-  const upstream = await fetch(`https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`, {
+  const upstream = await fetch(`https://app.kit.com/forms/${LEGACY_KIT_FORM_ID}/subscriptions`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" },
     body: new URLSearchParams({ email_address: email }),
