@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { MEDIA_BASE } from "./lib/media";
+import { SONGS, playSong, getAudio, currentTrack } from "./components/GlobalUI";
 
 /* ── Re-triggering reveal (home page only) ──
    Unlike the shared Reveal component, this toggles visibility every time
@@ -54,6 +55,43 @@ function RevealToggle({
   );
 }
 
+/* ── Shared bits ── */
+const INK = "#1c1713";
+const MUTED = "rgba(28,23,19,0.62)";
+const FAINT = "rgba(28,23,19,0.45)";
+const SMALL_LABEL: React.CSSProperties = {
+  fontFamily: "'HelvLight', var(--font-inter)",
+  fontSize: "0.58rem",
+  letterSpacing: "0.22em",
+  textTransform: "uppercase",
+  color: FAINT,
+};
+
+/* Section heading in her signature lettering: script first letter, condensed rest.
+   The layered shadow art stays, in quiet ink and a whisper of red. */
+function SectionTitle({ first, rest, size = "clamp(2.4rem, 5vw, 4.2rem)" }: { first: string; rest: string; size?: string }) {
+  const layers = [
+    { color: "rgba(150,0,24,0.13)", dx: 3 },
+    { color: "rgba(28,23,19,0.10)", dx: 6 },
+  ];
+  const inner = (color: string) => (
+    <>
+      <span style={{ fontFamily: "BillaMount, cursive", fontSize: size, color }}>{first}</span>
+      <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: `calc(${size} * 0.72)`, color, letterSpacing: "0.04em" }}>{rest}</span>
+    </>
+  );
+  return (
+    <div className="leading-none" style={{ position: "relative" }} suppressHydrationWarning>
+      {layers.map((l, i) => (
+        <div key={i} aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, transform: `translate(${l.dx}px, ${l.dx}px)`, pointerEvents: "none", whiteSpace: "nowrap" }}>
+          {inner(l.color)}
+        </div>
+      ))}
+      <h2 style={{ fontWeight: "normal", position: "relative", margin: 0 }}>{inner(INK)}</h2>
+    </div>
+  );
+}
+
 /* ── Data ── */
 const LABELS = ["Content Creator", "World Traveler", "Woman of God", "Coffee Connoisseur", "Gen Z (21 Y/O)", "Fashion Lover"];
 
@@ -63,6 +101,15 @@ const FEATURED = [
   { src: `${MEDIA_BASE}/yt/invideocollab.mp4`, tag: "Partnerships" },
 ];
 
+const STATS = [
+  { n: "60K+",  t: "Instagram followers" },
+  { n: "5.1M",  t: "Reel views" },
+  { n: "400K",  t: "Interactions" },
+  { n: "62K",   t: "Profile visits" },
+];
+
+const BRAND_NAMES = ["CapCut", "Insta360", "Epidemic Sound", "Invideo", "Captions"];
+
 const LOGO_SCALE: Record<number, number> = { 15: 0.6, 17: 2, 18: 0.45 };
 const LOGO_IDS = [15, 16, 17, 18];
 const LOGOS = LOGO_IDS.map(id => ({
@@ -70,22 +117,18 @@ const LOGOS = LOGO_IDS.map(id => ({
   scale: LOGO_SCALE[id] ?? 1,
 }));
 
-const TOOLS = [
+const EDIT_TOOLS = [
+  { src: "/apps/cc.png",     label: "CapCut"          },
   { src: "/apps/dr.png",     label: "DaVinci Resolve" },
   { src: "/apps/fcp.png",    label: "Final Cut Pro"   },
   { src: "/apps/vs.png",     label: "Video Star"      },
-  { src: "/apps/cc.png",     label: "CapCut"          },
   { src: "/apps/c.png",      label: "Canva"           },
-  { src: "/apps/claude.png", label: "Claude"          },
+];
+const WORKFLOW_TOOLS = [
+  { src: "/apps/claude.png", label: "Claude" },
 ];
 
 const STACK_PHOTOS = ["/c1.jpg","/c2.jpg","/c3.jpg","/c4.jpg","/c5.jpg","/c6.jpg","/c7.jpg"];
-const PHOTO_OFFSETS = [
-  { rotate: 0, tx: 0, ty: 0 }, { rotate: -3, tx: -8, ty: 0 },
-  { rotate: 5, tx: 10, ty: 0 }, { rotate: -6, tx: -14, ty: 0 },
-  { rotate: 3, tx: 6, ty: 0 }, { rotate: -4, tx: -10, ty: 0 },
-  { rotate: 7, tx: 12, ty: 0 },
-];
 
 /* ── Components ── */
 
@@ -107,7 +150,7 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
       href="/work"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ display: "block", position: "relative", aspectRatio: "16/9", overflow: "hidden", borderRadius: "4px", textDecoration: "none" }}
+      style={{ display: "block", position: "relative", aspectRatio: "16/9", overflow: "hidden", borderRadius: "10px", textDecoration: "none" }}
     >
       <video
         ref={videoRef}
@@ -124,72 +167,112 @@ function FeaturedCard({ src, tag }: { src: string; tag: string }) {
         transition: "background 0.5s ease",
       }} />
       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.2rem 1rem" }}>
-        <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.7)" }}>{tag}</p>
+        <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.7)", margin: 0 }}>{tag}</p>
       </div>
     </a>
   );
 }
 
-function HeroNameText() {
+function HeroNameText({ color }: { color: string }) {
   return (
     <>
-      <span style={{ fontFamily: "BillaMount, cursive" }}>Cal1star</span>{" "}
-      <span style={{ fontFamily: "BillaMount, cursive", display: "inline-block", marginLeft: "-0.18em" }}>Editing</span>
+      <span style={{ fontFamily: "BillaMount, cursive", color }}>Cal1star</span>{" "}
+      <span style={{ fontFamily: "BillaMount, cursive", color, display: "inline-block", marginLeft: "-0.18em" }}>Editing</span>
     </>
   );
 }
 
-function FlipPhoto() {
-  const [order, setOrder] = useState(STACK_PHOTOS.map((_, i) => i));
+function ToolGroup({ title, tools, small = false }: { title: string; tools: typeof EDIT_TOOLS; small?: boolean }) {
   return (
-    <div style={{ position: "relative", width: "clamp(270px, 30vw, 420px)", height: "clamp(340px, 38vw, 540px)", transform: "scale(0.85)" }}>
-      {order.map((photoIdx, stackPos) => {
-        const off = PHOTO_OFFSETS[stackPos] ?? PHOTO_OFFSETS[PHOTO_OFFSETS.length - 1];
-        const isTop = stackPos === 0;
-        return (
-          <div
-            key={photoIdx}
-            onClick={isTop ? () => setOrder(prev => { const n = [...prev]; n.push(n.shift()!); return n; }) : undefined}
-            style={{
-              position: "absolute", inset: 0,
-              transform: `translate(${off.tx}px,${off.ty}px) rotate(${off.rotate}deg)`,
-              transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
-              zIndex: order.length - stackPos,
-              cursor: isTop ? "pointer" : "default",
-              borderRadius: "12px", overflow: "hidden",
-              boxShadow: "0 4px 14px rgba(0,0,0,0.45)",
-            }}
-          >
-            <img
-              src={STACK_PHOTOS[photoIdx]} alt="" draggable={false}
-              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block", userSelect: "none", pointerEvents: "none" }}
-            />
-          </div>
-        );
-      })}
+    <div style={{ textAlign: "center" }}>
+      <p style={{ ...SMALL_LABEL, marginBottom: "1.6rem" }}>{title}</p>
+      <div className="toolkit-row" style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: "clamp(1.2rem, 4vw, 3.5rem)" }}>
+        {tools.map(({ src, label }, i) => (
+          <RevealToggle key={label} direction="left" delay={i * 90}>
+            <div style={{ textAlign: "center", width: small ? "clamp(52px, 7vw, 76px)" : "clamp(64px, 9vw, 100px)" }}>
+              <img src={src} alt={label} style={{ width: "100%", display: "block", borderRadius: "22%" }} />
+              <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "clamp(0.52rem, 0.75vw, 0.68rem)", color: MUTED, letterSpacing: "0.05em", marginTop: "0.4rem" }}>{label}</p>
+            </div>
+          </RevealToggle>
+        ))}
+      </div>
     </div>
   );
 }
 
-function ToolkitSection() {
+/* The music section: her six songs in one tidy home, played by the same player as the rest of the site */
+function MusicSection() {
+  const [playing, setPlaying] = useState(false);
+  const [track, setTrack] = useState(0);
+
+  useEffect(() => {
+    const audio = getAudio();
+    if (!audio) return;
+    const sync = () => { setPlaying(!audio.paused); setTrack(currentTrack()); };
+    sync();
+    audio.addEventListener("play", sync);
+    audio.addEventListener("pause", sync);
+    window.addEventListener("cal1star:track", sync);
+    return () => {
+      audio.removeEventListener("play", sync);
+      audio.removeEventListener("pause", sync);
+      window.removeEventListener("cal1star:track", sync);
+    };
+  }, []);
+
+  function pick(i: number) {
+    const audio = getAudio();
+    if (!audio) return;
+    if (i === track) {
+      if (audio.paused) audio.play().catch(() => {}); else audio.pause();
+    } else {
+      playSong(i);
+    }
+  }
+
   return (
-    <section className="relative" style={{ paddingTop: "7rem", paddingBottom: "6rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <div style={{ maxWidth: "900px", width: "100%", padding: "0 2rem", textAlign: "center" }}>
+    <section style={{ padding: "6rem clamp(1.5rem, 6vw, 5rem)" }}>
+      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
         <RevealToggle>
-          <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 3.8vw, 3.8rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "4.5rem" }}>
-            My Toolkit
+          <div style={{ display: "flex", alignItems: "center", gap: "1.6rem", marginBottom: "2.2rem" }}>
+            <img src="/vinyl.png" alt="" style={{ width: "84px", height: "84px", objectFit: "contain", animation: "vinylSpin 9s linear infinite", flexShrink: 0 }} />
+            <div>
+              <SectionTitle first="M" rest="usic" size="clamp(2rem, 4vw, 3.2rem)" />
+              <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.85rem", color: MUTED, lineHeight: 1.7, marginTop: "0.6rem" }}>
+                Six songs I love. Press play and the little player in the corner travels with you.
+              </p>
+            </div>
           </div>
         </RevealToggle>
-        <div className="toolkit-row" style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: "clamp(1.2rem, 4vw, 3.5rem)" }}>
-          {TOOLS.map(({ src, label }, i) => (
-            <RevealToggle key={label} direction="left" delay={i * 90}>
-              <div style={{ textAlign: "center", width: "clamp(64px, 9vw, 100px)" }}>
-                <img src={src} alt={label} style={{ width: "100%", display: "block", borderRadius: "22%" }} />
-                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "clamp(0.52rem, 0.75vw, 0.68rem)", color: "rgba(245,240,240,0.55)", letterSpacing: "0.05em", marginTop: "0.4rem" }}>{label}</p>
-              </div>
-            </RevealToggle>
-          ))}
-        </div>
+        <RevealToggle>
+          <div className="stat-card" style={{ padding: "0.6rem" }}>
+            {SONGS.map((s, i) => {
+              const active = i === track && playing;
+              return (
+                <button
+                  key={s.title}
+                  onClick={() => pick(i)}
+                  style={{
+                    display: "flex", alignItems: "center", gap: "0.8rem",
+                    width: "100%", textAlign: "left",
+                    padding: "0.7rem 0.9rem",
+                    background: active ? "rgba(150,0,24,0.08)" : "transparent",
+                    border: "none", borderRadius: "8px",
+                    color: INK, cursor: "pointer",
+                    fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.85rem", letterSpacing: "0.03em",
+                    transition: "background 0.2s",
+                  }}
+                  onMouseEnter={e => { if (!active) e.currentTarget.style.background = "rgba(28,23,19,0.05)"; }}
+                  onMouseLeave={e => { if (!active) e.currentTarget.style.background = "transparent"; }}
+                >
+                  <span style={{ width: "0.8rem", fontSize: "0.6rem", color: "#960018" }}>{active ? "❚❚" : "▶"}</span>
+                  <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.title}</span>
+                  <span style={{ marginLeft: "auto", fontSize: "0.7rem", color: FAINT, whiteSpace: "nowrap" }}>{s.artist}</span>
+                </button>
+              );
+            })}
+          </div>
+        </RevealToggle>
       </div>
     </section>
   );
@@ -204,95 +287,226 @@ export default function Home() {
     return () => clearTimeout(t);
   }, []);
 
+  const pad = "clamp(1.5rem, 6vw, 5rem)";
+
   return (
-    <main className="relative min-h-screen overflow-x-clip">
+    <main className="relative min-h-screen overflow-x-clip" style={{ background: "#f7f4ee" }}>
 
       {/* ── Hero ── */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 overflow-hidden" style={{ background: "#0a0000" }}>
-        <video autoPlay muted loop playsInline preload="auto"
-          className="absolute inset-0 w-full h-full object-cover" style={{ zIndex: 0 }}>
-          <source src={`${MEDIA_BASE}/background/pg1.mp4`} type="video/mp4" />
-        </video>
+      <section className="relative flex items-center px-6 pt-32 pb-20 overflow-hidden" style={{ minHeight: "92vh" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", width: "100%", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 26rem), 1fr))", gap: "clamp(2.5rem, 6vw, 6rem)", alignItems: "center" }}>
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center pt-16" style={{ zIndex: 3 }}>
-          {/* Name block */}
-          <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative", textAlign: "center" }}>
-            <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "1rem", marginTop: "-4rem", position: "relative", zIndex: 2 }}>est. 2026</p>
-            <div style={{ position: "relative" }} suppressHydrationWarning>
-              <div aria-hidden="true" className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(3px, 3px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}><HeroNameText /></div>
-              <div aria-hidden="true" className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#000000", lineHeight: 1.15, position: "absolute", top: 0, left: 0, opacity: 0.12, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}><HeroNameText /></div>
-              <div className="hero-name" style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", color: "#6b0016", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}><HeroNameText /></div>
+          <div>
+            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.2s", position: "relative" }}>
+              <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "clamp(0.55rem, 1vw, 0.75rem)", letterSpacing: "0.3em", textTransform: "uppercase", color: FAINT, marginBottom: "1rem" }}>est. 2026</p>
+              <div style={{ position: "relative" }} suppressHydrationWarning>
+                <div aria-hidden="true" className="hero-name" style={{ fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", lineHeight: 1.15, position: "absolute", top: 0, left: 0, transform: "translate(3px, 3px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}><HeroNameText color="rgba(150,0,24,0.16)" /></div>
+                <div aria-hidden="true" className="hero-name" style={{ fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", lineHeight: 1.15, position: "absolute", top: 0, left: 0, transform: "translate(6px, 6px)", whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.05em" }}><HeroNameText color="rgba(28,23,19,0.10)" /></div>
+                <div className="hero-name" style={{ fontSize: "clamp(4rem, 8vw, 7rem)", fontWeight: "normal", lineHeight: 1.15, position: "relative", whiteSpace: "nowrap", letterSpacing: "0.05em" }}><HeroNameText color={INK} /></div>
+              </div>
+            </div>
+
+            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.5rem" }}>
+              <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: "italic", color: INK, fontSize: "clamp(1.3rem, 2.2vw, 1.8rem)", lineHeight: 1.3 }}>Video editing at its finest.</p>
+              <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontWeight: 300, color: MUTED, fontSize: "clamp(0.9rem, 1.15vw, 1rem)", lineHeight: 1.8, marginTop: "0.9rem", maxWidth: "30rem" }}>
+                I edit short form videos for brands, and I teach beginners how to edit in CapCut and DaVinci Resolve.
+              </p>
+            </div>
+
+            <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.8s", marginTop: "2.2rem", display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+              <a href="/work" className="inline-block px-8 py-3 uppercase text-white text-[10px] tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", borderRadius: "2px", fontFamily: "'HelvLight', var(--font-inter)" }}>
+                Watch my work
+              </a>
+              <a href="/course" className="inline-block px-8 py-3 uppercase text-[10px] tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95" style={{ border: `1px solid rgba(28,23,19,0.35)`, color: INK, borderRadius: "2px", fontFamily: "'HelvLight', var(--font-inter)" }}>
+                Join Editing 101
+              </a>
             </div>
           </div>
 
-          {/* Tagline */}
-          <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.55s", marginTop: "1.75rem", textAlign: "center", position: "relative", zIndex: 2 }}>
-            <p style={{ fontFamily: "'HelvLight', var(--font-inter)", color: "rgba(245,240,240,0.6)", fontSize: "clamp(0.55rem, 0.85vw, 0.72rem)", letterSpacing: "0.18em" }}>{"Video editing at its finest."}</p>
+          {/* Hero clip, with her vinyl resting at the corner at a modest size */}
+          <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.45s", position: "relative" }}>
+            <div style={{ borderRadius: "14px", overflow: "hidden", boxShadow: "0 24px 60px rgba(28,23,19,0.22)" }}>
+              <video autoPlay muted loop playsInline preload="auto" style={{ width: "100%", aspectRatio: "4/3", objectFit: "cover", display: "block" }}>
+                <source src={`${MEDIA_BASE}/background/pg1.mp4`} type="video/mp4" />
+              </video>
+            </div>
+            <img src="/vinyl.png" alt="" style={{ position: "absolute", left: "-26px", bottom: "-26px", width: "104px", height: "104px", objectFit: "contain", animation: "vinylSpin 8s linear infinite", filter: "drop-shadow(0 10px 24px rgba(28,23,19,0.3))" }} />
           </div>
-        </div>
 
-        {/* Buttons */}
-        <div className={`hero-item${heroVisible ? " hero-visible" : ""}`} style={{ transitionDelay: "0.8s", position: "absolute", bottom: "clamp(2.5rem, 6vh, 5rem)", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "1rem", zIndex: 3 }}>
-          <a href="/work" className="inline-block px-8 py-3 rounded-none border border-text-muted text-text-muted text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 hover:border-text-primary hover:text-text-primary active:scale-95" style={{ fontFamily: "'HelvLight', var(--font-inter)" }}>
-            explore my work
-          </a>
-          <a href="/contact" className="inline-block px-8 py-3 rounded-none text-[10px] uppercase tracking-[0.2em] text-bg transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "rgba(232,228,224,0.92)", fontFamily: "'HelvLight', var(--font-inter)" }}>
-            work with me
-          </a>
         </div>
       </section>
 
-      {/* ── About ── */}
-      <section id="about" className="section-content relative pb-10 md:pb-14 px-6 md:px-16 lg:px-32" style={{ paddingTop: "1.5rem", backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "cover", backgroundPosition: "center 15%", backgroundAttachment: "fixed" }}>
-        <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
-
-          <RevealToggle className="order-1" direction="left">
-            <div className="leading-none" style={{ position: "relative", marginTop: "2rem", marginBottom: "1.2rem" }} suppressHydrationWarning>
-              <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, opacity: 0.18, transform: "translate(3px, 3px)", pointerEvents: "none", letterSpacing: "0.05em", color: "#000000" }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal" }}>A</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)", fontWeight: "normal" }}>bout me</span>
-              </div>
-              <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, opacity: 0.12, transform: "translate(6px, 6px)", pointerEvents: "none", letterSpacing: "0.05em", color: "#000000" }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)", fontWeight: "normal" }}>A</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)", fontWeight: "normal" }}>bout me</span>
-              </div>
-              <h2 style={{ fontWeight: "normal", color: "#f5f0f0", letterSpacing: "0.05em", position: "relative" }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)" }}>A</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)" }}>bout me</span>
-              </h2>
-            </div>
-            <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", color: "rgba(245,240,240,0.5)", letterSpacing: "0.05em" }}>
-              @cal1star &nbsp;|&nbsp; 20K+ Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
+      {/* ── Proof strip ── */}
+      <section style={{ padding: `0 ${pad} 5.5rem` }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem" }}>
+            {STATS.map((s, i) => (
+              <RevealToggle key={s.t} delay={i * 90}>
+                <div className="stat-card" style={{ padding: "1.4rem 1.2rem", textAlign: "center" }}>
+                  <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.7rem, 3vw, 2.4rem)", color: INK, lineHeight: 1, margin: 0 }}>{s.n}</p>
+                  <p style={{ ...SMALL_LABEL, marginTop: "0.55rem" }}>{s.t}</p>
+                </div>
+              </RevealToggle>
+            ))}
+          </div>
+          <RevealToggle>
+            <p style={{ textAlign: "center", fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.8rem", letterSpacing: "0.14em", color: MUTED, marginTop: "1.6rem" }}>
+              {BRAND_NAMES.join("  ·  ")}
             </p>
-            <p className="font-inter text-text-muted" style={{ fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", lineHeight: 1.85, textShadow: "0 2px 12px rgba(0,0,0,0.55)", fontWeight: 400 }}>
+          </RevealToggle>
+        </div>
+      </section>
+
+      {/* ── Selected Work ── */}
+      <section style={{ padding: `1rem ${pad} 6rem` }}>
+        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+          <RevealToggle>
+            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: "1px solid rgba(28,23,19,0.14)", paddingBottom: "1.2rem", marginBottom: "2.5rem" }}>
+              <SectionTitle first="S" rest="elected Work" />
+              <a href="/work" style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: FAINT, textDecoration: "none", transition: "color 0.3s ease", whiteSpace: "nowrap" }}
+                onMouseEnter={e => (e.currentTarget.style.color = INK)}
+                onMouseLeave={e => (e.currentTarget.style.color = FAINT)}
+              >View all →</a>
+            </div>
+          </RevealToggle>
+          <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: FAINT, marginBottom: "1rem", textAlign: "center" }}>
+            hover a frame to preview · click to watch
+          </p>
+          <div className="mobile-1col" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem" }}>
+            {FEATURED.map((item, i) => (
+              <RevealToggle key={item.src} delay={i * 110}>
+                <FeaturedCard {...item} />
+              </RevealToggle>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Divider: the record store photo, one clean moment with no words on it ── */}
+      <div aria-hidden="true" style={{ height: "clamp(220px, 38vh, 380px)", backgroundImage: "url('/background/record-store.jpg')", backgroundSize: "cover", backgroundPosition: "center 40%" }} />
+
+      {/* ── For brands ── */}
+      <section style={{ padding: `6rem ${pad}` }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <RevealToggle>
+            <SectionTitle first="F" rest="or brands" />
+            <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontWeight: 300, fontSize: "0.95rem", color: MUTED, lineHeight: 1.8, marginTop: "1rem", maxWidth: "34rem" }}>
+              Three ways to work with me, all made the same way I make my own videos.
+            </p>
+          </RevealToggle>
+          <div className="mobile-1col" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", marginTop: "2.5rem" }}>
+            {[
+              { h: "Sponsored Reels", p: "A dedicated Reel planned with you from the first idea to the final cut, made to feel at home on my page." },
+              { h: "Tutorials and templates", p: "Step by step tutorials and ready to use templates from my own edits, sold in my Gumroad store." },
+              { h: "Working together", p: "Script approval before I film, two rounds of changes, and an ad code for your campaign. Reels start at 1,000 dollars." },
+            ].map((c, i) => (
+              <RevealToggle key={c.h} delay={i * 110}>
+                <div className="service-card" style={{ padding: "1.8rem 1.6rem", height: "100%", boxSizing: "border-box" }}>
+                  <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "1.35rem", color: INK, letterSpacing: "0.03em", margin: 0 }}>{c.h}</p>
+                  <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontWeight: 300, fontSize: "0.88rem", color: MUTED, lineHeight: 1.8, marginTop: "0.8rem" }}>{c.p}</p>
+                </div>
+              </RevealToggle>
+            ))}
+          </div>
+          <RevealToggle>
+            <div style={{ marginTop: "2.2rem" }}>
+              <a href="/contact" className="inline-block px-8 py-3 uppercase text-white text-[10px] tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", borderRadius: "2px", fontFamily: "'HelvLight', var(--font-inter)" }}>
+                Work with me
+              </a>
+            </div>
+          </RevealToggle>
+        </div>
+      </section>
+
+      {/* ── Course teaser ── */}
+      <section style={{ padding: `5.5rem ${pad}`, textAlign: "center", borderTop: "1px solid rgba(28,23,19,0.1)" }}>
+        <RevealToggle>
+          <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.25em", textTransform: "uppercase", color: FAINT, marginBottom: "1.75rem" }}>New · A beginner course by me</p>
+          <h2 style={{ fontWeight: "normal", color: INK, fontSize: "clamp(3rem, 7vw, 6.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.45em", whiteSpace: "nowrap", margin: 0 }}>
+            <span style={{ fontFamily: "BillaMount, cursive", display: "inline-block", marginLeft: "-0.18em" }}>Editing</span>
+            <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
+          </h2>
+          <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)", color: MUTED, maxWidth: "34rem", margin: "0 auto 2.25rem", lineHeight: 1.75 }}>
+            Never edited before? I&apos;ll take you from CapCut to DaVinci Resolve to the effects and transitions you see in my videos.
+          </p>
+          <a href="/course" className="inline-block uppercase text-white transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", borderRadius: "2px", fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.2em", padding: "0.95rem 2.2rem" }}>
+            Join the waitlist →
+          </a>
+          <div style={{ marginTop: "1.5rem" }}>
+            <a href="https://cal1starediting.gumroad.com" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: MUTED, textDecoration: "none", borderBottom: "1px solid rgba(28,23,19,0.25)", paddingBottom: "0.2rem", transition: "color 0.3s ease" }}
+              onMouseEnter={e => (e.currentTarget.style.color = INK)}
+              onMouseLeave={e => (e.currentTarget.style.color = MUTED)}
+            >
+              Or browse my Gumroad store →
+            </a>
+          </div>
+        </RevealToggle>
+      </section>
+
+      {/* ── About ── */}
+      <section id="about" className="section-content relative px-6 md:px-16 lg:px-32" style={{ paddingTop: "5.5rem", paddingBottom: "5.5rem", borderTop: "1px solid rgba(28,23,19,0.1)" }}>
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <RevealToggle direction="left">
+            <SectionTitle first="A" rest="bout me" size="clamp(2.8rem, 6.5vw, 6rem)" />
+            <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginTop: "1.2rem", color: FAINT, letterSpacing: "0.05em" }}>
+              @cal1star &nbsp;|&nbsp; 60K+ Instagram, 4K+ YouTube &nbsp;|&nbsp; San Francisco, CA
+            </p>
+            <p className="font-inter" style={{ fontSize: "clamp(0.85rem, 1.15vw, 1rem)", marginTop: "1.2rem", lineHeight: 1.85, color: MUTED, fontWeight: 300, maxWidth: "36rem" }}>
               Hi! I&apos;m Calista, your friendly neighborhood video editor/videographer, and I&apos;m thrilled you&apos;ve found your way to my corner of the internet.
             </p>
-            <div className="font-inter" style={{ fontSize: "clamp(0.55rem, 0.9vw, 0.72rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", display: "flex", gap: "2rem", color: "#e8e4e0" }}>
-              {[0, 1].map(col => (
-                <div key={col} style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
-                  {LABELS.filter((_, i) => i % 2 === col).map(label => (
-                    <p key={label} style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 400, whiteSpace: "nowrap" }}>{label}</p>
-                  ))}
+          </RevealToggle>
+
+          {/* All six labels, gathered into one tidy group */}
+          <RevealToggle>
+            <div className="stat-card" style={{ marginTop: "2.5rem", padding: "1.4rem 1.6rem" }}>
+              <p style={{ ...SMALL_LABEL, marginBottom: "0.9rem" }}>A few things about me</p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.7rem 2.2rem" }}>
+                {LABELS.map(label => (
+                  <p key={label} className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.9vw, 0.75rem)", letterSpacing: "0.06em", textTransform: "uppercase", color: INK, margin: 0, whiteSpace: "nowrap" }}>{label}</p>
+                ))}
+              </div>
+            </div>
+          </RevealToggle>
+
+          {/* All seven photos in one even grid */}
+          <RevealToggle>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0.8rem", marginTop: "2.5rem" }}>
+              {STACK_PHOTOS.map(src => (
+                <div key={src} style={{ borderRadius: "10px", overflow: "hidden", aspectRatio: "3/4" }}>
+                  <img src={src} alt="" draggable={false} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block", userSelect: "none" }} />
                 </div>
               ))}
             </div>
           </RevealToggle>
+        </div>
+      </section>
 
-          <div className="order-2 flex justify-center" style={{ marginTop: "1rem" }}>
-            <RevealToggle direction="right" delay={200}>
-              <FlipPhoto />
-            </RevealToggle>
+      {/* ── Divider: the second background photo, one clean moment with no words on it ── */}
+      <div aria-hidden="true" style={{ height: "clamp(220px, 38vh, 380px)", backgroundImage: "url('/background/pg2.jpg')", backgroundSize: "cover", backgroundPosition: "center 15%" }} />
+
+      {/* ── Toolkit, sorted into two labeled groups ── */}
+      <section className="relative" style={{ paddingTop: "6rem", paddingBottom: "2rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={{ maxWidth: "900px", width: "100%", padding: "0 2rem", textAlign: "center" }}>
+          <RevealToggle>
+            <div style={{ marginBottom: "3.5rem", display: "flex", justifyContent: "center" }}>
+              <SectionTitle first="M" rest="y Toolkit" size="clamp(2rem, 3.8vw, 3.4rem)" />
+            </div>
+          </RevealToggle>
+          <ToolGroup title="Editing tools" tools={EDIT_TOOLS} />
+          <div style={{ marginTop: "3.5rem" }}>
+            <ToolGroup title="Workflow helpers" tools={WORKFLOW_TOOLS} small />
           </div>
         </div>
       </section>
 
-      {/* ── Trusted By ── */}
-      <section className="section-content relative py-6 overflow-hidden">
-        <p className="text-center font-inter uppercase tracking-[0.25em] text-text-muted opacity-60" style={{ fontSize: "13px", marginTop: "0.5rem" }}>Trusted by</p>
-      </section>
+      {/* ── Music, in one home of its own ── */}
+      <MusicSection />
 
-      {/* ── Portfolio Strip ── */}
-      <section className="section-content relative py-1 overflow-hidden" style={{ marginTop: "-1.5rem" }}>
+      {/* ── Trusted by, in its one spot above the footer ── */}
+      <section className="section-content relative py-6 overflow-hidden">
+        <p className="text-center font-inter uppercase tracking-[0.25em]" style={{ fontSize: "13px", color: FAINT, marginTop: "0.5rem" }}>Trusted by</p>
+      </section>
+      <section className="section-content relative py-1 overflow-hidden">
         <div style={{ overflow: "hidden", maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}>
           <div style={{ display: "flex", animation: "marquee 36s linear infinite", whiteSpace: "nowrap", width: "max-content", alignItems: "center" }}>
             {Array.from({ length: 12 }, () => LOGOS).flat().map(({ src, scale }, i) => (
@@ -306,67 +520,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Course teaser ── */}
-      <section style={{ minHeight: "70vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "5.5rem clamp(1.5rem, 6vw, 5rem)", textAlign: "center" }}>
-        <RevealToggle>
-          <div style={{ position: "relative", top: "-1.5rem" }}>
-          <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "clamp(0.65rem, 0.9vw, 0.8rem)", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", marginBottom: "1.75rem" }}>New · A beginner course by me</p>
-          <h2 style={{ fontWeight: "normal", color: "#f5f0f0", fontSize: "clamp(3rem, 7vw, 6.5rem)", lineHeight: 1.1, padding: "0.9em 0 0.45em", whiteSpace: "nowrap" }}>
-            <span style={{ fontFamily: "BillaMount, cursive", display: "inline-block", marginLeft: "-0.18em" }}>Editing</span>
-            <span style={{ fontFamily: "var(--font-melodrama)", fontSize: "0.8em", marginLeft: "0.3em" }}>101</span>
-          </h2>
-          <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)", color: "rgba(245,240,240,0.78)", maxWidth: "34rem", margin: "0 auto 2.25rem", lineHeight: 1.75 }}>
-            Never edited before? I&apos;ll take you from CapCut to DaVinci Resolve to the effects and transitions you see in my videos.
-          </p>
-          <a href="/course" className="inline-block rounded-none uppercase text-white transition-all duration-300 hover:scale-105 active:scale-95" style={{ background: "#960018", fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.2em", padding: "0.95rem 2.2rem" }}>
-            Join the waitlist →
-          </a>
-          <div style={{ marginTop: "1.5rem" }}>
-            <a href="https://cal1starediting.gumroad.com" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(245,240,240,0.55)", textDecoration: "none", borderBottom: "1px solid rgba(245,240,240,0.25)", paddingBottom: "0.2rem", transition: "color 0.3s ease" }}
-              onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.95)")}
-              onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.55)")}
-            >
-              Or browse my Gumroad store →
-            </a>
-          </div>
-          </div>
-        </RevealToggle>
-      </section>
-
-      {/* ── Selected Work ── */}
-      <section style={{ position: "relative", padding: "7rem clamp(1.5rem, 6vw, 5rem)", backgroundImage: "linear-gradient(rgba(10,0,0,0.55), rgba(10,0,0,0.7)), url('/background/record-store.jpg')", backgroundSize: "cover", backgroundPosition: "center 40%", backgroundAttachment: "fixed" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-          <RevealToggle>
-            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: "1px solid rgba(245,240,240,0.1)", paddingBottom: "1.2rem", marginBottom: "2.5rem" }}>
-              <span>
-                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", fontWeight: "normal" }}>S</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.4rem, 2.8vw, 2.5rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.04em" }}>elected Work</span>
-              </span>
-              <a href="/work" style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.4)", textDecoration: "none", transition: "color 0.3s ease" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.85)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(245,240,240,0.4)")}
-              >View all →</a>
-            </div>
-          </RevealToggle>
-          <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
-            hover a frame to preview · click to watch
-          </p>
-          <div className="mobile-1col" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem" }}>
-            {FEATURED.map((item, i) => (
-              <RevealToggle key={item.src} delay={i * 110}>
-                <FeaturedCard {...item} />
-              </RevealToggle>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Editing Toolkit ── */}
-      <ToolkitSection />
-
       {/* ── Footer ── */}
-      <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
-        <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
+      <footer className="section-content py-10 text-center" style={{ borderTop: "1px solid rgba(28,23,19,0.14)", marginTop: "3rem" }}>
+        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "1rem 2.4rem", marginBottom: "1.4rem" }}>
+          <a href="mailto:cal1starpartnerships@gmail.com" style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.1em", color: MUTED, textDecoration: "none" }}>cal1starpartnerships@gmail.com</a>
+          {([
+            ["Instagram", "https://instagram.com/cal1star"],
+            ["YouTube", "https://www.youtube.com/@cal1stvr"],
+            ["TikTok", "https://www.tiktok.com/@cal1star"],
+          ] as [string, string][]).map(([label, href]) => (
+            <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.1em", color: MUTED, textDecoration: "none" }}>{label}</a>
+          ))}
+        </div>
+        <p className="font-inter" style={{ fontSize: "0.65rem", letterSpacing: "0.18em", color: FAINT, margin: 0 }}>
           @2026 CAL1STAR EDITING.&nbsp;&nbsp;PSALM 46:5
         </p>
       </footer>
