@@ -205,7 +205,7 @@
 .c1s .hero-grid > div { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
 .c1s .hero h1 { margin: 8px 0 16px; line-height: 0; text-align: center; }
 .c1s .hero-logo { width: min(520px, 100%); height: auto; filter: invert(1); margin: 0 auto; }
-.c1s .hero .tagline { font-family: var(--font-display); font-size: clamp(24px, 3vw, 32px); font-weight: 400; font-synthesis: none; letter-spacing: 0.02em; line-height: 1.15; color: var(--on-dark); margin: 0 0 12px; text-align: center; }
+.c1s .hero .tagline { font-family: var(--font-display); font-size: clamp(19px, 2.2vw, 24px); font-weight: 400; font-synthesis: none; letter-spacing: 0.02em; line-height: 1.15; color: var(--on-dark); margin: 0 0 32px; text-align: center; }
 .c1s .hero .sub { color: var(--on-dark-muted); max-width: 52ch; margin: 0 auto 32px; font-weight: 400; font-size: 18px; line-height: 1.5; text-align: center; }
 .c1s .hero .btn-row { justify-content: center; }
 .c1s .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -438,6 +438,7 @@
 .c1s .work-grid--wide .work-card .frame { aspect-ratio: 16 / 9; }
 .c1s .work-card .frame .play { opacity: 0.92; }
 .c1s .work-card .frame .tag { font-size: 11px; letter-spacing: 0.14em; max-width: calc(100% - 28px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.c1s .work-card .frame .tag--dot-only { width: 7px; height: 7px; padding: 0; }
 .c1s .work-card-label { margin: 10px 2px 0; font-size: 13.5px; font-weight: 600; color: var(--on-dark); line-height: 1.35; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .c1s .work-card-label span { display: block; font-size: 12px; font-weight: 400; color: var(--on-dark-muted); }
 .c1s .work-sub-head { text-align: center; margin: var(--gap-lg) auto var(--gap-md); max-width: 640px; }
@@ -466,18 +467,19 @@
 .c1s .gumroad-link { display: inline-block; margin-top: 26px; font-size: 14px; font-weight: 500; letter-spacing: -0.01em; text-transform: none; text-underline-offset: 5px; padding: 10px 4px; }
 .c1s .launch-line { margin-top: 34px; font-size: 14px; letter-spacing: -0.01em; text-transform: none; color: var(--on-dark-muted); font-weight: 400; }
 .c1s .launch-line b { color: var(--on-dark); font-weight: 700; }
-.c1s .course .label { font-size: 12px; margin-top: -16px; margin-bottom: 32px; }
-.c1s .course-logo { width: min(300px, 68vw); margin: 2px auto 16px; }
-.c1s .first-line-img { width: min(210px, 50vw); margin: 0 auto 24px; }
-.c1s .course-copy { font-size: 15px; line-height: 1.55; max-width: 54ch; margin-bottom: 32px; }
-.c1s .course .first-line { font-size: clamp(20px, 3vw, 26px); margin-bottom: 24px; }
-.c1s .course .waitlist { max-width: 480px; gap: 12px; }
+.c1s .course .label { font-size: 12px; margin: 0; }
+.c1s .course-logo { width: min(300px, 68vw); margin: 0 auto; }
+.c1s .first-line-img { width: min(210px, 50vw); margin: 0 auto; }
+.c1s .course-copy { font-size: 15px; line-height: 1.55; max-width: 54ch; margin: 0 auto; }
+.c1s .course .first-line { font-size: clamp(20px, 3vw, 26px); margin: 0; }
+.c1s .course .waitlist { width: 100%; max-width: 480px; gap: 12px; margin: 0 auto; }
 .c1s .course .waitlist input { flex-basis: 240px; font-size: 14px; padding: 11px 18px; min-height: 44px; }
 .c1s .course .waitlist .btn { font-size: 14px; min-height: 44px; padding: 10px 18px; }
-.c1s .course .form-note { font-size: 13px; margin-top: 16px; }
-.c1s .course .gumroad-link { font-size: 13px; margin-top: 24px; }
-.c1s .course .launch-line { font-size: 12.5px; margin-top: 32px; }
-.c1s .course .wrap { transform: translateY(-16px); }
+.c1s .course .form-note { font-size: 13px; margin: 0 auto; }
+.c1s .course .form-note:empty { display: none; }
+.c1s .course .gumroad-link { font-size: 13px; margin: 0; }
+.c1s .course .launch-line { font-size: 12.5px; margin: 0; }
+.c1s .course .wrap { display: flex; flex-direction: column; align-items: center; gap: var(--gap-sm); }
 .c1s .toolkit-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px; margin-top: var(--gap-lg); }
 @media (max-width: 900px) {
 .c1s .toolkit-grid { grid-template-columns: repeat(3, 1fr); }
@@ -488,7 +490,7 @@
 .c1s .tool { background: var(--surface); border: 1px solid var(--line); border-radius: 24px;
         padding: 28px 12px 22px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
         display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
-.c1s .tool img { width: 56px; height: 56px; max-width: 56px; margin: 0 auto 14px; object-fit: contain; }
+.c1s .tool img { width: 68px; height: 68px; max-width: 68px; margin: 0 auto 14px; object-fit: contain; }
 .c1s .tool p { margin: 0; font-size: 14.5px; font-weight: 600; }
 .c1s footer { background-image: linear-gradient(180deg, #000000 0%, #101012 70%, #1d1d1f 100%); background-size: 100% 100%; color: var(--on-dark); padding: var(--section-pad) 0; position: relative; overflow: clip; }
 @media (max-width: 560px) {
