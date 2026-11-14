@@ -58,7 +58,6 @@ export default function GlobalUI() {
   const [duration, setDuration] = useState(0);
   const [trackIndex, setTrackIndex] = useState(0);
   const playerRef = useRef<HTMLDivElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
 
   /* click outside player → close popup */
   useEffect(() => {
@@ -92,9 +91,6 @@ export default function GlobalUI() {
     let raf: number;
     const loop = (time: number) => {
       lenis.raf(time);
-      if (bgRef.current) {
-        bgRef.current.style.transform = `translate3d(0, ${-lenis.scroll * 0.3}px, 0)`;
-      }
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
@@ -205,8 +201,8 @@ export default function GlobalUI() {
     `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
   const navLinks = [
-    { label: "Home",    href: "/" },
-    { label: "My Work", href: "/work" },
+    { label: "Work",    href: "/work" },
+    { label: "Course",  href: "/course" },
     { label: "Contact", href: "/contact" },
   ];
 
@@ -214,39 +210,20 @@ export default function GlobalUI() {
 
   /* icon style reused for prev/next/play buttons */
   const ctrlBtn: React.CSSProperties = {
-    background: "none", border: "none", cursor: "none",
-    padding: "4px", color: "#f5f0f0", flexShrink: 0,
+    background: "none", border: "none", cursor: "pointer",
+    padding: "4px", color: "#1c1713", flexShrink: 0,
     display: "flex", alignItems: "center", justifyContent: "center",
   };
 
   return (
     <>
-      {/* Parallax background */}
-      <div
-        ref={bgRef}
-        style={{
-          position: "fixed",
-          left: 0,
-          right: 0,
-          top: "-150vh",
-          height: "400vh",
-          zIndex: -1,
-          backgroundImage: "url('/bg-red.jpg')",
-          backgroundSize: "100% auto",
-          backgroundRepeat: "repeat-y",
-          backgroundPosition: "top center",
-          willChange: "transform",
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* Custom cursor */}
+      {/* Custom cursor ring, drawn around the real cursor */}
       <div
         className="cursor-dot"
         style={{
           left: cursorPos.x,
           top: cursorPos.y,
-          transform: `translate(-50%, -50%) scale(${cursorHover ? 2.8 : 1})`,
+          transform: `translate(-50%, -50%) scale(${cursorHover ? 1.6 : 1})`,
         }}
       />
 
@@ -259,17 +236,24 @@ export default function GlobalUI() {
             style={{ width: "clamp(58px, 7vw, 90px)", opacity: 0.9, display: "block" }}
           />
         </a>
-        <nav className="flex justify-end gap-8 md:gap-12">
+        <nav className="nav-pill" style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "clamp(1.1rem, 3vw, 2.2rem)", width: "fit-content", marginLeft: "auto" }}>
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary hover:tracking-[0.28em] transition-all duration-300"
+              className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-text-muted hover:text-text-primary transition-all duration-300"
               style={{ textDecoration: "none", fontWeight: pathname === link.href ? 700 : 400 }}
             >
               {link.label}
             </a>
           ))}
+          <a
+            href="/contact"
+            className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95"
+            style={{ textDecoration: "none", background: "#960018", color: "#fff", padding: "0.5rem 1rem", borderRadius: "9999px", whiteSpace: "nowrap" }}
+          >
+            Work with me
+          </a>
         </nav>
       </header>
 
@@ -285,13 +269,13 @@ export default function GlobalUI() {
           transition: "max-height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease, transform 0.35s ease",
         }}>
           <div style={{
-            background: "rgba(10,0,0,0.88)",
+            background: "rgba(255,253,249,0.94)",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255,255,255,0.08)",
+            border: "1px solid rgba(28,23,19,0.14)",
             borderRadius: "14px",
             padding: "12px 16px",
-            width: "256px",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
+            width: "248px",
+            boxShadow: "0 8px 32px rgba(28,23,19,0.18)",
           }}>
             {/* Track info row */}
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
@@ -301,8 +285,8 @@ export default function GlobalUI() {
                 style={{ width: "36px", height: "36px", objectFit: "contain", animation: "vinylSpin 3s linear infinite", flexShrink: 0 }}
               />
               <div style={{ overflow: "hidden", flex: 1 }}>
-                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#f5f0f0", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{song.title}</p>
-                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.55rem", color: "rgba(245,240,240,0.45)", letterSpacing: "0.04em" }}>{song.artist}</p>
+                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.6rem", fontWeight: 600, color: "#1c1713", letterSpacing: "0.04em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{song.title}</p>
+                <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.55rem", color: "rgba(28,23,19,0.5)", letterSpacing: "0.04em" }}>{song.artist}</p>
               </div>
             </div>
 
@@ -313,7 +297,7 @@ export default function GlobalUI() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,5 9,12 19,19"/><rect x="5" y="5" width="2" height="14"/></svg>
               </button>
               {/* Play/Pause */}
-              <button onClick={togglePlay} style={{ ...ctrlBtn, width: "28px", height: "28px", borderRadius: "50%", background: "rgba(245,240,240,0.12)" }}>
+              <button onClick={togglePlay} style={{ ...ctrlBtn, width: "28px", height: "28px", borderRadius: "50%", background: "rgba(28,23,19,0.08)" }}>
                 {playing ? (
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
                 ) : (
@@ -327,36 +311,36 @@ export default function GlobalUI() {
             </div>
 
             {/* Progress bar */}
-            <div onClick={seek} style={{ width: "100%", height: "3px", background: "rgba(255,255,255,0.12)", borderRadius: "2px", cursor: "none" }}>
-              <div style={{ height: "100%", background: "rgba(245,240,240,0.7)", borderRadius: "2px", width: duration ? `${(progress / duration) * 100}%` : "0%", transition: "width 0.5s linear" }} />
+            <div onClick={seek} style={{ width: "100%", height: "3px", background: "rgba(28,23,19,0.14)", borderRadius: "2px", cursor: "pointer" }}>
+              <div style={{ height: "100%", background: "#960018", borderRadius: "2px", width: duration ? `${(progress / duration) * 100}%` : "0%", transition: "width 0.5s linear" }} />
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px" }}>
-              <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.48rem", color: "rgba(245,240,240,0.35)" }}>{fmt(progress)}</span>
-              <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.48rem", color: "rgba(245,240,240,0.35)" }}>{duration ? fmt(duration) : "--:--"}</span>
+              <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.48rem", color: "rgba(28,23,19,0.45)" }}>{fmt(progress)}</span>
+              <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.48rem", color: "rgba(28,23,19,0.45)" }}>{duration ? fmt(duration) : "--:--"}</span>
             </div>
           </div>
         </div>
 
-        {/* Spinning star / vinyl button — 2× size = 128px */}
+        {/* Spinning vinyl button, kept small and quiet in the corner */}
         <button
           onClick={handleVinylClick}
           aria-label="Toggle music player"
           style={{
-            width: "128px", height: "128px",
+            width: "76px", height: "76px",
             border: "none", background: "transparent",
             display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "none", padding: 0,
+            cursor: "pointer", padding: 0,
             transition: "transform 0.2s ease",
             transform: playerOpen ? "scale(1.05)" : "scale(1)",
             filter: playing
-              ? "drop-shadow(0 0 14px rgba(139,0,0,0.65))"
-              : "drop-shadow(0 4px 16px rgba(0,0,0,0.65))",
+              ? "drop-shadow(0 0 14px rgba(150,0,24,0.45))"
+              : "drop-shadow(0 4px 16px rgba(28,23,19,0.35))",
           }}
         >
           <img
             src="/vinyl.png"
             alt="Music player"
-            style={{ width: "128px", height: "128px", objectFit: "contain", animation: "vinylSpin 3s linear infinite" }}
+            style={{ width: "76px", height: "76px", objectFit: "contain", animation: "vinylSpin 3s linear infinite" }}
           />
         </button>
       </div>
