@@ -9,12 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#0d0000",
-        "red-deep": "#1a0000",
-        "red-mid": "#3d0000",
-        "red-accent": "#8b0000",
-        "text-primary": "#f5f0f0",
-        "text-muted": "#e8e4e0",
+        bg: "#f7f4ee",
+        "red-deep": "#f1e7db",
+        "red-mid": "#ddc9b8",
+        "red-accent": "#960018",
+        "text-primary": "#1c1713",
+        "text-muted": "#6f655c",
       },
       fontFamily: {
         serif: ["Cormorant Garamond", "serif"],
