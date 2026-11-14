@@ -438,7 +438,6 @@
 .c1s .work-grid--wide .work-card .frame { aspect-ratio: 16 / 9; }
 .c1s .work-card .frame .play { opacity: 0.92; }
 .c1s .work-card .frame .tag { font-size: 11px; letter-spacing: 0.14em; max-width: calc(100% - 28px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.c1s .work-card .frame .tag--dot-only { width: 7px; height: 7px; padding: 0; }
 .c1s .work-card-label { margin: 10px 2px 0; font-size: 13.5px; font-weight: 600; color: var(--on-dark); line-height: 1.35; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .c1s .work-card-label span { display: block; font-size: 12px; font-weight: 400; color: var(--on-dark-muted); }
 .c1s .work-sub-head { text-align: center; margin: var(--gap-lg) auto var(--gap-md); max-width: 640px; }

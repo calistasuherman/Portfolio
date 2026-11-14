@@ -260,9 +260,12 @@ function initHome() {
           }
         }
 
-        /* Lazy frames: the video file is only attached when the frame is
-           about to be seen (IntersectionObserver), hovered, or focused,
-           so opening a category with 20 videos stays fast. */
+        /* Frames show at once: when a category opens, every video in it
+           is attached with preload "metadata" (see primeVideo in
+           renderGallery) so its first frame renders immediately, with
+           no hover needed, touch devices included. The
+           IntersectionObserver stays as a safety net for any video that
+           was not primed, and hovering still plays a preview. */
         var workIO = ("IntersectionObserver" in window) ? new IntersectionObserver(function (entries) {
           entries.forEach(function (en) {
             if (en.isIntersecting) { ensureVideo(en.target); workIO.unobserve(en.target); }
@@ -272,6 +275,11 @@ function initHome() {
           if (v && !v.getAttribute("src") && v.getAttribute("data-src")) {
             v.src = v.getAttribute("data-src");
           }
+        }
+        function primeVideo(v) {
+          if (!v) { return; }
+          v.preload = "metadata";
+          ensureVideo(v);
         }
         function bindFrame(frame, v, watchBtn) {
           if (workIO && v) { workIO.observe(v); }
@@ -302,20 +310,17 @@ function initHome() {
           var play = document.createElement("span");
           play.className = "play"; play.setAttribute("aria-hidden", "true");
           play.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
-          var tag = document.createElement("span");
-          tag.className = "tag";
-          /* Partnerships: the word next to the frame's dot is removed
-             at Calista's request. It repeated the same category (AI on
-             three of the four brand videos, SFX on the other) that the
-             label under each frame already shows, so the partnerships
-             frames now carry the dot alone with no title beside it.
-             Every other category keeps its number next to the dot, and
-             the Partnerships brand name labels under the frames stay
+          /* Partnerships frames carry no tag at all: the dot and its
+             word repeated the category (AI on three of the four brand
+             videos, SFX on the other) that the label under each frame
+             already shows, so Calista asked for the whole tag to go.
+             Every other category keeps its number tag, and the
+             Partnerships brand name labels under the frames stay
              exactly as they were. */
-          if (categoryTitle === "Partnerships") {
-            tag.className = "tag tag--dot-only";
-            tag.setAttribute("aria-hidden", "true");
-          } else {
+          var tag = null;
+          if (categoryTitle !== "Partnerships") {
+            tag = document.createElement("span");
+            tag.className = "tag";
             tag.textContent = item.category || pad2(i + 1);
           }
           var watchBtn = document.createElement("button");
@@ -324,7 +329,7 @@ function initHome() {
           watchBtn.setAttribute("data-tag", categoryTitle + " \u00B7 " + display);
           watchBtn.setAttribute("aria-label", "Watch " + display + " (" + categoryTitle + ")");
           watchBtn.setAttribute("data-popup", "Click to watch");
-          frame.appendChild(v); frame.appendChild(play); frame.appendChild(tag); frame.appendChild(watchBtn);
+          frame.appendChild(v); frame.appendChild(play); if (tag) { frame.appendChild(tag); } frame.appendChild(watchBtn);
           card.appendChild(frame);
           if (titled) {
             var label = document.createElement("p");
@@ -344,6 +349,7 @@ function initHome() {
           container.innerHTML = "";
           container.className = "work-grid work-grid--" + layout;
           videos.forEach(function (item, i) { container.appendChild(createWorkCard(item, i, categoryTitle, titled)); });
+          container.querySelectorAll("video").forEach(primeVideo);
         }
 
         var vinylView = document.getElementById("vinylView");
