@@ -1,7 +1,5 @@
 import type { Config } from "tailwindcss";
 
-const helvetica = ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"];
-
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,18 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#fafafa",
-        "red-deep": "#efefef",
-        "red-mid": "#d9d9d9",
-        "red-accent": "#161616",
-        "text-primary": "#161616",
-        "text-muted": "#5f5f5f",
+        bg: "#0d0000",
+        "red-deep": "#1a0000",
+        "red-mid": "#3d0000",
+        "red-accent": "#8b0000",
+        "text-primary": "#f5f0f0",
+        "text-muted": "#e8e4e0",
       },
       fontFamily: {
-        serif: helvetica,
-        sans: helvetica,
-        melodrama: helvetica,
-        inter: helvetica,
+        serif: ["Cormorant Garamond", "serif"],
+        sans: ["HelvLight", "var(--font-inter)", "sans-serif"],
+        melodrama: ["var(--font-melodrama)", "serif"],
+        inter: ["HelvLight", "var(--font-inter)", "sans-serif"],
       },
     },
   },

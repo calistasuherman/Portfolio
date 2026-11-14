@@ -49,9 +49,9 @@ const TUTORIAL_VIDEOS = [
 
 /* ── Vinyl data ── */
 const VINYL_DATA = [
-  { label: "Video Editing", href: "video-editing", idx: "01", sleeve: "#0a0a0a", accent: "#d4cfc8", labelBg: "#454545" },
-  { label: "Videography",   href: "videography",   idx: "02", sleeve: "#101010", accent: "#e8e8e8", labelBg: "#262626" },
-  { label: "Partnerships",  href: "partnerships",  idx: "03", sleeve: "#101010", accent: "#c8a84b", labelBg: "#262626" },
+  { label: "Video Editing", href: "video-editing", idx: "01", sleeve: "#0a0a0a", accent: "#d4cfc8", labelBg: "#4a4540" },
+  { label: "Videography",   href: "videography",   idx: "02", sleeve: "#0e0000", accent: "#960018", labelBg: "#5c0010" },
+  { label: "Partnerships",  href: "partnerships",  idx: "03", sleeve: "#0b0800", accent: "#c8a84b", labelBg: "#6b5a18" },
 ];
 
 /* ── VinylUnit ── */
@@ -119,8 +119,8 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay, onSelect }: { v: typeof 
             {(() => { const r = DISC / 2; const grooves = Array.from({ length: 24 }, (_, i) => r * 0.3 + (r * 0.62) * (i / 24)); return (<>
               <circle cx={r} cy={r} r={r} fill="#090909"/>
               {grooves.map((gr, i) => <circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"} strokeWidth="0.55"/>)}
-              <circle cx={r} cy={r} r={r * 0.29} fill="#e8e8e8"/>
-              <circle cx={r} cy={r} r={r * 0.25} fill="#e8e8e8" opacity="0.85"/>
+              <circle cx={r} cy={r} r={r * 0.29} fill="#960018"/>
+              <circle cx={r} cy={r} r={r * 0.25} fill="#960018" opacity="0.85"/>
               {([-r*0.09, r*0.02, r*0.12] as number[]).map((dy, i) => <line key={i} x1={r - r*0.18} y1={r+dy} x2={r + r*0.18} y2={r+dy} stroke="rgba(255,255,255,0.28)" strokeWidth={i===0?0.9:0.6}/>)}
               <circle cx={r} cy={r} r={r * 0.045} fill="#000"/>
             </>); })()}
@@ -143,13 +143,13 @@ function VinylUnit({ v, defaultX, defaultY, floatDelay, onSelect }: { v: typeof 
           />
           {/* Text: idx top, label center, explore bottom */}
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", textAlign: "center", padding: "1rem" }}>
-            <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.52rem", letterSpacing: "0.18em", color: "#e8e8e8", fontWeight: 700 }}>
+            <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.18em", color: "#960018", fontWeight: 700 }}>
               {v.idx}
             </span>
-            <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "2rem", color: "#e8e8e8", lineHeight: 1.0, fontWeight: 700, whiteSpace: "nowrap" }}>
+            <p style={{ fontFamily: "BillaMount, cursive", fontSize: "2rem", color: "#960018", lineHeight: 1.0, fontWeight: 700, whiteSpace: "nowrap" }}>
               {v.label}
             </p>
-            <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.44rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#e8e8e8", fontWeight: 600 }}>
+            <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#960018", fontWeight: 600 }}>
               click to explore ↓
             </span>
           </div>
@@ -173,8 +173,8 @@ function MobileVinylCard({ v, delay, onSelect }: { v: typeof VINYL_DATA[0]; dela
         <svg width={D} height={D} viewBox={`0 0 ${D} ${D}`} style={{ display: "block", animation: "vinylSpin 6s linear infinite" }}>
           <circle cx={r} cy={r} r={r} fill="#090909"/>
           {grooves.map((gr, i) => <circle key={i} cx={r} cy={r} r={gr} fill="none" stroke={i % 5 === 0 ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.022)"} strokeWidth="0.55"/>)}
-          <circle cx={r} cy={r} r={r * 0.29} fill="#e8e8e8"/>
-          <circle cx={r} cy={r} r={r * 0.25} fill="#e8e8e8" opacity="0.85"/>
+          <circle cx={r} cy={r} r={r * 0.29} fill="#960018"/>
+          <circle cx={r} cy={r} r={r * 0.25} fill="#960018" opacity="0.85"/>
           {([-r*0.09, r*0.02, r*0.12] as number[]).map((dy, i) => <line key={i} x1={r - r*0.18} y1={r+dy} x2={r + r*0.18} y2={r+dy} stroke="rgba(255,255,255,0.28)" strokeWidth={i===0?0.9:0.6}/>)}
           <circle cx={r} cy={r} r={r * 0.045} fill="#000"/>
         </svg>
@@ -184,9 +184,9 @@ function MobileVinylCard({ v, delay, onSelect }: { v: typeof VINYL_DATA[0]; dela
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/vinyl-sleeve.png" alt="" draggable={false} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", userSelect: "none", pointerEvents: "none" }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", textAlign: "center", padding: "0.6rem" }}>
-          <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.44rem", letterSpacing: "0.18em", color: "#e8e8e8", fontWeight: 700 }}>{v.idx}</span>
-          <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "1.05rem", color: "#e8e8e8", lineHeight: 1.05, fontWeight: 700 }}>{v.label}</p>
-          <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.38rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#e8e8e8", fontWeight: 600 }}>tap to explore</span>
+          <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.18em", color: "#960018", fontWeight: 700 }}>{v.idx}</span>
+          <p style={{ fontFamily: "BillaMount, cursive", fontSize: "1.05rem", color: "#960018", lineHeight: 1.05, fontWeight: 700 }}>{v.label}</p>
+          <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.38rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#960018", fontWeight: 600 }}>tap to explore</span>
         </div>
       </div>
     </div>
@@ -243,7 +243,7 @@ function OrbitTitle({ parts }: { parts: { text: string; script?: boolean }[] }) 
   return (
     <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
       {parts.map(({ text, script }, i) => (
-        <span key={i} style={{ fontFamily: script ? "'Helvetica Neue', Helvetica, Arial, sans-serif" : "'Helvetica Neue', Helvetica, Arial, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>{text}</span>
+        <span key={i} style={{ fontFamily: script ? "BillaMount, cursive" : "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>{text}</span>
       ))}
     </div>
   );
@@ -273,7 +273,7 @@ function CinemaClip({ src, idx, onClick }: { src: string; idx: number; onClick: 
         flexGrow: active ? 9 : 1, flexShrink: 0, flexBasis: "56px",
         scrollSnapAlign: "start",
         transition: "flex-grow 0.6s cubic-bezier(0.16,1,0.3,1)",
-        borderRight: "1px solid rgba(15,15,15,0.6)",
+        borderRight: "1px solid rgba(10,0,0,0.6)",
         background: "#0a0000",
       }}
     >
@@ -282,7 +282,7 @@ function CinemaClip({ src, idx, onClick }: { src: string; idx: number; onClick: 
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
       <div style={{
         position: "absolute", inset: 0,
-        background: active ? "linear-gradient(to top, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0) 40%)" : "rgba(8,8,8,0.6)",
+        background: active ? "linear-gradient(to top, rgba(5,0,0,0.55) 0%, rgba(5,0,0,0) 40%)" : "rgba(5,0,0,0.6)",
         transition: "background 0.4s ease",
       }} />
       <span style={{
@@ -315,13 +315,13 @@ function CinemaShowcase({ videos }: { videos: { src: string }[] }) {
 
   return (
     <div>
-      <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
+      <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
         hover a frame to preview · click to watch
       </p>
       <div style={{
         display: "flex", height: "clamp(300px, 36vw, 460px)", maxWidth: "1100px", margin: "0 auto",
         overflowX: "auto", overflowY: "hidden", scrollSnapType: "x proximity",
-        borderRadius: "6px", border: "1px solid rgba(230,230,230,0.4)", boxShadow: "0 20px 60px rgba(0,0,0,0.8)",
+        borderRadius: "6px", border: "1px solid rgba(139,0,0,0.4)", boxShadow: "0 20px 60px rgba(0,0,0,0.8)",
       }}>
         {videos.map(({ src }, i) => (
           <CinemaClip key={src} src={src} idx={i} onClick={() => setLightbox(src)} />
@@ -356,10 +356,10 @@ function SectionLabel({ index, title, desc }: { index: string; title: React.Reac
   return (
     <div style={{ paddingTop: "1.8rem", marginBottom: "3rem" }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: "1.2rem", marginBottom: "0.75rem" }}>
-        <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.58rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{index}</span>
+        <span style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", color: "rgba(245,240,240,0.28)", letterSpacing: "0.12em", flexShrink: 0 }}>{index}</span>
         {title}
       </div>
-      <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.72rem", color: "rgba(245,240,240,0.42)", lineHeight: 1.75, paddingLeft: "calc(0.58rem + 1.2rem + 4px)", maxWidth: "480px" }}>{desc}</p>
+      <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", color: "rgba(245,240,240,0.42)", lineHeight: 1.75, paddingLeft: "calc(0.58rem + 1.2rem + 4px)", maxWidth: "480px" }}>{desc}</p>
     </div>
   );
 }
@@ -404,7 +404,7 @@ function AccordionCard({ src, idx, onClick, compact }: { src: string; idx: numbe
       {/* Index number — visible when collapsed, fades on expand */}
       <span style={{
         position: "absolute", bottom: "10px", left: "50%", transform: "translateX(-50%)",
-        fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.44rem", letterSpacing: "0.16em",
+        fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.44rem", letterSpacing: "0.16em",
         color: "rgba(245,240,240,0.5)",
         opacity: active ? 0 : 1,
         transition: "opacity 0.25s ease",
@@ -437,7 +437,7 @@ function MotionGrid() {
   for (let i = 0; i < VE_VIDEOS.length; i += 5) rows.push(VE_VIDEOS.slice(i, i + 5));
   return (
     <Reveal direction="up">
-      <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
+      <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
         hover a frame to preview · click to watch
       </p>
       {rows.map((row, r) => {
@@ -471,8 +471,8 @@ function PartnerCard({ src, label, category, onClick }: { src: string; label: st
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.6s ease", transform: hovered ? "scale(1.04)" : "scale(1)" }} />
       <div style={{ position: "absolute", inset: 0, background: hovered ? "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%)" : "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 60%)", transition: "background 0.4s ease" }} />
       <div style={{ position: "absolute", bottom: 0, left: 0, padding: "1.4rem 1.6rem" }}>
-        <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.52rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.3rem" }}>{category}</p>
-        <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "clamp(1.2rem, 2vw, 1.8rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.05em", lineHeight: 1 }}>{label}</p>
+        <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.52rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.5)", marginBottom: "0.3rem" }}>{category}</p>
+        <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.2rem, 2vw, 1.8rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.05em", lineHeight: 1 }}>{label}</p>
       </div>
       {hovered && (
         <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)", borderRadius: "50%", width: "44px", height: "44px", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgba(245,240,240,0.2)" }}>
@@ -488,7 +488,7 @@ function PartnerGrid({ videos = COLLAB_VIDEOS }: { videos?: { src: string; label
   const close = useCallback(() => setLightbox(null), []);
   return (
     <>
-      <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
+      <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,240,0.35)", marginBottom: "1rem", textAlign: "center" }}>
         hover a frame to preview · click to watch
       </p>
       <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
@@ -509,21 +509,21 @@ export default function WorkPage() {
 
   if (!active) {
     return (
-      <main className="relative min-h-screen overflow-x-clip" style={{ background: "#111111" }}>
+      <main className="relative min-h-screen overflow-x-clip">
         <VinylSection onSelect={setActive} />
       </main>
     );
   }
 
   return (
-    <main className="relative min-h-screen overflow-x-clip" style={{ background: "#111111" }}>
+    <main className="relative min-h-screen overflow-x-clip">
 
       <button
         onClick={() => setActive(null)}
         style={{
           position: "fixed", top: "clamp(84px, 10vh, 100px)", left: "calc(clamp(1.5rem, 5vw, 4rem) + 0.58rem + 1.2rem + 4px + 1.5rem)", zIndex: 40,
           background: "none", border: "none", padding: 0,
-          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase",
+          fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase",
           color: "rgba(245,240,240,0.4)", transition: "color 0.3s ease",
         }}
         onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.85)")}
@@ -587,7 +587,7 @@ export default function WorkPage() {
         </section>
       )}
 
-      <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(230,230,230,0.2)" }}>
+      <footer className="section-content py-8 text-center" style={{ borderTop: "1px solid rgba(139,0,0,0.2)" }}>
         <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
           @2026 CAL1STAR EDITING.&nbsp;&nbsp;PSALM 46:5
         </p>

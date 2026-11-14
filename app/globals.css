@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -51,28 +51,17 @@
   src: local("HelveticaNeue-Light"), local("Helvetica Neue Light"), local("Helvetica-Light"), local("Helvetica Light");
 }
 
-@font-face {
-  font-family: "RelationshipMelodrame";
-  src: url("/fonts/RelationshipMelodrame.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
   --font-inter: "Inter", sans-serif;
   --font-cormorant: "Cormorant Garamond", serif;
   --font-sloop: "SloopScript", cursive;
   --font-pinyon: var(--font-pinyon), cursive;
   --font-melodrama: var(--font-melodrama), serif;
-  --ink: #161616;
-  --paper: #fafafa;
-  --accent: #161616;
-  --line: rgba(22,22,22, 0.14);
 }
 
 html {
   scroll-behavior: smooth;
+  cursor: none;
   scroll-padding-top: 80px;
 }
 
@@ -82,57 +71,54 @@ html {
 }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background-color: #f4f4f4;
-  /* Ombre fade from white down to soft gray, with a subtle grid of thin lines over it */
-  background-image:
-    linear-gradient(rgba(17,17,17,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(17,17,17,0.05) 1px, transparent 1px),
-    linear-gradient(180deg, #ffffff 0%, #f4f4f4 55%, #e9e9e9 100%);
-  background-size: 54px 54px, 54px 54px, 100% 100%;
-  background-repeat: repeat, repeat, no-repeat;
-  background-attachment: scroll, scroll, fixed;
-  color: #161616;
+  font-family: "HelvLight", var(--font-inter), sans-serif;
+  background-color: #f7f4ee;
+  color: #f5f0f0;
+  cursor: none;
   overscroll-behavior: none;
   transition: opacity 0.3s ease;
 }
 
-/* Grain texture, kept very light: a whisper over the page, not a film */
+a, button {
+  cursor: none;
+}
+
+/* â”€â”€ Grain texture â”€â”€ */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.012;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
 
-/* Custom cursor: a soft ring that follows the real cursor instead of replacing it */
+/* â”€â”€ Custom cursor â”€â”€ */
 .cursor-dot {
   position: fixed;
-  width: 26px;
-  height: 26px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: transparent;
-  border: 1.5px solid rgba(22,22,22, 0.45);
+  background: rgba(232, 228, 224, 0.85);
   pointer-events: none;
   z-index: 9999;
   transition: transform 0.2s ease;
+  mix-blend-mode: difference;
 }
 
-/* Nav pill */
+/* â”€â”€ Nav pill â”€â”€ */
 .nav-pill {
-  padding: 10px 22px;
+  padding: 10px 28px;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(22,22,22, 0.14);
+  background: rgba(13, 0, 0, 0.55);
+  border: 1px solid rgba(139, 0, 0, 0.25);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
 
-/* Page fade */
+/* ── Page fade ── */
 @keyframes pageFadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -148,14 +134,14 @@ body.page-fade-out {
   pointer-events: none;
 }
 
-/* Ink splatter (lives in the music artwork) */
+/* ── Ink splatter ── */
 @keyframes splatFade {
   0%   { transform: translate(-50%, -50%) rotate(var(--r, 0deg)) scale(0.4); opacity: 0.9; }
   40%  { opacity: 0.8; transform: translate(-50%, -50%) rotate(var(--r, 0deg)) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.15); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--r, 0deg)) scale(1.15); }
 }
 
-/* Hero entrance animations */
+/* ── Hero entrance animations ── */
 .hero-item {
   opacity: 0;
   transform: translateY(28px);
@@ -167,7 +153,7 @@ body.page-fade-out {
   transform: translateY(0);
 }
 
-/* Marquee and vinyl motion */
+/* â”€â”€ Marquee â”€â”€ */
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-33.333%); }
@@ -208,54 +194,58 @@ body.page-fade-out {
   animation-play-state: paused;
 }
 
-/* One shared card family: same border, same padding feel, same corners.
-   Red appears here only as the shared accent on hover. */
+/* â”€â”€ Brand pill â”€â”€ */
 .brand-pill {
-  border: 1px solid rgba(22,22,22, 0.16);
-  background: #ffffff;
-  border-radius: 9999px;
+  border: 1px solid rgba(139, 0, 0, 0.35);
+  background: rgba(26, 0, 0, 0.3);
   transition: border-color 0.3s ease, color 0.3s ease;
 }
 
 .brand-pill:hover {
-  border-color: rgba(17,17,17,0.6);
-  color: #111111;
+  border-color: rgba(232, 228, 224, 0.5);
+  color: #f5f0f0;
 }
 
+/* â”€â”€ Stat card â”€â”€ */
 .stat-card {
-  border: 1px solid rgba(22,22,22, 0.14);
-  background: #ffffff;
-  border-radius: 12px;
-  transition: border-color 0.4s ease;
+  border: 1px solid rgba(139, 0, 0, 0.3);
+  background: rgba(26, 0, 0, 0.4);
+  transition: border-color 0.4s ease, background 0.4s ease;
 }
 
 .stat-card:hover {
-  border-color: rgba(17,17,17, 0.5);
+  border-color: rgba(139, 0, 0, 0.6);
+  background: rgba(26, 0, 0, 0.65);
 }
 
+/* â”€â”€ Work card â”€â”€ */
 .work-card {
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .work-card:hover {
   transform: scale(1.025);
-  box-shadow: 0 8px 32px rgba(22,22,22, 0.18);
-  border-color: rgba(17,17,17, 0.5) !important;
+  box-shadow: 0 8px 32px rgba(139, 0, 0, 0.25);
+  border-color: rgba(139, 0, 0, 0.5) !important;
 }
 
+/* â”€â”€ Service card â”€â”€ */
 .service-card {
-  border: 1px solid rgba(22,22,22, 0.14);
-  background: #ffffff;
-  border-radius: 12px;
-  transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(139, 0, 0, 0.25);
+  background: rgba(26, 0, 0, 0.35);
+  transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .service-card:hover {
-  border-color: rgba(17,17,17, 0.5);
+  border-color: rgba(139, 0, 0, 0.6);
+  background: rgba(26, 0, 0, 0.65);
 }
 
-/* Mobile */
+/* ── Mobile ── */
 @media (max-width: 768px) {
+  html { cursor: auto; }
+  body { cursor: auto; }
+  a, button { cursor: auto; }
   .cursor-dot { display: none; }
 
   /* Disable fixed bg on iOS (causes white flash) */
@@ -265,20 +255,20 @@ body.page-fade-out {
   .mobile-2col { grid-template-columns: repeat(2,1fr) !important; }
   .mobile-1col { grid-template-columns: 1fr !important; }
 
-  /* Hero name, smaller and allowed to wrap */
+  /* Hero name — smaller + allow wrap */
   .hero-name {
     font-size: clamp(2.6rem, 13vw, 3.8rem) !important;
     white-space: normal !important;
   }
 
-  /* Services rows collapse, index number hidden */
+  /* Services rows — collapse to 2 cols, hide index number */
   .services-row {
     grid-template-columns: 1fr !important;
     gap: 0.4rem !important;
   }
   .services-index { display: none; }
 
-  /* Contact stacks vertically */
+  /* Contact — stack vertically */
   .contact-row {
     flex-direction: column !important;
     gap: 2.5rem !important;
@@ -292,7 +282,7 @@ body.page-fade-out {
     align-self: stretch !important;
   }
 
-  /* Work page accordion rows stack vertically on mobile */
+  /* Work page — accordion rows stack vertically on mobile */
   .accordion-row {
     flex-direction: column !important;
     height: auto !important;
@@ -303,7 +293,7 @@ body.page-fade-out {
     width: 100% !important;
   }
 
-  /* Toolkit wraps into rows of three */
+  /* Toolkit — wrap into 2 rows of 3 */
   .toolkit-row {
     flex-wrap: wrap !important;
     gap: 1.4rem 2rem !important;
@@ -314,7 +304,7 @@ body.page-fade-out {
     max-width: 80px !important;
   }
 
-  /* Contact headline, bigger on mobile */
+  /* Contact headline — bigger on mobile */
   .contact-headline {
     font-size: clamp(3.2rem, 17vw, 5rem) !important;
   }
@@ -327,21 +317,47 @@ body.page-fade-out {
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Course page: the song picker vinyl now lives in the music section, in normal flow */
-.course-vinyl {
+/* Course page: vinyl peeking out of the top-left corner, signup centered */
+.course-hero {
+  --disc: min(36rem, 46vw);
   position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  overflow: clip;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.course-vinyl {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--disc);
+  height: var(--disc);
+  transform: translate(-38%, -38%);
+  z-index: 0;
+}
+.course-hero > div:not(.course-vinyl) { position: relative; z-index: 1; max-width: 40rem; }
 @media (max-width: 900px) {
+  .course-hero {
+    --disc: 72vw;
+    padding-top: calc(40vw + 1.5rem) !important;
+    align-items: flex-start;
+  }
+  .course-vinyl { transform: translate(-45%, -45%); }
   .course-picker { width: 46vw !important; padding: 0.6rem 0.3rem !important; }
   .course-picker button { font-size: 0.62rem !important; padding: 0.35rem 0.4rem !important; }
 }
 
-/* Phone: tuck the music vinyl left so the visible record lines up with the page content margin */
+/* Phone: tuck the music vinyl left so the visible record lines up with the page's content margin */
 @media (max-width: 767px) {
   .music-player { left: -0.45rem !important; }
 }
 
+@font-face {
+  font-family: "RelationshipMelodrame";
+  src: url("/fonts/RelationshipMelodrame.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 .course-intro { width: min(20.6rem, 88vw); }
 @media (min-width: 700px) { .course-intro { width: 32.98rem; } }
