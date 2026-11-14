@@ -509,14 +509,14 @@ export default function WorkPage() {
 
   if (!active) {
     return (
-      <main className="relative min-h-screen overflow-x-clip">
+      <main className="relative min-h-screen overflow-x-clip" style={{ background: "#0d0000" }}>
         <VinylSection onSelect={setActive} />
       </main>
     );
   }
 
   return (
-    <main className="relative min-h-screen overflow-x-clip">
+    <main className="relative min-h-screen overflow-x-clip" style={{ background: "#0d0000" }}>
 
       <button
         onClick={() => setActive(null)}
