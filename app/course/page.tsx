@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { SONGS, playSong, getAudio, currentTrack } from "../components/GlobalUI";
 
 const label: React.CSSProperties = {
-  fontFamily: "'HelvLight', var(--font-inter)",
+  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
   fontSize: "0.58rem",
   letterSpacing: "0.22em",
   textTransform: "uppercase",
@@ -45,7 +45,7 @@ function WaitlistForm({ center = false, tone = "dark" }: { center?: boolean; ton
 
   if (sent) {
     return (
-      <p style={{ fontFamily: "'HelvLight', var(--font-inter)", fontWeight: 300, fontSize: "clamp(0.78rem, 0.95vw, 0.85rem)", lineHeight: 1.7, color: light ? "#1c1713" : "#f5f0f0", textAlign: center ? "center" : "left" }}>
+      <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontWeight: 300, fontSize: "clamp(0.78rem, 0.95vw, 0.85rem)", lineHeight: 1.7, color: light ? "#161616" : "#f5f0f0", textAlign: center ? "center" : "left" }}>
         {confirm ? "You're in! Check your inbox to confirm your spot." : "You're in! I'll email you as soon as Editing 101 opens."}
       </p>
     );
@@ -75,11 +75,11 @@ function WaitlistForm({ center = false, tone = "dark" }: { center?: boolean; ton
         style={{
           width: "100%", boxSizing: "border-box",
           padding: "0.85rem 1.1rem",
-          background: light ? "#fffdf9" : "rgba(8,2,5,0.55)",
-          border: light ? "1px solid rgba(28,23,19,0.35)" : "1px solid rgba(245,240,240,0.2)",
+          background: light ? "#fffdf9" : "rgba(12,12,12,0.55)",
+          border: light ? "1px solid rgba(22,22,22,0.35)" : "1px solid rgba(245,240,240,0.2)",
           borderRadius: "2px",
-          color: light ? "#1c1713" : "#f5f0f0",
-          fontFamily: "'HelvLight', var(--font-inter)",
+          color: light ? "#161616" : "#f5f0f0",
+          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
           fontWeight: 300,
           fontSize: "0.95rem",
           outline: "none",
@@ -94,23 +94,23 @@ function WaitlistForm({ center = false, tone = "dark" }: { center?: boolean; ton
         disabled={busy}
         style={{
           padding: "0.85rem 1.4rem",
-          background: "#960018",
-          border: "1px solid #960018",
+          background: "#161616",
+          border: "1px solid #161616",
           borderRadius: "2px",
           color: "#fff",
-          fontFamily: "'HelvLight', var(--font-inter)",
+          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
           fontSize: "0.8rem",
           letterSpacing: "0.14em",
           textTransform: "uppercase",
           transition: "background 0.25s, border-color 0.25s",
         }}
-        onMouseEnter={e => { e.currentTarget.style.background = "#b3001d"; e.currentTarget.style.borderColor = "#b3001d"; }}
-        onMouseLeave={e => { e.currentTarget.style.background = "#960018"; e.currentTarget.style.borderColor = "#960018"; }}
+        onMouseEnter={e => { e.currentTarget.style.background = "#333333"; e.currentTarget.style.borderColor = "#333333"; }}
+        onMouseLeave={e => { e.currentTarget.style.background = "#161616"; e.currentTarget.style.borderColor = "#161616"; }}
       >
         <img src={busy ? "/course/btn-joining.svg" : "/course/btn-join.svg"} alt={busy ? "Joining…" : "Join the waitlist"} style={{ display: "block", height: "0.8rem", width: "auto" }} />
       </button>
       {error && (
-        <p role="alert" style={{ flexBasis: "100%", margin: 0, fontFamily: "'HelvLight', var(--font-inter)", fontWeight: 300, fontSize: "0.8rem", color: light ? "#960018" : "#ff8a8a", textAlign: center ? "center" : "left" }}>
+        <p role="alert" style={{ flexBasis: "100%", margin: 0, fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontWeight: 300, fontSize: "0.8rem", color: light ? "#9c7410" : "#e9cf87", textAlign: center ? "center" : "left" }}>
           {error}
         </p>
       )}
@@ -166,7 +166,7 @@ function SongVinyl() {
         style={{
           width: "100%", height: "100%", display: "block",
           animation: "vinylSpin 6s linear infinite",
-          filter: playing ? "drop-shadow(0 0 60px rgba(139,0,0,0.55))" : "drop-shadow(0 20px 60px rgba(0,0,0,0.35))",
+          filter: playing ? "drop-shadow(0 0 60px rgba(201,151,28,0.55))" : "drop-shadow(0 20px 60px rgba(0,0,0,0.35))",
           transition: "filter 0.4s ease",
           willChange: "transform",
         }}
@@ -179,8 +179,8 @@ function SongVinyl() {
             <circle key={`hl${i}`} cx={r} cy={r} r={r * k} fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="1.1"
               strokeDasharray={`${r * k * 0.5} ${r * k * 5.8}`} strokeDashoffset={r * k * i * 1.3} strokeLinecap="round"/>
           ))}
-          <circle cx={r} cy={r} r={r * 0.29} fill="#960018"/>
-          <circle cx={r} cy={r} r={r * 0.25} fill="#960018" opacity="0.85"/>
+          <circle cx={r} cy={r} r={r * 0.29} fill="#c9971c"/>
+          <circle cx={r} cy={r} r={r * 0.25} fill="#c9971c" opacity="0.85"/>
           {([-r*0.09, r*0.02, r*0.12] as number[]).map((dy, i) => <line key={i} x1={r - r*0.18} y1={r+dy} x2={r + r*0.18} y2={r+dy} stroke="rgba(255,255,255,0.28)" strokeWidth={i===0?0.9:0.6}/>)}
           <circle cx={r} cy={r} r={r * 0.045} fill="#000"/>
         </>); })()}
@@ -217,10 +217,10 @@ function SongVinyl() {
                 display: "flex", alignItems: "center", gap: "0.6rem",
                 width: "100%", textAlign: "left",
                 padding: "0.45rem 0.6rem",
-                background: active ? "rgba(150,0,24,0.35)" : "transparent",
+                background: active ? "rgba(201,151,28,0.35)" : "transparent",
                 border: "none", borderRadius: "8px",
                 color: "#f5f0f0", cursor: "pointer",
-                fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.72rem", letterSpacing: "0.03em",
+                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.72rem", letterSpacing: "0.03em",
                 transition: "background 0.2s",
               }}
               onMouseEnter={e => { if (!active) e.currentTarget.style.background = "rgba(245,240,240,0.08)"; }}
@@ -238,14 +238,14 @@ function SongVinyl() {
 }
 
 /* ── Course content pieces ── */
-const INK = "#1c1713";
-const MUTED = "rgba(28,23,19,0.62)";
-const FAINT = "rgba(28,23,19,0.45)";
-const H_FONT = "'HelvLight', var(--font-inter), sans-serif";
+const INK = "#161616";
+const MUTED = "rgba(22,22,22,0.62)";
+const FAINT = "rgba(22,22,22,0.45)";
+const H_FONT = "'Helvetica Neue', Helvetica, Arial, sans-serif";
 
 function H2({ children }: { children: React.ReactNode }) {
   return (
-    <h2 style={{ fontFamily: "PerandoryCondensed, sans-serif", fontWeight: "normal", fontSize: "clamp(1.9rem, 3.6vw, 2.9rem)", color: INK, letterSpacing: "0.03em", margin: 0, lineHeight: 1.1 }}>
+    <h2 style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontWeight: 700, fontSize: "clamp(1.9rem, 3.6vw, 2.9rem)", color: INK, letterSpacing: "0.03em", margin: 0, lineHeight: 1.1 }}>
       {children}
     </h2>
   );
@@ -285,7 +285,7 @@ export default function CoursePage() {
   const pad = "clamp(1.8rem, 5vw, 5rem)";
 
   return (
-    <main className="relative min-h-screen overflow-x-clip" style={{ background: "#f7f4ee", color: INK }}>
+    <main className="relative min-h-screen overflow-x-clip" style={{ background: "#f6eeda", color: INK }}>
 
       {/* ── Hero: her artwork and the waitlist form at the very top, held in one deep panel
            so the light lettering artwork keeps the dark setting it was made for ── */}
@@ -293,15 +293,13 @@ export default function CoursePage() {
         <div
           style={{
             maxWidth: "1120px", margin: "0 auto",
-            backgroundImage: "url('/bg-red.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            background: "linear-gradient(160deg, #101010 0%, #1b1b1b 58%, #262626 100%)",
             borderRadius: "18px",
             overflow: "hidden",
-            boxShadow: "0 30px 80px rgba(28,23,19,0.3)",
+            boxShadow: "0 30px 80px rgba(22,22,22,0.3)",
           }}
         >
-          <div style={{ background: "linear-gradient(to bottom, rgba(8,2,5,0.6) 0%, rgba(8,2,5,0.85) 45%, rgba(8,2,5,0.95) 100%)", padding: "clamp(2.5rem, 6vh, 4.5rem) clamp(1.2rem, 5vw, 4rem)" }}>
+          <div style={{ background: "none", padding: "clamp(2.5rem, 6vh, 4.5rem) clamp(1.2rem, 5vw, 4rem)" }}>
             <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(1.75rem, 4.5vh, 2.75rem)" }}>
               <p style={{ ...label, margin: 0, lineHeight: 0 }}><img src="/course/label-course.svg" alt="A beginner course by @cal1star" style={{ display: "block", height: "0.58rem", width: "auto" }} /></p>
               <h1 style={{ fontWeight: "normal", color: "#f5f0f0", margin: 0, lineHeight: 1, padding: 0 }}>
@@ -343,8 +341,8 @@ export default function CoursePage() {
           <H2>What you will learn</H2>
           <div style={{ marginTop: "2rem", display: "flex", flexDirection: "column" }}>
             {LEARN_ITEMS.map((item, i) => (
-              <div key={item.h} style={{ display: "flex", gap: "1.4rem", padding: "1.3rem 0", borderBottom: i < LEARN_ITEMS.length - 1 ? "1px solid rgba(28,23,19,0.12)" : "none", alignItems: "baseline" }}>
-                <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "1.1rem", color: "#960018", margin: 0, minWidth: "2rem" }}>{String(i + 1).padStart(2, "0")}</p>
+              <div key={item.h} style={{ display: "flex", gap: "1.4rem", padding: "1.3rem 0", borderBottom: i < LEARN_ITEMS.length - 1 ? "1px solid rgba(22,22,22,0.12)" : "none", alignItems: "baseline" }}>
+                <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "1.1rem", color: "#9c7410", margin: 0, minWidth: "2rem" }}>{String(i + 1).padStart(2, "0")}</p>
                 <div>
                   <p style={{ fontFamily: H_FONT, fontSize: "1rem", fontWeight: 600, color: INK, margin: 0 }}>{item.h}</p>
                   <p style={{ fontFamily: H_FONT, fontWeight: 300, fontSize: "0.9rem", color: MUTED, lineHeight: 1.8, marginTop: "0.35rem", maxWidth: "34rem" }}>{item.p}</p>
@@ -383,7 +381,7 @@ export default function CoursePage() {
               <div className="mobile-2col" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.8rem", marginTop: "1.6rem" }}>
                 {STATS.map(s => (
                   <div key={s.t} className="stat-card" style={{ padding: "1rem 0.7rem", textAlign: "center" }}>
-                    <p style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "1.5rem", color: INK, lineHeight: 1, margin: 0 }}>{s.n}</p>
+                    <p style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "1.5rem", color: INK, lineHeight: 1, margin: 0 }}>{s.n}</p>
                     <p style={{ fontFamily: H_FONT, fontSize: "0.52rem", letterSpacing: "0.18em", textTransform: "uppercase", color: FAINT, marginTop: "0.45rem" }}>{s.t}</p>
                   </div>
                 ))}
@@ -414,7 +412,7 @@ export default function CoursePage() {
           <H2>Questions</H2>
           <div style={{ marginTop: "1.6rem", display: "flex", flexDirection: "column" }}>
             {QUESTIONS.map((item, i) => (
-              <div key={item.q} style={{ padding: "1.2rem 0", borderBottom: i < QUESTIONS.length - 1 ? "1px solid rgba(28,23,19,0.12)" : "none" }}>
+              <div key={item.q} style={{ padding: "1.2rem 0", borderBottom: i < QUESTIONS.length - 1 ? "1px solid rgba(22,22,22,0.12)" : "none" }}>
                 <p style={{ fontFamily: H_FONT, fontSize: "0.98rem", fontWeight: 600, color: INK, margin: 0 }}>{item.q}</p>
                 <p style={{ fontFamily: H_FONT, fontWeight: 300, fontSize: "0.9rem", color: MUTED, lineHeight: 1.8, marginTop: "0.4rem", maxWidth: "36rem" }}>{item.a}</p>
               </div>
@@ -424,7 +422,7 @@ export default function CoursePage() {
       </section>
 
       {/* ── Divider: her red artwork as one clean moment with no words on it ── */}
-      <div aria-hidden="true" style={{ height: "clamp(200px, 34vh, 340px)", backgroundImage: "url('/bg-red.jpg')", backgroundSize: "cover", backgroundPosition: "center" }} />
+      <div aria-hidden="true" style={{ height: "clamp(200px, 34vh, 340px)", backgroundImage: "url('/background/record-store.jpg')", backgroundSize: "cover", backgroundPosition: "center" }} />
 
       {/* ── Music, gathered into its own section below the course content ── */}
       <section style={{ padding: `6rem ${pad}` }}>
@@ -454,7 +452,7 @@ export default function CoursePage() {
       {/* ── Footer ── */}
       <footer
         className="section-content relative py-8 text-center"
-        style={{ borderTop: "1px solid rgba(28,23,19,0.14)" }}
+        style={{ borderTop: "1px solid rgba(22,22,22,0.14)" }}
       >
         <p className="font-inter" style={{ fontSize: "0.65rem", letterSpacing: "0.18em", color: FAINT, margin: 0 }}>
           @2026 CAL1STAR EDITING.&nbsp;&nbsp;PSALM 46:5

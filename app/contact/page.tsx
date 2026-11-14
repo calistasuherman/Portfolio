@@ -2,7 +2,7 @@
 
 export default function ContactPage() {
   return (
-    <main className="relative min-h-screen overflow-x-clip" style={{ background: "#080205" }}>
+    <main className="relative min-h-screen overflow-x-clip" style={{ background: "#101010" }}>
 
       {/* Background photo */}
       <div style={{
@@ -14,7 +14,7 @@ export default function ContactPage() {
       {/* Gradient overlay — heavier at top/bottom, lighter at center so bg breathes */}
       <div style={{
         position: "fixed", inset: 0, zIndex: 1,
-        background: "linear-gradient(to bottom, rgba(8,2,5,0.72) 0%, rgba(8,2,5,0.38) 40%, rgba(8,2,5,0.38) 60%, rgba(8,2,5,0.82) 100%)",
+        background: "linear-gradient(to bottom, rgba(12,12,12,0.72) 0%, rgba(12,12,12,0.38) 40%, rgba(12,12,12,0.38) 60%, rgba(12,12,12,0.82) 100%)",
       }} />
 
       {/* Main content */}
@@ -32,12 +32,12 @@ export default function ContactPage() {
       >
         {/* Headline */}
         <h1 className="contact-headline" style={{
-          fontFamily: "BillaMount, cursive",
-          fontSize: "clamp(3.8rem, 11vw, 10.5rem)",
+          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+          fontSize: "clamp(3rem, 8.5vw, 7.5rem)",
           color: "#f5f0f0",
           lineHeight: 0.95,
-          fontWeight: "normal",
-          letterSpacing: "-0.01em",
+          fontWeight: 700,
+          letterSpacing: "-0.02em",
           flexShrink: 0,
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}>
@@ -56,7 +56,7 @@ export default function ContactPage() {
           {/* Email CTA */}
           <div>
             <p style={{
-              fontFamily: "'HelvLight', var(--font-inter)",
+              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
               fontSize: "0.58rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
@@ -71,7 +71,7 @@ export default function ContactPage() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.6rem",
-                fontFamily: "'HelvLight', var(--font-inter)",
+                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
                 fontSize: "clamp(0.85rem, 1.5vw, 1.1rem)",
                 color: "#f5f0f0",
                 textDecoration: "none",
@@ -84,9 +84,9 @@ export default function ContactPage() {
               }}
               onMouseEnter={e => {
                 const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = "#960018";
-                el.style.borderColor = "#960018";
-                el.style.color = "#fff";
+                el.style.background = "#c9971c";
+                el.style.borderColor = "#c9971c";
+                el.style.color = "#161616";
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLAnchorElement;
@@ -103,7 +103,7 @@ export default function ContactPage() {
           {/* Socials */}
           <div>
             <p style={{
-              fontFamily: "'HelvLight', var(--font-inter)",
+              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
               fontSize: "0.58rem",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
@@ -124,7 +124,7 @@ export default function ContactPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
-                    fontFamily: "'HelvLight', var(--font-inter)",
+                    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
                     fontSize: "clamp(0.8rem, 1.2vw, 0.95rem)",
                     color: "rgba(245,240,240,0.45)",
                     textDecoration: "none",
@@ -154,7 +154,7 @@ export default function ContactPage() {
 
       <footer
         className="section-content relative py-8 text-center"
-        style={{ zIndex: 2, borderTop: "1px solid rgba(139,0,0,0.15)" }}
+        style={{ zIndex: 2, borderTop: "1px solid rgba(201,151,28,0.15)" }}
       >
         <p className="font-inter text-text-muted opacity-40" style={{ fontSize: "0.65rem", letterSpacing: "0.18em" }}>
           @2026 CAL1STAR EDITING.&nbsp;&nbsp;PSALM 46:5
