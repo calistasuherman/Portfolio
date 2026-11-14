@@ -304,7 +304,20 @@ function initHome() {
           play.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
           var tag = document.createElement("span");
           tag.className = "tag";
-          tag.textContent = item.category || pad2(i + 1);
+          /* Partnerships: the word next to the frame's dot is removed
+             at Calista's request. It repeated the same category (AI on
+             three of the four brand videos, SFX on the other) that the
+             label under each frame already shows, so the partnerships
+             frames now carry the dot alone with no title beside it.
+             Every other category keeps its number next to the dot, and
+             the Partnerships brand name labels under the frames stay
+             exactly as they were. */
+          if (categoryTitle === "Partnerships") {
+            tag.className = "tag tag--dot-only";
+            tag.setAttribute("aria-hidden", "true");
+          } else {
+            tag.textContent = item.category || pad2(i + 1);
+          }
           var watchBtn = document.createElement("button");
           watchBtn.className = "watch"; watchBtn.type = "button";
           watchBtn.setAttribute("data-src", item.src);
