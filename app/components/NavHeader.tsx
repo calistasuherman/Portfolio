@@ -162,7 +162,7 @@ export default function NavHeader() {
             cursor: "none", padding: 0,
             transition: "transform 0.2s ease",
             transform: playerOpen ? "scale(1.08)" : "scale(1)",
-            filter: playing ? "drop-shadow(0 0 10px rgba(201,151,28,0.5))" : "drop-shadow(0 4px 12px rgba(0,0,0,0.6))",
+            filter: playing ? "drop-shadow(0 0 10px rgba(230,230,230,0.5))" : "drop-shadow(0 4px 12px rgba(0,0,0,0.6))",
           }}
         >
           <img

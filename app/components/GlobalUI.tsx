@@ -251,7 +251,7 @@ export default function GlobalUI() {
           <a
             href="/contact"
             className="font-inter text-[10px] md:text-[11px] uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95"
-            style={{ textDecoration: "none", background: "#c9971c", color: "#161616", fontWeight: 600, padding: "0.5rem 1rem", borderRadius: "9999px", whiteSpace: "nowrap" }}
+            style={{ textDecoration: "none", background: "#161616", color: "#ffffff", fontWeight: 600, padding: "0.5rem 1rem", borderRadius: "9999px", whiteSpace: "nowrap" }}
           >
             Work with me
           </a>
@@ -313,7 +313,7 @@ export default function GlobalUI() {
 
             {/* Progress bar */}
             <div onClick={seek} style={{ width: "100%", height: "3px", background: "rgba(22,22,22,0.14)", borderRadius: "2px", cursor: "pointer" }}>
-              <div style={{ height: "100%", background: "#c9971c", borderRadius: "2px", width: duration ? `${(progress / duration) * 100}%` : "0%", transition: "width 0.5s linear" }} />
+              <div style={{ height: "100%", background: "#161616", borderRadius: "2px", width: duration ? `${(progress / duration) * 100}%` : "0%", transition: "width 0.5s linear" }} />
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px" }}>
               <span style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontSize: "0.48rem", color: "rgba(22,22,22,0.45)" }}>{fmt(progress)}</span>
@@ -334,7 +334,7 @@ export default function GlobalUI() {
             transition: "transform 0.2s ease",
             transform: playerOpen ? "scale(1.05)" : "scale(1)",
             filter: playing
-              ? "drop-shadow(0 0 14px rgba(201,151,28,0.45))"
+              ? "drop-shadow(0 0 14px rgba(17,17,17,0.45))"
               : "drop-shadow(0 4px 16px rgba(22,22,22,0.35))",
           }}
         >
