@@ -196,7 +196,7 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
         <div class="wrap about-grid">
           <div>
             <p class="label" data-reveal>Get to know me</p>
-            <h2 data-reveal style="--reveal-delay: .06s"><span class="script" style="color: var(--ink); font-size: 1.35em; margin-right: 10px;">About</span>me</h2>
+            <h2 data-reveal style="--reveal-delay: .06s"><span class="script" style="color: var(--ink); font-size: 1.35em; margin-right: 10px;">About</span>Me</h2>
             <p class="meta-line" data-reveal style="--reveal-delay: .12s"><b>@cal1star</b> &nbsp;|&nbsp; <span class="js-followers-milestone">60k+</span> Instagram, 4K+ YouTube &nbsp;|&nbsp; <span class="location">San Francisco, CA</span></p>
             <p class="about-copy" data-reveal style="--reveal-delay: .18s">Hi! I&rsquo;m Calista, your friendly neighborhood video editor, and I&rsquo;m thrilled you&rsquo;ve found your way to my corner of the internet.</p>
             <ul class="labels" data-reveal style="--reveal-delay: .24s">
@@ -324,14 +324,6 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
               <p class="work-count" id="detailCount"></p>
             </div>
             <div class="work-grid" id="workGallery"></div>
-            <div id="workSubsection" hidden>
-              <div class="work-sub-head">
-                <p class="label" id="detailSubIdx">01.1 &middot; My work</p>
-                <h3 id="detailSubTitle">Tutorials</h3>
-                <p class="work-desc" id="detailSubDesc"></p>
-              </div>
-              <div class="work-grid work-grid--wide" id="workSubGallery"></div>
-            </div>
             <p class="work-note" data-reveal>Hover a frame to preview &middot; Click to watch</p>
           </div>
         </div>
