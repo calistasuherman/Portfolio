@@ -457,8 +457,7 @@ export default function Home() {
           <RevealToggle className="order-1" direction="left">
             <div className="leading-none" style={{ position: "relative", marginTop: "2rem", marginBottom: "1.2rem" }} suppressHydrationWarning>
               <h2 style={{ fontWeight: "normal", color: "#0a0a0a", letterSpacing: "0.05em", position: "relative" }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)" }}>A</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(2rem, 4.5vw, 4.2rem)" }}>bout me</span>
+                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)" }}>About me</span>
               </h2>
             </div>
             <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", color: "#0a0a0a", letterSpacing: "0.05em" }}>
@@ -539,8 +538,7 @@ export default function Home() {
           <RevealToggle>
             <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: "1px solid rgba(245,240,240,0.1)", paddingBottom: "1.2rem", marginBottom: "2.5rem" }}>
               <span>
-                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", fontWeight: "normal" }}>S</span>
-                <span style={{ fontFamily: "PerandoryCondensed, sans-serif", fontSize: "clamp(1.4rem, 2.8vw, 2.5rem)", color: "#f5f0f0", fontWeight: "normal", letterSpacing: "0.04em" }}>elected Work</span>
+                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", fontWeight: "normal" }}>Selected Work</span>
               </span>
               <a href="/work" style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.4)", textDecoration: "none", transition: "color 0.3s ease" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.85)")}

@@ -243,7 +243,7 @@ function OrbitTitle({ parts }: { parts: { text: string; script?: boolean }[] }) 
   return (
     <div style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
       {parts.map(({ text, script }, i) => (
-        <span key={i} style={{ fontFamily: script ? "BillaMount, cursive" : "PerandoryCondensed, sans-serif", fontWeight: "normal", color: "#f5f0f0" }}>{text}</span>
+        <span key={i} style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", color: "#f5f0f0" }}>{text}</span>
       ))}
     </div>
   );
