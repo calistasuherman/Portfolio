@@ -49,7 +49,7 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Calista Suherman — Portfolio",
   description: "AI Visuals · Graphic Design · Creative Direction",
-  icons: { icon: "/cs-logo.png" },
+  icons: { icon: "/favicon-c.png", apple: "/apple-touch-icon.png" },
 };
 
 export default function RootLayout({
