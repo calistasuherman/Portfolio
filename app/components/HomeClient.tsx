@@ -205,10 +205,10 @@ function initHome() {
         /* ---------- work: every video from the live site, restored ----------
            Source of truth: app/work/page.tsx in calistasuherman/Portfolio
            (the code behind cal1star.com/work), checked 2026-11-13.
-           Video Editing lists 20 edits in this exact order, Videography
-           lists 14 cinema clips, Partnerships lists 4 brand videos, and
-           Video Editing also carries a Tutorials subsection with the
-           Invideo tutorial. Files stream from the live site's own media
+           Video Editing lists 21 videos in this exact order (the 20
+           edits, then the Invideo tutorial last), Videography lists 14
+           cinema clips, and Partnerships lists 4 brand videos. Files
+           stream from the live site's own media
            address (cal1star.com/media, its /media proxy) and load lazily:
            nothing downloads until a frame nears the screen or is hovered,
            and full playback only starts on a click in the lightbox. */
@@ -222,12 +222,7 @@ function initHome() {
             idx: "01", title: "Video Editing",
             desc: "Short form edits, motion graphics, VFX, and dynamic transitions built to stop the scroll.",
             layout: "portrait",
-            videos: VE_FILES.map(function (f) { return { src: MEDIA + "/ve/" + f, label: fileLabel(f) }; }),
-            sub: {
-              idx: "01.1", title: "Tutorials",
-              desc: "Quick walkthroughs of the tools and techniques behind my edits.",
-              videos: [{ src: MEDIA + "/yt/invideotutorial.mp4", label: "Invideo", category: "Tutorial" }]
-            }
+            videos: VE_FILES.map(function (f) { return { src: MEDIA + "/ve/" + f, label: fileLabel(f) }; }).concat([{ src: MEDIA + "/yt/invideotutorial.mp4", label: "Invideo" }])
           },
           "videography": {
             idx: "02", title: "Videography",
@@ -293,8 +288,8 @@ function initHome() {
           });
         }
         /* Only Partnerships cards carry a title under the video (the brand
-           names); Video Editing, Videography and the Tutorials subsection
-           show the bare frame with its number tag, per Calista's request. */
+           names); Video Editing and Videography show the bare frame with
+           its number tag, per Calista's request. */
         function createWorkCard(item, i, categoryTitle, titled) {
           var display = titled ? (item.category ? item.label : (item.label + " \u00B7 " + pad2(i + 1))) : pad2(i + 1);
           var card = document.createElement("div");
@@ -355,8 +350,6 @@ function initHome() {
         var vinylView = document.getElementById("vinylView");
         var workDetail = document.getElementById("workDetail");
         var workGallery = document.getElementById("workGallery");
-        var workSubsection = document.getElementById("workSubsection");
-        var workSubGallery = document.getElementById("workSubGallery");
         document.querySelectorAll(".vinyl").forEach(function (btn) {
           btn.addEventListener("click", function () {
             var d = workData[btn.getAttribute("data-cat")];
@@ -366,22 +359,7 @@ function initHome() {
             document.getElementById("detailDesc").textContent = d.desc;
             var countEl = document.getElementById("detailCount");
             countEl.textContent = d.videos.length + (d.videos.length === 1 ? " video" : " videos");
-            if (d.sub) {
-              var subNote = document.createElement("span");
-              subNote.textContent = " \u00B7 plus " + d.sub.videos.length + " tutorial";
-              countEl.appendChild(subNote);
-            }
             renderGallery(workGallery, d.videos, d.layout, d.title, btn.getAttribute("data-cat") === "partnerships");
-            if (d.sub) {
-              document.getElementById("detailSubIdx").textContent = d.sub.idx + " \u00B7 My work";
-              document.getElementById("detailSubTitle").textContent = d.sub.title;
-              document.getElementById("detailSubDesc").textContent = d.sub.desc;
-              renderGallery(workSubGallery, d.sub.videos, "wide", d.sub.title, false);
-              workSubsection.hidden = false;
-            } else {
-              workSubGallery.innerHTML = "";
-              workSubsection.hidden = true;
-            }
             vinylView.hidden = true;
             workDetail.hidden = false;
             document.getElementById("work").scrollIntoView({ behavior: "smooth", block: "start" });
