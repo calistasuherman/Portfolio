@@ -342,7 +342,6 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
             <button class="btn btn-light" type="submit">Join the waitlist &rarr;</button>
           </form>
           <p class="form-note" id="formNote" role="status"></p>
-          <a class="gumroad-link" data-reveal style="--reveal-delay: .3s" href="https://cal1starediting.gumroad.com" target="_blank" rel="noopener">Or browse my Gumroad store &rarr;</a>
           <p class="launch-line" data-reveal style="--reveal-delay: .36s">Launching <b>early January</b> &middot; The Cutting Room community on Discord</p>
         </div>
       </section>
@@ -371,11 +370,11 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
         <div class="foot-grid">
           <div data-reveal>
             <img class="foot-logo" src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="cal" alt="Cal1star Editing" />
-            <p class="tagline">For partnerships, tutorials or just to say hi, you can find me on Instagram at @cal1star.</p>
-            <p class="foot-email">You can also reach me at <a href="mailto:cal1starpartnerships@gmail.com">cal1starpartnerships@gmail.com</a></p>
+            <p class="tagline">Let’s work together!<br /><a href="mailto:cal1starpartnerships@gmail.com">cal1starpartnerships@gmail.com</a></p>
+            <p class="foot-email">For tutorials or just to say hi, you can find me on Instagram at @cal1star.</p>
             <div class="btn-row" style="margin-top: 26px;">
               <a class="btn btn-light" href="/course" target="_blank" rel="noopener">Join the waitlist</a>
-              <a class="btn btn-outline" href="https://cal1starediting.gumroad.com" target="_blank" rel="noopener">Gumroad store</a>
+              <a class="btn btn-outline" href="https://cal1starediting.gumroad.com" target="_blank" rel="noopener">Shop my templates and tutorials</a>
             </div>
           </div>
           <div class="foot-side" data-reveal style="--reveal-delay: .1s">
