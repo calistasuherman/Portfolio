@@ -374,7 +374,7 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
             <p class="foot-email">For tutorials or just to say hi, you can find me on Instagram at @cal1star.</p>
             <div class="btn-row" style="margin-top: 26px;">
               <a class="btn btn-light" href="/course" target="_blank" rel="noopener">Join the waitlist</a>
-              <a class="btn btn-outline" href="https://cal1starediting.gumroad.com" target="_blank" rel="noopener">Shop my templates and tutorials</a>
+              <a class="btn btn-outline" href="https://cal1starediting.gumroad.com" target="_blank" rel="noopener">Shop my templates</a>
             </div>
           </div>
           <div class="foot-side" data-reveal style="--reveal-delay: .1s">
