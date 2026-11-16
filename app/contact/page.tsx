@@ -32,12 +32,12 @@ export default function ContactPage() {
       >
         {/* Headline */}
         <h1 className="contact-headline" style={{
-          fontFamily: "BillaMount, cursive",
-          fontSize: "clamp(3.8rem, 11vw, 10.5rem)",
+          fontFamily: "var(--font-bebas), Impact, sans-serif",
+          fontSize: "clamp(3.8rem, 12vw, 11rem)",
           color: "#f5f0f0",
           lineHeight: 0.95,
           fontWeight: "normal",
-          letterSpacing: "-0.01em",
+          letterSpacing: "0.02em",
           flexShrink: 0,
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}>

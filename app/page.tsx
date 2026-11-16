@@ -217,7 +217,7 @@ function ToolkitSection() {
     <section className="relative" style={{ paddingTop: "7rem", paddingBottom: "6rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
       <div style={{ maxWidth: "900px", width: "100%", padding: "0 2rem", textAlign: "center" }}>
         <RevealToggle>
-          <div style={{ fontFamily: "BillaMount, cursive", fontWeight: "normal", fontSize: "clamp(2rem, 3.8vw, 3.8rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "4.5rem" }}>
+          <div style={{ fontFamily: "var(--font-bebas), Impact, sans-serif", letterSpacing: "0.04em", fontWeight: "normal", fontSize: "clamp(2rem, 3.8vw, 3.8rem)", color: "#f5f0f0", lineHeight: 1, marginBottom: "4.5rem" }}>
             My Toolkit
           </div>
         </RevealToggle>
@@ -457,7 +457,7 @@ export default function Home() {
           <RevealToggle className="order-1" direction="left">
             <div className="leading-none" style={{ position: "relative", marginTop: "2rem", marginBottom: "1.2rem" }} suppressHydrationWarning>
               <h2 style={{ fontWeight: "normal", color: "#0a0a0a", letterSpacing: "0.05em", position: "relative" }}>
-                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2.8rem, 6.5vw, 6rem)" }}>About me</span>
+                <span style={{ fontFamily: "var(--font-bebas), Impact, sans-serif", letterSpacing: "0.04em", fontSize: "clamp(2.8rem, 6.5vw, 6rem)" }}>About me</span>
               </h2>
             </div>
             <p className="font-inter" style={{ fontSize: "clamp(0.6rem, 0.95vw, 0.78rem)", marginTop: "1.2rem", paddingLeft: "1.5rem", color: "#0a0a0a", letterSpacing: "0.05em" }}>
@@ -538,7 +538,7 @@ export default function Home() {
           <RevealToggle>
             <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", borderBottom: "1px solid rgba(245,240,240,0.1)", paddingBottom: "1.2rem", marginBottom: "2.5rem" }}>
               <span>
-                <span style={{ fontFamily: "BillaMount, cursive", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", fontWeight: "normal" }}>Selected Work</span>
+                <span style={{ fontFamily: "var(--font-bebas), Impact, sans-serif", letterSpacing: "0.04em", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "#f5f0f0", fontWeight: "normal" }}>Selected Work</span>
               </span>
               <a href="/work" style={{ fontFamily: "'HelvLight', var(--font-inter)", fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(245,240,240,0.4)", textDecoration: "none", transition: "color 0.3s ease" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "rgba(245,240,240,0.85)")}
