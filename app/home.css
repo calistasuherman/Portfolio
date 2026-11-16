@@ -134,7 +134,7 @@
           --glass-border: rgba(255, 255, 255, 0.32);
           --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.48), inset 0 -1px 0 rgba(255,255,255,0.09), inset 0 0 14px rgba(255,255,255,0.14), 0 8px 22px rgba(0,0,0,0.24); }
 }
-.c1s .hero .label, .c1s .trusted .label, .c1s .work .label, .c1s .course .label, .c1s .work-detail-head .label, .c1s .work-sub-head .label { display: flex; margin-left: auto; margin-right: auto; }
+.c1s .hero .label, .c1s .trusted .label, .c1s .work .label, .c1s .course .label, .c1s .work-detail-head .label, .c1s .work-sub-head .label, .c1s #toolkit .label { display: flex; margin-left: auto; margin-right: auto; }
 .c1s h1, .c1s h2, .c1s h3 { font-family: var(--font-display);
         font-weight: 400;
         font-synthesis: none; letter-spacing: 0.03em; }
@@ -530,7 +530,7 @@
 @media (max-width: 760px) {
 .c1s .foot-grid { grid-template-columns: 1fr; }
 }
-.c1s .foot-logo { width: min(300px, 82vw); height: auto; filter: invert(1); margin: 0 0 16px; }
+.c1s .foot-logo { width: min(300px, 82vw); height: auto; filter: invert(1); margin: 0 0 16px calc(min(300px, 82vw) * -0.05); }
 .c1s footer .tagline { color: var(--on-dark-muted); font-weight: 300; margin: 0; max-width: 40ch; }
 .c1s footer .foot-email { color: var(--on-dark-muted); font-weight: 300; margin: 14px 0 0; max-width: 40ch; }
 .c1s footer .foot-email a, .c1s footer .tagline a { color: var(--on-dark); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.35); transition: color .2s ease, border-color .2s ease; }
@@ -626,6 +626,13 @@
 .c1s .trusted.anim-paused .brand-track { animation-play-state: paused; }
 .c1s .work.anim-paused .vinyl-float, .c1s .work.anim-paused .vinyl-disc svg { animation-play-state: paused; }
 .c1s #toolkit.anim-paused .tool::before { animation-play-state: paused; }
+/* Glide quieting: while a section link glide runs, HomeClient adds
+   .glide-active to the root element and every CSS animation on the
+   page holds still, so the hero rows, the marquee, the vinyls and the
+   toolkit sheen stop compositing and the glide gets the frames to
+   itself. The class is removed the moment the glide ends or is
+   cancelled, and everything resumes. */
+html.glide-active *, html.glide-active *::before, html.glide-active *::after { animation-play-state: paused !important; }
 @keyframes c1sRevealSlideUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
