@@ -78,21 +78,21 @@
 .c1s .bg-stage { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background-image: var(--ombre-light); background-size: 100% 100%; }
 .c1s .bg-grid-layer { position: absolute; inset: -108px 0;
         background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-        background-size: 54px 54px; will-change: transform; }
+        background-size: 54px 54px; }
 .c1s .bg-glow-travel { position: absolute; left: 50%; top: -18vmin; width: 90vmin; height: 90vmin; border-radius: 50%;
         background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.07) 40%, transparent 68%);
-        will-change: transform; }
+        transform: translate3d(-50%, 0, 0); }
 @media (prefers-color-scheme: dark) {
 .c1s .bg-glow-travel { background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 40%, transparent 68%); }
 }
 .c1s .work::before, .c1s .course::before, .c1s footer::before { content: ""; position: absolute; inset: -220px 0; z-index: 0; pointer-events: none;
         background-image: linear-gradient(var(--grid-dark) 1px, transparent 1px), linear-gradient(90deg, var(--grid-dark) 1px, transparent 1px);
         background-size: 54px 54px;
-        transform: translate3d(0, var(--py, 0px), 0); will-change: transform; }
+        transform: translate3d(0, var(--py, 0px), 0); }
 .c1s .work::after, .c1s .course::after, .c1s footer::after { content: ""; position: absolute; z-index: 0; pointer-events: none;
         width: min(680px, 88vw); aspect-ratio: 1; border-radius: 50%;
         background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.07) 42%, transparent 68%);
-        transform: translate3d(0, calc(var(--py, 0px) * -1.7), 0); will-change: transform; }
+        transform: translate3d(0, calc(var(--py, 0px) * -1.7), 0); }
 .c1s .work::after { top: -100px; right: -120px; }
 .c1s .course::after { bottom: -160px; left: -100px; }
 .c1s footer::after { top: -80px; right: 10%; }
@@ -100,7 +100,7 @@
 .c1s #about::after, .c1s #toolkit::after { content: ""; position: absolute; z-index: 0; pointer-events: none;
         width: min(620px, 86vw); aspect-ratio: 1; border-radius: 50%;
         background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.055) 42%, transparent 68%);
-        transform: translate3d(0, calc(var(--py, 0px) * -1.7), 0); will-change: transform; }
+        transform: translate3d(0, calc(var(--py, 0px) * -1.7), 0); }
 .c1s #about::after { top: -60px; right: -40px; }
 .c1s #toolkit::after { bottom: -140px; left: -80px; }
 @media (prefers-color-scheme: dark) {
@@ -146,8 +146,8 @@
         letter-spacing: 0.03em; margin: 0 0 16px; color: var(--ink); }
 .c1s section { padding: var(--section-pad) 0; }
 .c1s header.nav { position: sticky; top: 0; z-index: 40;
-        background: color-mix(in srgb, var(--bg) 72%, transparent);
-        backdrop-filter: blur(12px) saturate(180%); -webkit-backdrop-filter: blur(12px) saturate(180%);
+        background: color-mix(in srgb, var(--bg) 82%, transparent);
+        backdrop-filter: blur(8px) saturate(180%); -webkit-backdrop-filter: blur(8px) saturate(180%);
         border-bottom: 1px solid var(--line); }
 .c1s header.nav .nav-inner { display: flex; align-items: center; gap: 28px; min-height: 52px;
         max-width: none; width: 100%; margin: 0; padding: 0 20px 0 14px;
@@ -223,10 +223,10 @@
         width: min(232px, calc(100vw - 32px));
         padding: 8px 10px 7px; color: #ffffff;
         border-radius: 18px;
-        background: linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.10) 38%, rgba(255,255,255,0.04) 62%, rgba(0,0,0,0.18) 100%), rgba(22, 22, 24, 0.46);
+        background: linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.10) 38%, rgba(255,255,255,0.04) 62%, rgba(0,0,0,0.18) 100%), rgba(22, 22, 24, 0.58);
         border: 1px solid rgba(255, 255, 255, 0.42);
         box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32), 0 2px 10px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(255,255,255,0.10);
-        backdrop-filter: blur(12px) saturate(185%); -webkit-backdrop-filter: blur(12px) saturate(185%);
+        backdrop-filter: blur(8px) saturate(185%); -webkit-backdrop-filter: blur(8px) saturate(185%);
         overflow: hidden; }
 .c1s .player::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
         background: radial-gradient(120% 70% at 12% 0%, rgba(255,255,255,0.28) 0%, transparent 55%);

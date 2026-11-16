@@ -7,7 +7,7 @@ import { BRAND_CAPCUT, BRAND_ELEVENLABS, BRAND_HIGGSFIELD, CAL1STAR_LOGO, CAPCUT
    follower milestone, the simulated Michael Jackson mini player, the photo
    stack flip and parallax, the work galleries and lightbox, the waitlist
    form (posting to /api/waitlist like the live course page), native
-   scrolling with eased link glides, the scroll moving backgrounds, the scroll reveals, the custom
+   scrolling with eased link glides, the scroll reveals, the custom
    cursor and the hero video wall. It runs once on mount and every handler
    that outlives the page checks for the homepage root first, so nothing
    here can leak into the other pages. */
@@ -483,81 +483,6 @@ function initHome() {
               target.setAttribute("tabindex", "-1");
             });
           });
-        })();
-
-        /* ---------- scroll moving backgrounds ----------
-           One rAF gated pass per scroll or resize frame, and only
-           while a frame is actually owed: at rest this costs nothing.
-           Section positions are measured once and cached (re measured
-           on resize, or whenever the document height changes), so a
-           scroll frame does no layout reads at all, and a --py write
-           only happens when the rounded value actually changed.
-           Everything it moves is a transform on a dedicated layer
-           (the fixed stage's single grid and glow, each section's
-           --py fed grid and glow plates), never a layout or paint
-           property, so scrolling stays cheap and nothing lags.
-           The stage grid wraps modulo its own 54px tile, so its drift
-           is seamless and bounded no matter how far the page scrolls.
-           The travelling glow follows overall page progress: it starts
-           near the top of the viewport and eases down through it,
-           swaying a little side to side, as Calista scrolls down.
-           Per section, --py is the section centre's distance from the
-           viewport centre scaled down and clamped to about 50px, so
-           grids visibly slide against the scroll and glows counter
-           drift through the CSS calc on the ::after layers (the
-           ::before layers are inset by 220px so a 50px drift
-           never exposes an edge). Reduced
-           motion: the whole thing never starts and the CSS pins every
-           layer still, so backgrounds sit exactly where they were. */
-        (function initScrollBackgrounds() {
-          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { return; }
-          var grid = document.querySelector(".bg-grid-layer");
-          var glow = document.querySelector(".bg-glow-travel");
-          var sections = [];
-          [".hero", "#about", "#work", "#course", "#toolkit", "#contact"].forEach(function (sel) {
-            var el = document.querySelector(sel);
-            if (el) { sections.push(el); }
-          });
-          if (!grid && !glow && !sections.length) { return; }
-          var ticking = false;
-          var vh = window.innerHeight || 1;
-          var docH = document.documentElement.scrollHeight || 1;
-          var measured = [];
-          function measure() {
-            vh = window.innerHeight || 1;
-            docH = document.documentElement.scrollHeight || 1;
-            var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-            measured = sections.map(function (el) {
-              var r = el.getBoundingClientRect();
-              return { el: el, top: r.top + y, height: r.height, lastPy: null };
-            });
-          }
-          function update() {
-            ticking = false;
-            if (!document.getElementById("c1sRoot")) { return; }
-            var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-            if ((document.documentElement.scrollHeight || 1) !== docH) { measure(); }
-            var max = Math.max(1, docH - vh);
-            var p = Math.min(1, Math.max(0, y / max));
-            if (grid) { grid.style.transform = "translate3d(0," + (-((y * 0.3) % 54)).toFixed(1) + "px,0)"; }
-            if (glow) {
-              var sway = Math.sin(p * Math.PI * 2) * 16;
-              glow.style.transform = "translate3d(calc(-50% + " + sway.toFixed(1) + "vw)," + (p * 88).toFixed(1) + "vh,0)";
-            }
-            measured.forEach(function (sec) {
-              var top = sec.top - y;
-              if (top + sec.height < -320 || top > vh + 320) { return; }
-              var delta = (top + sec.height / 2) - vh / 2;
-              var py = Math.max(-50, Math.min(50, -delta * 0.16)).toFixed(1);
-              if (sec.lastPy !== py) { sec.lastPy = py; sec.el.style.setProperty("--py", py + "px"); }
-            });
-          }
-          function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
-          function onResize() { measure(); onScroll(); }
-          window.addEventListener("scroll", onScroll, { passive: true });
-          window.addEventListener("resize", onResize, { passive: true });
-          measure();
-          update();
         })();
 
         /* ---------- scroll reveals: slide in on scroll, once each ----------
