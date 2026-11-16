@@ -502,10 +502,10 @@ function initHome() {
            near the top of the viewport and eases down through it,
            swaying a little side to side, as Calista scrolls down.
            Per section, --py is the section centre's distance from the
-           viewport centre scaled down and clamped to about 110px, so
+           viewport centre scaled down and clamped to about 50px, so
            grids visibly slide against the scroll and glows counter
            drift through the CSS calc on the ::after layers (the
-           ::before layers are inset by 220px so a 110px drift
+           ::before layers are inset by 220px so a 50px drift
            never exposes an edge). Reduced
            motion: the whole thing never starts and the CSS pins every
            layer still, so backgrounds sit exactly where they were. */
@@ -548,7 +548,7 @@ function initHome() {
               var top = sec.top - y;
               if (top + sec.height < -320 || top > vh + 320) { return; }
               var delta = (top + sec.height / 2) - vh / 2;
-              var py = Math.max(-110, Math.min(110, -delta * 0.16)).toFixed(1);
+              var py = Math.max(-50, Math.min(50, -delta * 0.16)).toFixed(1);
               if (sec.lastPy !== py) { sec.lastPy = py; sec.el.style.setProperty("--py", py + "px"); }
             });
           }
