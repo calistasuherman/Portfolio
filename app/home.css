@@ -511,17 +511,7 @@
 .c1s .toolkit-grid .tool:nth-child(4) { --sheen-delay: 1.35s; }
 .c1s .toolkit-grid .tool:nth-child(5) { --sheen-delay: 1.8s; }
 .c1s .toolkit-grid .tool:nth-child(6) { --sheen-delay: 2.25s; }
-.c1s .tool-ico { width: 108px; height: 108px; border-radius: 50%; display: grid; place-items: center; position: relative; z-index: 1; margin: 0 auto 16px;
-        background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.45) 55%, rgba(255,255,255,0.18) 100%);
-        border: 1px solid rgba(0,0,0,0.06);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -8px 16px rgba(0,0,0,0.05), 0 12px 24px rgba(0,0,0,0.08);
-        transition: box-shadow .38s ease; }
-@media (prefers-color-scheme: dark) {
-.c1s .tool-ico { background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.10) 55%, rgba(255,255,255,0.04) 100%);
-        border-color: rgba(255,255,255,0.18);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -8px 16px rgba(0,0,0,0.25), 0 12px 24px rgba(0,0,0,0.30); }
-}
-.c1s .tool:hover .tool-ico { box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -8px 16px rgba(0,0,0,0.05), 0 14px 30px rgba(0,0,0,0.10), 0 0 34px rgba(255,255,255,0.55); }
+.c1s .tool-ico { display: block; position: relative; z-index: 1; margin: 0 auto 16px; }
 .c1s .tool img { width: 84px; height: 84px; max-width: 84px; margin: 0; object-fit: contain; position: relative; z-index: 1;
         filter: drop-shadow(0 10px 18px rgba(0,0,0,0.16)); }
 .c1s .tool p { margin: 0; font-size: 15.5px; letter-spacing: -0.01em; font-weight: 600; position: relative; z-index: 1; }
