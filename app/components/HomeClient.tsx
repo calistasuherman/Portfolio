@@ -506,12 +506,36 @@ function initHome() {
           var reducedScroll = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
           var rootEl = document.documentElement;
           var glideId = 0;
+          var glideQuiet = false;
+
+          /* While a glide runs, quiet the page: .glide-active pauses
+             every CSS animation (see home.css) and the hero wall videos
+             pause, so two seconds of scrolling is not competing with
+             76 decoding clips, the marquee, the vinyls and the toolkit
+             sheen for frames. pauseWall, playWall and wallOnScreen are
+             the hero wall's own controls further down this script; the
+             wall's observer checks .glide-active too, so it cannot
+             restart the wall mid glide. Everything resumes the moment
+             the glide ends or is cancelled. */
+          function quietPage() {
+            if (glideQuiet) { return; }
+            glideQuiet = true;
+            rootEl.classList.add("glide-active");
+            if (typeof pauseWall === "function") { pauseWall(); }
+          }
+          function unquietPage() {
+            if (!glideQuiet) { return; }
+            glideQuiet = false;
+            rootEl.classList.remove("glide-active");
+            if (typeof playWall === "function" && typeof wallOnScreen !== "undefined" && wallOnScreen && !document.hidden) { playWall(); }
+          }
 
           function stopGlide() {
             if (!glideId) { return; }
             cancelAnimationFrame(glideId);
             glideId = 0;
             rootEl.style.scrollBehavior = "";
+            unquietPage();
           }
           ["wheel", "touchstart", "pointerdown", "keydown"].forEach(function (type) {
             window.addEventListener(type, stopGlide, { passive: true });
@@ -534,6 +558,7 @@ function initHome() {
             var duration = Math.min(2300, Math.max(1700, 1400 + Math.abs(distance) * 0.3));
             var startTime = null;
             rootEl.style.scrollBehavior = "auto";
+            quietPage();
             function step(now) {
               if (startTime === null) { startTime = now; }
               var t = (now - startTime) / duration;
@@ -541,6 +566,7 @@ function initHome() {
                 window.scrollTo(0, endY);
                 glideId = 0;
                 rootEl.style.scrollBehavior = "";
+                unquietPage();
                 return;
               }
               var eased = t < 0.5 ? 8 * Math.pow(t, 4) : 1 - Math.pow(-2 * t + 2, 4) / 2;
@@ -693,7 +719,7 @@ function initHome() {
               var heroIO = new IntersectionObserver(function (entries) {
                 entries.forEach(function (en) {
                   wallOnScreen = !!en.isIntersecting;
-                  if (en.isIntersecting) { playWall(); } else { pauseWall(); }
+                  if (en.isIntersecting) { if (!document.documentElement.classList.contains("glide-active")) { playWall(); } } else { pauseWall(); }
                 });
               }, { threshold: 0.02 });
               heroIO.observe(heroEl);
@@ -707,7 +733,7 @@ function initHome() {
             document.addEventListener("visibilitychange", function () {
               if (!document.getElementById("c1sRoot")) { return; }
               if (document.hidden) { pauseWall(); }
-              else if (wallOnScreen) { playWall(); }
+              else if (wallOnScreen && !document.documentElement.classList.contains("glide-active")) { playWall(); }
             });
           }
         }
