@@ -7,7 +7,7 @@ import { BRAND_CAPCUT, BRAND_ELEVENLABS, BRAND_HIGGSFIELD, CAL1STAR_LOGO, CAPCUT
    follower milestone, the simulated Michael Jackson mini player, the photo
    stack flip and parallax, the work galleries and lightbox, the waitlist
    form (posting to /api/waitlist like the live course page), native
-   scrolling with eased link glides, the scroll reveals, the custom
+   scrolling with native smooth link scrolls, the scroll reveals, the custom
    cursor and the hero video wall. It runs once on mount and every handler
    that outlives the page checks for the homepage root first, so nothing
    here can leak into the other pages. */
@@ -437,51 +437,21 @@ function initHome() {
           });
         });
 
-        /* ---------- scrolling: native, with an eased glide for in page links ---------- */
+        /* ---------- scrolling: native, including in page links ---------- */
         (function initSmoothScroll() {
           var reducedScroll = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-          if (reducedScroll) { return; }
-
-          function maxScroll() {
-            return Math.max(0, (document.documentElement.scrollHeight || 0) - window.innerHeight);
-          }
-          function clampY(y) { return Math.min(maxScroll(), Math.max(0, y)); }
-          function currentY() { return window.pageYOffset || document.documentElement.scrollTop || 0; }
 
           /* Scrolling itself is left entirely to the browser. An earlier
-             version hijacked every wheel event (preventDefault on a non
-             passive listener) and eased window.scrollTo on the main
-             thread each frame; that switched off the compositor's own
-             scrolling and felt laggy, worst on trackpads. Native wheel,
-             trackpad and touch scrolling needs no help, so the only
-             scroll listeners in this section are passive ones that
-             cancel a link glide (below) when real scroll input arrives. */
-
-          /* In page links: one soft eased glide to the section */
-          var DURATION = 900;
-          var rafId = null;
-          function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
-          function stopGlide() { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
-          function glideTo(targetY) {
-            var startY = currentY();
-            var distance = targetY - startY;
-            if (Math.abs(distance) < 2) { return; }
-            stopGlide();
-            var startTime = null;
-            function step(now) {
-              if (!startTime) { startTime = now; }
-              var progress = Math.min(1, (now - startTime) / DURATION);
-              window.scrollTo(0, startY + distance * easeInOutCubic(progress));
-              if (progress < 1) { rafId = requestAnimationFrame(step); } else { rafId = null; }
-            }
-            rafId = requestAnimationFrame(step);
-          }
-          window.addEventListener("touchstart", stopGlide, { passive: true });
-          window.addEventListener("wheel", stopGlide, { passive: true });
-          window.addEventListener("pointerdown", stopGlide, { passive: true });
-          window.addEventListener("keydown", function (e) {
-            if (["PageDown", "PageUp", "Home", "End", "ArrowDown", "ArrowUp", " "].indexOf(e.key) !== -1) { stopGlide(); }
-          }, { passive: true });
+             version hijacked every wheel event and eased window.scrollTo
+             on the main thread each frame; that switched off the
+             compositor's own scrolling and felt laggy. A later version
+             animated in page links with the same kind of main thread
+             requestAnimationFrame glide, which chopped on this page for
+             the same reason. In page links now use the browser's own
+             smooth scrolling, which the compositor drives. The sticky
+             nav offset comes from the scroll-margin-top the sections
+             already carry in the CSS (84px), and reduced motion gets an
+             instant jump instead of an animated scroll. */
           document.querySelectorAll('a[href^="#"]').forEach(function (link) {
             link.addEventListener("click", function (e) {
               var hash = link.getAttribute("href");
@@ -489,10 +459,7 @@ function initHome() {
               var target = document.querySelector(hash);
               if (!target) { return; }
               e.preventDefault();
-              var headerOffset = 84;
-              var targetY = target.getBoundingClientRect().top + currentY() - headerOffset;
-              if (hash === "#top") { targetY = 0; }
-              glideTo(clampY(targetY));
+              target.scrollIntoView({ behavior: reducedScroll ? "auto" : "smooth", block: "start" });
               if (window.history && window.history.pushState) { window.history.pushState(null, "", hash); }
               target.setAttribute("tabindex", "-1");
             });
