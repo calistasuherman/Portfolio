@@ -487,9 +487,10 @@ function initHome() {
            the browser; only section link clicks animate. They used to
            use the browser's own smooth scrolling, which drifts slowly
            over this page's long distances, so clicks now run a tuned
-           glide instead: the whole trip takes about 0.9s to 1.5s
-           depending on distance, opening on an easeOutQuart curve and
-           settling softly. The glide is written
+           glide instead: the whole trip takes about 1.7s to 2.3s
+           depending on distance (roughly two seconds for a typical
+           trip), on an easeInOutQuart curve that starts gently and
+           settles softly. The glide is written
            to stay smooth on this heavy page: the target position is
            measured once up front (the sections carry a scroll margin
            top of 84px for the sticky nav, so the glide aims 84px above
@@ -530,7 +531,7 @@ function initHome() {
               rootEl.style.scrollBehavior = "";
               return;
             }
-            var duration = Math.min(1500, Math.max(900, 700 + Math.abs(distance) * 0.22));
+            var duration = Math.min(2300, Math.max(1700, 1400 + Math.abs(distance) * 0.3));
             var startTime = null;
             rootEl.style.scrollBehavior = "auto";
             function step(now) {
@@ -542,7 +543,7 @@ function initHome() {
                 rootEl.style.scrollBehavior = "";
                 return;
               }
-              var eased = 1 - Math.pow(1 - t, 4);
+              var eased = t < 0.5 ? 8 * Math.pow(t, 4) : 1 - Math.pow(-2 * t + 2, 4) / 2;
               window.scrollTo(0, startY + distance * eased);
               glideId = requestAnimationFrame(step);
             }
