@@ -371,7 +371,7 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
           <div data-reveal>
             <img class="foot-logo" src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="cal" alt="Cal1star Editing" />
             <p class="tagline">Let’s work together!<br /><a href="mailto:cal1starpartnerships@gmail.com">cal1starpartnerships@gmail.com</a></p>
-            <p class="foot-email">For tutorials or just to say hi find me on Instagram at @cal1star</p>
+            <p class="foot-email">For tutorials or just to say hi, find me on Instagram at @cal1star</p>
             <div class="btn-row" style="margin-top: 26px;">
               <a class="btn btn-light" href="#course">Join the waitlist</a>
               <a class="btn btn-outline" href="https://cal1starediting.gumroad.com" target="_blank" rel="noopener">Shop my templates</a>
