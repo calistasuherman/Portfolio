@@ -1,0 +1,12 @@
+/* Standalone waitlist page layout. Every visual rule for the header, the
+   course section and the footer comes from app/home.css unchanged; these
+   rules only stretch the page so the section fills the space between the
+   sticky header and the footer, with its content vertically centred, on
+   desktop and mobile alike. Scoped under .c1s-waitlist so the homepage
+   and the other pages are untouched. */
+
+.c1s-waitlist .wl-shell { display: flex; flex-direction: column;
+        min-height: 100vh; min-height: 100svh; min-height: 100dvh; }
+.c1s-waitlist main { flex: 1 0 auto; display: flex; flex-direction: column; }
+.c1s-waitlist .course { flex: 1 0 auto; display: flex; align-items: center; }
+.c1s-waitlist .course .wrap { width: 100%; }
