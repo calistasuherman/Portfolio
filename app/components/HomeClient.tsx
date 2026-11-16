@@ -613,11 +613,41 @@ function initHome() {
             return;
           }
           var vh = window.innerHeight || document.documentElement.clientHeight || 0;
+          /* Reveals wait out a section glide: a two second glide sweeps
+             past most of the page, and without this every element it
+             crosses would take its .is-visible class mid glide, forcing
+             style recalculations on this large DOM inside glide frames
+             and queueing a slide up animation that can only sit frozen
+             (animations are paused while gliding) until the landing,
+             when they would all fire at once. Instead, elements the
+             glide crosses are collected and revealed in one batch the
+             moment the glide ends or is cancelled (the glide removes
+             .glide-active from the root element in both cases, which
+             the MutationObserver below watches for). Ordinary scrolling
+             never sets .glide-active, so reveals behave exactly as
+             before outside a glide. */
+          var canDeferReveals = "MutationObserver" in window;
+          var glidePending = [];
+          function flushGlidePending() {
+            if (!glidePending.length) { return; }
+            var batch = glidePending;
+            glidePending = [];
+            batch.forEach(function (el) { el.classList.add("is-visible"); });
+          }
+          if (canDeferReveals) {
+            new MutationObserver(function () {
+              if (!document.documentElement.classList.contains("glide-active")) { flushGlidePending(); }
+            }).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+          }
           var revealIO = new IntersectionObserver(function (entries) {
             entries.forEach(function (en) {
               if (en.isIntersecting) {
-                en.target.classList.add("is-visible");
                 revealIO.unobserve(en.target);
+                if (canDeferReveals && document.documentElement.classList.contains("glide-active")) {
+                  if (glidePending.indexOf(en.target) === -1) { glidePending.push(en.target); }
+                } else {
+                  en.target.classList.add("is-visible");
+                }
               }
             });
           }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });

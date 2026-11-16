@@ -633,6 +633,18 @@
    itself. The class is removed the moment the glide ends or is
    cancelled, and everything resumes. */
 html.glide-active *, html.glide-active *::before, html.glide-active *::after { animation-play-state: paused !important; }
+/* Glide quieting, the part animation pausing cannot reach: the toolkit
+   cards carry the homepage's only backdrop filter (blur 14px plus
+   saturate 170%), and a backdrop filter cannot be paused. While the
+   toolkit section crosses the viewport during a glide, the browser
+   re runs that blur over the moving page beneath all six cards on
+   every frame, which is what made some glides chop (only the trips
+   whose path crosses the toolkit). During a glide the filter is
+   switched off; the cards keep their own near opaque gradient
+   background, border and shadows, so they look the same while the
+   page is moving, and the frosted blur returns the moment the glide
+   ends. Normal scrolling is untouched. */
+html.glide-active .c1s .tool { backdrop-filter: none; -webkit-backdrop-filter: none; }
 @keyframes c1sRevealSlideUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
