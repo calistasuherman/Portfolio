@@ -206,22 +206,33 @@ function initHome() {
         });
 
         /* ---------- photo stack parallax: wrapper only, flip untouched ----------
-           The drift is written to two CSS variables on .stack-zone (the
-           wrapper) and eased in its own rAF loop; it never writes to a
-           .stack-card transform, so the flip above keeps the live
-           site's exact 0.4s transform tween and gains no lag. It also
-           freezes for the length of a flip (430ms): while a card is
-           mid flip the wrapper holds perfectly still, and the drift
-           resumes once the flip has settled. Mouse only: it never runs
-           for touch pointers or under reduced motion. The range is
-           deliberately tiny, max about 6px, so the stack feels like it
-           has depth without ever sliding around. */
+           The drift is written straight to the transform of .stack-zone
+           (the wrapper) and of the .stack-shadow layer, eased in its own
+           rAF loop; it never writes to a .stack-card transform, so the
+           flip above keeps the live site's exact 0.4s transform tween
+           and gains no lag. The transforms are written directly, not
+           through CSS variables: a transform that depends on a custom
+           property cannot be composited, so every eased frame used to
+           force a style recalculation and a full repaint of the whole
+           stack (three large photo layers plus the blurred shadow),
+           which was the About section lag. Direct transform writes on
+           these will-change layers composite instead. The shadow used
+           to be the zone's ::before for the same reason: a pseudo
+           element's transform can only be driven through variables, so
+           it is now a real .stack-shadow element with identical styles.
+           The parallax also freezes for the length of a flip (430ms):
+           while a card is mid flip the wrapper holds perfectly still,
+           and the drift resumes once the flip has settled. Mouse only:
+           it never runs for touch pointers or under reduced motion.
+           The range is deliberately tiny, max about 6px, so the stack
+           feels like it has depth without ever sliding around. */
         (function initStackParallax() {
           if (!window.matchMedia("(pointer: fine)").matches) { return; }
           if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { return; }
           var zone = stack.closest(".stack-zone");
           var about = document.getElementById("about");
           if (!zone || !about) { return; }
+          var shadow = zone.querySelector(".stack-shadow");
           var tx = 0, ty = 0, cx = 0, cy = 0, raf = null, freezeUntil = 0;
           function loop() {
             raf = null;
@@ -229,8 +240,8 @@ function initHome() {
             cx += (tx - cx) * 0.055;
             cy += (ty - cy) * 0.055;
             if (Math.abs(tx - cx) < 0.002 && Math.abs(ty - cy) < 0.002) { cx = tx; cy = ty; }
-            zone.style.setProperty("--par-x", cx.toFixed(3));
-            zone.style.setProperty("--par-y", cy.toFixed(3));
+            zone.style.transform = "translate3d(" + (cx * 6).toFixed(2) + "px, " + (cy * 5).toFixed(2) + "px, 0)";
+            if (shadow) { shadow.style.transform = "translate(calc(-50% + " + (cx * -9).toFixed(2) + "px), calc(-46% + " + (cy * -7).toFixed(2) + "px)) scale(0.92)"; }
             if (cx !== tx || cy !== ty) { raf = requestAnimationFrame(loop); }
           }
           function kick() { if (!raf) { raf = requestAnimationFrame(loop); } }

@@ -209,6 +209,7 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
             </ul>
           </div>
           <div class="stack-zone">
+            <span class="stack-shadow" aria-hidden="true"></span>
             <button class="stack" id="photoStack" type="button" aria-label="Flip through Calista photos">
               <span class="stack-card"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="capcut2" alt="Calista holding a CapCut sign inside the big frame at the CapCut World event" draggable="false" /></span>
               <span class="stack-card" aria-hidden="true"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="capcut1" alt="" draggable="false" /></span>
