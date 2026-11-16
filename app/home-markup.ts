@@ -342,7 +342,7 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
             <button class="btn btn-light" type="submit">Join the waitlist &rarr;</button>
           </form>
           <p class="form-note" id="formNote" role="status"></p>
-          <p class="launch-line" data-reveal style="--reveal-delay: .36s">Launching <b>early January</b> &middot; The Cutting Room community on Discord</p>
+          <p class="launch-line" data-reveal style="--reveal-delay: .36s">Launching <b>early January</b></p>
         </div>
       </section>
 
@@ -352,12 +352,12 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
           <p class="label" data-reveal>Behind the edits</p>
           <h2 data-reveal style="--reveal-delay: .06s">My Toolkit</h2>
           <div class="toolkit-grid">
-            <div class="tool" data-popup="In my toolkit" data-reveal><img src="/apps/dr.png" alt="DaVinci Resolve app icon" /><p>DaVinci Resolve</p></div>
-            <div class="tool" data-popup="In my toolkit" data-reveal style="--reveal-delay: .07s"><img src="/apps/fcp.png" alt="Final Cut Pro app icon" /><p>Final Cut Pro</p></div>
-            <div class="tool" data-popup="In my toolkit" data-reveal style="--reveal-delay: .14s"><img src="/apps/vs.png" alt="Video Star app icon" /><p>Video Star</p></div>
-            <div class="tool" data-popup="In my toolkit" data-reveal style="--reveal-delay: .21s"><img src="/apps/cc.png" alt="CapCut app icon" /><p>CapCut</p></div>
-            <div class="tool" data-popup="In my toolkit" data-reveal style="--reveal-delay: .28s"><img src="/apps/c.png" alt="Canva app icon" /><p>Canva</p></div>
-            <div class="tool" data-popup="In my toolkit" data-reveal style="--reveal-delay: .35s"><img src="/apps/claude.png" alt="Claude app icon" /><p>Claude</p></div>
+            <div class="tool" data-popup="In my toolkit" data-reveal><span class="tool-ico"><img src="/apps/dr.png" alt="DaVinci Resolve app icon" /></span><p>DaVinci Resolve</p></div>
+            <div class="tool" data-popup="In my toolkit" data-reveal style="--reveal-delay: .07s"><span class="tool-ico"><img src="/apps/fcp.png" alt="Final Cut Pro app icon" /></span><p>Final Cut Pro</p></div>
+            <div class="tool" data-popup="In my toolkit" data-reveal style="--reveal-delay: .14s"><span class="tool-ico"><img src="/apps/vs.png" alt="Video Star app icon" /></span><p>Video Star</p></div>
+            <div class="tool" data-popup="In my toolkit" data-reveal style="--reveal-delay: .21s"><span class="tool-ico"><img src="/apps/cc.png" alt="CapCut app icon" /></span><p>CapCut</p></div>
+            <div class="tool" data-popup="In my toolkit" data-reveal style="--reveal-delay: .28s"><span class="tool-ico"><img src="/apps/c.png" alt="Canva app icon" /></span><p>Canva</p></div>
+            <div class="tool" data-popup="In my toolkit" data-reveal style="--reveal-delay: .35s"><span class="tool-ico"><img src="/apps/claude.png" alt="Claude app icon" /></span><p>Claude</p></div>
           </div>
         </div>
       </section>
