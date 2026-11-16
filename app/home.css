@@ -499,7 +499,7 @@
 .c1s .tool { position: relative;
         background: linear-gradient(160deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.55) 46%, rgba(255,255,255,0.38) 100%) padding-box, linear-gradient(165deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.35) 42%, rgba(0,0,0,0.10) 100%) border-box;
         border: 1px solid transparent; border-radius: 26px;
-        padding: 30px 12px 24px; text-align: center;
+        padding: 24px 12px; text-align: center;
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(255,255,255,0.35), inset 0 0 22px rgba(255,255,255,0.5), 0 10px 30px rgba(0,0,0,0.06);
         backdrop-filter: blur(14px) saturate(170%); -webkit-backdrop-filter: blur(14px) saturate(170%);
         display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
@@ -518,7 +518,7 @@
 .c1s .toolkit-grid .tool:nth-child(4) { --sheen-delay: 1.35s; }
 .c1s .toolkit-grid .tool:nth-child(5) { --sheen-delay: 1.8s; }
 .c1s .toolkit-grid .tool:nth-child(6) { --sheen-delay: 2.25s; }
-.c1s .tool-ico { display: block; position: relative; z-index: 1; margin: 0 auto 16px; }
+.c1s .tool-ico { display: block; position: relative; z-index: 1; margin: 0 auto 24px; }
 .c1s .tool img { width: 84px; height: 84px; max-width: 84px; margin: 0; object-fit: contain; position: relative; z-index: 1;
         filter: drop-shadow(0 10px 18px rgba(0,0,0,0.16)); }
 .c1s .tool p { margin: 0; font-size: 15.5px; letter-spacing: -0.01em; font-weight: 600; position: relative; z-index: 1; }
