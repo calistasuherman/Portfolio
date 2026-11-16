@@ -63,10 +63,6 @@
 }
 .c1s { margin: 0;
         background-color: var(--bg);
-        
-        background-image: var(--ombre-light);
-        background-size: 100% 100%;
-        background-attachment: fixed;
         color: var(--ink);
         font-family: var(--font);
         font-size: 17px;
@@ -146,8 +142,7 @@
         letter-spacing: 0.03em; margin: 0 0 16px; color: var(--ink); }
 .c1s section { padding: var(--section-pad) 0; }
 .c1s header.nav { position: sticky; top: 0; z-index: 40;
-        background: color-mix(in srgb, var(--bg) 82%, transparent);
-        backdrop-filter: blur(8px) saturate(180%); -webkit-backdrop-filter: blur(8px) saturate(180%);
+        background: color-mix(in srgb, var(--bg) 96%, transparent);
         border-bottom: 1px solid var(--line); }
 .c1s header.nav .nav-inner { display: flex; align-items: center; gap: 28px; min-height: 52px;
         max-width: none; width: 100%; margin: 0; padding: 0 20px 0 14px;
@@ -223,10 +218,9 @@
         width: min(232px, calc(100vw - 32px));
         padding: 8px 10px 7px; color: #ffffff;
         border-radius: 18px;
-        background: linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.10) 38%, rgba(255,255,255,0.04) 62%, rgba(0,0,0,0.18) 100%), rgba(22, 22, 24, 0.58);
+        background: linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.10) 38%, rgba(255,255,255,0.04) 62%, rgba(0,0,0,0.18) 100%), rgba(22, 22, 24, 0.88);
         border: 1px solid rgba(255, 255, 255, 0.42);
         box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32), 0 2px 10px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(255,255,255,0.10);
-        backdrop-filter: blur(8px) saturate(185%); -webkit-backdrop-filter: blur(8px) saturate(185%);
         overflow: hidden; }
 .c1s .player::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
         background: radial-gradient(120% 70% at 12% 0%, rgba(255,255,255,0.28) 0%, transparent 55%);
@@ -255,8 +249,7 @@
 .c1s .times { display: flex; justify-content: space-between; font-size: 10px; color: rgba(255,255,255,0.62); margin-top: 3px; font-variant-numeric: tabular-nums; }
 .c1s .controls { display: flex; align-items: center; gap: 3px; margin-top: 5px; }
 .c1s .ctl { width: 26px; height: 26px; min-height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.10);
-        color: #ffffff; display: grid; place-items: center; cursor: pointer; padding: 0;
-        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        color: #ffffff; display: grid; place-items: center; cursor: pointer; padding: 0; }
 .c1s .ctl svg { width: 12px; height: 12px; fill: currentColor; }
 .c1s .ctl:hover { border-color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.18); }
 .c1s .ctl-main { background: #ffffff; border-color: #ffffff; color: #000000; width: 29px; height: 29px; min-height: 29px; box-shadow: 0 6px 18px rgba(0,0,0,0.22); }
@@ -432,7 +425,7 @@
 .c1s .work-grid--landscape, .c1s .work-grid--wide { grid-template-columns: 1fr; }
 }
 .c1s .work-card { min-width: 0; }
-.c1s .work-card .frame { box-shadow: 0 12px 30px rgba(0,0,0,0.28); background: #101012; }
+.c1s .work-card .frame { box-shadow: 0 8px 20px rgba(0,0,0,0.25); background: #101012; }
 .c1s .work-grid--portrait .work-card .frame { aspect-ratio: 4 / 5; }
 .c1s .work-grid--landscape .work-card .frame { aspect-ratio: 16 / 10; }
 .c1s .work-grid--wide .work-card .frame { aspect-ratio: 16 / 9; }
@@ -586,6 +579,14 @@
 @media (prefers-reduced-motion: reduce) {
 .c1s .btn:hover, .c1s .tool:hover, .c1s .player:hover, .c1s .brand-slot:hover img, .c1s .stack:hover img { transform: none !important; }
 }
+/* Off screen animation pause: HomeClient toggles .anim-paused on the
+   hero, the Trusted by strip and the work section when they leave the
+   viewport, so their infinite animations stop costing frames while the
+   rest of the page scrolls. While a section is on screen, nothing
+   changes. */
+.c1s .hero.anim-paused .hero-row-track { animation-play-state: paused; }
+.c1s .trusted.anim-paused .brand-track { animation-play-state: paused; }
+.c1s .work.anim-paused .vinyl-float, .c1s .work.anim-paused .vinyl-disc svg { animation-play-state: paused; }
 @keyframes c1sRevealSlideUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
