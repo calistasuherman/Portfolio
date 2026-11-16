@@ -1,36 +1,19 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond, Pinyon_Script, Instrument_Serif, Luxurious_Script, Cinzel, Playfair_Display, Bebas_Neue } from "next/font/google";
+import { Inter, Pinyon_Script, Instrument_Serif, Playfair_Display, Bebas_Neue } from "next/font/google";
 import "./globals.css";
 import GlobalUI from "./components/GlobalUI";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-});
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-cormorant",
+  preload: false,
 });
 
 const pinyon = Pinyon_Script({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-pinyon",
-});
-
-const luxuriousScript = Luxurious_Script({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-luxurious",
-});
-
-const cinzel = Cinzel({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-  variable: "--font-cinzel",
+  preload: false,
 });
 
 const playfair = Playfair_Display({
@@ -38,12 +21,14 @@ const playfair = Playfair_Display({
   weight: ["400", "700", "900"],
   style: ["normal", "italic"],
   variable: "--font-playfair",
+  preload: false,
 });
 
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-melodrama",
+  preload: false,
 });
 
 const bebas = Bebas_Neue({
@@ -65,7 +50,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${cormorant.variable} ${pinyon.variable} ${instrumentSerif.variable} ${luxuriousScript.variable} ${cinzel.variable} ${playfair.variable} ${bebas.variable} bg-bg text-text-primary antialiased`}>
+      <body className={`${inter.variable} ${pinyon.variable} ${instrumentSerif.variable} ${playfair.variable} ${bebas.variable} bg-bg text-text-primary antialiased`}>
         <GlobalUI />
         {children}
       </body>
