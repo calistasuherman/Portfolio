@@ -49,6 +49,11 @@ export function getAudio(): HTMLAudioElement | null {
 
 export default function GlobalUI() {
   const pathname = usePathname();
+  /* The homepage and the standalone waitlist page run the rebrand design
+     with their own header, cursor and player, so this shared pre rebrand
+     chrome (old CS monogram header, red background, vinyl music player)
+     steps aside on both. */
+  const standalone = pathname === "/" || pathname === "/waitlist";
   const router = useRouter();
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const [cursorHover, setCursorHover] = useState(false);
@@ -62,7 +67,7 @@ export default function GlobalUI() {
 
   /* click outside player → close popup */
   useEffect(() => {
-    if (pathname === "/") return;
+    if (standalone) return;
     if (!playerOpen) return;
     const handler = (e: MouseEvent) => {
       if (playerRef.current && !playerRef.current.contains(e.target as Node)) {
@@ -75,7 +80,7 @@ export default function GlobalUI() {
 
   /* cursor */
   useEffect(() => {
-    if (pathname === "/") return;
+    if (standalone) return;
     const move = (e: MouseEvent) => setCursorPos({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
@@ -83,7 +88,7 @@ export default function GlobalUI() {
 
   /* Lenis smooth scroll */
   useEffect(() => {
-    if (pathname === "/") return;
+    if (standalone) return;
     const lenis = new Lenis({
       duration: 1.1,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -106,7 +111,7 @@ export default function GlobalUI() {
 
   /* page-fade on link clicks — client-side nav so audio/scroll state survives */
   useEffect(() => {
-    if (pathname === "/") return;
+    if (standalone) return;
     const handler = (e: MouseEvent) => {
       const anchor = (e.target as Element).closest("a");
       if (!anchor) return;
@@ -126,7 +131,7 @@ export default function GlobalUI() {
   }, [pathname]);
 
   useEffect(() => {
-    if (pathname === "/") return;
+    if (standalone) return;
     const on = () => setCursorHover(true);
     const off = () => setCursorHover(false);
     const attach = () => {
@@ -143,7 +148,7 @@ export default function GlobalUI() {
 
   /* audio event listeners */
   useEffect(() => {
-    if (pathname === "/") return;
+    if (standalone) return;
     const audio = getAudio();
     if (!audio) return;
     const onTime = () => setProgress(audio.currentTime);
@@ -229,7 +234,7 @@ export default function GlobalUI() {
      cursor, music player and scrolling, so this shared chrome steps
      aside there. Every effect above is gated the same way, and the
      other pages keep this component exactly as before. */
-  if (pathname === "/") return null;
+  if (standalone) return null;
 
   return (
     <>
