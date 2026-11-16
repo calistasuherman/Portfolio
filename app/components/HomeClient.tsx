@@ -189,11 +189,25 @@ function initHome() {
             if (cx !== tx || cy !== ty) { raf = requestAnimationFrame(loop); }
           }
           function kick() { if (!raf) { raf = requestAnimationFrame(loop); } }
+          /* The zone centre is measured once and cached in document
+             coordinates (stable across scrolling), instead of calling
+             getBoundingClientRect on every pointermove: a layout read
+             at pointer rate forces reflows and makes the page feel
+             choppy. The cache is dropped on resize and remeasured on
+             the next move. */
+          var centerX = 0, centerY = 0, centerKnown = false;
+          function measureCenter() {
+            var r = zone.getBoundingClientRect();
+            centerX = r.left + r.width / 2 + window.scrollX;
+            centerY = r.top + r.height / 2 + window.scrollY;
+            centerKnown = true;
+          }
+          window.addEventListener("resize", function () { centerKnown = false; }, { passive: true });
           about.addEventListener("pointermove", function (e) {
             if (e.pointerType && e.pointerType !== "mouse") { return; }
-            var r = zone.getBoundingClientRect();
-            var nx = (e.clientX - (r.left + r.width / 2)) / 340;
-            var ny = (e.clientY - (r.top + r.height / 2)) / 340;
+            if (!centerKnown) { measureCenter(); }
+            var nx = (e.clientX + window.scrollX - centerX) / 340;
+            var ny = (e.clientY + window.scrollY - centerY) / 340;
             tx = Math.max(-1, Math.min(1, nx));
             ty = Math.max(-1, Math.min(1, ny));
             kick();
@@ -536,20 +550,47 @@ function initHome() {
           if (!dot || !ring) { return; }
           var c1sRoot = document.getElementById("c1sRoot"); if (c1sRoot) { c1sRoot.classList.add("has-custom-cursor"); }
           var mx = -100, my = -100, rx = -100, ry = -100, raf = null;
+          /* The ring is 24px, or 18px while pressed (.is-down in the
+             CSS). Its size is tracked here instead of being read from
+             ring.offsetWidth inside the loop: a layout read on every
+             animation frame can force a reflow and chop the page. */
+          var ringSize = 24;
           function loop() {
             rx += (mx - rx) * 0.16;
             ry += (my - ry) * 0.16;
             dot.style.transform = "translate(" + (mx - 3) + "px," + (my - 3) + "px)";
-            ring.style.transform = "translate(" + (rx - ring.offsetWidth / 2) + "px," + (ry - ring.offsetHeight / 2) + "px)";
+            ring.style.transform = "translate(" + (rx - ringSize / 2) + "px," + (ry - ringSize / 2) + "px)";
             if (Math.abs(mx - rx) > 0.4 || Math.abs(my - ry) > 0.4) { raf = requestAnimationFrame(loop); } else { raf = null; }
           }
           function kick() { if (!raf) { raf = requestAnimationFrame(loop); } }
           document.addEventListener("pointermove", function (e) { mx = e.clientX; my = e.clientY; kick(); }, { passive: true });
-          document.addEventListener("pointerdown", function () { ring.classList.add("is-down"); });
-          document.addEventListener("pointerup", function () { ring.classList.remove("is-down"); });
+          document.addEventListener("pointerdown", function () { ring.classList.add("is-down"); ringSize = 18; });
+          document.addEventListener("pointerup", function () { ring.classList.remove("is-down"); ringSize = 24; });
           var hoverSel = "a, button, input, .tool, .vinyl, .stack, .song, .frame, [data-popup]";
           document.addEventListener("pointerover", function (e) { if (e.target.closest(hoverSel)) { ring.classList.add("is-hover"); } });
           document.addEventListener("pointerout", function (e) { if (e.target.closest(hoverSel)) { ring.classList.remove("is-hover"); } });
+        })();
+
+        /* ---------- off screen animations: pause what cannot be seen ----------
+           The hero rows, the Trusted by marquee and the vinyl float and
+           spin run on infinite CSS loops. Hero video playback is
+           visibility gated too (see the hero wall section below), but
+           the CSS animations were not: they kept compositing while
+           their section was far off screen and stole frames from
+           scrolling. This observer toggles .anim-paused (see home.css)
+           on each section as it leaves the viewport, with a small
+           margin so motion resumes just before the section scrolls
+           back into view. On screen, everything plays exactly as
+           before. */
+        (function initAnimVisibility() {
+          if (!("IntersectionObserver" in window)) { return; }
+          var targets = [document.querySelector(".hero"), document.querySelector(".trusted"), document.getElementById("work")];
+          var animIO = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              en.target.classList.toggle("anim-paused", !en.isIntersecting);
+            });
+          }, { rootMargin: "120px 0px" });
+          targets.forEach(function (el) { if (el) { animIO.observe(el); } });
         })();
 
         /* ---------- hero video wall: rows drifting in opposite directions ----------
