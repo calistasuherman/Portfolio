@@ -437,21 +437,73 @@ function initHome() {
           });
         });
 
-        /* ---------- scrolling: native, including in page links ---------- */
+        /* ---------- in page links: one fast, sleek glide ----------
+           Plain wheel, trackpad and touch scrolling is left entirely to
+           the browser; only section link clicks animate. They used to
+           use the browser's own smooth scrolling, which drifts slowly
+           over this page's long distances, so clicks now run a short
+           tuned glide instead: the whole trip takes about half a
+           second to 0.8s no matter the distance, opening fast on an
+           easeOutQuint curve and settling softly. The glide is written
+           to stay smooth on this heavy page: the target position is
+           measured once up front (the sections carry a scroll margin
+           top of 84px for the sticky nav, so the glide aims 84px above
+           the section top), the frame loop only writes window.scrollTo
+           and never reads layout, and globals.css sets scroll-behavior
+           smooth on the root element, which would make the browser
+           re smooth every programmatic scroll and fight the glide, so
+           it is switched off for the duration of the animation and
+           restored after. A wheel, touch, pointer or key press cancels
+           the glide at once and hands scrolling back to the visitor,
+           and reduced motion gets an instant jump. */
         (function initSmoothScroll() {
           var reducedScroll = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          var rootEl = document.documentElement;
+          var glideId = 0;
 
-          /* Scrolling itself is left entirely to the browser. An earlier
-             version hijacked every wheel event and eased window.scrollTo
-             on the main thread each frame; that switched off the
-             compositor's own scrolling and felt laggy. A later version
-             animated in page links with the same kind of main thread
-             requestAnimationFrame glide, which chopped on this page for
-             the same reason. In page links now use the browser's own
-             smooth scrolling, which the compositor drives. The sticky
-             nav offset comes from the scroll-margin-top the sections
-             already carry in the CSS (84px), and reduced motion gets an
-             instant jump instead of an animated scroll. */
+          function stopGlide() {
+            if (!glideId) { return; }
+            cancelAnimationFrame(glideId);
+            glideId = 0;
+            rootEl.style.scrollBehavior = "";
+          }
+          ["wheel", "touchstart", "pointerdown", "keydown"].forEach(function (type) {
+            window.addEventListener(type, stopGlide, { passive: true });
+          });
+
+          function glideTo(target) {
+            var startY = window.scrollY || window.pageYOffset || 0;
+            var endY = startY + target.getBoundingClientRect().top - 84;
+            var maxY = Math.max(0, rootEl.scrollHeight - window.innerHeight);
+            if (endY > maxY) { endY = maxY; }
+            if (endY < 0) { endY = 0; }
+            var distance = endY - startY;
+            stopGlide();
+            if (reducedScroll || Math.abs(distance) < 2) {
+              rootEl.style.scrollBehavior = "auto";
+              window.scrollTo(0, endY);
+              rootEl.style.scrollBehavior = "";
+              return;
+            }
+            var duration = Math.min(800, Math.max(500, 420 + Math.abs(distance) * 0.12));
+            var startTime = null;
+            rootEl.style.scrollBehavior = "auto";
+            function step(now) {
+              if (startTime === null) { startTime = now; }
+              var t = (now - startTime) / duration;
+              if (t >= 1) {
+                window.scrollTo(0, endY);
+                glideId = 0;
+                rootEl.style.scrollBehavior = "";
+                return;
+              }
+              var eased = 1 - Math.pow(1 - t, 5);
+              window.scrollTo(0, startY + distance * eased);
+              glideId = requestAnimationFrame(step);
+            }
+            glideId = requestAnimationFrame(step);
+          }
+
           document.querySelectorAll('a[href^="#"]').forEach(function (link) {
             link.addEventListener("click", function (e) {
               var hash = link.getAttribute("href");
@@ -459,7 +511,7 @@ function initHome() {
               var target = document.querySelector(hash);
               if (!target) { return; }
               e.preventDefault();
-              target.scrollIntoView({ behavior: reducedScroll ? "auto" : "smooth", block: "start" });
+              glideTo(target);
               if (window.history && window.history.pushState) { window.history.pushState(null, "", hash); }
               target.setAttribute("tabindex", "-1");
             });
@@ -551,7 +603,7 @@ function initHome() {
            before. */
         (function initAnimVisibility() {
           if (!("IntersectionObserver" in window)) { return; }
-          var targets = [document.querySelector(".hero"), document.querySelector(".trusted"), document.getElementById("work")];
+          var targets = [document.querySelector(".hero"), document.querySelector(".trusted"), document.getElementById("work"), document.getElementById("toolkit")];
           var animIO = new IntersectionObserver(function (entries) {
             entries.forEach(function (en) {
               en.target.classList.toggle("anim-paused", !en.isIntersecting);
