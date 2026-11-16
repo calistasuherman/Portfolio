@@ -2,9 +2,11 @@
 "use client";
 import { useEffect } from "react";
 import { BRAND_CAPCUT, BRAND_ELEVENLABS, BRAND_HIGGSFIELD, CAL1STAR_LOGO, CAPCUT_WORLD_1, CAPCUT_WORLD_2, CAPCUT_WORLD_3, CE_LOGO, EDITING_101_CLEAN } from "../home-assets";
+import { getAudio, playSong, currentTrack } from "./GlobalUI";
 
 /* Homepage behaviours, ported from the approved preview's page script:
-   follower milestone, the simulated Michael Jackson mini player, the photo
+   follower milestone, the Michael Jackson mini player (real audio through
+   the shared GlobalUI singleton), the photo
    stack flip and parallax, the work galleries and lightbox, the waitlist
    form (posting to /api/waitlist like the live course page), native
    scrolling with native smooth link scrolls, the scroll reveals, the custom
@@ -45,7 +47,18 @@ function initHome() {
         var followerText = followerMilestone >= 10 ? followerMilestone + "k+" : followerCount.toLocaleString("en-US");
         document.querySelectorAll(".js-followers-milestone").forEach(function (el) { el.textContent = followerText; });
 
-        /* ---------- music player ---------- */
+        /* ---------- music player: real audio via the shared GlobalUI singleton ----------
+           The mini player drives the same module level audio element the
+           course page vinyl uses (getAudio / playSong / currentTrack from
+           ./GlobalUI), so pressing play streams the hosted MP4 for the
+           current song, the progress bar follows the real playback
+           position, and prev, next and the song list switch tracks
+           through playSong. Nothing autoplays: audio only ever starts
+           from a click below. The GlobalUI component itself steps aside
+           on the homepage, so this is the only driver of the singleton
+           here. The len values stay as the pre metadata fallback for the
+           total time label; once the file metadata loads, the real
+           duration takes over. */
         var songs = [
           { title: "The Lady in My Life", artist: "Michael Jackson", len: 298 },
           { title: "(I Like) The Way You Love Me", artist: "Michael Jackson", len: 257 },
@@ -54,11 +67,13 @@ function initHome() {
           { title: "You Rock My World", artist: "Michael Jackson", len: 338 },
           { title: "Loving You", artist: "Michael Jackson", len: 189 }
         ];
-        var idx = 0, playing = false, elapsed = 0, timer = null;
+        var audio = getAudio();
+        var idx = currentTrack();
         var disc = document.getElementById("disc");
         var titleEl = document.getElementById("trackTitle");
         var artistEl = document.getElementById("trackArtist");
         var timeNow = document.getElementById("timeNow");
+        var timeTotalEl = document.getElementById("timeTotal");
         var fill = document.getElementById("progressFill");
         var playBtn = document.getElementById("playBtn");
         var playIcon = document.getElementById("playIcon");
@@ -70,13 +85,20 @@ function initHome() {
           var m = Math.floor(s / 60), r = Math.floor(s % 60);
           return m + ":" + (r < 10 ? "0" : "") + r;
         }
-        var timeTotalEl = document.getElementById("timeTotal");
+        function totalLen() {
+          if (audio && isFinite(audio.duration) && audio.duration > 0) { return audio.duration; }
+          return songs[idx].len;
+        }
         function render() {
+          if (!document.getElementById("c1sRoot")) { detachAudio(); return; }
+          var playing = audio ? !audio.paused : false;
+          var elapsed = audio ? audio.currentTime : 0;
+          var total = totalLen();
           titleEl.textContent = songs[idx].title;
           artistEl.textContent = songs[idx].artist;
           timeNow.textContent = fmt(elapsed);
-          if (timeTotalEl) { timeTotalEl.textContent = fmt(songs[idx].len); }
-          fill.style.width = Math.min(100, (elapsed / songs[idx].len) * 100) + "%";
+          if (timeTotalEl) { timeTotalEl.textContent = fmt(total); }
+          fill.style.width = Math.min(100, (elapsed / total) * 100) + "%";
           disc.classList.toggle("spinning", playing);
           playIcon.innerHTML = "";
           var p = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -85,30 +107,53 @@ function initHome() {
           playBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
           songBtns.forEach(function (b, i) { b.classList.toggle("active", i === idx); });
         }
-        function tick() {
-          if (!document.getElementById("c1sRoot")) { stopTimer(); return; }
-          elapsed += 0.5;
-          if (elapsed >= songs[idx].len) { select(idx + 1, true); return; }
+        function onAudioEvent() {
+          if (!document.getElementById("c1sRoot")) { detachAudio(); return; }
+          idx = currentTrack();
           render();
         }
-        function startTimer() { stopTimer(); timer = setInterval(tick, 500); }
-        function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
-        function select(i, autoplay) {
-          idx = ((i % songs.length) + songs.length) % songs.length;
-          elapsed = 0;
-          playing = !!autoplay;
-          if (playing) { startTimer(); } else { stopTimer(); }
-          render();
+        function onEnded() {
+          if (!document.getElementById("c1sRoot")) { detachAudio(); return; }
+          playSong(idx + 1);
+        }
+        function detachAudio() {
+          if (!audio) { return; }
+          audio.removeEventListener("timeupdate", onAudioEvent);
+          audio.removeEventListener("play", onAudioEvent);
+          audio.removeEventListener("pause", onAudioEvent);
+          audio.removeEventListener("loadedmetadata", onAudioEvent);
+          audio.removeEventListener("durationchange", onAudioEvent);
+          audio.removeEventListener("ended", onEnded);
+          window.removeEventListener("cal1star:track", onAudioEvent);
+          if (audio.__c1sDetach === detachAudio) { audio.__c1sDetach = null; }
+        }
+        if (audio) {
+          /* a previous homepage mount may have left listeners on the
+             singleton; drop them so this mount is the only driver */
+          if (audio.__c1sDetach) { audio.__c1sDetach(); }
+          audio.__c1sDetach = detachAudio;
+          audio.addEventListener("timeupdate", onAudioEvent);
+          audio.addEventListener("play", onAudioEvent);
+          audio.addEventListener("pause", onAudioEvent);
+          audio.addEventListener("loadedmetadata", onAudioEvent);
+          audio.addEventListener("durationchange", onAudioEvent);
+          audio.addEventListener("ended", onEnded);
+          window.addEventListener("cal1star:track", onAudioEvent);
         }
         playBtn.addEventListener("click", function () {
-          playing = !playing;
-          if (playing) { startTimer(); } else { stopTimer(); }
+          if (!audio) { return; }
+          if (audio.paused) {
+            if (currentTrack() !== idx) { playSong(idx); }
+            else { audio.play().catch(function () {}); }
+          } else {
+            audio.pause();
+          }
           render();
         });
-        document.getElementById("prevBtn").addEventListener("click", function () { select(idx - 1, playing); });
-        document.getElementById("nextBtn").addEventListener("click", function () { select(idx + 1, playing); });
+        document.getElementById("prevBtn").addEventListener("click", function () { playSong(idx - 1); });
+        document.getElementById("nextBtn").addEventListener("click", function () { playSong(idx + 1); });
         songBtns.forEach(function (b) {
-          b.addEventListener("click", function () { select(parseInt(b.getAttribute("data-index"), 10), true); });
+          b.addEventListener("click", function () { playSong(parseInt(b.getAttribute("data-index"), 10)); });
         });
         var miniPlayer = document.getElementById("miniPlayer");
         var pickerToggle = document.getElementById("pickerToggle");
