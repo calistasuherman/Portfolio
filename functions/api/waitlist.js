@@ -44,12 +44,12 @@ async function addToKit(email, apiKey) {
     fetch(KIT_API_BASE + "/forms/" + KIT_FORM_ID + "/subscribers", {
       method: "POST",
       headers,
-      body: JSON.stringify({ subscriber_id: subscriberId }),
+      body: JSON.stringify({ email_address: email }),
     }),
     fetch(KIT_API_BASE + "/tags/" + KIT_TAG_ID + "/subscribers", {
       method: "POST",
       headers,
-      body: JSON.stringify({ subscriber_id: subscriberId }),
+      body: JSON.stringify({ email_address: email }),
     }),
   ]);
   let allOk = true;
