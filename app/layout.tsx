@@ -39,7 +39,7 @@ const bebas = Bebas_Neue({
 
 export const metadata: Metadata = {
   title: "Calista Suherman — Portfolio",
-  description: "Video editing, tutorials, templates, and the Editing 101 course by Calista Suherman",
+  description: "Video editing, tutorials, templates, and the Editing 101 guide by Calista Suherman",
   icons: { icon: "/ce-icon.svg" },
 };
 

@@ -12,7 +12,7 @@ import { WAITLIST_HTML } from "./waitlist-markup";
 export const metadata: Metadata = {
   title: "Editing 101 Waitlist — Cal1star Editing",
   description:
-    "Join the waitlist for Editing 101, the beginner video editing course by Calista Suherman. Launching early January.",
+    "Join the waitlist for Editing 101, the beginner video editing guide by Calista Suherman. Launching early January.",
 };
 
 /* Scroll reveals: the same gate script as the homepage. Enables the
