@@ -18,7 +18,7 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
           <a href="#top" data-popup="Home" data-popup-pos="bottom">Home</a>
           <a href="#about" data-popup="About me" data-popup-pos="bottom">About</a>
           <a href="#work" data-popup="Pick a record" data-popup-pos="bottom">My Work</a>
-          <a href="#course" data-popup="Editing 101" data-popup-pos="bottom">Course</a>
+          <a href="#course" data-popup="Editing 101" data-popup-pos="bottom">Guide</a>
         </nav>
       </div>
     </header>
@@ -333,11 +333,12 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
       <!-- COURSE -->
       <section class="course" id="course">
         <div class="wrap">
-          <p class="label" data-reveal>New &middot; A beginner course by @cal1star</p>
+          <p class="label" data-reveal>New &middot; A beginner guide by @cal1star</p>
           <h2 style="margin: 0; --reveal-delay: .06s" data-reveal><img class="course-logo" src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="editing101" alt="Editing 101: made easy" /></h2>
           <p class="course-copy" data-reveal style="--reveal-delay: .12s">Editing changed my life, and I want to make it feel easy for you. I&rsquo;ll walk you through CapCut first, then DaVinci Resolve, then the fun stuff: the effects and transitions you see in my videos. No experience needed, just come as you are.</p>
-          <img class="first-line-img" data-reveal style="--reveal-delay: .18s" src="/course/be-first-in-line.png" alt="Be first in line!" />
-          <form class="waitlist" id="waitlistForm" novalidate data-reveal style="--reveal-delay: .24s">
+          <p class="course-copy" data-reveal style="--reveal-delay: .18s">I want to get to know you and work with you individually, so along with the guide I will be offering limited spots for 1:1 editing support, plus a community where we can learn and grow together.</p>
+          <img class="first-line-img" data-reveal style="--reveal-delay: .24s" src="/course/be-first-in-line.png" alt="Be first in line!" />
+          <form class="waitlist" id="waitlistForm" novalidate data-reveal style="--reveal-delay: .30s">
             <label class="sr" for="waitlistEmail" style="position:absolute; left:-9999px;">Your email</label>
             <input id="waitlistEmail" type="email" name="email" placeholder="Your email" autocomplete="email" required />
             <button class="btn btn-light" type="submit">Join the waitlist &rarr;</button>
