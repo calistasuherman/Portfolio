@@ -30,7 +30,7 @@ export const WAITLIST_HTML = `<div class="bg-stage" aria-hidden="true">
           <p class="label" data-reveal>New &middot; A beginner guide by @cal1star</p>
           <h2 style="margin: 0; --reveal-delay: .06s" data-reveal><img class="course-logo" src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="editing101" alt="Editing 101: made easy" /></h2>
           <p class="course-copy" data-reveal style="--reveal-delay: .12s">Editing changed my life, and I want to make it feel easy for you. I&rsquo;ll walk you through CapCut first, then DaVinci Resolve, then the fun stuff: the effects and transitions you see in my videos. No experience needed, just come as you are.</p>
-          <p class="course-copy" data-reveal style="--reveal-delay: .18s">I want to get to know you and work with you individually, so along with the guide I will be offering limited spots for 1:1 editing support, plus a community where we can learn and grow together.</p>
+          <p class="course-copy" data-reveal style="--reveal-delay: .18s">Along with the guide, I will be offering limited spots for 1:1 editing support, plus a Discord community where we can learn and grow together.</p>
           <img class="first-line-img" data-reveal style="--reveal-delay: .24s" src="/course/be-first-in-line.png" alt="Be first in line!" />
           <form class="waitlist" id="waitlistForm" novalidate data-reveal style="--reveal-delay: .30s">
             <label class="sr" for="waitlistEmail" style="position:absolute; left:-9999px;">Your email</label>
