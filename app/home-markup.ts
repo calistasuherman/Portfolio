@@ -138,7 +138,7 @@ export const HOME_HTML = `<div class="cursor-dot" id="cursorDot" aria-hidden="tr
           <div>
             <p class="label">Est. 2026</p>
             <h1><img class="hero-logo" src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" data-asset="cal" alt="Cal1star Editing" /></h1>
-            <p class="tagline">editing made easy</p>
+            <p class="tagline">Editing made easy</p>
             <div class="btn-row">
               <a class="btn btn-outline" href="#work" data-popup="See the records">Explore my work</a>
               <a class="btn btn-solid" href="#contact" data-popup="Say hi">Work with me</a>
