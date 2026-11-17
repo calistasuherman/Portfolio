@@ -5,7 +5,7 @@ import { HOME_HTML } from "./home-markup";
 /* The follower count the whole page renders from, in milestone form
    (73,793 shows as 70k+ and steps up at the next ten thousand). Checked
    live through Instagram on 2026-11-15. */
-const DATA_SCRIPT = "window.CAL1STAR_DATA = { instagramFollowers: 73793 };";
+const DATA_SCRIPT = "window.CAL1STAR_DATA = { instagramFollowers: 84443 };";
 
 /* Scroll reveals: enable the hidden pre reveal state only when an
    IntersectionObserver can actually run and motion is allowed, with a
