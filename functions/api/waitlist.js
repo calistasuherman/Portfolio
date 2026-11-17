@@ -15,8 +15,8 @@
 // Until the WAITLIST binding exists, signups fall back to the old public Kit
 // form post so the page never breaks.
 const LEGACY_KIT_FORM_ID = "10021620";
-const KIT_FORM_ID = "10158402";
-const KIT_TAG_ID = "25846583";
+const KIT_FORM_ID = "10187755";
+const KIT_TAG_ID = "25979309";
 const KIT_API_BASE = "https://api.kit.com/v4";
 
 async function addToKit(email, apiKey) {
