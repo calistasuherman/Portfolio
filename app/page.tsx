@@ -3,9 +3,9 @@ import HomeClient from "./components/HomeClient";
 import { HOME_HTML } from "./home-markup";
 
 /* The follower count the whole page renders from, in milestone form
-   (91,165 shows as 90k+ and steps up at the next ten thousand). Checked
-   live through Instagram on 2026-11-18. */
-const DATA_SCRIPT = "window.CAL1STAR_DATA = { instagramFollowers: 91165 };";
+   (101,357 shows as 100k+ and steps up at the next ten thousand). Checked
+   live through Instagram on 2026-11-20. */
+const DATA_SCRIPT = "window.CAL1STAR_DATA = { instagramFollowers: 101357 };";
 
 /* Scroll reveals: enable the hidden pre reveal state only when an
    IntersectionObserver can actually run and motion is allowed, with a
